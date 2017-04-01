@@ -111,7 +111,7 @@ NSString *md5Str;
     
     // Do any additional setup after loading the view.
     [self.navigationItem setTitle:@"专家咨询"];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
     
     UIView *infoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 46)];
     infoView.backgroundColor = CM_BACKGROUND_COLOR;
@@ -1380,13 +1380,20 @@ NSString *md5Str;
 }
 
 #pragma mark SWT methods
+/**
+ *  @author Zxt, 17-04-01 14:04:00
+ *
+ *  修改接口适配医爱淘查看历史对话
+ *  http://yiaitao.lifehealthcare.com/api/mychat?imei=867451022317702&chatid=1662173&history=1（0 最后一条记录 1 所有历史记录）
+ */
 
 - (void)initSWTChat {
     _swtUserID = [CureMeUtils defaultCureMeUtil].userSWTID;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *urlStr = [NSString stringWithFormat:@"api2/mychat/%ld/%ld/1", (long)_swtUserID, (long)_chatSWTID];
+        //NSString *urlStr = [NSString stringWithFormat:@"api2/mychat/%ld/%ld/1", (long)_swtUserID, (long)_chatSWTID];
+        NSString *urlStr = [NSString stringWithFormat:@"mychat?imei=%ld&chatid=%ld&history=1",[CureMeUtils defaultCureMeUtil].userID,_chatSWTID];
         NSMutableDictionary *respDict = [[NSMutableDictionary alloc] init];
-        NSData *response = sendRequestWithFullURLNAP([@"http://exswt.ranknowcn.com/" stringByAppendingString:urlStr], respDict);
+        NSData *response = sendRequestWithFullURLNAP([@"http://yiaitao.lifehealthcare.com/api/" stringByAppendingString:urlStr], respDict);
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if (isQuit)

@@ -55,7 +55,7 @@
 
     // 无医生回复时的默认图片
     myHeadImage = [[UIImageView alloc] initWithImage:[CMImageUtils defaultImageUtil].qaListQuestionImage];
-    myHeadImage.frame = CGRectMake(19, inset * 3, 42, 35);
+    myHeadImage.frame = CGRectMake(19, inset * 3, 38, 38);
     [myHeadImage setBackgroundColor:[UIColor clearColor]];
     myHeadImage.hidden = YES;
     [self addSubview:myHeadImage];
@@ -99,8 +99,8 @@
 
     if (!_chatInfoUnit.doctorName || _chatInfoUnit.doctorName.length <= 0) {
         doctorName.hidden = YES;
-        doctorInfo.hidden = YES;
-        lastWord.frame = CGRectMake(70, 5 * 2 + 2, 240, 40);
+        //doctorInfo.hidden = YES;
+        //lastWord.frame = CGRectMake(70, 5 * 2 + 2, 240, 40);
     }
     else {
         doctorName.text = _chatInfoUnit.doctorName;
@@ -109,7 +109,10 @@
         lastWord.frame = CGRectMake(70, 30, 240, 40);
     }
 
-    if (_chatInfoUnit.doctorTitle && _chatInfoUnit.hospitalName) {
+    if (_chatInfoUnit.doctorTitle || _chatInfoUnit.hospitalName) {
+        if (!_chatInfoUnit.doctorTitle) {
+            _chatInfoUnit.doctorTitle = @"专家";
+        }
         doctorInfo.text = [NSString stringWithFormat:@"%@ %@", _chatInfoUnit.doctorTitle, _chatInfoUnit.hospitalName];
     }
     
@@ -204,20 +207,20 @@
     [self addSubview:lastMsgTime];
     
     msgCount = [[UILabel alloc] initWithFrame:CGRectMake(230, 6, 80, 20)];
-    [msgCount setTextAlignment:UITextAlignmentRight];
+    [msgCount setTextAlignment:NSTextAlignmentCenter];
     [msgCount setFont:[UIFont systemFontOfSize:13]];
     [msgCount setTextColor:[UIColor grayColor]];
     [msgCount setBackgroundColor:[UIColor clearColor]];
     [self addSubview:msgCount];
     
-    _markBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _markBtn.frame = CGRectMake(16, 5, 44, 23);
-    [_markBtn setTitle:@"    评价" forState:UIControlStateNormal];
-    [_markBtn setTitle:@"    评价" forState:UIControlStateHighlighted];
-    [_markBtn setTitle:@"    评价" forState:UIControlStateSelected];
-    [_markBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
-    [_markBtn addTarget:self action:@selector(markBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:_markBtn];
+//    _markBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    _markBtn.frame = CGRectMake(16, 5, 44, 23);
+//    [_markBtn setTitle:@"    评价" forState:UIControlStateNormal];
+//    [_markBtn setTitle:@"    评价" forState:UIControlStateHighlighted];
+//    [_markBtn setTitle:@"    评价" forState:UIControlStateSelected];
+//    [_markBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
+//    [_markBtn addTarget:self action:@selector(markBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+//    [self addSubview:_markBtn];
 }
 
 - (NSString *)stringWithMarkPoint:(NSInteger)point
@@ -365,8 +368,23 @@
         
         infoView = [[CMMyChatInfoView alloc] initWithFrame:CGRectMake(0, MYCHATLIST_CELL_WORDHEIGHT, 320, MYCHATLIST_CELL_INFOHEIGHT)];
         [self.contentView addSubview:infoView];
+        
+        _deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_deleteBtn setImage:[CMImageUtils defaultImageUtil].deleteChatBtnImage forState:UIControlStateNormal];
+        _deleteBtn.frame = CGRectMake(SCREEN_WIDTH - 35, MYCHATLIST_CELL_WORDHEIGHT + MYCHATLIST_CELL_INFOHEIGHT + 1, 16, 16);
+        [_deleteBtn addTarget:self action:@selector(deleteBtonClick) forControlEvents:UIControlEventTouchUpInside];
+        [self.contentView addSubview:_deleteBtn];
+        
+        _lineLb = [[UILabel alloc] initWithFrame:CGRectMake(0, MYCHATLIST_CELL_WORDHEIGHT + MYCHATLIST_CELL_INFOHEIGHT + 18, SCREEN_WIDTH, 5)];
+        _lineLb.backgroundColor = [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1];
+        [self.contentView addSubview:_lineLb];
     }
     return self;
+}
+
+- (void)deleteBtonClick{
+    CMMyChatListViewController *tempclvc = (CMMyChatListViewController *)self.chatListView;
+    [tempclvc deleteChatCell:self];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

@@ -53,6 +53,8 @@
 // 评价按钮
 @property (nonatomic, strong) UIImage *hasMarkedBtnImage;
 @property (nonatomic, strong) UIImage *hasNotMarkedBtnImage;
+// 删除聊天记录按钮
+@property (nonatomic, strong) UIImage *deleteChatBtnImage;
 
 - (UIImage *)officeIconWithID:(NSInteger)officeID;
 

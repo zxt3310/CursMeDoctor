@@ -40,6 +40,7 @@ static CMImageUtils *defaultImageU = nil;
 
 @synthesize navBackBtnNormal = _navBackBtnNormal;
 @synthesize navBackBtnSelected = _navBackBtnSelected;
+@synthesize deleteChatBtnImage = _deleteChatBtnImage;
 
 @synthesize chatListNoreplyDefaultImage = _chatListNoreplyDefaultImage;
 
@@ -198,7 +199,7 @@ static CMImageUtils *defaultImageU = nil;
 - (UIImage *)qaListQuestionImage
 {
     if (!_qaListQuestionImage) {
-        _qaListQuestionImage = [UIImage imageNamed:@"ico_new.png"];
+        _qaListQuestionImage = [UIImage imageNamed:@"ico_head_hos@2x.png"];
     }
     
     return _qaListQuestionImage;
@@ -308,7 +309,7 @@ static CMImageUtils *defaultImageU = nil;
 - (UIImage *)navBackBtnNormal
 {
     if (!_navBackBtnNormal) {
-        _navBackBtnNormal = [UIImage imageNamed:@"back_n.png"];
+        _navBackBtnNormal = [UIImage imageNamed:@"icon_back.png"];
     }
     
     return _navBackBtnNormal;
@@ -317,7 +318,7 @@ static CMImageUtils *defaultImageU = nil;
 - (UIImage *)navBackBtnSelected
 {
     if (!_navBackBtnSelected) {
-        _navBackBtnSelected = [UIImage imageNamed:@"back_p.png"];
+        _navBackBtnSelected = [UIImage imageNamed:@"back_n.png"];
     }
     
     return _navBackBtnSelected;
@@ -339,6 +340,20 @@ static CMImageUtils *defaultImageU = nil;
     }
     
     return _hasNotMarkedBtnImage;
+}
+/**
+ *  @author Zxt, 17-04-01 17:04:29
+ *
+ *  删除按钮
+ *
+ *  @return <#return value description#>
+ */
+- (UIImage *)deleteChatBtnImage
+{
+    if (!_deleteChatBtnImage) {
+        _deleteChatBtnImage = [UIImage imageNamed:@"icon_trash"];
+    }
+    return _deleteChatBtnImage;
 }
 
 #pragma mark 科室有关的字典（Icon、名称）

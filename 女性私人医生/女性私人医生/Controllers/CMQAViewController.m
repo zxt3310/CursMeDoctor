@@ -49,7 +49,7 @@ UIView *protocolView1;
 - (void)viewDidLoad
 {
     // Custom initialization
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
     [self.tabBarController.navigationController setNavigationBarHidden:NO];
     [self.view setUserInteractionEnabled:YES];
     // Do any additional setup after loading the view from its nib.

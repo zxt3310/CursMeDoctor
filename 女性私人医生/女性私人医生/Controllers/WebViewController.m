@@ -37,7 +37,7 @@
 {
     [super viewDidLoad];
     
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
 
     float topY = 140;
     if ([UIScreen mainScreen].bounds.size.height > 480.0) {
@@ -55,7 +55,7 @@
         self.tabBarController.navigationItem.rightBarButtonItems = nil;
         
         UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake(0, 0, 41, 41);
+        button.frame = CGRectMake(0, 0, 9, 18);
         [button setImage:[CMImageUtils defaultImageUtil].navBackBtnNormal forState:UIControlStateNormal];
         [button setImage:[CMImageUtils defaultImageUtil].navBackBtnSelected forState:UIControlStateHighlighted];
         [button setImage:[CMImageUtils defaultImageUtil].navBackBtnSelected forState:UIControlStateSelected];

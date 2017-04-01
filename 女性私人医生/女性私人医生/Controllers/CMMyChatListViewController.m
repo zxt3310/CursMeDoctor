@@ -8,7 +8,7 @@
 
 #import "CMMyChatListViewController.h"
 #import "LoginViewController.h"
-#import "CMMyChatListCell.h"
+
 #import "BubbleViewController.h"
 #import "KGModal.h"
 #import "CMAlertViewController.h"
@@ -38,7 +38,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
 
     if (_refreshHeaderView == nil) {
         _refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.listTableView.bounds.size.height, self.listTableView.frame.size.width, self.listTableView.bounds.size.height)];
@@ -252,8 +252,32 @@
     }
     
     [cell setChatInfoUnit:[chatInfoArray objectAtIndex:indexPath.row]];
+    MyChatInfoUnit *unit = [chatInfoArray objectAtIndex:indexPath.row];
+    // 如果最后一句话是自己说的，并且只有一行，则高度调小
+    if ([unit.lastMsgUserType isEqualToString:@"user"] && unit.lastMsg.length < 16) {
+        CGRect temp = cell.lineLb.frame;
+        temp.origin.y = MYCHATLIST_CELL_MYWORDHEIGHT + MYCHATLIST_CELL_INFOHEIGHT +18;
+        cell.lineLb.frame = temp;
+        
+        temp = cell.deleteBtn.frame;
+        temp.origin.y = MYCHATLIST_CELL_MYWORDHEIGHT + MYCHATLIST_CELL_INFOHEIGHT +1;
+        cell.deleteBtn.frame = temp;
+    }
+    else{
+        CGRect temp = cell.lineLb.frame;
+        temp.origin.y = MYCHATLIST_CELL_WORDHEIGHT + MYCHATLIST_CELL_INFOHEIGHT +18;
+        cell.lineLb.frame = temp;
+        
+        temp = cell.deleteBtn.frame;
+        temp.origin.y = MYCHATLIST_CELL_WORDHEIGHT + MYCHATLIST_CELL_INFOHEIGHT +1;
+        cell.deleteBtn.frame = temp;
+    }
+    
+    cell.chatListView = self;
+    
     [cell setMyChatListViewController:self];
-
+    
+    
     return cell;
 }
 
@@ -267,10 +291,10 @@
 
     // 如果最后一句话是自己说的，并且只有一行，则高度调小
     if ([unit.lastMsgUserType isEqualToString:@"user"] && unit.lastMsg.length < 16) {
-        return MYCHATLIST_CELL_MYWORDHEIGHT + MYCHATLIST_CELL_INFOHEIGHT;
+        return MYCHATLIST_CELL_MYWORDHEIGHT + MYCHATLIST_CELL_INFOHEIGHT +23;
     }
 
-    return MYCHATLIST_CELL_WORDHEIGHT + MYCHATLIST_CELL_INFOHEIGHT;
+    return MYCHATLIST_CELL_WORDHEIGHT + MYCHATLIST_CELL_INFOHEIGHT +23;
 }
 
 /*
@@ -494,7 +518,7 @@
                 continue;
             }
             NSString *chattype = [chatInfo objectForKey:@"chattype"];
-            if ([chattype isEqualToString:@"swt"]) {
+            if ([chattype isEqualToString:@"zlswt"]) {
                 [infoUnit setIsSWT:YES];
                 [infoUnit setChatID:chatID];
                 NSInteger endTime = [[chatInfo objectForKey:@"lasttime"] integerValue];
@@ -506,6 +530,8 @@
                 NSString *lastMsg = [chatInfo objectForKey:@"lastmsg"];
                 [infoUnit setLastMsg:lastMsg];
                 [infoUnit setDoctorID:0];
+                NSString *hName = [chatInfo objectForKey:@"hname"];
+                [infoUnit  setHospitalName:hName];
                 [chatInfoArray addObject:infoUnit];
             }else{
                 [infoUnit setIsSWT:NO];
@@ -630,6 +656,21 @@
     [self.listTableView reloadData];
 }
 
+
+/**
+ *  @author Zxt, 17-04-01 17:04:24
+ *
+ *  chatCell删除方法
+ *
+ *  @return <#return value description#>
+ */
+- (void)deleteChatCell:(CMMyChatListCell *)cell{
+    NSIndexPath  *path = [self.listTableView indexPathForCell:cell];
+    MyChatInfoUnit *unit = [chatInfoArray objectAtIndex:path.row];
+    NSInteger chatId = unit.chatID;
+    
+}
+
 #pragma mark CMMarkDoctorViewControllerDelegate
 - (void)pointMarked:(NSInteger)point withComment:(NSString *)comment
 {
@@ -733,3 +774,15 @@
 }
 
 @end
+
+UIImage* buttonImageFromColor(UIColor *color)
+{
+    CGRect rect = CGRectMake(0, 0, SCREEN_WIDTH,44);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return img;
+}

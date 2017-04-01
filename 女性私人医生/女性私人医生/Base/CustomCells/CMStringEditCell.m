@@ -259,7 +259,7 @@
 //		CGSize textSize = [self.textLabel sizeThatFits:CGSizeZero];
 //		editFrame.origin.x += textSize.width + 10;
 //		editFrame.size.width -= textSize.width + 10;
-//		self.textField.textAlignment = UITextAlignmentRight;
+//		self.textField.textAlignment = NSTextAlignmentCenter;
 //	} else {
 //		self.textField.textAlignment = UITextAlignmentLeft;
 //	}

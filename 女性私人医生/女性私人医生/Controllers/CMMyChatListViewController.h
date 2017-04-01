@@ -10,6 +10,7 @@
 #import "CustomBaseViewController.h"
 #import "CMMarkDoctorViewController.h"
 #import "EGORefreshTableHeaderView.h"
+#import "CMMyChatListCell.h"
 //#import <StoreKit/StoreKit.h>
 
 
@@ -17,6 +18,16 @@
 @class CMMyChatInfoView;
 @class LoadingView;
 @class NoDataBackgroundView;
+
+/**
+ *  @author Zxt, 17-04-01 17:04:28
+ *
+ *  点击删除 cell刷新协议
+ */
+@protocol deleteChatCellDelegate <NSObject>
+
+- (void)deleteChat:(UITableViewCell *)cell;
+@end
 
 @interface CMMyChatListViewController : CustomBaseViewController<UITableViewDelegate, UITableViewDataSource, ImageDownloadHelperDelegate, CMMarkDoctorViewControllerDelegate,UIAlertViewDelegate, EGORefreshTableHeaderDelegate>
 
@@ -54,7 +65,7 @@
 @property bool isMainTabController;
 @property (strong, nonatomic) IBOutlet UITableView *listTableView;
 @property (nonatomic, strong) NoDataBackgroundView *noDataBgView;
-
+//@property (nonatomic, strong) id<deleteChatCellDelegate> deleteDelegate;
 - (void)ntfUpdateUnreadMsgCount:(NSNotification *)note;
 
 - (void)threadInitMyChatListData;
@@ -62,4 +73,7 @@
 
 - (void)showMarkDialog:(MyChatInfoUnit *)chatInfoUnit andInfoView:(CMMyChatInfoView *)infoView;
 
+- (void)deleteChatCell:(CMMyChatListCell *)cell;
 @end
+
+UIImage* buttonImageFromColor(UIColor *color);

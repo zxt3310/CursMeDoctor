@@ -40,7 +40,7 @@
     }
     
     UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(0, 0, 41, 41);
+    button.frame = CGRectMake(0, 0, 9, 18);
     [button setImage:[CMImageUtils defaultImageUtil].navBackBtnNormal forState:UIControlStateNormal];
     [button setImage:[CMImageUtils defaultImageUtil].navBackBtnSelected forState:UIControlStateHighlighted];
     [button setImage:[CMImageUtils defaultImageUtil].navBackBtnSelected forState:UIControlStateSelected];
@@ -92,11 +92,14 @@
     
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 5.0) {
         // iOS 5 code
-        [self.navigationController.navigationBar setBackgroundImage:navBarBgImage forBarMetrics:UIBarMetricsDefault];
+        [self.navigationController.navigationBar setBackgroundImage:buttonImageFromColor([UIColor whiteColor]) forBarMetrics:UIBarMetricsDefault];
+        self.navigationController.navigationBar.layer.shadowColor = [UIColor blackColor].CGColor;
+        self.navigationController.navigationBar.layer.shadowOffset = CGSizeMake(0, 2);
+        self.navigationController.navigationBar.layer.shadowOpacity = 0.3;
     }
     else {
         // iOS 4.x code
-        [self.navigationController.navigationBar setBackgroundColor:[UIColor colorWithPatternImage:navBarBgImage]];
+        //[self.navigationController.navigationBar setBackgroundColor:[UIColor colorWithPatternImage:navBarBgImage]];
     }
 }
 

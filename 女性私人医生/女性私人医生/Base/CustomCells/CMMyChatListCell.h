@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-
-
+//#import "CMMyChatListViewController.h"
 #define MYCHATLIST_CELL_MYWORDHEIGHT 52
 #define MYCHATLIST_CELL_WORDHEIGHT 68
 #define MYCHATLIST_CELL_INFOHEIGHT 35
@@ -38,7 +37,6 @@
 
 @property (nonatomic, strong) CMMyChatListViewController *myChatListViewController;
 @property (nonatomic, strong) MyChatInfoUnit *chatInfoUnit;
-
 @end
 
 
@@ -73,5 +71,8 @@
 
 @property (nonatomic, strong) CMMyChatListViewController *myChatListViewController;
 @property (nonatomic, strong) MyChatInfoUnit *chatInfoUnit;
+@property (nonatomic, strong) UILabel *lineLb;
+@property (nonatomic, strong) UIButton *deleteBtn;
+@property (nonatomic, strong) id chatListView;
 
 @end

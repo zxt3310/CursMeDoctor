@@ -54,7 +54,7 @@
     status = [[UILabel alloc] initWithFrame:CGRectMake(190, inset + 3, 120, 15)];
     [status setTextColor:[UIColor lightGrayColor]];
     [status setFont:[UIFont systemFontOfSize:12]];
-    [status setTextAlignment:UITextAlignmentRight];
+    [status setTextAlignment:NSTextAlignmentCenter];
     [status setBackgroundColor:[UIColor clearColor]];
     [self addSubview:status];
     
