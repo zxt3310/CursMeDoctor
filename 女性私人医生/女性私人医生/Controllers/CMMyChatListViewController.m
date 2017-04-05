@@ -404,6 +404,9 @@
     if (unit.isSWT) {
         CMNewQueryViewController *chatViewController = [CMNewQueryViewController new];
         [chatViewController setChatSWTID:unit.chatID];
+        if ([unit.chattype isEqualToString:@"swt"]) {
+            chatViewController.chatHistoryType = @"swt";
+        }
         [self.navigationController pushViewController:chatViewController animated:YES];
         return;
     }
@@ -518,8 +521,14 @@
                 continue;
             }
             NSString *chattype = [chatInfo objectForKey:@"chattype"];
-            if ([chattype isEqualToString:@"zlswt"]) {
+            if ([chattype containsString:@"swt"]) {
                 [infoUnit setIsSWT:YES];
+                if ([chattype isEqualToString:@"swt"]){
+                    [infoUnit setChattype:@"swt"];
+                }
+                else{
+                    [infoUnit setChattype:@"zlswt"];
+                }
                 [infoUnit setChatID:chatID];
                 NSInteger endTime = [[chatInfo objectForKey:@"lasttime"] integerValue];
                 [infoUnit setLastMsgTime:[NSDate dateWithTimeIntervalSince1970:endTime]];
@@ -532,10 +541,25 @@
                 [infoUnit setDoctorID:0];
                 NSString *hName = [chatInfo objectForKey:@"hname"];
                 [infoUnit  setHospitalName:hName];
+                /**
+                 *  @author Zxt, 17-04-05 12:04:42
+                 *
+                 *  医爱淘 新增questionID属性
+                 */
+//                NSInteger questionID = [chatInfo objectForKey:@"questionid"];
+                [infoUnit setQuestionID:0];
                 [chatInfoArray addObject:infoUnit];
+                
             }else{
                 [infoUnit setIsSWT:NO];
                 [infoUnit setChatID:chatID];
+                /**
+                 *  @author Zxt, 17-04-05 12:04:42
+                 *
+                 *  医爱淘 新增questionID属性
+                 */
+                NSInteger questionID = [[chatInfo objectForKey:@"questionid"] integerValue];
+                [infoUnit setQuestionID:questionID];
                 
                 NSInteger endTime = [[chatInfo objectForKey:@"lasttime"] integerValue];
                 [infoUnit setLastMsgTime:[NSDate dateWithTimeIntervalSince1970:endTime]];
@@ -668,6 +692,54 @@
     NSIndexPath  *path = [self.listTableView indexPathForCell:cell];
     MyChatInfoUnit *unit = [chatInfoArray objectAtIndex:path.row];
     NSInteger chatId = unit.chatID;
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"您是否确定删除对话"  preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+    
+        NSString *urlStr = @"http://new.medapp.ranknowcn.com/api/m.php?action=userallchatlisthide";
+        NSString *post = [NSString stringWithFormat:@"imei=%@&token=%@&chatid=%ld&chattype=%@&questionid=%ld&userid=%ld&os=ios",[CureMeUtils defaultCureMeUtil].UDID,[[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN],chatId,unit.isSWT?unit.chattype:@"medapp",unit.questionID,[CureMeUtils defaultCureMeUtil].userID];
+        
+       // dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSData *response = sendRequestWithFullURL(urlStr, post);
+            //dispatch_async(dispatch_get_main_queue(), ^{
+                if (response) {
+                    NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
+                    NSLog(@"%@",replaceUnicode(strResp));
+                }
+                NSDictionary *dataDic = parseJsonResponse(response);
+                NSNumber *result = JsonValue([dataDic objectForKey:@"result"], CLASS_NUMBER);
+                if ([result integerValue] == 1) {
+                    // 如果未登录，但已经显示过一次登录页面
+                    if (![CureMeUtils defaultCureMeUtil].hasLogin && !hasShownLoginViewController) {
+                        LoginViewController *loginVC = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+                        [self.navigationController pushViewController:loginVC animated:YES];
+                        hasShownLoginViewController = true;
+                        return;
+                    }
+                    
+                    // 如果已经登录并且没有正在载入数据
+                    if ([CureMeUtils defaultCureMeUtil].hasLogin) {
+                        loadingView.hidden = NO;
+                        //        [activityIndicator startAnimating];
+                        [chatInfoArray removeAllObjects];
+                        [self performSelectorInBackground:@selector(threadInitMyChatListData) withObject:nil];
+                        lastLoginUserID = [CureMeUtils defaultCureMeUtil].userID;
+                    }
+                }
+                else{
+                    //NSString *errMsg = JsonValue([dataDic objectForKey:@"result"], CLASS_STRING);
+                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"删除对话失败"  preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+                    [alert addAction:cancel];
+                    [self presentViewController:alert animated:YES completion:nil];
+                }
+            //});
+        //});
+    }];
+    [alert addAction:confirm];
+    [alert addAction:cancel];
+    [self presentViewController:alert animated:YES completion:nil];
     
 }
 

@@ -60,6 +60,7 @@ static bool needStopDetectReplies;
  *  是否允许分配到医爱淘
  */
 @property BOOL isAllowToiatao;
+@property NSString *chatHistoryType;
 
 - (NSMutableDictionary *)doctorNames;
 - (NSString *)doctorNameWithDoctorID:(NSInteger)doctorID;

@@ -25,6 +25,14 @@ enum {
 @property (nonatomic, strong) NSDate *addTime;
 @property NSInteger doctorID;
 @property NSInteger hospitalID;
+/**
+ *  @author Zxt, 17-04-05 15:04:33
+ *
+ *  医爱淘 新增对话删除，需要questionID，对话分配类型chattype
+ */
+@property NSInteger questionID;
+@property (nonatomic, strong) NSString *chattype;
+
 @property NSInteger unreadCount;
 @property (nonatomic, strong) NSString *doctorName;
 @property (nonatomic, strong) NSString *doctorTitle;

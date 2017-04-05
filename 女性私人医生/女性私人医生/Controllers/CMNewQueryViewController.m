@@ -1391,9 +1391,18 @@ NSString *md5Str;
     _swtUserID = [CureMeUtils defaultCureMeUtil].userSWTID;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         //NSString *urlStr = [NSString stringWithFormat:@"api2/mychat/%ld/%ld/1", (long)_swtUserID, (long)_chatSWTID];
-        NSString *urlStr = [NSString stringWithFormat:@"mychat?imei=%ld&chatid=%ld&history=1",[CureMeUtils defaultCureMeUtil].userID,_chatSWTID];
-        NSMutableDictionary *respDict = [[NSMutableDictionary alloc] init];
-        NSData *response = sendRequestWithFullURLNAP([@"http://yiaitao.lifehealthcare.com/api/" stringByAppendingString:urlStr], respDict);
+        NSString *urlStr;
+        NSData *response;
+        if ([_chatHistoryType isEqualToString:@"swt"]) {
+            urlStr = [NSString stringWithFormat:@"api2/mychat/%ld/%ld/1", (long)_swtUserID, (long)_chatSWTID];
+            NSMutableDictionary *respDict = [[NSMutableDictionary alloc] init];
+            response = sendRequestWithFullURLNAP([@"http://exswt.lifehealthcare.com/" stringByAppendingString:urlStr], respDict);
+        }
+        else{
+            urlStr = [NSString stringWithFormat:@"mychat?imei=%ld&chatid=%ld&history=1",(long)[CureMeUtils defaultCureMeUtil].userID,(long)_chatSWTID];
+            NSMutableDictionary *respDict = [[NSMutableDictionary alloc] init];
+            response = sendRequestWithFullURLNAP([@"http://yiaitao.lifehealthcare.com/api/" stringByAppendingString:urlStr], respDict);
+        }
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if (isQuit)
@@ -2018,7 +2027,7 @@ NSString *md5Str;
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSString *urlStr = [NSString stringWithFormat:@"api/m.php?action=citytypegethospitalinfo&step=%@", step];
-        NSString *post = [NSString stringWithFormat:@"addrdetail=%@&token=%@&type=%ld&typechild=%ld", [CureMeUtils defaultCureMeUtil].encodedLocateInfo, [[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN], (long)self.officeType, (long)self.subOfficeType];
+        NSString *post = [NSString stringWithFormat:@"addrdetail=%@&token=%@&type=%ld&typechild=%ld&imei=%@", [CureMeUtils defaultCureMeUtil].encodedLocateInfo, [[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN], (long)self.officeType, (long)self.subOfficeType,[CureMeUtils defaultCureMeUtil].UDID];
         NSData *response = sendRequestWithFullURL([@"http://new.medapp.ranknowcn.com/" stringByAppendingString:urlStr], post);
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -2351,10 +2360,17 @@ NSString *md5Str;
             [self setChatID:[chatIdStr integerValue]];
             hospitalName = JsonValue([dataDic objectForKey:@"hname"],CLASS_STRING);
             swtMaxID = [JsonValue([dataDic objectForKey:@"maxid"], CLASS_NUMBER) integerValue];
+            NSArray *listDic = JsonValue([dataDic objectForKey:@"list"], CLASS_ARRAY);
+            if (listDic.count>0) {
+                doctorName = [listDic[0] objectForKey:@"name"];
+                welcomeStr = [listDic[0] objectForKey:@"msg"];
+            }
             cdCheckTimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(cdCheckRequestIAT:) userInfo:nil repeats:YES];
             [self reloadIATinfoView];
-            welcomeStr = @"问来问去不如问医生，请把您的问题输入下面聊天框，将由专人为您解答！";
-            [self addSWTDoctorClientMessage:welcomeStr msgDate:[NSDate date]];
+//            welcomeStr = @"问来问去不如问医生，请把您的问题输入下面聊天框，将由专人为您解答！";
+            if (welcomeStr.length>0) {
+                [self addSWTDoctorClientMessage:welcomeStr msgDate:[NSDate date]];
+            }
             [self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
             
             //当前分配为医爱淘

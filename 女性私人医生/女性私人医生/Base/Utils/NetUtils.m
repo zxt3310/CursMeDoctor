@@ -94,7 +94,7 @@ NSData *sendRequest(NSString *phpFile, NSString *post)
 
 NSData *sendRequestWithFullURL(NSString *fullURL, NSString *post)
 {
-    NSString *finalPost = [NSString stringWithFormat:@"%@&version=2.2&deviceid=%@&appid=1&source=apple", post, [[NSUserDefaults standardUserDefaults] objectForKey:USER_UNIQUE_ID]];
+    NSString *finalPost = [NSString stringWithFormat:@"%@&version=3.0&deviceid=%@&appid=1&source=apple", post, [[NSUserDefaults standardUserDefaults] objectForKey:USER_UNIQUE_ID]];
     NSLog(@"sendRequestWithFullURL:%@ post:%@", fullURL, finalPost);
     
     return sendFullRequest(fullURL, finalPost, nil, true, false);
