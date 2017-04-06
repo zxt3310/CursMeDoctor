@@ -31,6 +31,8 @@
 
 // 咨询列表，无回复时的默认图片
 @property (nonatomic, readonly, strong) UIImage *chatListNoreplyDefaultImage;
+// 问题展示列表，默认问题图片
+@property (nonatomic, readonly, strong) UIImage *qaListQuestionDefultImage;
 
 // 聊天气泡图
 @property (nonatomic, readonly, strong) UIImage *chatOtherBubbleImage;

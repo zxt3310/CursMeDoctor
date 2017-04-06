@@ -50,7 +50,7 @@
         [replyCountLabel setBackgroundColor:[UIColor clearColor]];
         [self addSubview:replyCountLabel];
         
-        qImageView = [[UIImageView alloc] initWithImage:[CMImageUtils defaultImageUtil].qaListQuestionImage];
+        qImageView = [[UIImageView alloc] initWithImage:[CMImageUtils defaultImageUtil].qaListQuestionDefultImage];
         [qImageView setBackgroundColor:[UIColor clearColor]];
         [self addSubview:qImageView];
                 
@@ -67,7 +67,7 @@
     }
     
     float inset = 4.0;
-    qImageView.frame = CGRectMake(14 + inset, inset * 2, 34, 27);
+    qImageView.frame = CGRectMake(14 + inset, inset * 2, 27, 24);
     
     questionLabel.text = _question.question;
     CGSize qSize = [questionLabel.text sizeWithFont:[UIFont fontWithName:@"Arial" size:15] constrainedToSize:CGSizeMake(249, 60) lineBreakMode:NSLineBreakByTruncatingTail];

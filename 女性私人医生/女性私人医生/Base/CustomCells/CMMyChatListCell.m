@@ -110,10 +110,20 @@
     }
 
     if (_chatInfoUnit.doctorTitle || _chatInfoUnit.hospitalName) {
-        if (!_chatInfoUnit.doctorTitle) {
-            _chatInfoUnit.doctorTitle = @"专家";
+        if (!_chatInfoUnit.doctorName) {
+            CGRect temp2 = doctorInfo.frame;
+            temp2.origin.x = doctorName.frame.origin.x;
+            temp2.origin.y = doctorName.frame.origin.y-2;
+            doctorInfo.frame = temp2;
+            doctorInfo.textColor = [UIColor blackColor];
+            doctorInfo.font = [UIFont systemFontOfSize:15];
         }
-        doctorInfo.text = [NSString stringWithFormat:@"%@ %@", _chatInfoUnit.doctorTitle, _chatInfoUnit.hospitalName];
+        else{
+            doctorInfo.frame = CGRectMake(124, 14, 185, 15);
+            doctorInfo.textColor = [UIColor lightGrayColor];
+            doctorInfo.font = [UIFont systemFontOfSize:13];
+        }
+        doctorInfo.text = [NSString stringWithFormat:@"%@", /*_chatInfoUnit.doctorTitle,*/ _chatInfoUnit.hospitalName];
     }
     
     // 最后一句对话内容

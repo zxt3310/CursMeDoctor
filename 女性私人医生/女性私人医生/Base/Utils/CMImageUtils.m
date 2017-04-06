@@ -27,6 +27,7 @@ static CMImageUtils *defaultImageU = nil;
 @synthesize qaCellAnswerMidImage = _qaCellAnswerMidImage;
 @synthesize qaCellAnswerTailImage = _qaCellAnswerTailImage;
 @synthesize qaListQuestionImage = _qaListQuestionImage;
+@synthesize qaListQuestionDefultImage = _qaListQuestionDefultImage;
 
 @synthesize chatOtherBubbleImage = _chatOtherBubbleImage;
 @synthesize chatSelfBubbleImage = _chatSelfBubbleImage;
@@ -203,6 +204,13 @@ static CMImageUtils *defaultImageU = nil;
     }
     
     return _qaListQuestionImage;
+}
+
+- (UIImage *)qaListQuestionDefultImage{
+    if (!_qaListQuestionDefultImage) {
+        _qaListQuestionDefultImage = [UIImage imageNamed:@"ico_msg_and.png"];
+    }
+    return _qaListQuestionDefultImage;
 }
 
 - (UIImage *)hospitalDefaultHeadMImage

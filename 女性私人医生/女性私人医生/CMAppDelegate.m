@@ -182,7 +182,7 @@ void uncaughtExceptionHandler(NSException *exception)
     mainTabViewController = [[CMMainTabViewController alloc] init];
     
     // 1. 主界面Page
-    CMMainPageViewController *mainPageVC = [[CMMainPageViewController alloc] initWithNibName:@"CMMainPageViewController" bundle:nil];
+    CMMainPageViewController *mainPageVC = [[CMMainPageViewController alloc] init]; //initWithNibName:@"CMMainPageViewController" bundle:nil];
     
     // 2. 我的咨询Page
     UIViewController *listViewController = nil;
@@ -217,7 +217,7 @@ void uncaughtExceptionHandler(NSException *exception)
     // 5. 个人中心Page
     PerCenterViewController *perCenterVC = [[PerCenterViewController alloc] initWithStyle:UITableViewStyleGrouped];
     
-    mainTabViewController.viewControllers = [NSArray arrayWithObjects:mainPageVC, listViewController, webVC, bookListViewController, perCenterVC, nil];
+    mainTabViewController.viewControllers = [NSArray arrayWithObjects:mainPageVC, listViewController, webVC, /*bookListViewController,*/ perCenterVC, nil];
     mainTabViewController.selectedIndex = 0;
     
     _navigationController = [[CureMeNavigationController alloc] initWithRootViewController:mainTabViewController];

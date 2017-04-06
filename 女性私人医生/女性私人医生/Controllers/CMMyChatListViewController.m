@@ -700,9 +700,9 @@
         NSString *urlStr = @"http://new.medapp.ranknowcn.com/api/m.php?action=userallchatlisthide";
         NSString *post = [NSString stringWithFormat:@"imei=%@&token=%@&chatid=%ld&chattype=%@&questionid=%ld&userid=%ld&os=ios",[CureMeUtils defaultCureMeUtil].UDID,[[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN],chatId,unit.isSWT?unit.chattype:@"medapp",unit.questionID,[CureMeUtils defaultCureMeUtil].userID];
         
-       // dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSData *response = sendRequestWithFullURL(urlStr, post);
-            //dispatch_async(dispatch_get_main_queue(), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
                 if (response) {
                     NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
                     NSLog(@"%@",replaceUnicode(strResp));
@@ -734,8 +734,8 @@
                     [alert addAction:cancel];
                     [self presentViewController:alert animated:YES completion:nil];
                 }
-            //});
-        //});
+            });
+        });
     }];
     [alert addAction:confirm];
     [alert addAction:cancel];

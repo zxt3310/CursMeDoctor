@@ -12,7 +12,7 @@
 #import "CMAlertViewController.h"
 
 
-@interface CMMainPageViewController : CustomBaseViewController <CMPickerDelegate,UIScrollViewDelegate>
+@interface CMMainPageViewController : CustomBaseViewController <CMPickerDelegate,UIScrollViewDelegate,UIWebViewDelegate>
 
 {
     // 选择省份的VC

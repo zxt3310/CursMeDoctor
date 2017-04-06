@@ -37,7 +37,7 @@
         if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0)
             [_titleLabel setTextAlignment:NSTextAlignmentCenter];
         else
-            [_titleLabel setTextAlignment:UITextAlignmentCenter];
+            [_titleLabel setTextAlignment:NSTextAlignmentCenter];
         [_titleLabel setBackgroundColor:[UIColor clearColor]];
         [_titleLabel setMinimumFontSize:12];
         [_titleLabel setTextColor:[UIColor whiteColor]];

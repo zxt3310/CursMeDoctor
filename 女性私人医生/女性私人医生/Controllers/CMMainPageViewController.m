@@ -15,7 +15,9 @@
 
 
 @interface CMMainPageViewController ()
-
+{
+    UIWebView *html5WebView;
+}
 @end
 
 @implementation CMMainPageViewController
@@ -60,6 +62,26 @@ BOOL isLFMShow;
     _homeTopView.frame = frameTop;
     
     [self.view sendSubviewToBack:_homeTopView];
+    
+    
+    html5WebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-50)];
+    [self.view addSubview:html5WebView];
+    html5WebView.delegate = self;
+    NSURLRequest *url = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/h5_new/index.html?appid=1&addrdetail=%@&source=apple",[CureMeUtils defaultCureMeUtil].encodedLocateInfo]]];
+    [html5WebView loadRequest:url];
+}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+    NSString *schemeStr = request.URL.scheme;
+    if ([schemeStr isEqualToString:@"medapp"]) {
+        NSString *bodyStr = [[request.URL.absoluteString stringByReplacingOccurrencesOfString:schemeStr withString:@""] stringByReplacingOccurrencesOfString:request.URL.host withString:@""];
+        NSLog(@"");
+    }
+    return YES;
+    
+}
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
+    
 }
 
 - (void)dealloc

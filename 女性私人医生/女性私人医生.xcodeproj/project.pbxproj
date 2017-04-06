@@ -304,6 +304,7 @@
 		705D5B691E8FA61C00D4E090 /* icon_trash.png in Resources */ = {isa = PBXBuildFile; fileRef = 705D5B681E8FA61C00D4E090 /* icon_trash.png */; };
 		707871BA1E7947430051C8A4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 707871B91E7947430051C8A4 /* libz.tbd */; };
 		707871BC1E7947590051C8A4 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 707871BB1E7947590051C8A4 /* libxml2.tbd */; };
+		70B568E81E9610C700E3D4CF /* ico_msg_and.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B568E71E9610C700E3D4CF /* ico_msg_and.png */; };
 		70C18AC71E81310B00A82F46 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 22FA96A2169D06870058E8D4 /* main.m */; };
 		70C18AC81E81310B00A82F46 /* CMNewMyBookListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DE5AF5E81CABB10B001BD6E8 /* CMNewMyBookListCell.m */; };
 		70C18AC91E81310B00A82F46 /* CMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 22FA96A6169D06870058E8D4 /* CMAppDelegate.m */; };
@@ -1124,6 +1125,7 @@
 		705D5B681E8FA61C00D4E090 /* icon_trash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_trash.png; path = "女性私人医生/Resources/images/icon_trash.png"; sourceTree = "<group>"; };
 		707871B91E7947430051C8A4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		707871BB1E7947590051C8A4 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		70B568E71E9610C700E3D4CF /* ico_msg_and.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ico_msg_and.png; path = "女性私人医生/Resources/images/ico_msg_and.png"; sourceTree = "<group>"; };
 		70C18C191E81310B00A82F46 /* 男性私人医生.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "男性私人医生.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		70C18C1A1E81310B00A82F46 /* 女性私人医生 copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "女性私人医生 copy-Info.plist"; path = "/Users/zhangxintao/Documents/女性私人医生/女性私人医生 copy-Info.plist"; sourceTree = "<absolute>"; };
 		DE016F79199C87AC007F38AF /* CMException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMException.h; path = "女性私人医生/Base/CMException.h"; sourceTree = "<group>"; };
@@ -2136,6 +2138,7 @@
 				22F2C6B916A55D5300ECA7EC /* 默认背景 */,
 				229D6E0E16A2E94500D6DB94 /* OfficeType */,
 				22FAE0FF16B0125C00B19ADA /* 警示@2x.png */,
+				70B568E71E9610C700E3D4CF /* ico_msg_and.png */,
 				228DA67F16AEA28400C2383F /* 消息_n@2x.png */,
 				228DA68016AEA28400C2383F /* 消息_p@2x.png */,
 				222CAE3916AD8C61004C533C /* 评价预约bg@2x.png */,
@@ -2420,6 +2423,7 @@
 				DEEFAA021C27FAC7006E85CA /* wdyy_n@3x.png in Resources */,
 				22FA97FF169D213E0058E8D4 /* action-blue-button-selected@2x.png in Resources */,
 				22FA9800169D213E0058E8D4 /* action-blue-button.png in Resources */,
+				70B568E81E9610C700E3D4CF /* ico_msg_and.png in Resources */,
 				22FA9801169D213E0058E8D4 /* action-blue-button@2x.png in Resources */,
 				22FA9802169D213E0058E8D4 /* action-red-button-selected.png in Resources */,
 				22FA9803169D213E0058E8D4 /* action-red-button-selected@2x.png in Resources */,
