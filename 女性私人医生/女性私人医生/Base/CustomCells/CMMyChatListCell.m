@@ -37,7 +37,7 @@
     float inset = 5.0;
     
     background = [[UIImageView alloc] initWithImage:[CMImageUtils defaultImageUtil].qaCellQuestionBgImage];
-    background.frame = CGRectMake(0, 3, 320, MYCHATLIST_CELL_WORDHEIGHT - 3);
+    background.frame = CGRectMake(0, 3, SCREEN_WIDTH, MYCHATLIST_CELL_WORDHEIGHT - 3);
     [background setBackgroundColor:[UIColor clearColor]];
     [self addSubview:background];
     
@@ -67,13 +67,13 @@
     [doctorName setTextColor:[UIColor colorWithRed:200.0/255 green:62.0/255 blue:101.0/255 alpha:1.0]];
     [self addSubview:doctorName];
     
-    doctorInfo = [[UILabel alloc] initWithFrame:CGRectMake(124, inset * 2 + 4, 185, 15)];
+    doctorInfo = [[UILabel alloc] initWithFrame:CGRectMake(124 *SCREEN_WIDTH / 320, inset * 2 + 4, 185 *SCREEN_WIDTH/320, 15)];
     [doctorInfo setBackgroundColor:[UIColor clearColor]];
     [doctorInfo setTextColor:[UIColor lightGrayColor]];
     [doctorInfo setFont:[UIFont systemFontOfSize:13]];
     [self addSubview:doctorInfo];
     
-    lastWord = [[UILabel alloc] initWithFrame:CGRectMake(70, 30, 240, 40)];
+    lastWord = [[UILabel alloc] initWithFrame:CGRectMake(70, 30, 240 * SCREEN_WIDTH/320, 40)];
     [lastWord setNumberOfLines:2];
     [lastWord setFont:[UIFont systemFontOfSize:14]];
     [lastWord setLineBreakMode:NSLineBreakByTruncatingTail];
@@ -106,7 +106,7 @@
         doctorName.text = _chatInfoUnit.doctorName;
         doctorName.hidden = NO;
         doctorInfo.hidden = NO;
-        lastWord.frame = CGRectMake(70, 30, 240, 40);
+        lastWord.frame = CGRectMake(70, 30, 240 * SCREEN_WIDTH/320, 40);
     }
 
     if (_chatInfoUnit.doctorTitle || _chatInfoUnit.hospitalName) {
@@ -119,7 +119,7 @@
             doctorInfo.font = [UIFont systemFontOfSize:15];
         }
         else{
-            doctorInfo.frame = CGRectMake(124, 14, 185, 15);
+            doctorInfo.frame = CGRectMake(124 *SCREEN_WIDTH/320, 14, 185, 15);
             doctorInfo.textColor = [UIColor lightGrayColor];
             doctorInfo.font = [UIFont systemFontOfSize:13];
         }
@@ -207,7 +207,7 @@
 - (void)initialization
 {
     background = [[UIImageView alloc] initWithImage:[CMImageUtils defaultImageUtil].qaCellAnswerTailImage];
-    background.frame = CGRectMake(0, 0, 320, MYCHATLIST_CELL_INFOHEIGHT - 3);
+    background.frame = CGRectMake(0, 0, SCREEN_WIDTH, MYCHATLIST_CELL_INFOHEIGHT - 3);
     [self addSubview:background];
     
     lastMsgTime = [[UILabel alloc] initWithFrame:CGRectMake(70, 6, 150, 20)];
@@ -216,7 +216,7 @@
     [lastMsgTime setTextColor:[UIColor lightGrayColor]];
     [self addSubview:lastMsgTime];
     
-    msgCount = [[UILabel alloc] initWithFrame:CGRectMake(230, 6, 80, 20)];
+    msgCount = [[UILabel alloc] initWithFrame:CGRectMake(230 *SCREEN_WIDTH/320, 6, 80, 20)];
     [msgCount setTextAlignment:NSTextAlignmentCenter];
     [msgCount setFont:[UIFont systemFontOfSize:13]];
     [msgCount setTextColor:[UIColor grayColor]];
@@ -373,10 +373,10 @@
         // Initialization code
         [self setSelectionStyle:UITableViewCellSelectionStyleNone];
         
-        lastWordView = [[CMMyChatLastWordView alloc] initWithFrame:CGRectMake(0, 0, 320, MYCHATLIST_CELL_WORDHEIGHT)];
+        lastWordView = [[CMMyChatLastWordView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, MYCHATLIST_CELL_WORDHEIGHT)];
         [self.contentView addSubview:lastWordView];
         
-        infoView = [[CMMyChatInfoView alloc] initWithFrame:CGRectMake(0, MYCHATLIST_CELL_WORDHEIGHT, 320, MYCHATLIST_CELL_INFOHEIGHT)];
+        infoView = [[CMMyChatInfoView alloc] initWithFrame:CGRectMake(0, MYCHATLIST_CELL_WORDHEIGHT, SCREEN_WIDTH, MYCHATLIST_CELL_INFOHEIGHT)];
         [self.contentView addSubview:infoView];
         
         _deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];

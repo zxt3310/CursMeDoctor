@@ -48,7 +48,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated
-{    
+{
     if (!customTabBarView) {
         NSArray *nibObjects = [[NSBundle mainBundle] loadNibNamed:@"TabBarView" owner:self options:nil];
         customTabBarView = [nibObjects objectAtIndex:0];

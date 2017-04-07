@@ -28,6 +28,7 @@ static CMImageUtils *defaultImageU = nil;
 @synthesize qaCellAnswerTailImage = _qaCellAnswerTailImage;
 @synthesize qaListQuestionImage = _qaListQuestionImage;
 @synthesize qaListQuestionDefultImage = _qaListQuestionDefultImage;
+@synthesize logoImage = _logoImage;
 
 @synthesize chatOtherBubbleImage = _chatOtherBubbleImage;
 @synthesize chatSelfBubbleImage = _chatSelfBubbleImage;
@@ -86,6 +87,13 @@ static CMImageUtils *defaultImageU = nil;
 }
 
 #pragma mark Image properties
+- (UIImage *)logoImage{
+    if (!_logoImage) {
+        _logoImage = [UIImage imageNamed:@"logo_woman_B.png"];
+    }
+    return _logoImage;
+}
+
 - (UIImage *)doctorDefaultBGImage
 {
     if (!_doctorDefaultBGImage) {

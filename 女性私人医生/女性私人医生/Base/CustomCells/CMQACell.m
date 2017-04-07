@@ -71,15 +71,15 @@
     
     questionLabel.text = _question.question;
     CGSize qSize = [questionLabel.text sizeWithFont:[UIFont fontWithName:@"Arial" size:15] constrainedToSize:CGSizeMake(249, 60) lineBreakMode:NSLineBreakByTruncatingTail];
-    questionLabel.frame = CGRectMake(67, inset * 2, 249, qSize.height);
+    questionLabel.frame = CGRectMake(67, inset * 2, 249 *SCREEN_WIDTH/320, qSize.height);
     
     timeLabel.text = [[CureMeUtils defaultCureMeUtil].dateFormatter stringFromDate:_question.questionTime];
     timeLabel.frame = CGRectMake(67, qSize.height + inset * 2, 100, 15);
     
     replyCountLabel.text = [NSString stringWithFormat:@"共%ld条回复", (long)_replyCount];
-    replyCountLabel.frame = CGRectMake(320 - 84, qSize.height + inset * 2, 80, 15);
+    replyCountLabel.frame = CGRectMake(SCREEN_WIDTH - 84, qSize.height + inset * 2, 80, 15);
     
-    self.frame = CGRectMake(0, 0, 320, _question.qViewHeight);
+    self.frame = CGRectMake(0, 0, SCREEN_WIDTH, _question.qViewHeight);
     
     UIImage *bgImage = nil;
     if (_replyCount <= 0) {
@@ -185,16 +185,16 @@
     imageViewFrame.frame = CGRectMake(inset * 2, inset, 55, 58);
 
     nameLabel.text = _answer.doctorName;
-    nameLabel.frame = CGRectMake(67, inset, 52, 20);
+    nameLabel.frame = CGRectMake(67, inset, 52 *SCREEN_WIDTH, 20);
     
     infoLabel.text = [NSString stringWithFormat:@"%@ %@", _answer.doctorTitle, _answer.hospitalName];
-    infoLabel.frame = CGRectMake(121, inset * 2, 195, 15);
+    infoLabel.frame = CGRectMake(161 *SCREEN_WIDTH/320, inset * 2, 165 *SCREEN_WIDTH/320, 15);
     
     answerLabel.text = _answer.answer;
-    CGSize answerSize = [answerLabel.text sizeWithFont:[UIFont fontWithName:@"Arial" size:15] constrainedToSize:CGSizeMake(249, 60) lineBreakMode:NSLineBreakByTruncatingTail];
-    answerLabel.frame = CGRectMake(67, 20 + inset * 2, 249, answerSize.height);
+    CGSize answerSize = [answerLabel.text sizeWithFont:[UIFont fontWithName:@"Arial" size:15] constrainedToSize:CGSizeMake(249 *SCREEN_WIDTH/320, 60) lineBreakMode:NSLineBreakByTruncatingTail];
+    answerLabel.frame = CGRectMake(67, 20 + inset * 2, 249 *SCREEN_WIDTH/320, answerSize.height);
     
-    self.frame = CGRectMake(0, initHeight, 320, _answer.answerViewHeight);
+    self.frame = CGRectMake(0, initHeight, SCREEN_WIDTH, _answer.answerViewHeight);
     
     UIImage *bgImage = nil;
     if (_isLastAnswer) {
@@ -314,7 +314,7 @@
         float curHeight = _questionAnswers.question.qViewHeight;
         for (int i = 0; i < _questionAnswers.answerArray.count; i++) {
             Answer *answer = [_questionAnswers.answerArray objectAtIndex:i];
-            QACellAnswerSubView *answerSubView = [[QACellAnswerSubView alloc] initWithFrame:CGRectMake(0, curHeight, 320, answer.answerViewHeight)];
+            QACellAnswerSubView *answerSubView = [[QACellAnswerSubView alloc] initWithFrame:CGRectMake(0, curHeight, SCREEN_WIDTH, answer.answerViewHeight)];
             answerSubView.qaViewController = _qaViewController;
             answerSubView.answer = answer;
             

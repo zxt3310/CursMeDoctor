@@ -5,6 +5,7 @@
 //  Created by Tim on 13-1-9.
 //  Copyright (c) 2013年 Tim. All rights reserved.
 //
+#define UIColorFromHex(s,a)  [UIColor colorWithRed:(((s & 0xFF0000) >> 16))/255.0 green:(((s &0xFF00) >>8))/255.0 blue:((s &0xFF))/255.0 alpha:a]
 
 #import "CMMainPageViewController.h"
 #import "LoginViewController.h"
@@ -45,40 +46,96 @@ BOOL isLFMShow;
     [[CMDataUtils defaultDataUtil] initAllOfficeSubTypeData];
 
     // Do any additional setup after loading the view from its nib.
-    CGRect frame = _entranceScrollView.frame;
-    frame.origin.y = 20;
-    frame.size.height = 441;
-    if (IS_IPHONE_5) {
-        frame.size.height += 57;
-    }
-    _entranceScrollView.frame = frame;
-    [_entranceScrollView setContentSize:CGSizeMake(320, 601)];
-    _entranceScrollView.delegate = self;
-    [self.view addSubview:_entranceScrollView];
-    NSLog(@"mainPageScroll: %@", _entranceScrollView);
+//    CGRect frame = _entranceScrollView.frame;
+//    frame.origin.y = 20;
+//    frame.size.height = 441;
+//    if (IS_IPHONE_5) {
+//        frame.size.height += 57;
+//    }
+//    _entranceScrollView.frame = frame;
+//    [_entranceScrollView setContentSize:CGSizeMake(320, 601)];
+//    _entranceScrollView.delegate = self;
+//    [self.view addSubview:_entranceScrollView];
+//    NSLog(@"mainPageScroll: %@", _entranceScrollView);
+//    
+//    CGRect frameTop = _homeTopView.frame;
+//    frameTop.origin.y = 20;
+//    _homeTopView.frame = frameTop;
+//    
+//    [self.view sendSubviewToBack:_homeTopView];
+    /**
+     *  @author Zxt, 17-04-07 13:04:43
+     *
+     *  顶部logo及快速问答
+     */
+    [self setTopView];
     
-    CGRect frameTop = _homeTopView.frame;
-    frameTop.origin.y = 20;
-    _homeTopView.frame = frameTop;
-    
-    [self.view sendSubviewToBack:_homeTopView];
-    
-    
-    html5WebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-50)];
+    html5WebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 108, SCREEN_WIDTH, SCREEN_HEIGHT-158)];
     [self.view addSubview:html5WebView];
     html5WebView.delegate = self;
     NSURLRequest *url = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/h5_new/index.html?appid=1&addrdetail=%@&source=apple",[CureMeUtils defaultCureMeUtil].encodedLocateInfo]]];
     [html5WebView loadRequest:url];
 }
 
+- (void)setTopView{
+    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, 88)];
+    topView.backgroundColor = UIColorFromHex(0xF65378, 0.8);
+    
+    UIImageView *logoView = [[UIImageView alloc] initWithFrame:CGRectMake(19, 17, 20, 20)];
+    logoView.image = [CMImageUtils defaultImageUtil].logoImage;
+    [topView addSubview:logoView];
+    
+    UILabel *logoLb = [[UILabel alloc] initWithFrame:CGRectMake(41, 17, 150, 18)];
+    logoLb.font = [UIFont systemFontOfSize:17];
+    logoLb.textColor = [UIColor whiteColor];
+    logoLb.text = @"女性私人医生";
+    [topView addSubview:logoLb];
+    
+    UITextField *quickAskTF = [[UITextField alloc] initWithFrame:CGRectMake(14, 49, 354, 30)];
+    quickAskTF.layer.cornerRadius = 5;
+    quickAskTF.backgroundColor = [UIColor whiteColor];
+    quickAskTF.font = [UIFont systemFontOfSize:14];
+    quickAskTF.enabled = NO;
+    UIView *leftImg = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 39, 28)];
+    UIImageView *leftImgView = [[UIImageView alloc] initWithFrame:CGRectMake(11, 7, 18, 16)];
+    leftImgView.image = [CMImageUtils defaultImageUtil].qaListQuestionDefultImage;
+    [leftImg addSubview:leftImgView];
+    quickAskTF.leftView = leftImg;
+    quickAskTF.leftViewMode = UITextFieldViewModeAlways;
+    quickAskTF.placeholder = @"请输入您要咨询的问题";
+    [topView addSubview:quickAskTF];
+    
+    [self.view addSubview:topView];
+}
+
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     NSString *schemeStr = request.URL.scheme;
-    if ([schemeStr isEqualToString:@"medapp"]) {
-        NSString *bodyStr = [[request.URL.absoluteString stringByReplacingOccurrencesOfString:schemeStr withString:@""] stringByReplacingOccurrencesOfString:request.URL.host withString:@""];
-        NSLog(@"");
+    if ([request.URL.absoluteString containsString:@"index.html"]) {
+        return YES;
     }
-    return YES;
     
+    if ([schemeStr isEqualToString:@"medapp"]) {
+        if ([request.URL.absoluteString containsString:@"depart"]) {
+            NSInteger officeId = [request.URL.lastPathComponent integerValue];
+            CMQAViewController *qaViewController = [[CMQAViewController alloc] initWithNibName:@"CMQAViewController" bundle:nil];
+            qaViewController.officeType = officeId;
+            [[CMAppDelegate Delegate].navigationController pushViewController:qaViewController animated:YES];
+            return YES;
+        }
+        else if ([request.URL.absoluteString containsString:@"news"]){
+            WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
+            webViewController.strURL = [NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/h5_new/news.html?appid=1&addrdetail=%@&source=apple",[CureMeUtils defaultCureMeUtil].encodedLocateInfo];
+            [self.navigationController pushViewController:webViewController animated:YES];
+            return NO;
+        }
+    }
+    else{
+        WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
+        webViewController.strURL = request.URL.absoluteString;
+        [self.navigationController pushViewController:webViewController animated:YES];
+     return NO;
+    }
+    return NO;
 }
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
     

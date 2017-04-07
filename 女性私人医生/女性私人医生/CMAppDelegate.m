@@ -199,7 +199,7 @@ void uncaughtExceptionHandler(NSException *exception)
     // 3. 我的消息Page
     WebViewController *webVC = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
     //[webVC setStrURL:[[NSString alloc] initWithFormat:@"%@/html5/myxiaoxi.php?userid=%ld&deviceid=%@", MEDAPP_MAINDOMAIN, (long)[CureMeUtils defaultCureMeUtil].userID, [[NSUserDefaults standardUserDefaults] objectForKey:USER_UNIQUE_ID]]];
-    [webVC setStrURL:[[NSString alloc] initWithFormat:@"http://gzh.medapp.ranknowcn.com/h5_new/news.html?device=ios"]];
+    [webVC setStrURL:[[NSString alloc] initWithFormat:@"http://new.medapp.ranknowcn.com/h5_new/news.html?appid=1&addrdetail=%@&source=apple",[CureMeUtils defaultCureMeUtil].encodedLocateInfo]];
     webVC.isMainTabPage = true;
 
     // 4. 我的预约Page

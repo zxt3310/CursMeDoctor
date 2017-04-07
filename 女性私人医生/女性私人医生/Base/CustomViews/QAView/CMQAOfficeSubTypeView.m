@@ -105,7 +105,7 @@
 
 - (void)switchViewTypeToQuery
 {
-    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 300, 15)];
+    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 300*SCREEN_WIDTH/320, 15)];
     [_titleLabel setFont:[UIFont boldSystemFontOfSize:13]];
     [_titleLabel setTextColor:[UIColor whiteColor]];
     [_titleLabel setBackgroundColor:[UIColor clearColor]];
@@ -163,7 +163,7 @@
 - (void)initAllSubTypeButton
 {
     _allSubTypeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _allSubTypeBtn.frame = CGRectMake(10.0, 5.0, 70, 31);
+    _allSubTypeBtn.frame = CGRectMake(10.0, 5.0, 65, 31);
     [_allSubTypeBtn setBackgroundImage:[CMImageUtils defaultImageUtil].btnBg_NImage forState:UIControlStateNormal];
     [_allSubTypeBtn setBackgroundImage:[CMImageUtils defaultImageUtil].btnBg_PImage forState:UIControlStateHighlighted];
     [_allSubTypeBtn setBackgroundImage:[CMImageUtils defaultImageUtil].btnBg_PImage forState:UIControlStateSelected];
@@ -185,7 +185,7 @@
     // 设置下一个按钮的Origin
     _nextPoint = CGPointMake(85, 5);
     
-    _backgroundImage.frame = CGRectMake(0, 0, 320, 40);
+    _backgroundImage.frame = CGRectMake(0, 0, SCREEN_WIDTH, 40);
     self.frame = _backgroundImage.frame;
 }
 
@@ -210,7 +210,7 @@
 - (void)addSubTypeBtnWithType:(NSInteger)subType andName:(NSString *)subTypeName
 {
     UIButton *subTypeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    subTypeBtn.frame = CGRectMake(_nextPoint.x, _nextPoint.y, 70, 31);
+    subTypeBtn.frame = CGRectMake(_nextPoint.x, _nextPoint.y, 65, 31);
 
     [subTypeBtn setBackgroundImage:[CMImageUtils defaultImageUtil].btnBg_NImage forState:UIControlStateNormal];
     [subTypeBtn setBackgroundImage:[CMImageUtils defaultImageUtil].btnBg_PImage forState:UIControlStateHighlighted];
@@ -230,14 +230,14 @@
     [self addSubview:subTypeBtn];
     [_subTypeBtns addObject:subTypeBtn];
     
-    float newPointX = _nextPoint.x + 75;
-    if (newPointX + 75 > 320) {
+    float newPointX = _nextPoint.x + 70;
+    if (newPointX + 70 > SCREEN_WIDTH) {
         _nextPoint = CGPointMake(10.0, _nextPoint.y + 35);
-        _backgroundImage.frame = CGRectMake(0, 0, 320, _nextPoint.y + 5);
+        _backgroundImage.frame = CGRectMake(0, 0, SCREEN_WIDTH, _nextPoint.y + 5);
     }
     else {
-        _nextPoint.x += 75;
-        _backgroundImage.frame = CGRectMake(0, 0, 320, _nextPoint.y + 30 + 8);
+        _nextPoint.x += 70;
+        _backgroundImage.frame = CGRectMake(0, 0, SCREEN_WIDTH, _nextPoint.y + 30 + 8);
     }
     
     self.frame = _backgroundImage.frame;

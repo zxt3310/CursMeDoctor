@@ -29,6 +29,9 @@
 @property (nonatomic, readonly, strong) UIImage *hospitalDefaultHeadMImage;
 @property (nonatomic, readonly, strong) UIImage *hospitalDefaultHeadLImage;
 
+//Logo
+@property (nonatomic, strong, readonly) UIImage *logoImage;
+
 // 咨询列表，无回复时的默认图片
 @property (nonatomic, readonly, strong) UIImage *chatListNoreplyDefaultImage;
 // 问题展示列表，默认问题图片

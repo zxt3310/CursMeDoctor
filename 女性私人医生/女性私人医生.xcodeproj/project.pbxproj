@@ -246,7 +246,6 @@
 		22FA9825169D21AD0058E8D4 /* DDXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 22FA981E169D21AD0058E8D4 /* DDXMLNode.m */; };
 		22FA9829169D29420058E8D4 /* CMLogUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 22FA9828169D29420058E8D4 /* CMLogUtils.mm */; };
 		22FA982F169D429F0058E8D4 /* CMMainPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22FA982D169D429F0058E8D4 /* CMMainPageViewController.m */; };
-		22FA9830169D429F0058E8D4 /* CMMainPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22FA982E169D429F0058E8D4 /* CMMainPageViewController.xib */; };
 		22FA984E169D716B0058E8D4 /* ALTabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22FA984C169D716B0058E8D4 /* ALTabBarView.m */; };
 		22FA984F169D716B0058E8D4 /* TabBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22FA984D169D716B0058E8D4 /* TabBarView.xib */; };
 		22FA9861169D7A630058E8D4 /* activity@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22FA9850169D7A630058E8D4 /* activity@2x.png */; };
@@ -301,6 +300,9 @@
 		70257CA91E8F471C0064C517 /* ico_head_hos@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70257CA81E8F471C0064C517 /* ico_head_hos@2x.png */; };
 		70257CAB1E8F499A0064C517 /* icon_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 70257CAA1E8F499A0064C517 /* icon_back.png */; };
 		7053AEC71E790D7600120C0A /* 绿色对勾@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7053AEC61E790D7600120C0A /* 绿色对勾@2x.png */; };
+		705BFAD61E97634D000DDEE8 /* logo_woman_B.png in Resources */ = {isa = PBXBuildFile; fileRef = 705BFAD51E97634D000DDEE8 /* logo_woman_B.png */; };
+		705BFAD81E9769F4000DDEE8 /* ico_msg_min.png in Resources */ = {isa = PBXBuildFile; fileRef = 705BFAD71E9769F4000DDEE8 /* ico_msg_min.png */; };
+		705BFADA1E9773D5000DDEE8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 705BFAD91E9773D5000DDEE8 /* Images.xcassets */; };
 		705D5B691E8FA61C00D4E090 /* icon_trash.png in Resources */ = {isa = PBXBuildFile; fileRef = 705D5B681E8FA61C00D4E090 /* icon_trash.png */; };
 		707871BA1E7947430051C8A4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 707871B91E7947430051C8A4 /* libz.tbd */; };
 		707871BC1E7947590051C8A4 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 707871BB1E7947590051C8A4 /* libxml2.tbd */; };
@@ -472,7 +474,6 @@
 		70C18B6D1E81310B00A82F46 /* action-white-button-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22FA97F9169D213D0058E8D4 /* action-white-button-selected@2x.png */; };
 		70C18B6E1E81310B00A82F46 /* action-white-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 22FA97FA169D213D0058E8D4 /* action-white-button.png */; };
 		70C18B6F1E81310B00A82F46 /* action-white-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22FA97FB169D213D0058E8D4 /* action-white-button@2x.png */; };
-		70C18B701E81310B00A82F46 /* CMMainPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22FA982E169D429F0058E8D4 /* CMMainPageViewController.xib */; };
 		70C18B711E81310B00A82F46 /* TabBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22FA984D169D716B0058E8D4 /* TabBarView.xib */; };
 		70C18B721E81310B00A82F46 /* activity@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22FA9850169D7A630058E8D4 /* activity@2x.png */; };
 		70C18B731E81310B00A82F46 /* cooperation hospital@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22FA9851169D7A630058E8D4 /* cooperation hospital@2x.png */; };
@@ -1061,7 +1062,6 @@
 		22FA9828169D29420058E8D4 /* CMLogUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CMLogUtils.mm; path = "女性私人医生/Base/Utils/CMLogUtils.mm"; sourceTree = "<group>"; };
 		22FA982C169D429F0058E8D4 /* CMMainPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMMainPageViewController.h; path = "女性私人医生/Controllers/CMMainPageViewController.h"; sourceTree = "<group>"; };
 		22FA982D169D429F0058E8D4 /* CMMainPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CMMainPageViewController.m; path = "女性私人医生/Controllers/CMMainPageViewController.m"; sourceTree = "<group>"; };
-		22FA982E169D429F0058E8D4 /* CMMainPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CMMainPageViewController.xib; path = "女性私人医生/Controllers/CMMainPageViewController.xib"; sourceTree = "<group>"; };
 		22FA984B169D716B0058E8D4 /* ALTabBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ALTabBarView.h; path = "女性私人医生/Base/CustomViews/ALTabBarView.h"; sourceTree = "<group>"; };
 		22FA984C169D716B0058E8D4 /* ALTabBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALTabBarView.m; path = "女性私人医生/Base/CustomViews/ALTabBarView.m"; sourceTree = "<group>"; };
 		22FA984D169D716B0058E8D4 /* TabBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TabBarView.xib; path = "女性私人医生/Base/CustomViews/TabBarView.xib"; sourceTree = "<group>"; };
@@ -1122,6 +1122,9 @@
 		70257CA81E8F471C0064C517 /* ico_head_hos@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ico_head_hos@2x.png"; path = "女性私人医生/Resources/images/drawable-xxxhdpi/ico_head_hos@2x.png"; sourceTree = "<group>"; };
 		70257CAA1E8F499A0064C517 /* icon_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_back.png; path = "女性私人医生/Resources/images/icon_back.png"; sourceTree = "<group>"; };
 		7053AEC61E790D7600120C0A /* 绿色对勾@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "绿色对勾@2x.png"; path = "女性私人医生/Resources/images/绿色对勾@2x.png"; sourceTree = "<group>"; };
+		705BFAD51E97634D000DDEE8 /* logo_woman_B.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_woman_B.png; path = "女性私人医生/Resources/images/logo_woman_B.png"; sourceTree = "<group>"; };
+		705BFAD71E9769F4000DDEE8 /* ico_msg_min.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ico_msg_min.png; path = "女性私人医生/Resources/images/ico_msg_min.png"; sourceTree = "<group>"; };
+		705BFAD91E9773D5000DDEE8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		705D5B681E8FA61C00D4E090 /* icon_trash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_trash.png; path = "女性私人医生/Resources/images/icon_trash.png"; sourceTree = "<group>"; };
 		707871B91E7947430051C8A4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		707871BB1E7947590051C8A4 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
@@ -1611,6 +1614,7 @@
 			children = (
 				22FA96A5169D06870058E8D4 /* CMAppDelegate.h */,
 				22FA96A6169D06870058E8D4 /* CMAppDelegate.m */,
+				705BFAD91E9773D5000DDEE8 /* Images.xcassets */,
 				22FA969D169D06870058E8D4 /* Supporting Files */,
 			);
 			path = "女性私人医生";
@@ -1801,6 +1805,8 @@
 		22FA96D2169D09920058E8D4 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				705BFAD71E9769F4000DDEE8 /* ico_msg_min.png */,
+				705BFAD51E97634D000DDEE8 /* logo_woman_B.png */,
 				22A2CABA188F9697006BB056 /* ganbing@2x.png */,
 				DEBF72C219ECF3EF000D1941 /* gangchang@2x.png */,
 				DEBF72B419ECDB16000D1941 /* icon_byby@2x.png */,
@@ -2115,7 +2121,6 @@
 		22FA982B169D426E0058E8D4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				22FA982E169D429F0058E8D4 /* CMMainPageViewController.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -2403,6 +2408,7 @@
 				22FA9767169D19C00058E8D4 /* LoginViewController.xib in Resources */,
 				22FA9779169D1B080058E8D4 /* bubbleMine.png in Resources */,
 				DEEFA9CF1C27FAC7006E85CA /* 消息_p@3x.png in Resources */,
+				705BFADA1E9773D5000DDEE8 /* Images.xcassets in Resources */,
 				DEEFA9F51C27FAC7006E85CA /* personal center_n@3x.png in Resources */,
 				22FA977A169D1B080058E8D4 /* bubbleMine@2x.png in Resources */,
 				22FA977B169D1B080058E8D4 /* bubbleSomeone.png in Resources */,
@@ -2440,10 +2446,10 @@
 				22FA980B169D213E0058E8D4 /* action-white-button-selected@2x.png in Resources */,
 				22FA980C169D213E0058E8D4 /* action-white-button.png in Resources */,
 				22FA980D169D213E0058E8D4 /* action-white-button@2x.png in Resources */,
-				22FA9830169D429F0058E8D4 /* CMMainPageViewController.xib in Resources */,
 				22FA984F169D716B0058E8D4 /* TabBarView.xib in Resources */,
 				22FA9861169D7A630058E8D4 /* activity@2x.png in Resources */,
 				22FA9862169D7A630058E8D4 /* cooperation hospital@2x.png in Resources */,
+				705BFAD81E9769F4000DDEE8 /* ico_msg_min.png in Resources */,
 				22FA9863169D7A630058E8D4 /* dermatology@2x.png in Resources */,
 				22FA9864169D7A630058E8D4 /* fuke@2x.png in Resources */,
 				22FA9866169D7A630058E8D4 /* obstetrics@2x.png in Resources */,
@@ -2571,6 +2577,7 @@
 				22D1EFD716BA445E005AEAEF /* ico_new_list@2x.png in Resources */,
 				22D1EFDA16BA71D7005AEAEF /* 地图@2x.png in Resources */,
 				DEBF72C119ECDB16000D1941 /* icon_zhongliu@2x.png in Resources */,
+				705BFAD61E97634D000DDEE8 /* logo_woman_B.png in Resources */,
 				DEEFAA031C27FAC7006E85CA /* wdyy_p@3x.png in Resources */,
 				22D1EFDC16BA721B005AEAEF /* tel_s@2x.png in Resources */,
 				DEBF72C019ECDB16000D1941 /* icon_xinzang@2x.png in Resources */,
@@ -2667,7 +2674,6 @@
 				70C18B6D1E81310B00A82F46 /* action-white-button-selected@2x.png in Resources */,
 				70C18B6E1E81310B00A82F46 /* action-white-button.png in Resources */,
 				70C18B6F1E81310B00A82F46 /* action-white-button@2x.png in Resources */,
-				70C18B701E81310B00A82F46 /* CMMainPageViewController.xib in Resources */,
 				70C18B711E81310B00A82F46 /* TabBarView.xib in Resources */,
 				70C18B721E81310B00A82F46 /* activity@2x.png in Resources */,
 				70C18B731E81310B00A82F46 /* cooperation hospital@2x.png in Resources */,
@@ -3210,6 +3216,8 @@
 					armv7s,
 					arm64,
 				);
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: ZHENHUA GONG (429WZWZX68)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -3241,6 +3249,8 @@
 					armv7s,
 					arm64,
 				);
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: ZHENHUA GONG (429WZWZX68)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
