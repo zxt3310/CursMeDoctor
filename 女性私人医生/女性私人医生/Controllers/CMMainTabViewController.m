@@ -54,6 +54,7 @@
         customTabBarView = [nibObjects objectAtIndex:0];
         customTabBarView.delegate = self;
         CGRect viewFrame = customTabBarView.frame;
+        viewFrame.size.width = SCREEN_WIDTH;
         viewFrame.origin.y = [self view].frame.size.height - 49;
         customTabBarView.frame = viewFrame;
         for (UIButton *button in customTabBarView.subviews) {

@@ -122,6 +122,7 @@ enum {
 
 @property (readonly, strong) NSMutableDictionary *officeTypeDict;
 @property (readonly, strong) NSArray *officeTypeArray;
+@property (readonly, strong) NSDictionary *officeSuperTypeDict;
 
 - (void)initAllOfficeSubTypeData;
 

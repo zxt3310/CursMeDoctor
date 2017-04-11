@@ -105,6 +105,7 @@ static CMDataUtils *defaultDataU;
 
 @synthesize officeTypeArray = _officeTypeArray;
 @synthesize officeTypeDict = _officeTypeDict;
+@synthesize officeSuperTypeDict = _officeSuperTypeDict;
 
 + (CMDataUtils *)defaultDataUtil
 {
@@ -185,13 +186,19 @@ static CMDataUtils *defaultDataU;
         // 先用本地保存的子分类科室初始化
         NSData *archData = [[NSUserDefaults standardUserDefaults] objectForKey:OFFICE_SUBTYPE_DICT];
         _officeTypeDict = [NSKeyedUnarchiver unarchiveObjectWithData:archData];
+        archData = [[NSUserDefaults standardUserDefaults] objectForKey:OFFICE_SUPERTYPE_ARRAY];
+        _officeSuperTypeDict = [NSKeyedUnarchiver unarchiveObjectWithData:archData];
+        
         if (!_officeTypeDict) {
             _officeTypeDict = [[NSMutableDictionary alloc] init];
         }
         NSLog(@"officeSubTypeData: %@", _officeTypeDict);
-
-        NSString *post = [NSString stringWithFormat:@"action=questiontypechild"];
-        NSData *response = sendRequest(@"m.php", post);
+        
+        NSString *urlStr = [NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/api/m.php?action=getallqtypebyappidandgps&version=3.0&appid=1&source=apple&addrdetail=%@",[CureMeUtils defaultCureMeUtil].encodedLocateInfo];
+        
+        //NSString *post = [NSString stringWithFormat:@"action=questiontypechild"];
+        //NSData *response = sendRequest(@"m.php", post);
+        NSData *response = sendFullRequest(urlStr, nil, nil, NO, NO);
         
         NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
         NSLog(@"action=questiontypechild resp: %@", strResp);
@@ -212,30 +219,39 @@ static CMDataUtils *defaultDataU;
         if (!subTypes || subTypes.count <= 0) {
             return;
         }
-
+        
         // 请求获得新数据，更新内存
         [_officeTypeDict removeAllObjects];
+        NSMutableDictionary *superTypeDic = [[NSMutableDictionary alloc] init];
         for (NSDictionary *subType in subTypes) {
-            NSNumber *subTypeID = [subType objectForKey:@"id"];
-            NSString *subTypeName = [subType objectForKey:@"name"];
-            NSNumber *parent = [subType objectForKey:@"parent"];
-            if (!subTypeID || subTypeID.integerValue <= 0 || !parent || parent.integerValue <= 0) {
-                NSLog(@"action=questiontypechild data invalid: %@", subType);
-                continue;
-            }
+            NSNumber *parentId = [NSNumber numberWithInteger:[[subType objectForKey:@"id"] integerValue]];
+            NSString *parentName = [subType objectForKey:@"name"];
+            [superTypeDic setObject:parentName forKey:parentId];
             
-            NSMutableDictionary *subTypeDictForOffice = [_officeTypeDict objectForKey:parent];
-            if (!subTypeDictForOffice) {
-                subTypeDictForOffice = [[NSMutableDictionary alloc] init];
-                [_officeTypeDict setObject:subTypeDictForOffice forKey:parent];
+            NSArray *childTypeAry = [subType objectForKey:@"childs"];
+            for (NSDictionary *childTypeDic in childTypeAry) {
+                NSNumber *subTypeID = [childTypeDic objectForKey:@"id"];
+                NSString *subTypeName = [childTypeDic objectForKey:@"name"];
+                
+                if (!subTypeID || subTypeID.integerValue <= 0 || !parentId || parentId.integerValue <= 0) {
+                    NSLog(@"action=questiontypechild data invalid: %@", subType);
+                    continue;
+                }
+                
+                NSMutableDictionary *subTypeDictForOffice = [_officeTypeDict objectForKey:parentId];
+                if (!subTypeDictForOffice) {
+                    subTypeDictForOffice = [[NSMutableDictionary alloc] init];
+                    [_officeTypeDict setObject:subTypeDictForOffice forKey:parentId];
+                }
+                [subTypeDictForOffice setObject:subTypeName forKey:subTypeID];
             }
-            
-            [subTypeDictForOffice setObject:subTypeName forKey:subTypeID];
         }
-        
+        _officeSuperTypeDict = [superTypeDic copy];
         // 保存本地
         NSData *archiveData = [NSKeyedArchiver archivedDataWithRootObject:_officeTypeDict];
         [[NSUserDefaults standardUserDefaults] setObject:archiveData forKey:OFFICE_SUBTYPE_DICT];
+        archiveData = [NSKeyedArchiver archivedDataWithRootObject:_officeSuperTypeDict];
+        [[NSUserDefaults standardUserDefaults] setObject:archiveData forKey:OFFICE_SUPERTYPE_ARRAY];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }

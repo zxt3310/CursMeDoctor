@@ -68,18 +68,23 @@ BOOL isLFMShow;
      *
      *  顶部logo及快速问答
      */
-    [self setTopView];
     
     html5WebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 108, SCREEN_WIDTH, SCREEN_HEIGHT-158)];
     [self.view addSubview:html5WebView];
     html5WebView.delegate = self;
     NSURLRequest *url = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/h5_new/index.html?appid=1&addrdetail=%@&source=apple",[CureMeUtils defaultCureMeUtil].encodedLocateInfo]]];
     [html5WebView loadRequest:url];
+    
+    [self setTopView];
 }
 
 - (void)setTopView{
     UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, 88)];
     topView.backgroundColor = UIColorFromHex(0xF65378, 0.8);
+    topView.layer.shadowColor = [UIColor blackColor].CGColor;
+    topView.layer.shadowOffset = CGSizeMake(0, 2);
+    topView.layer.shadowOpacity = 0.5;
+    [topView setClipsToBounds:NO];
     
     UIImageView *logoView = [[UIImageView alloc] initWithFrame:CGRectMake(19, 17, 20, 20)];
     logoView.image = [CMImageUtils defaultImageUtil].logoImage;
@@ -91,11 +96,10 @@ BOOL isLFMShow;
     logoLb.text = @"女性私人医生";
     [topView addSubview:logoLb];
     
-    UITextField *quickAskTF = [[UITextField alloc] initWithFrame:CGRectMake(14, 49, 354, 30)];
+    UITextField *quickAskTF = [[UITextField alloc] initWithFrame:CGRectMake(14 *SCREEN_WIDTH/375, 49, 354 * SCREEN_WIDTH/375, 30)];
     quickAskTF.layer.cornerRadius = 5;
     quickAskTF.backgroundColor = [UIColor whiteColor];
     quickAskTF.font = [UIFont systemFontOfSize:14];
-    quickAskTF.enabled = NO;
     UIView *leftImg = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 39, 28)];
     UIImageView *leftImgView = [[UIImageView alloc] initWithFrame:CGRectMake(11, 7, 18, 16)];
     leftImgView.image = [CMImageUtils defaultImageUtil].qaListQuestionDefultImage;
@@ -103,6 +107,7 @@ BOOL isLFMShow;
     quickAskTF.leftView = leftImg;
     quickAskTF.leftViewMode = UITextFieldViewModeAlways;
     quickAskTF.placeholder = @"请输入您要咨询的问题";
+    quickAskTF.delegate = self;
     [topView addSubview:quickAskTF];
     
     [self.view addSubview:topView];
@@ -605,5 +610,14 @@ BOOL isLFMShow;
     NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
     NSLog(@"post: %@ resp: %@", post, strResp);
 }
+#pragma mark UITextField Delegate QuickAskView
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    
+    CMQuickAskChoosenAndLocationViewController *quickAskView = [[CMQuickAskChoosenAndLocationViewController alloc] init];
+    quickAskView.isQuickAskView = NO;
+    [[CMAppDelegate Delegate].navigationController pushViewController:quickAskView animated:YES];
+    return NO;
+}
+
 
 @end

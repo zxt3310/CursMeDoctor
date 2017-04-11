@@ -10,9 +10,15 @@
 #import "CMPickerViewController.h"
 #import "CustomBaseViewController.h"
 #import "CMAlertViewController.h"
+/**
+ *  @author Zxt, 17-04-11 14:04:21
+ *
+ *  医爱淘 新增快速问诊
+ */
+#import "CMQuickAskChoosenViewController.h"
 
 
-@interface CMMainPageViewController : CustomBaseViewController <CMPickerDelegate,UIScrollViewDelegate,UIWebViewDelegate>
+@interface CMMainPageViewController : CustomBaseViewController <CMPickerDelegate,UIScrollViewDelegate,UIWebViewDelegate,UITextFieldDelegate>
 
 {
     // 选择省份的VC

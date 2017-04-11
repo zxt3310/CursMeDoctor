@@ -21,6 +21,9 @@
 }
 
 - (id)initWithFrame:(CGRect)frame {
+//    CGRect temp = frame;
+//    temp.size.width = SCREEN_WIDTH;
+//    frame = temp;
     if ((self = [super initWithFrame:frame])) {
         // Initialization code
         self.userInteractionEnabled = YES;

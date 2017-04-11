@@ -297,6 +297,7 @@
 		22FD131716A5BD3A00B1F69C /* CMChatHeaderBtnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22FD131616A5BD3A00B1F69C /* CMChatHeaderBtnView.m */; };
 		22FFA85716A678F400E0978C /* chat_bg_right_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22FFA85516A678F400E0978C /* chat_bg_right_normal@2x.png */; };
 		22FFA85816A678F400E0978C /* chat_bg_left_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22FFA85616A678F400E0978C /* chat_bg_left_normal@2x.png */; };
+		700FC2DB1E9B5A9400614277 /* CMQuickAskChoosenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 700FC2DA1E9B5A9400614277 /* CMQuickAskChoosenViewController.m */; };
 		70257CA91E8F471C0064C517 /* ico_head_hos@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70257CA81E8F471C0064C517 /* ico_head_hos@2x.png */; };
 		70257CAB1E8F499A0064C517 /* icon_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 70257CAA1E8F499A0064C517 /* icon_back.png */; };
 		7053AEC71E790D7600120C0A /* 绿色对勾@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7053AEC61E790D7600120C0A /* 绿色对勾@2x.png */; };
@@ -1119,6 +1120,8 @@
 		22FD131616A5BD3A00B1F69C /* CMChatHeaderBtnView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CMChatHeaderBtnView.m; path = "女性私人医生/Base/CustomViews/ChatViews/CMChatHeaderBtnView.m"; sourceTree = "<group>"; };
 		22FFA85516A678F400E0978C /* chat_bg_right_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat_bg_right_normal@2x.png"; path = "女性私人医生/Resources/images/chat_bg_right_normal@2x.png"; sourceTree = "<group>"; };
 		22FFA85616A678F400E0978C /* chat_bg_left_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat_bg_left_normal@2x.png"; path = "女性私人医生/Resources/images/chat_bg_left_normal@2x.png"; sourceTree = "<group>"; };
+		700FC2D91E9B5A9400614277 /* CMQuickAskChoosenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMQuickAskChoosenViewController.h; sourceTree = "<group>"; };
+		700FC2DA1E9B5A9400614277 /* CMQuickAskChoosenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMQuickAskChoosenViewController.m; sourceTree = "<group>"; };
 		70257CA81E8F471C0064C517 /* ico_head_hos@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ico_head_hos@2x.png"; path = "女性私人医生/Resources/images/drawable-xxxhdpi/ico_head_hos@2x.png"; sourceTree = "<group>"; };
 		70257CAA1E8F499A0064C517 /* icon_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_back.png; path = "女性私人医生/Resources/images/icon_back.png"; sourceTree = "<group>"; };
 		7053AEC61E790D7600120C0A /* 绿色对勾@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "绿色对勾@2x.png"; path = "女性私人医生/Resources/images/绿色对勾@2x.png"; sourceTree = "<group>"; };
@@ -1774,6 +1777,8 @@
 				22FA982A169D42600058E8D4 /* MainTabPages */,
 				22FA9826169D239D0058E8D4 /* Booking */,
 				22FA978A169D1BBD0058E8D4 /* Personal */,
+				700FC2D91E9B5A9400614277 /* CMQuickAskChoosenViewController.h */,
+				700FC2DA1E9B5A9400614277 /* CMQuickAskChoosenViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -2909,6 +2914,7 @@
 				DE5AF5F01CABB10B001BD6E8 /* UINewBubbleTableViewBookInfoUptCell.m in Sources */,
 				DE5AF5F21CABB10B001BD6E8 /* UINewBubbleTableViewBookInfoCell.m in Sources */,
 				22FA97AC169D1D630058E8D4 /* ChatPopupRemindView.m in Sources */,
+				700FC2DB1E9B5A9400614277 /* CMQuickAskChoosenViewController.m in Sources */,
 				22FA97AF169D1E110058E8D4 /* ChatMoreHistoryCell.m in Sources */,
 				22FA97B5169D1E1F0058E8D4 /* BookDetailInfoViewController.m in Sources */,
 				22FA97B7169D1E1F0058E8D4 /* MyBookListViewController.m in Sources */,

@@ -39,6 +39,7 @@
 #define USER_LASTUSERID @"UserLastUserID"
 #define HAS_FIRST_USED @"Stat_HasFirstUsed"
 #define OFFICE_SUBTYPE_DICT @"OfficeSubTypeDict"
+#define OFFICE_SUPERTYPE_ARRAY @"OfficeSuperTypeArray"
 
 #define HAS_SENT_LOCATIONINFO @"HasSentLocationInfo"
 #define LAST_SEND_LOCATION_TIME @"LastSendLocationTime"

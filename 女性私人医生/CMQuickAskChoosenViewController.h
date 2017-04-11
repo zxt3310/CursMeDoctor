@@ -7,7 +7,10 @@
 //
 
 #import "CustomBaseViewController.h"
+#import "CMNewQueryViewController.h"
 
-@interface CMQuickAskChoosenViewController : CustomBaseViewController
+@interface CMQuickAskChoosenAndLocationViewController : CustomBaseViewController <UITableViewDelegate,UITableViewDataSource>
+@property  BOOL isQuickAskView;
 
+@property (nonatomic, copy) NSString *currentLocation;
 @end
