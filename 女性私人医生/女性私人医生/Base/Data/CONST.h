@@ -32,6 +32,8 @@
 #define CM_BACKGROUND_GRAYCOLOR [UIColor colorWithRed:228.0/255 green:228.0/255 blue:228.0/255 alpha:1.0]
 #define CM_BACKGROUND_RED [UIColor colorWithRed:249.0/255 green:80.0/255 blue:118.0/255 alpha:1.0]
 
+#define UIColorFromHex(s,a)  [UIColor colorWithRed:(((s & 0xFF0000) >> 16))/255.0 green:(((s &0xFF00) >>8))/255.0 blue:((s &0xFF))/255.0 alpha:a]
+
 #define APPLE_APPID @"566849177"
 //*********************定义App中埋点Event******************************
 // 主界面定位按钮点击

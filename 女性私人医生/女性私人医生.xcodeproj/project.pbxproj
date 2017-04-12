@@ -305,6 +305,7 @@
 		705BFAD81E9769F4000DDEE8 /* ico_msg_min.png in Resources */ = {isa = PBXBuildFile; fileRef = 705BFAD71E9769F4000DDEE8 /* ico_msg_min.png */; };
 		705BFADA1E9773D5000DDEE8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 705BFAD91E9773D5000DDEE8 /* Images.xcassets */; };
 		705D5B691E8FA61C00D4E090 /* icon_trash.png in Resources */ = {isa = PBXBuildFile; fileRef = 705D5B681E8FA61C00D4E090 /* icon_trash.png */; };
+		706564841E9E0E5F00BAB7E2 /* CMQAProtocolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 706564831E9E0E5F00BAB7E2 /* CMQAProtocolView.m */; };
 		707871BA1E7947430051C8A4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 707871B91E7947430051C8A4 /* libz.tbd */; };
 		707871BC1E7947590051C8A4 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 707871BB1E7947590051C8A4 /* libxml2.tbd */; };
 		70B568E81E9610C700E3D4CF /* ico_msg_and.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B568E71E9610C700E3D4CF /* ico_msg_and.png */; };
@@ -1129,6 +1130,8 @@
 		705BFAD71E9769F4000DDEE8 /* ico_msg_min.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ico_msg_min.png; path = "女性私人医生/Resources/images/ico_msg_min.png"; sourceTree = "<group>"; };
 		705BFAD91E9773D5000DDEE8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		705D5B681E8FA61C00D4E090 /* icon_trash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_trash.png; path = "女性私人医生/Resources/images/icon_trash.png"; sourceTree = "<group>"; };
+		706564821E9E0E5F00BAB7E2 /* CMQAProtocolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMQAProtocolView.h; sourceTree = "<group>"; };
+		706564831E9E0E5F00BAB7E2 /* CMQAProtocolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMQAProtocolView.m; sourceTree = "<group>"; };
 		707871B91E7947430051C8A4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		707871BB1E7947590051C8A4 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		70B568E71E9610C700E3D4CF /* ico_msg_and.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ico_msg_and.png; path = "女性私人医生/Resources/images/ico_msg_and.png"; sourceTree = "<group>"; };
@@ -1516,6 +1519,8 @@
 				22A43CDE16AA99970084E657 /* CMQAViewControllerTitleView.h */,
 				22A43CDF16AA99970084E657 /* LeveyPopListViewCell.h */,
 				22A43CE016AA99970084E657 /* LeveyPopListViewCell.m */,
+				706564821E9E0E5F00BAB7E2 /* CMQAProtocolView.h */,
+				706564831E9E0E5F00BAB7E2 /* CMQAProtocolView.m */,
 			);
 			name = QAView;
 			sourceTree = "<group>";
@@ -2980,6 +2985,7 @@
 				2204660E17F673D100DDC7D0 /* CMRateAppAlertViewController.m in Sources */,
 				22CB2423186C243800C405AA /* CLGetGsmInfo.m in Sources */,
 				22CB2424186C243800C405AA /* MSNetworksManager.m in Sources */,
+				706564841E9E0E5F00BAB7E2 /* CMQAProtocolView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -5,7 +5,7 @@
 //  Created by Tim on 13-1-9.
 //  Copyright (c) 2013年 Tim. All rights reserved.
 //
-#define UIColorFromHex(s,a)  [UIColor colorWithRed:(((s & 0xFF0000) >> 16))/255.0 green:(((s &0xFF00) >>8))/255.0 blue:((s &0xFF))/255.0 alpha:a]
+
 
 #import "CMMainPageViewController.h"
 #import "LoginViewController.h"
@@ -18,6 +18,8 @@
 @interface CMMainPageViewController ()
 {
     UIWebView *html5WebView;
+    UITextField *addressTF;
+    UITextField *quickAskTF;
 }
 @end
 
@@ -96,7 +98,7 @@ BOOL isLFMShow;
     logoLb.text = @"女性私人医生";
     [topView addSubview:logoLb];
     
-    UITextField *quickAskTF = [[UITextField alloc] initWithFrame:CGRectMake(14 *SCREEN_WIDTH/375, 49, 354 * SCREEN_WIDTH/375, 30)];
+    quickAskTF = [[UITextField alloc] initWithFrame:CGRectMake(14 *SCREEN_WIDTH/375, 49, 354 * SCREEN_WIDTH/375, 30)];
     quickAskTF.layer.cornerRadius = 5;
     quickAskTF.backgroundColor = [UIColor whiteColor];
     quickAskTF.font = [UIFont systemFontOfSize:14];
@@ -108,7 +110,25 @@ BOOL isLFMShow;
     quickAskTF.leftViewMode = UITextFieldViewModeAlways;
     quickAskTF.placeholder = @"请输入您要咨询的问题";
     quickAskTF.delegate = self;
+    quickAskTF.tag = 1;
     [topView addSubview:quickAskTF];
+    
+    addressTF = [[UITextField alloc] initWithFrame:CGRectMake(285 *SCREEN_WIDTH/375, 20, 40 *SCREEN_WIDTH/375, 18)];
+    addressTF.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 11, 18)];
+    UIImageView *adLeftImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 2, 11, 14)];
+    adLeftImgView.image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ico_dizhi_and_pink" ofType:@"png" inDirectory:@"images"]];
+    [addressTF.leftView addSubview:adLeftImgView];
+    
+    addressTF.rightView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 18)];
+    UIImageView *adRightImgVIew = [[UIImageView alloc] initWithFrame:CGRectMake(0, 4, 10, 6)];
+    adRightImgVIew.image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ico_chevron" ofType:@"png" inDirectory:@"images"]];
+    [addressTF.rightView addSubview:adRightImgVIew];
+    addressTF.leftViewMode = addressTF.rightViewMode = UITextFieldViewModeAlways;
+    addressTF.textColor = [UIColor whiteColor];
+    addressTF.font = [UIFont systemFontOfSize:13];
+    addressTF.tag = 2;
+    addressTF.delegate = self;
+    [topView addSubview: addressTF];
     
     [self.view addSubview:topView];
 }
@@ -308,7 +328,7 @@ BOOL isLFMShow;
     NSString *locateAddr = [CureMeUtils defaultCureMeUtil].province;
     NSString *city2 = [CureMeUtils defaultCureMeUtil].cityOrDistrict;
     if (locateAddr && locateAddr.length > 0) {
-        _regionLabel.text = [NSString stringWithFormat:@"%@ %@", locateAddr, city2];
+        addressTF.text = [NSString stringWithFormat:@" %@ %@", locateAddr, city2];
 
         // 如果用户已经登录，更新用户的地区设置
         if ([CureMeUtils defaultCureMeUtil].hasLogin) {
@@ -330,9 +350,14 @@ BOOL isLFMShow;
         NSNumber *region = [[NSUserDefaults standardUserDefaults] objectForKey:USER_REGION];
         NSString *city = [[NSUserDefaults standardUserDefaults] objectForKey:USER_CITY_NAME];
         if (region) {
-            _regionLabel.text = [NSString stringWithFormat:@"%@ %@", [[CureMeUtils defaultCureMeUtil] regionWithRegionID:region.integerValue], city];
+            addressTF.text = [NSString stringWithFormat:@" %@ %@", [[CureMeUtils defaultCureMeUtil] regionWithRegionID:region.integerValue], city];
         }
     }
+    
+    CGRect temp = addressTF.frame;
+    temp.size.width = addressTF.text.length * 13 + 12;
+    temp.origin.x = quickAskTF.frame.origin.x + quickAskTF.frame.size.width - temp.size.width;
+    addressTF.frame = temp;
 }
 
 - (void)didReceiveMemoryWarning
@@ -614,9 +639,15 @@ BOOL isLFMShow;
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
     
     CMQuickAskChoosenAndLocationViewController *quickAskView = [[CMQuickAskChoosenAndLocationViewController alloc] init];
-    quickAskView.isQuickAskView = NO;
+
+    if (textField.tag == 1) {
+        quickAskView.isQuickAskView = YES;
+    }
+    else
+        quickAskView.isQuickAskView = NO;
+    
     [[CMAppDelegate Delegate].navigationController pushViewController:quickAskView animated:YES];
-    return NO;
+       return NO;
 }
 
 

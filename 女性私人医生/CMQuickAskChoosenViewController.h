@@ -8,9 +8,18 @@
 
 #import "CustomBaseViewController.h"
 #import "CMNewQueryViewController.h"
+#import "CMQAProtocolView.h"
+
+@protocol CMQuickAskLocationDeletage <NSObject>
+
+@optional
+- (void)chooseOfficeToQuery;
+
+@end
 
 @interface CMQuickAskChoosenAndLocationViewController : CustomBaseViewController <UITableViewDelegate,UITableViewDataSource>
 @property  BOOL isQuickAskView;
+@property id <CMQuickAskLocationDeletage> CmLocationDelegate;
 
 @property (nonatomic, copy) NSString *currentLocation;
 @end

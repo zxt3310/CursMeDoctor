@@ -21,6 +21,9 @@
     NSArray *currentSelectNameArray;
     NSArray *currentSelectKeyArray;
     UITableView *rightView;
+    
+    NSIndexPath *currentLeftIndex;
+    NSIndexPath *currentRightIndex;
 }
 @end
 
@@ -206,12 +209,37 @@
             currentSelectKeyArray = [tempKey copy];
             [rightView reloadData];
         }
+        currentLeftIndex = indexPath;
     }
     else{
-        
-        
-    }
+        if (_isQuickAskView)
+        {
+            NSNumber *hasMarkApp = [[NSUserDefaults standardUserDefaults] objectForKey:HAS_AGREEPROTOCOL];
+            if (!hasMarkApp || hasMarkApp.integerValue == 0) {
+                CMQAProtocolView *protocl = [[CMQAProtocolView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+                protocl.office1 = [officeSuperTypeArray[currentLeftIndex.row] integerValue];
+                protocl.office2 = (indexPath.row == 0)?0:[currentSelectKeyArray[indexPath.row - 1] integerValue];
+                [self.view addSubview:protocl];
+            }
+            else{
+                CMNewQueryViewController *queryVC = [CMNewQueryViewController new];
+                queryVC.officeType = [officeSuperTypeArray[currentLeftIndex.row] integerValue];
+                if (indexPath.row == 0) {
+                    queryVC.subOfficeType = 0;
+                }
+                else{
+                    queryVC.subOfficeType = [currentSelectKeyArray[indexPath.row - 1] integerValue];
+                }
+                [self.navigationController pushViewController:queryVC animated:YES];
+            }
 
+        }
+        else
+        {
+            
+        }
+        currentRightIndex = indexPath;
+    }
 }
 /*
 #pragma mark - Navigation
