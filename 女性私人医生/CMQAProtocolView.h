@@ -8,9 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol CMQuickAskLocationDeletage <NSObject>
+
+@optional
+- (void)chooseOfficeToQuery;
+- (void)pushNewQuary:(NSInteger) office1 and:(NSInteger) office2;
+@end
+
 @interface CMQAProtocolView : UIView
 
-
+@property id <CMQuickAskLocationDeletage> CmLocationDelegate;
 @property NSInteger office1;
 @property NSInteger office2;
 

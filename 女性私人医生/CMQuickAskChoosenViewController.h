@@ -10,16 +10,15 @@
 #import "CMNewQueryViewController.h"
 #import "CMQAProtocolView.h"
 
-@protocol CMQuickAskLocationDeletage <NSObject>
-
+@protocol chooseLocationDelegate <NSObject>
 @optional
-- (void)chooseOfficeToQuery;
-
+- (void)refreshChosedLocation:(NSString *) province City:(NSString *) city;
 @end
 
-@interface CMQuickAskChoosenAndLocationViewController : CustomBaseViewController <UITableViewDelegate,UITableViewDataSource>
+@interface CMQuickAskChoosenAndLocationViewController : CustomBaseViewController <UITableViewDelegate,UITableViewDataSource,CMQuickAskLocationDeletage>
 @property  BOOL isQuickAskView;
-@property id <CMQuickAskLocationDeletage> CmLocationDelegate;
 
+@property id <chooseLocationDelegate> chooseDelegate;
 @property (nonatomic, copy) NSString *currentLocation;
+
 @end

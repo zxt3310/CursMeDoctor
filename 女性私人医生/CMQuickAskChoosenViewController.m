@@ -21,9 +21,13 @@
     NSArray *currentSelectNameArray;
     NSArray *currentSelectKeyArray;
     UITableView *rightView;
+    UITableView *leftView;
     
     NSIndexPath *currentLeftIndex;
     NSIndexPath *currentRightIndex;
+    
+    NSString *currentProvince;
+    NSString *currentCity;
 }
 @end
 
@@ -77,15 +81,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (_isQuickAskView) {
-        self.title = @"选择科室";
-    }
-    else
-    {
-        self.title = @"选择地区";
-    }
-    
-    UITableView *leftView = [[UITableView alloc] initWithFrame:CGRectMake(0,0, SCREEN_WIDTH/2, SCREEN_HEIGHT-64) style:UITableViewStylePlain];
+    leftView = [[UITableView alloc] initWithFrame:CGRectMake(0,0, SCREEN_WIDTH/2, SCREEN_HEIGHT-64) style:UITableViewStylePlain];
     leftView.tableFooterView = [[UITableView alloc] initWithFrame:CGRectZero];
     leftView.delegate = self;
     leftView.dataSource = self;
@@ -98,12 +94,57 @@
     rightView.delegate = self;
     rightView.dataSource = self;
     rightView.tag = 2;
-    //rightView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
     
     [self.view addSubview:leftView];
     [self.view addSubview:rightView];
+    self.view.backgroundColor = leftView.backgroundColor;
     
+    if (_isQuickAskView) {
+        self.title = @"选择科室";
+    }
+    else{
+        self.title = @"选择地区";
+        UILabel *currentLocatStr = [[UILabel alloc] initWithFrame:CGRectMake(17, 17, 80, 15)];
+        currentLocatStr.text = @"定位城市：";
+        currentLocatStr.font = [UIFont systemFontOfSize:15];
+        currentLocatStr.textColor = [UIColor grayColor];
+        [self.view addSubview:currentLocatStr];
+        
+        UILabel *localStr = [[UILabel alloc] initWithFrame:CGRectMake(currentLocatStr.frame.origin.x + currentLocatStr.frame.size.width,15,200,15)];
+        localStr.text = _currentLocation;
+        [self.view addSubview:localStr];
+        
+        CGRect temp = leftView.frame;
+        temp.origin.y += SCREEN_HEIGHT/14;
+        temp.size.height -= SCREEN_HEIGHT/14;
+        leftView.frame = temp;
+        
+        temp = rightView.frame;
+        temp.origin.y += SCREEN_HEIGHT/14;
+        temp.size.height -= SCREEN_HEIGHT/14;
+        rightView.frame = temp;
+        
+        NSInteger province = [CureMeUtils defaultCureMeUtil].cityCode;
+        NSInteger city = [CureMeUtils defaultCureMeUtil].userCity;
+        if (province >0) {
+            for (int i=0; i<fullProvinceArray.count; i++) {
+                if ([fullProvinceArray[i] integerValue] == province ) {
+                    NSIndexPath *path = [NSIndexPath indexPathForRow:i inSection:0];
+                    [leftView selectRowAtIndexPath:path animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+                    [self tableView:leftView didSelectRowAtIndexPath:path];
+                    break;
+                }
+            }
+            for (int i=0; i<currentSelectKeyArray.count; i++) {
+                if ([currentSelectKeyArray[i] integerValue] == city) {
+                    NSIndexPath *path = [NSIndexPath indexPathForRow:i inSection:0];
+                    [rightView selectRowAtIndexPath:path animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+                    currentRightIndex = path;
+                    [rightView reloadData];
+                }
+            }
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -169,9 +210,15 @@
         }
         else{
             cell.textLabel.text = currentSelectNameArray[indexPath.row];
+            if (currentRightIndex == indexPath) {
+                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            }
+            else
+                cell.accessoryType = UITableViewCellAccessoryNone;
         }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
     }
-
     
     return cell;
 }
@@ -195,7 +242,6 @@
                 [temp addObject:nameStr];
             }
             currentSelectNameArray = [temp copy];
-            [rightView reloadData];
         }
         else{
             NSArray *arry = [fullCityDic objectForKey:[NSNumber numberWithInteger:[fullProvinceArray[indexPath.row] integerValue]]];
@@ -207,16 +253,17 @@
             }
             currentSelectNameArray = [tempName copy];
             currentSelectKeyArray = [tempKey copy];
-            [rightView reloadData];
         }
+        [rightView reloadData];
         currentLeftIndex = indexPath;
+        currentRightIndex = nil;
     }
     else{
-        if (_isQuickAskView)
-        {
+        if (_isQuickAskView){
             NSNumber *hasMarkApp = [[NSUserDefaults standardUserDefaults] objectForKey:HAS_AGREEPROTOCOL];
             if (!hasMarkApp || hasMarkApp.integerValue == 0) {
                 CMQAProtocolView *protocl = [[CMQAProtocolView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+                protocl.CmLocationDelegate = self;
                 protocl.office1 = [officeSuperTypeArray[currentLeftIndex.row] integerValue];
                 protocl.office2 = (indexPath.row == 0)?0:[currentSelectKeyArray[indexPath.row - 1] integerValue];
                 [self.view addSubview:protocl];
@@ -232,23 +279,29 @@
                 }
                 [self.navigationController pushViewController:queryVC animated:YES];
             }
-
         }
         else
         {
+            UITableViewCell *cellLeft = [leftView cellForRowAtIndexPath:currentLeftIndex];
+            [CureMeUtils defaultCureMeUtil].cityCode = [fullProvinceArray[currentLeftIndex.row] integerValue];
+            NSString *province = cellLeft.textLabel.text;
             
+            UITableViewCell *cellRight = [rightView cellForRowAtIndexPath:indexPath];
+            [CureMeUtils defaultCureMeUtil].userCity = [currentSelectKeyArray[indexPath.row] integerValue];
+            NSString *city = cellRight.textLabel.text;
+            
+            [self.navigationController popViewControllerAnimated:YES];
+            [_chooseDelegate refreshChosedLocation:province City:city];
         }
         currentRightIndex = indexPath;
     }
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)pushNewQuary:(NSInteger) office1 and:(NSInteger) office2{
+    CMNewQueryViewController *queryVC = [CMNewQueryViewController new];
+    queryVC.officeType = office1;
+    queryVC.subOfficeType = office2;
+    [self.navigationController pushViewController:queryVC animated:YES];
 }
-*/
 
 @end

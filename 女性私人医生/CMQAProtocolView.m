@@ -65,6 +65,22 @@
     [self removeFromSuperview];
 }
 - (void)agreeBtnClick{
+    [UIView animateWithDuration:0.3 animations:^{
     
+        self.alpha = 0;
+    
+    } completion:^(BOOL finished){
+        if (finished) {
+            NSNumber *hasAgreeProtocol = [NSNumber numberWithInt:1];
+            [[NSUserDefaults standardUserDefaults] setObject:hasAgreeProtocol forKey:HAS_AGREEPROTOCOL];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            if (_CmLocationDelegate) {
+                [_CmLocationDelegate pushNewQuary:_office1 and:_office2];
+            }
+            _CmLocationDelegate = nil;
+            [self cancleBtnClick];
+        }
+    }];
 }
 @end

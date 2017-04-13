@@ -1778,12 +1778,12 @@
 				22FA9786169D1B880058E8D4 /* BubbleViewController.m */,
 				22FA975E169D17F20058E8D4 /* WebViewController.h */,
 				22FA975F169D17F20058E8D4 /* WebViewController.m */,
+				700FC2D91E9B5A9400614277 /* CMQuickAskChoosenViewController.h */,
+				700FC2DA1E9B5A9400614277 /* CMQuickAskChoosenViewController.m */,
 				22FA96D0169D09840058E8D4 /* Resources */,
 				22FA982A169D42600058E8D4 /* MainTabPages */,
 				22FA9826169D239D0058E8D4 /* Booking */,
 				22FA978A169D1BBD0058E8D4 /* Personal */,
-				700FC2D91E9B5A9400614277 /* CMQuickAskChoosenViewController.h */,
-				700FC2DA1E9B5A9400614277 /* CMQuickAskChoosenViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";

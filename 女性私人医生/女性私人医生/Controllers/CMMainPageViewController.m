@@ -113,7 +113,7 @@ BOOL isLFMShow;
     quickAskTF.tag = 1;
     [topView addSubview:quickAskTF];
     
-    addressTF = [[UITextField alloc] initWithFrame:CGRectMake(285 *SCREEN_WIDTH/375, 20, 40 *SCREEN_WIDTH/375, 18)];
+    addressTF = [[UITextField alloc] initWithFrame:CGRectMake(280 *SCREEN_WIDTH/375, 20, 80 *SCREEN_WIDTH/375, 18)];
     addressTF.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 11, 18)];
     UIImageView *adLeftImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 2, 11, 14)];
     adLeftImgView.image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ico_dizhi_and_pink" ofType:@"png" inDirectory:@"images"]];
@@ -128,6 +128,7 @@ BOOL isLFMShow;
     addressTF.font = [UIFont systemFontOfSize:13];
     addressTF.tag = 2;
     addressTF.delegate = self;
+    addressTF.text = @"定位中...";
     [topView addSubview: addressTF];
     
     [self.view addSubview:topView];
@@ -153,6 +154,13 @@ BOOL isLFMShow;
             [self.navigationController pushViewController:webViewController animated:YES];
             return NO;
         }
+        else if ([request.URL.absoluteString containsString:@"quickask"]){
+            CMQuickAskChoosenAndLocationViewController *quickAskView = [[CMQuickAskChoosenAndLocationViewController alloc] init];
+            
+            quickAskView.isQuickAskView = YES;
+            
+            [[CMAppDelegate Delegate].navigationController pushViewController:quickAskView animated:YES];
+        }
     }
     else{
         WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
@@ -163,7 +171,9 @@ BOOL isLFMShow;
     return NO;
 }
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
-    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [webView reload];
+    });
 }
 
 - (void)dealloc
@@ -316,10 +326,16 @@ BOOL isLFMShow;
 
 - (void)ntfLocationFailed:(NSNotification *)note
 {
-    if (isLFMShow) return;
-    isLFMShow = YES;
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位" message:@"定位功能当前不可用" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alert show];
+//    if (isLFMShow) return;
+//    isLFMShow = YES;
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"定位" message:@"定位功能当前不可用" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//    [alert show];
+    
+    NSLog(@"didFailLoadWithError");
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [[CureMeUtils defaultCureMeUtil] startLocationing];
+    });
+    
 }
 
 - (void)updateRegionDisplay
@@ -358,6 +374,11 @@ BOOL isLFMShow;
     temp.size.width = addressTF.text.length * 13 + 12;
     temp.origin.x = quickAskTF.frame.origin.x + quickAskTF.frame.size.width - temp.size.width;
     addressTF.frame = temp;
+    
+    //reload 主页
+    NSURLRequest *url = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/h5_new/index.html?appid=1&addrdetail=%@&source=apple",[CureMeUtils defaultCureMeUtil].encodedLocateInfo]]];
+    [html5WebView loadRequest:url];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -643,12 +664,23 @@ BOOL isLFMShow;
     if (textField.tag == 1) {
         quickAskView.isQuickAskView = YES;
     }
-    else
+    else{
         quickAskView.isQuickAskView = NO;
+        quickAskView.currentLocation = addressTF.text;
+        quickAskView.chooseDelegate = self;
+    }
     
     [[CMAppDelegate Delegate].navigationController pushViewController:quickAskView animated:YES];
        return NO;
 }
 
+- (void)refreshChosedLocation:(NSString *)province City:(NSString *)city{
+    addressTF.text = [NSString stringWithFormat:@"%@ %@",province,city];
+    
+    CGRect temp = addressTF.frame;
+    temp.size.width = addressTF.text.length * 13 + 22;
+    temp.origin.x = quickAskTF.frame.origin.x + quickAskTF.frame.size.width - temp.size.width;
+    addressTF.frame = temp;
+}
 
 @end

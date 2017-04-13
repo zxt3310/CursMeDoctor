@@ -18,7 +18,7 @@
 #import "CMQuickAskChoosenViewController.h"
 
 
-@interface CMMainPageViewController : CustomBaseViewController <CMPickerDelegate,UIScrollViewDelegate,UIWebViewDelegate,UITextFieldDelegate>
+@interface CMMainPageViewController : CustomBaseViewController <CMPickerDelegate,UIScrollViewDelegate,UIWebViewDelegate,UITextFieldDelegate,chooseLocationDelegate>
 
 {
     // 选择省份的VC
