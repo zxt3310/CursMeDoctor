@@ -64,6 +64,8 @@ BOOL swtClosed;
  */
 BOOL isIAT;
 BOOL isIATquit;
+//判断用户是否在当前页面，用来停止NSTimer
+BOOL isUserActive;
 
 NSTimer *loopGetChatIDTimer;
 NSInteger loopCount;
@@ -88,6 +90,7 @@ NSString *md5Str;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    isUserActive = YES;
     isSWT = NO;
     isReady = NO;
     isQuit = NO;
@@ -203,7 +206,7 @@ NSString *md5Str;
     if ([UIScreen mainScreen].bounds.size.height > 480.0) {
         topY += 40;
     }
-    loadingView = [[LoadingView alloc] initWithFrame:CGRectMake(118, topY, 80, 70)];
+    loadingView = [[LoadingView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2 - 35, topY, 80, 70)];
     loadingView.hidden = YES;
     [self.view addSubview:loadingView];
     
@@ -324,6 +327,8 @@ NSString *md5Str;
     NSLog(@"CMNewQueryViewController back");
     [CureMeUtils defaultCureMeUtil].isInNewQuery = NO;
     [self.view endEditing:YES];
+    
+    isUserActive = NO;
     
     [super back:sender];
     if (loopGetChatIDTimer)
@@ -1808,6 +1813,11 @@ NSString *md5Str;
 //------------------------
 - (void)cdCheckRequestIAT:(NSTimer *)timer{
     
+    if (isUserActive == NO) {
+        [cdCheckTimer invalidate];
+        cdCheckTimer = nil;
+        return;
+    }
     NSString *urlStr = [NSString stringWithFormat:@"%@check?imei=%ld&chatid=%ld&maxid=%ld&md5=%@&inputtext=%@&inputstate=%ld",iatao_server_url,(long)[CureMeUtils defaultCureMeUtil].userID,(long)self.chatID,(long)swtMaxID,md5Str,[questionInput.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],(long)(questionInput.text.length>0?1:0)];
     NSData *response = sendGetReqWithHeaderAndRespDict(urlStr, nil, nil, NO);
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -1843,7 +1853,6 @@ NSString *md5Str;
             [self addDoctorClientMessage:chatStr msgDate:[NSDate date]];
             
             [self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
-
         }
         else return;
         

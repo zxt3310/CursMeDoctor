@@ -111,7 +111,7 @@
     }
         
     // TableView无数据的View
-    _noDataBgView = [[NoDataBackgroundView alloc] initWithFrame:CGRectMake(118, 140, 80, 70)];
+    _noDataBgView = [[NoDataBackgroundView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2 - 35, 140, 80, 70)];
     _noDataBgView.hidden = YES;
     [self.view addSubview:_noDataBgView];
     [self.view sendSubviewToBack:_noDataBgView];

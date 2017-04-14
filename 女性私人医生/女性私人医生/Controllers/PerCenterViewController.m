@@ -287,7 +287,6 @@
     if (indexPath.section == 0) {
         return 80;
     }
-    
     return 40;
 }
 

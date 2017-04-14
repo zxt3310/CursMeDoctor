@@ -43,7 +43,7 @@
     if ([UIScreen mainScreen].bounds.size.height > 480.0) {
         topY += 40;
     }
-    loadingView = [[LoadingView alloc] initWithFrame:CGRectMake(118, topY, 80, 70)];
+    loadingView = [[LoadingView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2 - 35, topY, 80, 70)];
     loadingView.hidden = YES;
     [self.view addSubview:loadingView];
 //    [self.view sendSubviewToBack:loadingView];

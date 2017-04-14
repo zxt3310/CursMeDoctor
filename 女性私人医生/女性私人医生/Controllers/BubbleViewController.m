@@ -161,14 +161,14 @@ NSString *saveTitle;
         [_inputField setHidden:NO];
         
         // 如果是自己的对话，右上角显示“评价”按钮
-        UIButton *markBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        markBtn.frame = CGRectMake(0, 0, 41, 41);
-        [markBtn setImage:[UIImage imageNamed:@"评分_n.png"] forState:UIControlStateNormal];
-        [markBtn setImage:[UIImage imageNamed:@"评分_p.png"] forState:UIControlStateHighlighted];
-        [markBtn setImage:[UIImage imageNamed:@"评分_p.png"] forState:UIControlStateSelected];
-        [markBtn addTarget:self action:@selector(startMarkChat:) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *barBtnItem = [[UIBarButtonItem alloc] initWithCustomView:markBtn];
-        self.navigationItem.rightBarButtonItem = barBtnItem;
+//        UIButton *markBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        markBtn.frame = CGRectMake(0, 0, 41, 41);
+//        [markBtn setImage:[UIImage imageNamed:@"评分_n.png"] forState:UIControlStateNormal];
+//        [markBtn setImage:[UIImage imageNamed:@"评分_p.png"] forState:UIControlStateHighlighted];
+//        [markBtn setImage:[UIImage imageNamed:@"评分_p.png"] forState:UIControlStateSelected];
+//        [markBtn addTarget:self action:@selector(startMarkChat:) forControlEvents:UIControlEventTouchUpInside];
+//        UIBarButtonItem *barBtnItem = [[UIBarButtonItem alloc] initWithCustomView:markBtn];
+//        self.navigationItem.rightBarButtonItem = barBtnItem;
         
         markDoctorViewController = [[CMMarkDoctorViewController alloc] initWithNibName:@"CMMarkDoctorViewController" bundle:nil];
         markDoctorViewController.delegate = self;
@@ -206,7 +206,7 @@ NSString *saveTitle;
     if ([UIScreen mainScreen].bounds.size.height > 480.0) {
         topY += 40;
     }
-    loadingView = [[LoadingView alloc] initWithFrame:CGRectMake(118, topY, 80, 70)];
+    loadingView = [[LoadingView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2 - 35, topY, 80, 70)];
     loadingView.hidden = YES;
     [self.view addSubview:loadingView];
 //    [self.view sendSubviewToBack:loadingView];

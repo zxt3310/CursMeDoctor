@@ -71,7 +71,7 @@ BOOL isLFMShow;
      *  顶部logo及快速问答
      */
     
-    html5WebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 108, SCREEN_WIDTH, SCREEN_HEIGHT-158)];
+    html5WebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 108, SCREEN_WIDTH, SCREEN_HEIGHT-157)];
     [self.view addSubview:html5WebView];
     html5WebView.delegate = self;
     NSURLRequest *url = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/h5_new/index.html?appid=1&addrdetail=%@&source=apple",[CureMeUtils defaultCureMeUtil].encodedLocateInfo]]];
@@ -335,7 +335,6 @@ BOOL isLFMShow;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [[CureMeUtils defaultCureMeUtil] startLocationing];
     });
-    
 }
 
 - (void)updateRegionDisplay

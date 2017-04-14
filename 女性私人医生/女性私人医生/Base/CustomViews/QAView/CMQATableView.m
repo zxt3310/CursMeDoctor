@@ -51,12 +51,12 @@
         topY += 40;
     }
 
-    _noDataBgView = [[NoDataBackgroundView alloc] initWithFrame:CGRectMake(118, topY, 80, 70)];
+    _noDataBgView = [[NoDataBackgroundView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2 - 35, topY, 80, 70)];
     _noDataBgView.hidden = YES;
     [self addSubview:_noDataBgView];
     [self sendSubviewToBack:_noDataBgView];
     
-    _loadingBgView = [[LoadingView alloc] initWithFrame:CGRectMake(118, topY, 80, 70)];
+    _loadingBgView = [[LoadingView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2 - 35, topY, 80, 70)];
     _loadingBgView.hidden = YES;
     [self addSubview:_loadingBgView];
     [self sendSubviewToBack:_loadingBgView];

@@ -37,7 +37,7 @@
     self = [super init];
     if (self) {
         _isQuickAskView = NO;
-        currentSelectNameArray = [[NSArray alloc] init];
+        currentSelectNameArray = nil; //[[NSArray alloc] init];
         
         officeSuperTypeDic = [CMDataUtils defaultDataUtil].officeSuperTypeDict;
         officeSubTypeDic = [CMDataUtils defaultDataUtil].officeTypeDict;
@@ -173,7 +173,7 @@
             rows = currentSelectNameArray.count;
         }
         else{
-            rows = currentSelectNameArray.count + 1;
+            rows = currentSelectNameArray.count;
         }
         
     }
@@ -200,13 +200,16 @@
         cell.selectedBackgroundView.backgroundColor = [UIColor whiteColor];
     }
     else{
+        if (!currentSelectNameArray) {
+            cell.hidden = YES;
+        }
+        else{
+            cell.hidden = NO;
+        }
         if (_isQuickAskView){
-            if(indexPath.row == 0) {
-                cell.textLabel.text = @"全部";
-            }
-            else{
-                cell.textLabel.text = currentSelectNameArray[indexPath.row - 1];
-            }
+            
+            cell.textLabel.text = currentSelectNameArray[indexPath.row];
+            
         }
         else{
             cell.textLabel.text = currentSelectNameArray[indexPath.row];
@@ -241,6 +244,7 @@
                 NSString *nameStr = [dic objectForKey:currentSelectKeyArray[i]];
                 [temp addObject:nameStr];
             }
+            [temp insertObject:@"全部" atIndex:0];
             currentSelectNameArray = [temp copy];
         }
         else{
