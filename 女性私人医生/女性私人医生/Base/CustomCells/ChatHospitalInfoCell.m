@@ -283,7 +283,7 @@
     NSLog(@"ChatHospitalInfoCell generateLayout metaData: %@", metaInfoData);
     float inset = 4.0;
     
-    _backgroundImage.frame = CGRectMake(0, 0, 320, metaInfoData.metaDataHeight);
+    _backgroundImage.frame = CGRectMake(0, 0, SCREEN_WIDTH, metaInfoData.metaDataHeight);
     _backgroundImage.hidden = NO;
     
     // 医生头像
@@ -325,16 +325,16 @@
 
     // 1. 医院介绍按钮
     _hospitalInfoBtn.hidden = NO;
-    _hospitalInfoBtn.frame = CGRectMake(10, 56 + inset * 2 + textSize.height, 75, 40);
+    _hospitalInfoBtn.frame = CGRectMake(10, 56 + inset * 2 + textSize.height, 88.75, 40);
     // 2. 科室介绍按钮
     _officeInfoBtn.hidden = NO;
-    _officeInfoBtn.frame = CGRectMake(10 + 75, 56 + inset * 2 + textSize.height, 75, 40);
+    _officeInfoBtn.frame = CGRectMake(10 + 88.75, 56 + inset * 2 + textSize.height, 88.75, 40);
     // 3. 专家介绍按钮
     _doctorInfoBtn.hidden = NO;
-    _doctorInfoBtn.frame = CGRectMake(10 + 150, 56 + inset * 2 + textSize.height, 75, 40);
+    _doctorInfoBtn.frame = CGRectMake(10 + 177.5, 56 + inset * 2 + textSize.height, 88.75, 40);
     // 4. 预约挂号按钮
     _bookBtn.hidden = NO;
-    _bookBtn.frame = CGRectMake(10 + 225, 56 + inset * 2 + textSize.height, 75, 40);
+    _bookBtn.frame = CGRectMake(10 + 266.25, 56 + inset * 2 + textSize.height, 88.75, 40);
 }
 
 - (void)setChatMetaInfoData:(ChatMetaInfoData *)metaData

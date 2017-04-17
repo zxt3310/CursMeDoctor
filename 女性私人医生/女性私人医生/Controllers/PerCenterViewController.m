@@ -242,7 +242,7 @@
     }
     else if (indexPath.section == 2) {
         CMStringEditCell *strEditCell = nil;
-        
+
         if (indexPath.row == 0) {       // 姓名
             strEditCell = [[CMStringEditCell alloc] initWithEditType:EDITCELL_NAME reuseIdentifier:StringEditCell];
             return strEditCell;

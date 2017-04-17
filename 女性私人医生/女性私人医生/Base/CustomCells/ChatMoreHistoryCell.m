@@ -21,7 +21,7 @@
         // Initialization code
         moreHistoryLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         [moreHistoryLabel setFont:[UIFont systemFontOfSize:14]];
-        [moreHistoryLabel setTextAlignment:UITextAlignmentCenter];
+        [moreHistoryLabel setTextAlignment:NSTextAlignmentCenter];
         [moreHistoryLabel setText:@"获得更早聊天消息"];
         [moreHistoryLabel setBackgroundColor:[UIColor whiteColor]];
         
@@ -51,7 +51,7 @@
 
 - (void)generateLayout
 {
-    [moreHistoryLabel setFrame:CGRectMake(0, 0, 320, 40)];
+    [moreHistoryLabel setFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
 }
 
 @end

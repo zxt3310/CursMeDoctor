@@ -28,7 +28,7 @@
 
         // 背景
         _backgroundImage = [[UIImageView alloc] initWithImage:[CMImageUtils defaultImageUtil].qaCellAnswerTailImage];
-        _backgroundImage.frame = CGRectMake(0, 0, 320, 52);
+        _backgroundImage.frame = CGRectMake(0, 0, SCREEN_WIDTH, 52);
         _backgroundImage.alpha = 0.9;
         [self addSubview:_backgroundImage];
         
@@ -41,13 +41,13 @@
         [_headImageFrame addSubview:_headImage];
         [self addSubview:_headImageFrame];
         
-        _name = [[UILabel alloc] initWithFrame:CGRectMake(62, 5, 170, 20)];
+        _name = [[UILabel alloc] initWithFrame:CGRectMake(62, 5, 180 *SCREEN_WIDTH/320, 20)];
         [_name setFont:[UIFont systemFontOfSize:14]];
         [_name setLineBreakMode:NSLineBreakByTruncatingTail];
         [_name setBackgroundColor:[UIColor clearColor]];
         [self addSubview:_name];
         
-        _info = [[UILabel alloc] initWithFrame:CGRectMake(62, 25, 170, 20)];
+        _info = [[UILabel alloc] initWithFrame:CGRectMake(62, 25, 180* SCREEN_WIDTH/320, 20)];
         [_info setFont:[UIFont systemFontOfSize:14]];
         [_info setTextColor:[UIColor grayColor]];
         [_info setLineBreakMode:NSLineBreakByTruncatingTail];
@@ -62,7 +62,7 @@
         [_bookBtn setBackgroundImage:[UIImage imageNamed:@"全_p.png"] forState:UIControlStateSelected];
         [_bookBtn setTitle:@"预约挂号" forState:UIControlStateHighlighted];
         [_bookBtn setBackgroundImage:[UIImage imageNamed:@"全_p.png"] forState:UIControlStateHighlighted];
-        [_bookBtn setFrame:CGRectMake(235, 5, 75, 40)];
+        [_bookBtn setFrame:CGRectMake(245 *SCREEN_WIDTH/320, 5, 75, 40)];
         [_bookBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
         [_bookBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [_bookBtn setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];

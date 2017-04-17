@@ -137,6 +137,9 @@ NSString *saveTitle;
     // 1. 初始化DataSource
     bubbleTable.bubbleDataSource = self;
     [bubbleTable setChatViewController:self];
+    CGRect temp = bubbleTable.frame;
+    temp.size.width = SCREEN_WIDTH;
+    bubbleTable.frame = temp;
     
     bubbleData = [[NSMutableArray alloc] init];
     
@@ -325,6 +328,7 @@ NSString *saveTitle;
     CGRect frame = self.view.frame;
     frame.origin.y = 0;
     frame.size.height = SCREEN_HEIGHT;
+    frame.size.width = SCREEN_WIDTH;
     self.view.frame = frame;
     bubbleTable.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-40);
 }

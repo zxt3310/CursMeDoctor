@@ -183,7 +183,7 @@
     [_subTypeBtns addObject:_allSubTypeBtn];
 
     // 设置下一个按钮的Origin
-    _nextPoint = CGPointMake(85, 5);
+    _nextPoint = CGPointMake(80, 5);
     
     _backgroundImage.frame = CGRectMake(0, 0, SCREEN_WIDTH, 40);
     self.frame = _backgroundImage.frame;
