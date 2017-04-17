@@ -148,26 +148,27 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section == 0)
-        return 0;
-    
-    return 30;
+    return 10.0;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if (section == 0) {
-        return nil;
-    }
-    if (section == 1) {
-        return @"账户";
-    }
-    else if (section == 2) {
-        return @"个人信息";
-    }
-    
-    return @"账户管理";
+    return 0.1;
 }
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+//{
+//    if (section == 0) {
+//        return nil;
+//    }
+//    if (section == 1) {
+//        return @"账户";
+//    }
+//    else if (section == 2) {
+//        return @"个人信息";
+//    }
+//    
+//    return @"账户管理";
+//}
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
@@ -178,7 +179,7 @@
 {
     // Return the number of sections.
     if ([CureMeUtils defaultCureMeUtil].hasLogin) {
-        return 4;
+        return 3;
     }
     return 2;
 }
@@ -189,13 +190,11 @@
     if (section == 0) { // 顶部三个按钮Cell
         return 1;
     }
+
     else if (section == 1) {
-        return 1;       // 账户登录、注销、注册Cell
+        return 2;       // 个人信息Cell（姓名、年龄、手机、地区）
     }
     else if (section == 2) {
-        return 4;       // 个人信息Cell（姓名、年龄、手机、地区）
-    }
-    else if (section == 3) {
         return 1;       // 修改密码Cell
     }
     
@@ -206,8 +205,8 @@
 {
     static NSString *DefaultCell = @"DefaultCell";
     static NSString *HeaderCell = @"HeaderCell";
-    static NSString *loginCell = @"LoginCell";
-    static NSString *logoutCell = @"LogoutCell";
+//    static NSString *loginCell = @"LoginCell";
+//    static NSString *logoutCell = @"LogoutCell";
     static NSString *StringEditCell = @"StringEditCell";
     
     if (indexPath.section == 0) {
@@ -215,52 +214,37 @@
         if (!cell) {
             cell = [[CMPerCenterHeaderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:HeaderCell];
         }
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         [cell setPerCenterViewController:self];
         
         return cell;
     }
+
     else if (indexPath.section == 1) {
-        if ([CureMeUtils defaultCureMeUtil].hasLogin) {
-            PerCenterLogoutCell *cell = [tableView dequeueReusableCellWithIdentifier:logoutCell];
-            if (!cell) {
-                cell = [[PerCenterLogoutCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:logoutCell];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:StringEditCell];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:StringEditCell];
+            UIImageView *leftView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 15, 18, 18)];
+            leftView.contentMode = UIViewContentModeScaleAspectFit;
+            [cell.contentView addSubview:leftView];
+            
+            UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(50, 17, 100, 16)];
+            [cell.contentView addSubview:titleLb];
+            
+            if (indexPath.row == 0) {
+                leftView.image = [UIImage imageNamed:@"ico_wdyy.png"];
+                titleLb.text = @"我的预约";
             }
-            [cell clearDisplay];
-            [cell setViewController:self];
-
-            return cell;
-        }
-        else {
-            PerCenterLoginCell *cell = [tableView dequeueReusableCellWithIdentifier:loginCell];
-            if (!cell) {
-                cell = [[PerCenterLoginCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:loginCell];
+            else if (indexPath.row == 1){
+                leftView.image = [UIImage imageNamed:@"ico_msg_wdzx"];
+                titleLb.text = @"我的咨询";
             }
-            [cell setViewController:self];
-
-            return cell;
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
         }
+        return cell;
     }
     else if (indexPath.section == 2) {
-        CMStringEditCell *strEditCell = nil;
-
-        if (indexPath.row == 0) {       // 姓名
-            strEditCell = [[CMStringEditCell alloc] initWithEditType:EDITCELL_NAME reuseIdentifier:StringEditCell];
-            return strEditCell;
-        }
-        else if (indexPath.row == 1) {  // 年龄
-            strEditCell = [[CMStringEditCell alloc] initWithEditType:EDITCELL_AGE reuseIdentifier:StringEditCell];
-            return strEditCell;
-        }
-        else if (indexPath.row == 2) {  // 手机
-            strEditCell = [[CMStringEditCell alloc] initWithEditType:EDITCELL_PHONE reuseIdentifier:StringEditCell];
-            return strEditCell;
-        }
-        else if (indexPath.row == 3) {  // 地区
-            CMDataPickEditCell *cell = [[CMDataPickEditCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:DefaultCell];
-            return cell;
-        }
-    }
-    else if (indexPath.section == 3) {
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:DefaultCell];
         cell.textLabel.text = @"修改密码";
         [cell.textLabel setFont:[UIFont systemFontOfSize:16]];
@@ -287,7 +271,7 @@
     if (indexPath.section == 0) {
         return 80;
     }
-    return 40;
+    return 50;
 }
 
 /*
@@ -333,7 +317,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 3) {
+    if (indexPath.section == 2) {
         ChangePasswordViewController *changePwdVC = [[ChangePasswordViewController alloc] initWithNibName:@"ChangePasswordViewController" bundle:nil];
         [self.navigationController pushViewController:changePwdVC animated:YES];
     }

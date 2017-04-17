@@ -641,6 +641,9 @@
 		70C18C131E81310B00A82F46 /* 消息_n@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DEEFA9801C27FAC7006E85CA /* 消息_n@3x.png */; };
 		70C18C141E81310B00A82F46 /* ico_naobu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22A2CABE188F9697006BB056 /* ico_naobu@2x.png */; };
 		70C18C151E81310B00A82F46 /* naobu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22A2CABF188F9697006BB056 /* naobu@2x.png */; };
+		70F050391EA4CCDF00E43BFD /* ico_wdyy.png in Resources */ = {isa = PBXBuildFile; fileRef = 70F050361EA4CCDF00E43BFD /* ico_wdyy.png */; };
+		70F0503A1EA4CCDF00E43BFD /* ico_msg_wdzx.png in Resources */ = {isa = PBXBuildFile; fileRef = 70F050371EA4CCDF00E43BFD /* ico_msg_wdzx.png */; };
+		70F0503B1EA4CCDF00E43BFD /* ico_set.png in Resources */ = {isa = PBXBuildFile; fileRef = 70F050381EA4CCDF00E43BFD /* ico_set.png */; };
 		DE016F7B199C87AC007F38AF /* CMException.m in Sources */ = {isa = PBXBuildFile; fileRef = DE016F7A199C87AC007F38AF /* CMException.m */; };
 		DE016F7F199C9FD7007F38AF /* CMExtenstion.m in Sources */ = {isa = PBXBuildFile; fileRef = DE016F7E199C9FD7007F38AF /* CMExtenstion.m */; };
 		DE17CF9F1C200F5C005278AD /* 76.png in Resources */ = {isa = PBXBuildFile; fileRef = DE17CF9E1C200F5C005278AD /* 76.png */; };
@@ -1137,6 +1140,9 @@
 		70B568E71E9610C700E3D4CF /* ico_msg_and.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ico_msg_and.png; path = "女性私人医生/Resources/images/ico_msg_and.png"; sourceTree = "<group>"; };
 		70C18C191E81310B00A82F46 /* 男性私人医生.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "男性私人医生.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		70C18C1A1E81310B00A82F46 /* 女性私人医生 copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "女性私人医生 copy-Info.plist"; path = "/Users/zhangxintao/Documents/女性私人医生/女性私人医生 copy-Info.plist"; sourceTree = "<absolute>"; };
+		70F050361EA4CCDF00E43BFD /* ico_wdyy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ico_wdyy.png; path = "女性私人医生/Resources/images/ico_wdyy.png"; sourceTree = "<group>"; };
+		70F050371EA4CCDF00E43BFD /* ico_msg_wdzx.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ico_msg_wdzx.png; path = "女性私人医生/Resources/images/ico_msg_wdzx.png"; sourceTree = "<group>"; };
+		70F050381EA4CCDF00E43BFD /* ico_set.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ico_set.png; path = "女性私人医生/Resources/images/ico_set.png"; sourceTree = "<group>"; };
 		DE016F79199C87AC007F38AF /* CMException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMException.h; path = "女性私人医生/Base/CMException.h"; sourceTree = "<group>"; };
 		DE016F7A199C87AC007F38AF /* CMException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CMException.m; path = "女性私人医生/Base/CMException.m"; sourceTree = "<group>"; };
 		DE016F7D199C9FD7007F38AF /* CMExtenstion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMExtenstion.h; path = "女性私人医生/Base/CMExtenstion.h"; sourceTree = "<group>"; };
@@ -1458,6 +1464,9 @@
 		22F0420F16A69DA700139D62 /* Person */ = {
 			isa = PBXGroup;
 			children = (
+				70F050361EA4CCDF00E43BFD /* ico_wdyy.png */,
+				70F050371EA4CCDF00E43BFD /* ico_msg_wdzx.png */,
+				70F050381EA4CCDF00E43BFD /* ico_set.png */,
 				2273AAE017D83030006E4A5C /* tuijianapp_n@2x.png */,
 				2273AAE117D83030006E4A5C /* tuijianapp_p@2x.png */,
 				2273AAE217D83030006E4A5C /* twddh_n@2x.png */,
@@ -2451,6 +2460,7 @@
 				DEBF72BF19ECDB16000D1941 /* icon_weichang@2x.png in Resources */,
 				22FA9809169D213E0058E8D4 /* action-sheet-panel@2x.png in Resources */,
 				22FA980A169D213E0058E8D4 /* action-white-button-selected.png in Resources */,
+				70F050391EA4CCDF00E43BFD /* ico_wdyy.png in Resources */,
 				DEF938EE1C1AFAE1000AA4B9 /* choose_p@2x.png in Resources */,
 				7053AEC71E790D7600120C0A /* 绿色对勾@2x.png in Resources */,
 				22FA980B169D213E0058E8D4 /* action-white-button-selected@2x.png in Resources */,
@@ -2540,6 +2550,7 @@
 				DEEFAA001C27FAC7006E85CA /* wdxx_n@3x.png in Resources */,
 				22DA63B916A802020024E622 /* line@2x.png in Resources */,
 				22FAE15216A953CE00D9338A /* home_bg_btn_n@2x.png in Resources */,
+				70F0503A1EA4CCDF00E43BFD /* ico_msg_wdzx.png in Resources */,
 				22FAE15316A953CE00D9338A /* home_bg_btn_p@2x.png in Resources */,
 				22A43CBB16AA58400084E657 /* layout_bg@2x.png in Resources */,
 				22A43CBF16AA63AF0084E657 /* 文件夹@2x.png in Resources */,
@@ -2583,6 +2594,7 @@
 				22FAE10D16B03BE500B19ADA /* CMAlertViewController.xib in Resources */,
 				22F62BB216B0B592004E88C2 /* 选择_n@2x.png in Resources */,
 				22F62BB316B0B592004E88C2 /* 选择_p@2x.png in Resources */,
+				70F0503B1EA4CCDF00E43BFD /* ico_set.png in Resources */,
 				22029A9C16B1334B00EC5CB2 /* shuru@2x.png in Resources */,
 				22D1EFD716BA445E005AEAEF /* ico_new_list@2x.png in Resources */,
 				22D1EFDA16BA71D7005AEAEF /* 地图@2x.png in Resources */,

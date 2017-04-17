@@ -29,6 +29,8 @@
 @property (nonatomic, readonly, strong) UIImage *hospitalDefaultHeadMImage;
 @property (nonatomic, readonly, strong) UIImage *hospitalDefaultHeadLImage;
 
+@property (nonatomic, readonly, strong) UIImage *userHeadImage;
+
 //Logo
 @property (nonatomic, strong, readonly) UIImage *logoImage;
 

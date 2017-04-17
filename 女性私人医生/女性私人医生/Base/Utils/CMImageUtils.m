@@ -29,6 +29,7 @@ static CMImageUtils *defaultImageU = nil;
 @synthesize qaListQuestionImage = _qaListQuestionImage;
 @synthesize qaListQuestionDefultImage = _qaListQuestionDefultImage;
 @synthesize logoImage = _logoImage;
+@synthesize userHeadImage = _userHeadImage;
 
 @synthesize chatOtherBubbleImage = _chatOtherBubbleImage;
 @synthesize chatSelfBubbleImage = _chatSelfBubbleImage;
@@ -212,6 +213,14 @@ static CMImageUtils *defaultImageU = nil;
     }
     
     return _qaListQuestionImage;
+}
+
+- (UIImage *)userHeadImage{
+    if (!_userHeadImage) {
+        NSString *pathStr = [[NSBundle mainBundle] pathForResource:@"ico_head_me" ofType:@"png" inDirectory:@"images"];
+        _userHeadImage = [UIImage imageWithContentsOfFile:pathStr];
+    }
+    return _userHeadImage;
 }
 
 - (UIImage *)qaListQuestionDefultImage{
