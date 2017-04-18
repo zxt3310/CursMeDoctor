@@ -26,6 +26,8 @@
 #import "CMChooseQueryOfficeTableViewController.h"
 #import "CMMainTabViewController.h"
 #import "CMPerCenterHeaderCell.h"
+#import "MyBookListViewController.h"
+#import "personalDetailTableViewController.h"
 
 
 @interface PerCenterViewController ()
@@ -136,15 +138,6 @@
 }
 
 #pragma mark - Table view data source
-/*
- – tableView:cellForRowAtIndexPath:  required method
- – numberOfSectionsInTableView:
- – tableView:numberOfRowsInSection:  required method
- – sectionIndexTitlesForTableView:
- – tableView:sectionForSectionIndexTitle:atIndex:
- – tableView:titleForHeaderInSection:
- – tableView:titleForFooterInSection:
- */
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
@@ -224,7 +217,7 @@
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:StringEditCell];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:StringEditCell];
-            UIImageView *leftView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 15, 18, 18)];
+            UIImageView *leftView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 17, 18, 18)];
             leftView.contentMode = UIViewContentModeScaleAspectFit;
             [cell.contentView addSubview:leftView];
             
@@ -236,11 +229,10 @@
                 titleLb.text = @"我的预约";
             }
             else if (indexPath.row == 1){
-                leftView.image = [UIImage imageNamed:@"ico_msg_wdzx"];
+                leftView.image = [UIImage imageNamed:@"ico_msg_wdzx.png"];
                 titleLb.text = @"我的咨询";
             }
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            
         }
         return cell;
     }
@@ -274,52 +266,28 @@
     return 50;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 2) {
-        ChangePasswordViewController *changePwdVC = [[ChangePasswordViewController alloc] initWithNibName:@"ChangePasswordViewController" bundle:nil];
-        [self.navigationController pushViewController:changePwdVC animated:YES];
+    if (indexPath.section == 0) {
+        personalDetailTableViewController *personDetialVc = [[personalDetailTableViewController alloc] init];
+        [self.navigationController pushViewController:personDetialVc animated:YES];
+    }
+    else if (indexPath.section == 1){
+        if (indexPath.row == 0) {
+            MyBookListViewController *myBookListVC = [[MyBookListViewController alloc] initWithNibName:@"MyBookListViewController" bundle:nil];
+            myBookListVC.isMainTabPage = false;
+            myBookListVC.title = @"我的预约";
+            [self.navigationController pushViewController:myBookListVC animated:YES];
+        }
+        else{
+            
+            CMMainTabViewController *mainTabVC = (CMMainTabViewController *)[[self.navigationController viewControllers] objectAtIndex:0];
+            
+            [mainTabVC tabWasSelected:1];
+        }
     }
 }
 

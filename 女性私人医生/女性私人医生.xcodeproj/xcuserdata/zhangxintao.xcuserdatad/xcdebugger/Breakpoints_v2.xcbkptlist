@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5973;&#x6027;&#x79c1;&#x4eba;&#x533b;&#x751f;/Controllers/CMMainPageViewController.m"
-            timestampString = "513771190.64996"
+            timestampString = "514175460.488263"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
+            startingLineNumber = "200"
+            endingLineNumber = "200"
             landmarkName = "-viewWillAppear:"
             landmarkType = "7">
          </BreakpointContent>
@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5973;&#x6027;&#x79c1;&#x4eba;&#x533b;&#x751f;/Controllers/CMMainPageViewController.m"
-            timestampString = "513771190.64996"
+            timestampString = "514175460.488263"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "239"
-            endingLineNumber = "239"
+            startingLineNumber = "247"
+            endingLineNumber = "247"
             landmarkName = "-viewWillDisappear:"
             landmarkType = "7">
          </BreakpointContent>
@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5973;&#x6027;&#x79c1;&#x4eba;&#x533b;&#x751f;/Controllers/CMMainPageViewController.m"
-            timestampString = "513830366.809766"
+            timestampString = "514175460.488263"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "598"
-            endingLineNumber = "598"
+            startingLineNumber = "606"
+            endingLineNumber = "606"
             landmarkName = "-changeLocationBtnClick:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1082,11 +1082,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5973;&#x6027;&#x79c1;&#x4eba;&#x533b;&#x751f;/Controllers/CMMainPageViewController.m"
-            timestampString = "513830366.809766"
+            timestampString = "514175460.488263"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "368"
-            endingLineNumber = "368"
+            startingLineNumber = "376"
+            endingLineNumber = "376"
             landmarkName = "-updateRegionDisplay"
             landmarkType = "7">
          </BreakpointContent>
@@ -1098,11 +1098,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5973;&#x6027;&#x79c1;&#x4eba;&#x533b;&#x751f;/Controllers/CMMainPageViewController.m"
-            timestampString = "513830366.809766"
+            timestampString = "514175460.488263"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "395"
-            endingLineNumber = "395"
+            startingLineNumber = "403"
+            endingLineNumber = "403"
             landmarkName = "-viewDidUnload"
             landmarkType = "7">
          </BreakpointContent>
@@ -1146,11 +1146,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5973;&#x6027;&#x79c1;&#x4eba;&#x533b;&#x751f;/Controllers/CMNewQueryViewController.m"
-            timestampString = "513833451.32461"
+            timestampString = "514177714.494836"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2076"
-            endingLineNumber = "2076"
+            startingLineNumber = "2105"
+            endingLineNumber = "2105"
             landmarkName = "-chooseHospital:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1162,23 +1162,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5973;&#x6027;&#x79c1;&#x4eba;&#x533b;&#x751f;/Controllers/CMNewQueryViewController.m"
-            timestampString = "513833451.32461"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2066"
-            endingLineNumber = "2066"
-            landmarkName = "-chooseHospital:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "&#x5973;&#x6027;&#x79c1;&#x4eba;&#x533b;&#x751f;/Controllers/CMNewQueryViewController.m"
-            timestampString = "513833451.32461"
+            timestampString = "514177714.494836"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2067"
@@ -1194,11 +1178,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5973;&#x6027;&#x79c1;&#x4eba;&#x533b;&#x751f;/Controllers/CMNewQueryViewController.m"
-            timestampString = "513833451.32461"
+            timestampString = "514177714.494836"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2077"
-            endingLineNumber = "2077"
+            startingLineNumber = "2095"
+            endingLineNumber = "2095"
             landmarkName = "-chooseHospital:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1210,11 +1194,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5973;&#x6027;&#x79c1;&#x4eba;&#x533b;&#x751f;/Controllers/CMNewQueryViewController.m"
-            timestampString = "513833451.32461"
+            timestampString = "514177714.494836"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2081"
-            endingLineNumber = "2081"
+            startingLineNumber = "2106"
+            endingLineNumber = "2106"
             landmarkName = "-chooseHospital:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1226,11 +1210,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5973;&#x6027;&#x79c1;&#x4eba;&#x533b;&#x751f;/Controllers/CMNewQueryViewController.m"
-            timestampString = "513833451.32461"
+            timestampString = "514177714.494836"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2367"
-            endingLineNumber = "2367"
+            startingLineNumber = "2110"
+            endingLineNumber = "2110"
+            landmarkName = "-chooseHospital:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "&#x5973;&#x6027;&#x79c1;&#x4eba;&#x533b;&#x751f;/Controllers/CMNewQueryViewController.m"
+            timestampString = "514177714.494836"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2396"
+            endingLineNumber = "2396"
             landmarkName = "-connectToIatao:city1:city2:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1242,11 +1242,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5973;&#x6027;&#x79c1;&#x4eba;&#x533b;&#x751f;/Controllers/CMNewQueryViewController.m"
-            timestampString = "513833451.32461"
+            timestampString = "514177714.494836"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2370"
-            endingLineNumber = "2370"
+            startingLineNumber = "2399"
+            endingLineNumber = "2399"
             landmarkName = "-connectToIatao:city1:city2:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1258,11 +1258,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5973;&#x6027;&#x79c1;&#x4eba;&#x533b;&#x751f;/Controllers/CMNewQueryViewController.m"
-            timestampString = "513833451.32461"
+            timestampString = "514177714.494836"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2384"
-            endingLineNumber = "2384"
+            startingLineNumber = "2413"
+            endingLineNumber = "2413"
             landmarkName = "-connectToIatao:city1:city2:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1274,11 +1274,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5973;&#x6027;&#x79c1;&#x4eba;&#x533b;&#x751f;/Controllers/CMNewQueryViewController.m"
-            timestampString = "513833451.32461"
+            timestampString = "514177714.494836"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2380"
-            endingLineNumber = "2380"
+            startingLineNumber = "2409"
+            endingLineNumber = "2409"
             landmarkName = "-connectToIatao:city1:city2:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1481,11 +1481,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5973;&#x6027;&#x79c1;&#x4eba;&#x533b;&#x751f;/Controllers/CMNewQueryViewController.m"
-            timestampString = "513833451.32461"
+            timestampString = "514177714.494836"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2419"
-            endingLineNumber = "2419"
+            startingLineNumber = "2448"
+            endingLineNumber = "2448"
             landmarkName = "-sendLogRequest:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1497,11 +1497,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5973;&#x6027;&#x79c1;&#x4eba;&#x533b;&#x751f;/Controllers/CMNewQueryViewController.m"
-            timestampString = "513833451.32461"
+            timestampString = "514177714.494836"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2297"
-            endingLineNumber = "2297"
+            startingLineNumber = "2326"
+            endingLineNumber = "2326"
             landmarkName = "-isAllowToConnectIatao:and:"
             landmarkType = "7">
          </BreakpointContent>
@@ -1961,11 +1961,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5973;&#x6027;&#x79c1;&#x4eba;&#x533b;&#x751f;/Controllers/CMNewQueryViewController.m"
-            timestampString = "513833451.32461"
+            timestampString = "514177714.494836"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2377"
-            endingLineNumber = "2377"
+            startingLineNumber = "2406"
+            endingLineNumber = "2406"
             landmarkName = "-connectToIatao:city1:city2:"
             landmarkType = "7">
          </BreakpointContent>
@@ -2025,11 +2025,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5973;&#x6027;&#x79c1;&#x4eba;&#x533b;&#x751f;/Controllers/CMMainPageViewController.m"
-            timestampString = "513771190.64996"
+            timestampString = "514175460.488263"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "166"
-            endingLineNumber = "166"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
             landmarkName = "-webView:shouldStartLoadWithRequest:navigationType:"
             landmarkType = "7">
          </BreakpointContent>
@@ -2057,11 +2057,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5973;&#x6027;&#x79c1;&#x4eba;&#x533b;&#x751f;/Controllers/CMMainPageViewController.m"
-            timestampString = "513747576.993232"
+            timestampString = "514175460.488263"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "150"
-            endingLineNumber = "150"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
             landmarkName = "-webView:shouldStartLoadWithRequest:navigationType:"
             landmarkType = "7">
          </BreakpointContent>
@@ -2181,7 +2181,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5973;&#x6027;&#x79c1;&#x4eba;&#x533b;&#x751f;/Base/CustomViews/ALTabBarView.m"
@@ -2489,11 +2489,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5973;&#x6027;&#x79c1;&#x4eba;&#x533b;&#x751f;/Controllers/CMNewQueryViewController.m"
-            timestampString = "513833451.32461"
+            timestampString = "514177714.494836"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2287"
-            endingLineNumber = "2287"
+            startingLineNumber = "2316"
+            endingLineNumber = "2316"
             landmarkName = "-isAllowToConnectIatao:and:"
             landmarkType = "7">
          </BreakpointContent>
@@ -2601,11 +2601,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5973;&#x6027;&#x79c1;&#x4eba;&#x533b;&#x751f;/Controllers/CMMainPageViewController.m"
-            timestampString = "513830366.809766"
+            timestampString = "514175460.488263"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "337"
-            endingLineNumber = "337"
+            startingLineNumber = "345"
+            endingLineNumber = "345"
             landmarkName = "-ntfLocationFailed:"
             landmarkType = "7">
          </BreakpointContent>
@@ -2880,6 +2880,16 @@
             endingLineNumber = "2517"
             landmarkName = "-scrollViewDidScroll:"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            scope = "1"
+            stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

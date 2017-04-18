@@ -298,6 +298,7 @@
 		22FFA85716A678F400E0978C /* chat_bg_right_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22FFA85516A678F400E0978C /* chat_bg_right_normal@2x.png */; };
 		22FFA85816A678F400E0978C /* chat_bg_left_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22FFA85616A678F400E0978C /* chat_bg_left_normal@2x.png */; };
 		700FC2DB1E9B5A9400614277 /* CMQuickAskChoosenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 700FC2DA1E9B5A9400614277 /* CMQuickAskChoosenViewController.m */; };
+		7014D1D91EA5EE2500A3245F /* personalDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7014D1D81EA5EE2500A3245F /* personalDetailTableViewController.m */; };
 		70257CA91E8F471C0064C517 /* ico_head_hos@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70257CA81E8F471C0064C517 /* ico_head_hos@2x.png */; };
 		70257CAB1E8F499A0064C517 /* icon_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 70257CAA1E8F499A0064C517 /* icon_back.png */; };
 		7053AEC71E790D7600120C0A /* 绿色对勾@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7053AEC61E790D7600120C0A /* 绿色对勾@2x.png */; };
@@ -305,6 +306,7 @@
 		705BFAD81E9769F4000DDEE8 /* ico_msg_min.png in Resources */ = {isa = PBXBuildFile; fileRef = 705BFAD71E9769F4000DDEE8 /* ico_msg_min.png */; };
 		705BFADA1E9773D5000DDEE8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 705BFAD91E9773D5000DDEE8 /* Images.xcassets */; };
 		705D5B691E8FA61C00D4E090 /* icon_trash.png in Resources */ = {isa = PBXBuildFile; fileRef = 705D5B681E8FA61C00D4E090 /* icon_trash.png */; };
+		706041801EA611A600BFF22F /* ChangePhoneNoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7060417F1EA611A600BFF22F /* ChangePhoneNoViewController.m */; };
 		706564841E9E0E5F00BAB7E2 /* CMQAProtocolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 706564831E9E0E5F00BAB7E2 /* CMQAProtocolView.m */; };
 		707871BA1E7947430051C8A4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 707871B91E7947430051C8A4 /* libz.tbd */; };
 		707871BC1E7947590051C8A4 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 707871BB1E7947590051C8A4 /* libxml2.tbd */; };
@@ -1126,6 +1128,8 @@
 		22FFA85616A678F400E0978C /* chat_bg_left_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat_bg_left_normal@2x.png"; path = "女性私人医生/Resources/images/chat_bg_left_normal@2x.png"; sourceTree = "<group>"; };
 		700FC2D91E9B5A9400614277 /* CMQuickAskChoosenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMQuickAskChoosenViewController.h; sourceTree = "<group>"; };
 		700FC2DA1E9B5A9400614277 /* CMQuickAskChoosenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMQuickAskChoosenViewController.m; sourceTree = "<group>"; };
+		7014D1D71EA5EE2500A3245F /* personalDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = personalDetailTableViewController.h; sourceTree = "<group>"; };
+		7014D1D81EA5EE2500A3245F /* personalDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = personalDetailTableViewController.m; sourceTree = "<group>"; };
 		70257CA81E8F471C0064C517 /* ico_head_hos@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ico_head_hos@2x.png"; path = "女性私人医生/Resources/images/drawable-xxxhdpi/ico_head_hos@2x.png"; sourceTree = "<group>"; };
 		70257CAA1E8F499A0064C517 /* icon_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_back.png; path = "女性私人医生/Resources/images/icon_back.png"; sourceTree = "<group>"; };
 		7053AEC61E790D7600120C0A /* 绿色对勾@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "绿色对勾@2x.png"; path = "女性私人医生/Resources/images/绿色对勾@2x.png"; sourceTree = "<group>"; };
@@ -1133,6 +1137,8 @@
 		705BFAD71E9769F4000DDEE8 /* ico_msg_min.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ico_msg_min.png; path = "女性私人医生/Resources/images/ico_msg_min.png"; sourceTree = "<group>"; };
 		705BFAD91E9773D5000DDEE8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		705D5B681E8FA61C00D4E090 /* icon_trash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_trash.png; path = "女性私人医生/Resources/images/icon_trash.png"; sourceTree = "<group>"; };
+		7060417E1EA611A600BFF22F /* ChangePhoneNoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePhoneNoViewController.h; sourceTree = "<group>"; };
+		7060417F1EA611A600BFF22F /* ChangePhoneNoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePhoneNoViewController.m; sourceTree = "<group>"; };
 		706564821E9E0E5F00BAB7E2 /* CMQAProtocolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMQAProtocolView.h; sourceTree = "<group>"; };
 		706564831E9E0E5F00BAB7E2 /* CMQAProtocolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMQAProtocolView.m; sourceTree = "<group>"; };
 		707871B91E7947430051C8A4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -1974,6 +1980,8 @@
 		22FA978A169D1BBD0058E8D4 /* Personal */ = {
 			isa = PBXGroup;
 			children = (
+				7060417E1EA611A600BFF22F /* ChangePhoneNoViewController.h */,
+				7060417F1EA611A600BFF22F /* ChangePhoneNoViewController.m */,
 				2204C271169FC8C10037BE18 /* ChangePasswordViewController.h */,
 				2204C272169FC8C10037BE18 /* ChangePasswordViewController.m */,
 				2204C273169FC8C10037BE18 /* ChangePasswordViewController.xib */,
@@ -1987,6 +1995,8 @@
 				22FA978D169D1C120058E8D4 /* RegisterViewController.m */,
 				22FA9763169D19C00058E8D4 /* LoginViewController.h */,
 				22FA9764169D19C00058E8D4 /* LoginViewController.m */,
+				7014D1D71EA5EE2500A3245F /* personalDetailTableViewController.h */,
+				7014D1D81EA5EE2500A3245F /* personalDetailTableViewController.m */,
 				22FA978B169D1BC50058E8D4 /* Resources */,
 			);
 			name = Personal;
@@ -2920,6 +2930,7 @@
 				22FA977F169D1B080058E8D4 /* UIBubbleTableView.m in Sources */,
 				22FA9780169D1B080058E8D4 /* UIBubbleTableViewCell.m in Sources */,
 				22FA9788169D1B880058E8D4 /* BubbleViewController.m in Sources */,
+				706041801EA611A600BFF22F /* ChangePhoneNoViewController.m in Sources */,
 				22FA978F169D1C120058E8D4 /* RegisterViewController.m in Sources */,
 				22FA9795169D1CC30058E8D4 /* ChatHospitalInfoCell.m in Sources */,
 				22FA9799169D1D090058E8D4 /* UserRegionViewController.m in Sources */,
@@ -2947,6 +2958,7 @@
 				22FA9810169D21610058E8D4 /* OfficeInfoCell.m in Sources */,
 				22FA9821169D21AD0058E8D4 /* DDXMLElementAdditions.m in Sources */,
 				22FA9822169D21AD0058E8D4 /* NSString+DDXML.m in Sources */,
+				7014D1D91EA5EE2500A3245F /* personalDetailTableViewController.m in Sources */,
 				22FA9823169D21AD0058E8D4 /* DDXMLDocument.m in Sources */,
 				22FA9824169D21AD0058E8D4 /* DDXMLElement.m in Sources */,
 				22FA9825169D21AD0058E8D4 /* DDXMLNode.m in Sources */,

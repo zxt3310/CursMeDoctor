@@ -2064,7 +2064,36 @@ NSString *md5Str;
              *  新增医爱淘对话
              */
             if (_isAllowToiatao == YES) {
+                //没有账号创建临时账号
+                if (![CureMeUtils defaultCureMeUtil].hasLogin) {
+                    NSString *post = [NSString stringWithFormat:@"action=createuserdata&deviceid=%@&appid=1&addrdetail=%@&token=%@", [CureMeUtils defaultCureMeUtil].uniID, [CureMeUtils defaultCureMeUtil].encodedLocateInfo, [[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN]];
+                    NSData *response = sendRequest(@"m.php", post);
+                    NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
+                    NSLog(@"createuserdata resp: %@", strResp);
+                    NSDictionary *respDict = parseJsonResponse(response);
+                    NSNumber *result = [respDict objectForKey:@"result"];
+                    if (!result || [result integerValue] != 1) {
+                        NSLog(@"createuserdata result invalid %@", strResp);
+                        return;
+                    }
+                    
+                    NSNumber *userid = [respDict objectForKey:@"msg"];
+                    if (!userid || [userid integerValue] <= 0) {
+                        NSLog(@"createuserdata userid invalid %@", strResp);
+                        return;
+                    }
+                    
+                    [CureMeUtils defaultCureMeUtil].userID = [userid integerValue];
+                    [[NSUserDefaults standardUserDefaults] setObject:userid forKey:USER_ID];
+                    NSNumber *SWTID = [[NSNumber alloc] initWithInteger:0];
+                    [[NSUserDefaults standardUserDefaults] setObject:SWTID forKey:USER_SWT_ID];
+                    [CureMeUtils defaultCureMeUtil].userName = [CureMeUtils defaultCureMeUtil].uniID;
+                    [[NSUserDefaults standardUserDefaults] setObject:[CureMeUtils defaultCureMeUtil].uniID forKey:USER_REGISTERNAME];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                }
+                
                 [self isAllowToConnectIatao:[jsonData[@"city"] integerValue] and:[jsonData[@"city2"] integerValue]];
+                
                 return;
             }
             if ([result integerValue] != 1) {

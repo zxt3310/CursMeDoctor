@@ -122,6 +122,7 @@
             break;
     }
     self.selectedIndex = index;
+    [customTabBarView selectButtonAtIndex:index];
 }
 
 #pragma mark UITabBarDelegate

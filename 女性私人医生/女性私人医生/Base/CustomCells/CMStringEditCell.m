@@ -49,10 +49,10 @@
     float inset = 10.0;
 
 	self.selectionStyle = UITableViewCellSelectionStyleNone;
-	self.textField = [[UITextField alloc] initWithFrame:CGRectMake(65, inset, 180, 20)];
+	self.textField = [[UITextField alloc] initWithFrame:CGRectMake(65, inset + 5, 230 *SCREEN_WIDTH/375, 20)];
 	self.textField.autocorrectionType = UITextAutocorrectionTypeDefault;
 	self.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-	self.textField.textAlignment = UITextAlignmentLeft;
+	self.textField.textAlignment = NSTextAlignmentRight;
 	[self.textField setTextColor:[UIColor colorWithRed:0.243 green:0.306 blue:0.435 alpha:1.0]];
 	self.textField.font = [UIFont systemFontOfSize:17.0f];
 	self.textField.clearButtonMode = UITextFieldViewModeNever;
@@ -68,9 +68,9 @@
 	
 	self.textField.delegate = self;
     
-    variableLabel = [[UILabel alloc] initWithFrame:CGRectMake(inset, inset, 50, 20)];
-    [variableLabel setTextColor:[UIColor grayColor]];
-    [variableLabel setFont:[UIFont systemFontOfSize:16]];
+    variableLabel = [[UILabel alloc] initWithFrame:CGRectMake(inset + 7, inset + 5, 50, 20)];
+//    [variableLabel setTextColor:[UIColor grayColor]];
+//    [variableLabel setFont:[UIFont systemFontOfSize:16]];
     [variableLabel setBackgroundColor:[UIColor clearColor]];
     [self.contentView addSubview:variableLabel];
     

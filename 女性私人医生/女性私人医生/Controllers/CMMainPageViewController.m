@@ -148,6 +148,14 @@ BOOL isLFMShow;
             [[CMAppDelegate Delegate].navigationController pushViewController:qaViewController animated:YES];
             return YES;
         }
+        else if ([request.URL.absoluteString containsString:@"ads"]){
+            NSInteger officeId = [request.URL.lastPathComponent integerValue];
+            CMNewQueryViewController *queryVC = [CMNewQueryViewController new];
+            queryVC.officeType = officeId;
+            queryVC.subOfficeType = 0;
+            queryVC.chatUserID = [CureMeUtils defaultCureMeUtil].userID;
+            [self.navigationController pushViewController:queryVC animated:YES];
+        }
         else if ([request.URL.absoluteString containsString:@"news"]){
             WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
             webViewController.strURL = [NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/h5_new/news.html?appid=1&addrdetail=%@&source=apple",[CureMeUtils defaultCureMeUtil].encodedLocateInfo];
