@@ -28,6 +28,7 @@
 #import "CMPerCenterHeaderCell.h"
 #import "MyBookListViewController.h"
 #import "personalDetailTableViewController.h"
+#import "CMPersonSetingViewController.h"
 
 
 @interface PerCenterViewController ()
@@ -111,13 +112,6 @@
         hasShownLoginViewController = true;
         return;
     }
-    
-    // 如果已登录，则更新用户信息
-    if ([CureMeUtils defaultCureMeUtil].hasLogin) {
-        [[CureMeUtils defaultCureMeUtil] updateUserInfo:[CureMeUtils defaultCureMeUtil].userID];
-    }
-    
-    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -237,9 +231,18 @@
         return cell;
     }
     else if (indexPath.section == 2) {
-        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:DefaultCell];
-        cell.textLabel.text = @"修改密码";
-        [cell.textLabel setFont:[UIFont systemFontOfSize:16]];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:DefaultCell];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:DefaultCell];
+            UIImageView *leftView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 17, 18, 18)];
+            leftView.contentMode = UIViewContentModeScaleAspectFit;
+            leftView.image = [UIImage imageNamed:@"ico_set"];
+            [cell.contentView addSubview:leftView];
+            
+            UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(50, 17, 100, 16)];
+            [cell.contentView addSubview:titleLb];
+            titleLb.text = @"设置";
+        }
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         return cell;        
     }
@@ -288,6 +291,10 @@
             
             [mainTabVC tabWasSelected:1];
         }
+    }
+    else if (indexPath.section == 2){
+        CMPersonSetingViewController *setingVc = [[CMPersonSetingViewController alloc] init];
+        [self.navigationController pushViewController:setingVc animated:YES];
     }
 }
 

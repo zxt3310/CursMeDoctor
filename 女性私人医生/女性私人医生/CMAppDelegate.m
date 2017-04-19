@@ -121,7 +121,7 @@ void uncaughtExceptionHandler(NSException *exception)
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {    
-    sleep(2);
+    //sleep(2);
     // ======== 1. 注册异常处理
     // Catch C Exception
    // InstallUncaughtExceptionHandler();

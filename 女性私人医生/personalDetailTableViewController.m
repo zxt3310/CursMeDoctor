@@ -20,8 +20,25 @@
     [super viewDidLoad];
     self.title = @"我的账户";
     self.tableView.tableFooterView = [[UITableView alloc] initWithFrame:CGRectZero];
+    self.tableView.scrollEnabled = NO;
+    
+    UIButton *logOutBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    logOutBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT- 64 - 130, 200, 50);
+    logOutBtn.backgroundColor = UIColorFromHex(0xf65378, 1);
+    [logOutBtn setTitle:@"退出当前帐号" forState:UIControlStateNormal];
+    logOutBtn.titleLabel.textColor = [UIColor whiteColor];
+    [self.view addSubview:logOutBtn];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    // 如果已登录，则更新用户信息
+    if ([CureMeUtils defaultCureMeUtil].hasLogin) {
+        [[CureMeUtils defaultCureMeUtil] updateUserInfo:[CureMeUtils defaultCureMeUtil].userID];
+    }
+    
+    [self.tableView reloadData];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -39,7 +56,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 2) {
-        return 100;
+        return 0;
     }
     return 50;
 }
@@ -93,7 +110,7 @@
         }
         UILabel *lable = (UILabel *)[cell.contentView viewWithTag:1];
         lable.text = [CureMeUtils defaultCureMeUtil].userName;
-        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
     else if (indexPath.section == 1)
@@ -110,6 +127,7 @@
         }
         else if (indexPath.row == 2) {  // 手机
             strEditCell = [[CMStringEditCell alloc] initWithEditType:EDITCELL_PHONE reuseIdentifier:StringEditCell];
+            strEditCell.userInteractionEnabled = NO;
             return strEditCell;
         }
         else if (indexPath.row == 3) {  // 地区
@@ -121,12 +139,13 @@
                 [cell.contentView addSubview:lable];
             }
             UILabel *lable = (UILabel *)[cell.contentView viewWithTag:1];
-            lable.text = [NSString stringWithFormat:@"%@ %@",[CureMeUtils defaultCureMeUtil].province,[CureMeUtils defaultCureMeUtil].cityOrDistrict];
+            lable.text = [NSString stringWithFormat:@"%@ %@", [CureMeUtils defaultCureMeUtil].province,[[NSUserDefaults standardUserDefaults] objectForKey:USER_CITY_NAME]];
             CGRect temp = lable.frame;
             temp.size.width = lable.font.pointSize * lable.text.length;
-            temp.origin.x = SCREEN_WIDTH - temp.size.width;
+            temp.origin.x = SCREEN_WIDTH - temp.size.width - 17;
             lable.frame = temp;
         }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
     
@@ -147,6 +166,10 @@
     }
 }
 
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

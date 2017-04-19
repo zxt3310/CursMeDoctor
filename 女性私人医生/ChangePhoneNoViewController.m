@@ -11,7 +11,7 @@
 @interface ChangePhoneNoViewController ()
 {
     UITextField *PhoneTF;
-    NSString *code;
+    NSUInteger code;
     UITextField *codeTF;
     UIButton *codeBtn;
 }
@@ -28,12 +28,15 @@
     PhoneTF.placeholder = @"手机号码";
     PhoneTF.layer.borderWidth = 1;
     PhoneTF.layer.borderColor = [UIColor grayColor].CGColor;
+    PhoneTF.keyboardType = UIKeyboardTypeNumberPad;
+    PhoneTF.clearButtonMode = UITextFieldViewModeWhileEditing;
     [self.view addSubview:PhoneTF];
     
     codeTF = [[UITextField alloc] initWithFrame:CGRectMake(40, 140, SCREEN_WIDTH - 80 - 140, 40)];
     codeTF.placeholder = @"请输入验证码";
     codeTF.layer.borderWidth = 1;
     codeTF.layer.borderColor = [UIColor grayColor].CGColor;
+    codeTF.keyboardType = UIKeyboardTypeNumberPad;
     [self.view addSubview:codeTF];
     
     codeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -41,7 +44,7 @@
     [codeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
     [codeBtn setBackgroundColor:UIColorFromHex(0xf65378, 1)];
     codeBtn.titleLabel.textColor = [UIColor whiteColor];
-    [codeBtn addTarget:self action:@selector(codeBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    [codeBtn addTarget:self action:@selector(codeBtnLimit:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:codeBtn];
     
     UIButton *sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -49,7 +52,13 @@
     [sendBtn setTitle:@"提交修改" forState:UIControlStateNormal];
     sendBtn.backgroundColor = codeBtn.backgroundColor;
     sendBtn.titleLabel.textColor = [UIColor whiteColor];
+    [sendBtn addTarget:self action:@selector(sendBtnClickAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:sendBtn];
+}
+
+- (void)codeBtnLimit:(id) sender{
+    [[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(codeBtnAction) object:sender];
+    [self performSelector:@selector(codeBtnAction) withObject:sender afterDelay:0.5f];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -62,11 +71,14 @@
 }
 
 - (void)codeBtnAction{
-    
+    if (PhoneTF.text.length == 0 || PhoneTF.text.length !=11) {
+        [self presentAlert:@"请正确输入手机号"];
+        return;
+    }
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     
         NSString *urlStr = @"http://new.medapp.ranknowcn.com/api/m.php?action=yanzheng_getvcode&version=3.0";
-        NSString *post = [NSString stringWithFormat:@"source=apple&version=3.3&appid=1&imei=%@&deviceid=%@&username=%@&mobileTel=%@",[CureMeUtils defaultCureMeUtil].UDID,[CureMeUtils defaultCureMeUtil].uniID,[CureMeUtils defaultCureMeUtil].userName,PhoneTF.text];
+        NSString *post = [NSString stringWithFormat:@"source=apple&version=3.3&appid=1&switchType=1&os=ios&imei=%@&deviceid=%@&username=%@&mobileTel=%@&userid=",[CureMeUtils defaultCureMeUtil].UDID,[CureMeUtils defaultCureMeUtil].uniID,[CureMeUtils defaultCureMeUtil].userName,PhoneTF.text];
         NSData *response = sendFullRequest(urlStr, post, nil, NO, NO);
         dispatch_async(dispatch_get_main_queue(), ^{
             if (!response) {
@@ -88,7 +100,7 @@
                 return;
             }
             NSDictionary *codeDic = JsonValue([returnDic objectForKey:@"msg"], CLASS_DICTIONARY);
-            code = [codeDic objectForKey:@"vcode"];
+            code = [JsonValue([codeDic objectForKey:@"vcode"],CLASS_NUMBER) integerValue];
             [self sendMsgButtonChange];
         });
     });
@@ -109,7 +121,6 @@
             dispatch_source_cancel(_timer);
             dispatch_async(dispatch_get_main_queue(), ^{
                 //设置界面的按钮显示 根据自己需求设置
-                // verifybutton.backgroundColor = [UIColor colorWithHexString:@"FC740A"];
                 verifybutton.frame = temp;
                 [verifybutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 [verifybutton setTitle:@"获取验证码" forState:UIControlStateNormal];
@@ -118,7 +129,6 @@
         }else{
             dispatch_async(dispatch_get_main_queue(), ^{
                 //设置界面的按钮显示 根据自己需求设置
-                //verifybutton.backgroundColor = [UIColor grayColor];
                 NSString *strTime = [NSString stringWithFormat:@"(%d)秒",time];
                 [verifybutton setTitle:strTime forState:UIControlStateNormal];
                 // verifybutton.titleLabel.textColor = [UIColor darkGrayColor];
@@ -126,21 +136,47 @@
             });
             time--;
         }
-        
     });
     dispatch_resume(_timer);
+}
+
+- (void)sendBtnClickAction{
+    if ([codeTF.text integerValue] != code) {
+        [self presentAlert:@"验证码错误"];
+        return;
+    }
     
+    NSString *urlStr = @"http://new.medapp.ranknowcn.com/api/m.php?action=upduserinfo&version=3.0";
+    NSString *post = [NSString stringWithFormat:@"source=apple&os=ios&appid=1&version=3.3&mobile=%@&mobileverify=%@&deviceid=%@&userid=%ld&username=%@&imei=%@",PhoneTF.text,codeTF.text,[CureMeUtils defaultCureMeUtil].uniID,[CureMeUtils defaultCureMeUtil].userID,[CureMeUtils defaultCureMeUtil].userName,[CureMeUtils defaultCureMeUtil].UDID];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    NSData *response = sendFullRequest(urlStr, post, nil, NO, NO);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (!response) {
+            [self presentAlert:@"修改失败，请检查网络"];
+            return ;
+        }
+        NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
+        NSLog(@"%@",strResp);
+        
+        NSDictionary *returnDic = parseJsonResponse(response);
+        if (!returnDic) {
+            [self presentAlert:@"验证码发送失败，返回错误数据"];
+            return;
+        }
+        NSNumber *result = JsonValue([returnDic objectForKey:@"result"], CLASS_NUMBER);
+        if ([result integerValue] !=1) {
+            NSString *err = [returnDic objectForKey:@"msg"];
+            [self presentAlert:err];
+            return;
+        }
+        
+        [self.navigationController popViewControllerAnimated:YES];
+        
+    });
+});
+
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (void)presentAlert:(NSString *)msg{
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"消息" message:msg preferredStyle:UIAlertControllerStyleAlert];

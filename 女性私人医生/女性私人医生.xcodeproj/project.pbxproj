@@ -301,6 +301,10 @@
 		7014D1D91EA5EE2500A3245F /* personalDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7014D1D81EA5EE2500A3245F /* personalDetailTableViewController.m */; };
 		70257CA91E8F471C0064C517 /* ico_head_hos@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70257CA81E8F471C0064C517 /* ico_head_hos@2x.png */; };
 		70257CAB1E8F499A0064C517 /* icon_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 70257CAA1E8F499A0064C517 /* icon_back.png */; };
+		702B8CA21EA7424A002E726E /* CMPersonSetingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 702B8CA11EA7424A002E726E /* CMPersonSetingViewController.m */; };
+		702B8CA51EA7487E002E726E /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 702B8CA41EA7487E002E726E /* AboutUsViewController.m */; };
+		702B8CA71EA749AB002E726E /* woman.png in Resources */ = {isa = PBXBuildFile; fileRef = 702B8CA61EA749AB002E726E /* woman.png */; };
+		702B8CAA1EA762DC002E726E /* FeedBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 702B8CA91EA762DC002E726E /* FeedBackViewController.m */; };
 		7053AEC71E790D7600120C0A /* 绿色对勾@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7053AEC61E790D7600120C0A /* 绿色对勾@2x.png */; };
 		705BFAD61E97634D000DDEE8 /* logo_woman_B.png in Resources */ = {isa = PBXBuildFile; fileRef = 705BFAD51E97634D000DDEE8 /* logo_woman_B.png */; };
 		705BFAD81E9769F4000DDEE8 /* ico_msg_min.png in Resources */ = {isa = PBXBuildFile; fileRef = 705BFAD71E9769F4000DDEE8 /* ico_msg_min.png */; };
@@ -1132,6 +1136,13 @@
 		7014D1D81EA5EE2500A3245F /* personalDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = personalDetailTableViewController.m; sourceTree = "<group>"; };
 		70257CA81E8F471C0064C517 /* ico_head_hos@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ico_head_hos@2x.png"; path = "女性私人医生/Resources/images/drawable-xxxhdpi/ico_head_hos@2x.png"; sourceTree = "<group>"; };
 		70257CAA1E8F499A0064C517 /* icon_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_back.png; path = "女性私人医生/Resources/images/icon_back.png"; sourceTree = "<group>"; };
+		702B8CA01EA7424A002E726E /* CMPersonSetingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMPersonSetingViewController.h; sourceTree = "<group>"; };
+		702B8CA11EA7424A002E726E /* CMPersonSetingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMPersonSetingViewController.m; sourceTree = "<group>"; };
+		702B8CA31EA7487E002E726E /* AboutUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutUsViewController.h; sourceTree = "<group>"; };
+		702B8CA41EA7487E002E726E /* AboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutUsViewController.m; sourceTree = "<group>"; };
+		702B8CA61EA749AB002E726E /* woman.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = woman.png; sourceTree = "<group>"; };
+		702B8CA81EA762DC002E726E /* FeedBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedBackViewController.h; sourceTree = "<group>"; };
+		702B8CA91EA762DC002E726E /* FeedBackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedBackViewController.m; sourceTree = "<group>"; };
 		7053AEC61E790D7600120C0A /* 绿色对勾@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "绿色对勾@2x.png"; path = "女性私人医生/Resources/images/绿色对勾@2x.png"; sourceTree = "<group>"; };
 		705BFAD51E97634D000DDEE8 /* logo_woman_B.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_woman_B.png; path = "女性私人医生/Resources/images/logo_woman_B.png"; sourceTree = "<group>"; };
 		705BFAD71E9769F4000DDEE8 /* ico_msg_min.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ico_msg_min.png; path = "女性私人医生/Resources/images/ico_msg_min.png"; sourceTree = "<group>"; };
@@ -1821,6 +1832,7 @@
 		22FA96D1169D098B0058E8D4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				702B8CA61EA749AB002E726E /* woman.png */,
 				DEEFA96B1C27FA6B006E85CA /* Images_3x */,
 				22FA96D2169D09920058E8D4 /* Images */,
 			);
@@ -1997,6 +2009,12 @@
 				22FA9764169D19C00058E8D4 /* LoginViewController.m */,
 				7014D1D71EA5EE2500A3245F /* personalDetailTableViewController.h */,
 				7014D1D81EA5EE2500A3245F /* personalDetailTableViewController.m */,
+				702B8CA01EA7424A002E726E /* CMPersonSetingViewController.h */,
+				702B8CA11EA7424A002E726E /* CMPersonSetingViewController.m */,
+				702B8CA31EA7487E002E726E /* AboutUsViewController.h */,
+				702B8CA41EA7487E002E726E /* AboutUsViewController.m */,
+				702B8CA81EA762DC002E726E /* FeedBackViewController.h */,
+				702B8CA91EA762DC002E726E /* FeedBackViewController.m */,
 				22FA978B169D1BC50058E8D4 /* Resources */,
 			);
 			name = Personal;
@@ -2614,6 +2632,7 @@
 				22D1EFDC16BA721B005AEAEF /* tel_s@2x.png in Resources */,
 				DEBF72C019ECDB16000D1941 /* icon_xinzang@2x.png in Resources */,
 				22F88F3016BBA2B100D1192D /* chat_bg_m_normal@2x.png in Resources */,
+				702B8CA71EA749AB002E726E /* woman.png in Resources */,
 				22F88F3316BBA2E100D1192D /* home_top@2x.png in Resources */,
 				2206DDA116BF6DB700752314 /* 57.png in Resources */,
 				2206DDA416BF6DBB00752314 /* 114.png in Resources */,
@@ -2916,6 +2935,7 @@
 				22FA9701169D0A530058E8D4 /* ImageDownloadHelper.m in Sources */,
 				DE5AF5DE1CABB029001BD6E8 /* UINewBubbleTableView.m in Sources */,
 				22FA9702169D0A530058E8D4 /* FileUtils.m in Sources */,
+				702B8CAA1EA762DC002E726E /* FeedBackViewController.m in Sources */,
 				22FA9703169D0A530058E8D4 /* Notifications.mm in Sources */,
 				22FA9731169D0A6A0058E8D4 /* WebViewJavascriptBridge.m in Sources */,
 				22FA9732169D0A6A0058E8D4 /* Reachability.m in Sources */,
@@ -2977,6 +2997,7 @@
 				2204C274169FC8C10037BE18 /* ChangePasswordViewController.m in Sources */,
 				229D6DE7169FF5B600D6DB94 /* CMBaseTabBarController.m in Sources */,
 				229D6E0116A28ACD00D6DB94 /* CMImageUtils.m in Sources */,
+				702B8CA51EA7487E002E726E /* AboutUsViewController.m in Sources */,
 				22FD131716A5BD3A00B1F69C /* CMChatHeaderBtnView.m in Sources */,
 				22F2F74416A6F849001336D9 /* CMStringEditCell.m in Sources */,
 				22DA63BD16A80A050024E622 /* QAMoreHistoryCell.m in Sources */,
@@ -3010,6 +3031,7 @@
 				22CB2423186C243800C405AA /* CLGetGsmInfo.m in Sources */,
 				22CB2424186C243800C405AA /* MSNetworksManager.m in Sources */,
 				706564841E9E0E5F00BAB7E2 /* CMQAProtocolView.m in Sources */,
+				702B8CA21EA7424A002E726E /* CMPersonSetingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

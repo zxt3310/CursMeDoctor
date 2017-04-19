@@ -8,6 +8,6 @@
 
 #import "CustomBaseViewController.h"
 
-@interface FeedBackViewController : CustomBaseViewController
+@interface FeedBackViewController : CustomBaseViewController<UITextViewDelegate>
 
 @end
