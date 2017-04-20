@@ -49,11 +49,16 @@
     UILabel *userStatusLb = [[UILabel alloc] initWithFrame:CGRectMake(82, 38, 100, 20)];
     userStatusLb.textColor = [UIColor grayColor];
     userStatusLb.font = [UIFont systemFontOfSize:13];
-    if ([CureMeUtils defaultCureMeUtil].isUnRegLoginUser) {
-        userStatusLb.text = @"非正式用户";
+    if ([CureMeUtils defaultCureMeUtil].hasLogin) {
+        if ([CureMeUtils defaultCureMeUtil].isUnRegLoginUser) {
+            userStatusLb.text = @"非正式用户";
+        }
+        else{
+            userStatusLb.text = @"正式用户";
+        }
     }
-    else{
-        userStatusLb.text = @"正式用户";
+    else {
+        userNameLb.text = @"点击登录";
     }
     [self.contentView addSubview:userStatusLb];
 

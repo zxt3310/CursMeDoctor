@@ -40,6 +40,7 @@ NSData *sendRequestWithData(NSString *url, NSData *data);
 
 NSData *sendRequestWithHeaderAndResponse(NSString *phpFile, NSString *post, NSDictionary *additionalHeaders, bool needDispNetState, bool saveSetCookie);
 
+NSData* sendRequestAndNeedCookie(NSString *phpFile, NSString *post, NSDictionary *additionalHeader, bool needDispNetState, bool saveSetCookie);
 //NSData *sendFullRequest(NSString *fullURL, NSString *post, NSDictionary *additionalHeaders, bool needDispNetState, bool saveSetCookie, bool sendGZipContent);
 
 NSData* loadRequestWithImg(NSDictionary *params,NSString *url);

@@ -85,7 +85,7 @@ NSString* getUDID()
 // 默认所有调用此函数的请求，都发送至 medapp.ranknowcn.com/api/m.php
 NSData *sendRequest(NSString *phpFile, NSString *post)
 {
-    NSString *finalPost = [[NSString alloc] initWithFormat:@"%@&version=2.2&deviceid=%@&appid=1&source=apple", post, [[NSUserDefaults standardUserDefaults] objectForKey:USER_UNIQUE_ID]];
+    NSString *finalPost = [[NSString alloc] initWithFormat:@"%@&version=3.3&deviceid=%@&appid=1&source=apple&imei=%@", post, [[NSUserDefaults standardUserDefaults] objectForKey:USER_UNIQUE_ID],[CureMeUtils defaultCureMeUtil].UDID];
     NSLog(@"sendRequest: %@", finalPost);
     
     NSDictionary *additionalHeader = nil;
@@ -118,14 +118,12 @@ NSData *sendRequestWithFullURLNAP(NSString *fullURL, NSMutableDictionary *respDi
 }
 
 NSData *sendRequestWithCookie(NSString *phpFile, NSString *post, NSString *cookie, bool saveSetCookie) {
-    NSString *finalPost = [[NSString alloc] initWithFormat:@"%@&version=2.2&deviceid=%@&appid=1&source=apple", post, [[NSUserDefaults standardUserDefaults] objectForKey:USER_UNIQUE_ID]];
-    NSLog(@"sendRequest: %@", finalPost);
     
     NSDictionary *additionalHeader = nil;
     if (cookie && [cookie length] > 0) {
         additionalHeader = [NSDictionary dictionaryWithObjectsAndKeys:cookie, @"Cookie", nil];
     }
-    NSData *respData = sendRequestWithHeaderAndResponse(phpFile, finalPost, additionalHeader, true, saveSetCookie);
+    NSData *respData = sendRequestAndNeedCookie(phpFile, post, additionalHeader, true, saveSetCookie);
     
     return respData;
 }
@@ -279,10 +277,26 @@ NSData * sendRequestWithHeaderAndResponse(NSString *phpFile, NSString *post, NSD
     NSString *responseString = nil;
     
     @autoreleasepool {
-        postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+        
+        NSArray *postArray = [post componentsSeparatedByString:@"&"];
+        NSString *actionStr;
+        NSMutableString *exPost = [[NSMutableString alloc] init];
+        for (NSString *action in postArray) {
+            if ([action containsString:@"action="]) {
+                actionStr = action;
+                continue;
+            }
+            else{
+                [exPost appendString:[NSString stringWithFormat:@"&%@",action]];
+            }
+        }
+        [exPost replaceCharactersInRange:NSMakeRange(0, 1) withString:@""];
+        NSString *finalPost = [exPost copy];
+        
+        postData = [finalPost dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
         postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-        NSString *fullURL = [NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/api/%@?rn=%.2f", phpFile, [[[NSDate alloc] init] timeIntervalSince1970]];
+        NSString *fullURL = [NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/api/%@?%@&version=3.0", phpFile,actionStr];
         [request setURL:[NSURL URLWithString:fullURL]];
         if (additionalHeader) {
             NSArray *keys = additionalHeader.allKeys;
@@ -490,6 +504,83 @@ NSData* loadRequestWithImg(NSDictionary *params,NSString *url)
         responseString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
         NSLog(@"%@", responseString);
     }
+    
+    return returnData;
+}
+
+
+
+NSData* sendRequestAndNeedCookie(NSString *phpFile, NSString *post, NSDictionary *additionalHeader, bool needDispNetState, bool saveSetCookie)
+{
+    Reachability *reachability = [Reachability reachabilityWithHostname:@"new.medapp.ranknowcn.com"];
+    
+    NSNotification *note = nil;
+    switch ([reachability currentReachabilityStatus]) {
+        case NotReachable:
+            NSLog(@"new.medapp.ranknowcn.com host not reachable");
+            note = [NSNotification notificationWithName:NTF_NetNotReachable object:nil];
+            [[NSNotificationCenter defaultCenter] postNotification:note];
+            break;
+        default:
+            break;
+    }
+    
+    // show in the status bar that network activity is starting
+    if (needDispNetState) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    }
+    
+    NSData *postData = nil;
+    NSString *postLength = nil;
+    NSURLResponse *response = nil;
+    NSData *returnData = nil;
+    NSHTTPURLResponse *httpResponse = nil;
+    NSString *responseString = nil;
+    
+    @autoreleasepool {
+        postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+        postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+        
+        [request setURL:[NSURL URLWithString:phpFile]];
+        if (additionalHeader) {
+            NSArray *keys = additionalHeader.allKeys;
+            for (NSString *key in keys) {
+                NSString *value = [additionalHeader objectForKey:key];
+                NSLog(@"POST add Header: %@ value: %@", key, value);
+                [request addValue:value forHTTPHeaderField:key];
+            }
+        }
+        [request setHTTPMethod:@"POST"];
+        [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+        [request setHTTPBody:postData];
+        returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+        httpResponse = (NSHTTPURLResponse *) response;
+        if ([httpResponse statusCode] != 200) {
+            NSLog(@"Response error: http status %ld", (long)[httpResponse statusCode]);
+            responseString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+            NSLog(@"%@", responseString);
+        }
+        
+        if (saveSetCookie) {
+            NSDictionary *headers = httpResponse.allHeaderFields;
+            NSLog(@"setCookie resp: %@", headers);
+            
+            NSString *setCookie = [headers objectForKey:@"Set-Cookie"];
+            if (setCookie && [setCookie length] > 0) {
+                [CureMeUtils defaultCureMeUtil].loginCookie = setCookie;
+            }
+        }
+        
+        // show in the status bar that network activity is starting
+        if (needDispNetState) {
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        }
+    }
+    
+    NSString *strResp = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+    NSLog(@"sendRequestWithHeaderAndResponse reqp: %@", strResp);
     
     return returnData;
 }

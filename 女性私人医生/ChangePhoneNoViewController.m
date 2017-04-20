@@ -52,7 +52,7 @@
     [sendBtn setTitle:@"提交修改" forState:UIControlStateNormal];
     sendBtn.backgroundColor = codeBtn.backgroundColor;
     sendBtn.titleLabel.textColor = [UIColor whiteColor];
-    [sendBtn addTarget:self action:@selector(sendBtnClickAction:) forControlEvents:UIControlEventTouchUpInside];
+    [sendBtn addTarget:self action:@selector(sendBtnClickAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:sendBtn];
 }
 

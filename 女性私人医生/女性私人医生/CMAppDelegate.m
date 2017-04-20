@@ -172,8 +172,11 @@ void uncaughtExceptionHandler(NSException *exception)
     // 3. 如果UserID有效，则更新一次LoginCookie
     // {"result":true,"msg":1000001,"unreadcount":{"replycount":0,"channelcount":0,"chatcount":0},"chatservers":{"chatserver":"n2.medapp.ranknowcn.com","chatport":"3810","chatnport":"3820"}}
     if ([CureMeUtils defaultCureMeUtil].userID > 0) {
-        NSString *post = [[NSString alloc] initWithFormat:@"action=login&username=%@&password=%@&token=%@", [[CureMeUtils defaultCureMeUtil].userName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], [[CureMeUtils defaultCureMeUtil].password stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], [[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN]];
-        NSData *response = sendRequestWithCookie(@"m.php", post, @"", true);
+        NSString *urlStr = @"http://new.medapp.ranknowcn.com/api/m.php?action=login&version=3.0";
+//        NSString *post = [[NSString alloc] initWithFormat:@"action=login&username=%@&password=%@&token=%@", [[CureMeUtils defaultCureMeUtil].userName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], [[CureMeUtils defaultCureMeUtil].password stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], [[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN]];
+        
+        NSString *post = [NSString stringWithFormat:@"username=%@&password=%@&token=%@&version=3.3&deviceid=%@&source=apple",[CureMeUtils defaultCureMeUtil].userName,[CureMeUtils defaultCureMeUtil].password,[[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN],[CureMeUtils defaultCureMeUtil].uniID];
+        NSData *response = sendRequestWithCookie(urlStr, post, @"", true);
         NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
         NSLog(@"application loading loginCookie resp: %@", strResp);
         [[CureMeUtils defaultCureMeUtil] updatePollServerInfo:strResp];

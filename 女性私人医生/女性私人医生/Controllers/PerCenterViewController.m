@@ -100,6 +100,8 @@
         self.tableView.frame = tableFrame;
         //[self.tableView setContentOffset:CGPointMake(0.0, 20.0) animated:NO];
     }
+    
+    [self.tableView reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -164,11 +166,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
-    if ([CureMeUtils defaultCureMeUtil].hasLogin) {
-        return 3;
-    }
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -198,9 +196,9 @@
     
     if (indexPath.section == 0) {
         CMPerCenterHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:HeaderCell];
-        if (!cell) {
-            cell = [[CMPerCenterHeaderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:HeaderCell];
-        }
+        cell = nil;
+        cell = [[CMPerCenterHeaderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:HeaderCell];
+        
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         [cell setPerCenterViewController:self];
         
@@ -275,6 +273,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
+        
+        if (![CureMeUtils defaultCureMeUtil].hasLogin) {
+            LoginViewController *loginVC = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+            [self.navigationController pushViewController:loginVC animated:YES];
+            hasShownLoginViewController = true;
+            return;
+        }
+        
         personalDetailTableViewController *personDetialVc = [[personalDetailTableViewController alloc] init];
         [self.navigationController pushViewController:personDetialVc animated:YES];
     }

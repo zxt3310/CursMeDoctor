@@ -27,6 +27,7 @@
     logOutBtn.backgroundColor = UIColorFromHex(0xf65378, 1);
     [logOutBtn setTitle:@"退出当前帐号" forState:UIControlStateNormal];
     logOutBtn.titleLabel.textColor = [UIColor whiteColor];
+    [logOutBtn addTarget:self action:@selector(logOff) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:logOutBtn];
 }
 
@@ -170,6 +171,33 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     [self.view endEditing:YES];
 }
+
+
+- (bool)logOff
+{
+    NSString *post = [NSString stringWithFormat:@"action=logout&userid=%ld&lastactivity=%.2f", (long)[CureMeUtils defaultCureMeUtil].userID, [[NSDate alloc] init].timeIntervalSince1970];
+    NSLog(@"logoff %@", post);
+    
+    NSData *response = sendRequest(@"m.php", post);
+    
+    NSString *logoffStr = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
+    NSLog(@"logOff: %@", logoffStr);
+    
+    NSDictionary *jsonData = parseJsonResponse(response);
+    NSNumber *result = [jsonData objectForKey:@"result"];
+    if (!result || result.integerValue != 1) {
+        NSLog(@"logOff error: %@", [jsonData objectForKey:@"msg"]);
+    }
+    
+    [[CureMeUtils defaultCureMeUtil] resetUserInfo];
+    [[CureMeUtils defaultCureMeUtil] clearUserInfoStore];
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    return true;
+}
+
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
