@@ -56,6 +56,9 @@
     [passwordField setEnabled:YES];
     passwordField.secureTextEntry = YES;
     
+    _line1Lb.layer.borderWidth = _line2Lb.layer.borderWidth = 1;
+    _line1Lb.layer.borderColor = _line2Lb.layer.borderColor = UIColorFromHex(0xbfbfbf,0.3).CGColor;
+    
     [self.navigationItem setTitle:@"注册账号"];
 
 //    // 设置NavigationBar的返回按钮效果
@@ -287,30 +290,30 @@
     [[CureMeUtils defaultCureMeUtil] initUserLoginInfo];
     [[CureMeUtils defaultCureMeUtil] initUserPersonalInfo];
     
-    {
-        CMMainTabViewController *mainTabVC = (CMMainTabViewController *)[[self.navigationController viewControllers] objectAtIndex:0];
-
-        NSMutableArray *VCs = [[NSMutableArray alloc] initWithArray:[mainTabVC viewControllers]];
-        // “我的咨询”页面
-        UIViewController *listViewController = [VCs objectAtIndex:1];
-        if (![listViewController isKindOfClass:[CMMyChatListViewController class]]) {
-            CMMyChatListViewController *myChatListVC = [[CMMyChatListViewController alloc] initWithNibName:@"CMMyChatListViewController" bundle:nil]; //[[CMMyChatListViewController alloc] initWithStyle:UITableViewStylePlain];
-            [VCs setObject:myChatListVC atIndexedSubscript:1];
-        }
-        
-        // “我的预约”页面
-        listViewController = [VCs objectAtIndex:3];
-        if (![listViewController isKindOfClass:[MyBookListViewController class]]) {
-            MyBookListViewController *myBookListVC = [[MyBookListViewController alloc] initWithNibName:@"MyBookListViewController" bundle:nil]; //[[MyBookListViewController alloc] initWithStyle:UITableViewStylePlain];
-            [VCs setObject:myBookListVC atIndexedSubscript:3];
-        }
-        [mainTabVC setViewControllers:[VCs copy]];
-    }
+//    {
+//        CMMainTabViewController *mainTabVC = (CMMainTabViewController *)[[self.navigationController viewControllers] objectAtIndex:0];
+//
+//        NSMutableArray *VCs = [[NSMutableArray alloc] initWithArray:[mainTabVC viewControllers]];
+//        // “我的咨询”页面
+//        UIViewController *listViewController = [VCs objectAtIndex:1];
+//        if (![listViewController isKindOfClass:[CMMyChatListViewController class]]) {
+//            CMMyChatListViewController *myChatListVC = [[CMMyChatListViewController alloc] initWithNibName:@"CMMyChatListViewController" bundle:nil]; //[[CMMyChatListViewController alloc] initWithStyle:UITableViewStylePlain];
+//            [VCs setObject:myChatListVC atIndexedSubscript:1];
+//        }
+//        
+//        // “我的预约”页面
+//        listViewController = [VCs objectAtIndex:3];
+//        if (![listViewController isKindOfClass:[MyBookListViewController class]]) {
+//            MyBookListViewController *myBookListVC = [[MyBookListViewController alloc] initWithNibName:@"MyBookListViewController" bundle:nil]; //[[MyBookListViewController alloc] initWithStyle:UITableViewStylePlain];
+//            [VCs setObject:myBookListVC atIndexedSubscript:3];
+//        }
+//        [mainTabVC setViewControllers:[VCs copy]];
+//    }
 
     // 如果注册成功，发送最新的Push token + GUID + userid
     updateIOSPushInfo();
     
-    //    [[self navigationController] popViewControllerAnimated:YES];
+        [[self navigationController] popToRootViewControllerAnimated:YES];
 }
 
 - (IBAction)gotoLoginBtnClicked:(id)sender {

@@ -29,13 +29,14 @@
 #import "MyBookListViewController.h"
 #import "personalDetailTableViewController.h"
 #import "CMPersonSetingViewController.h"
+#import "RegisteOfficeMemberViewController.h"
 
 
 @interface PerCenterViewController ()
-
+{
+    UIButton *registVipBtn;
+}
 @end
-
-
 
 @implementation PerCenterViewController
 
@@ -65,9 +66,23 @@
     
     self.tableView.userInteractionEnabled = YES;
     
+    self.tableView.scrollEnabled = NO;
+    
     [self.tableView reloadData];
     
     [self.navigationItem setTitle:@"个人中心"];
+    
+    registVipBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    registVipBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 115,
+                                    452 * SCREEN_HEIGHT/667,
+                                    230,
+                                    40);
+    [registVipBtn setTitle:@"填写个人信息成为正式用户" forState:UIControlStateNormal];
+    registVipBtn.titleLabel.textColor = [UIColor whiteColor];
+    registVipBtn.backgroundColor = UIColorFromHex(0xf65378, 1);
+    registVipBtn.hidden = YES;
+    [registVipBtn addTarget:self action:@selector(registOfficeMember) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:registVipBtn];
 }
 
 - (void)viewDidUnload
@@ -113,6 +128,12 @@
         [self.navigationController pushViewController:loginVC animated:YES];
         hasShownLoginViewController = true;
         return;
+    }
+    else if ([CureMeUtils defaultCureMeUtil].hasLogin & [CureMeUtils defaultCureMeUtil].isUnRegLoginUser){
+        registVipBtn.hidden = NO;
+    }
+    else{
+        registVipBtn.hidden = YES;
     }
 }
 
@@ -275,10 +296,15 @@
     if (indexPath.section == 0) {
         
         if (![CureMeUtils defaultCureMeUtil].hasLogin) {
-            LoginViewController *loginVC = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
-            [self.navigationController pushViewController:loginVC animated:YES];
-            hasShownLoginViewController = true;
-            return;
+            if (![CureMeUtils defaultCureMeUtil].isUnRegLoginUser) {
+                LoginViewController *loginVC = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+                [self.navigationController pushViewController:loginVC animated:YES];
+                hasShownLoginViewController = true;
+                return;
+            }
+            else{
+                [self registOfficeMember];
+            }
         }
         
         personalDetailTableViewController *personDetialVc = [[personalDetailTableViewController alloc] init];
@@ -358,6 +384,8 @@
     return true;
 }
 
+
+
 - (void)login
 {
     LoginViewController *loginVC = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
@@ -374,6 +402,11 @@
         return;
     
     [self.navigationController pushViewController:registerVC animated:YES];
+}
+
+- (void)registOfficeMember{
+    RegisteOfficeMemberViewController *romvc = [[RegisteOfficeMemberViewController alloc] init];
+    [self.navigationController pushViewController:romvc animated:YES];
 }
 
 @end

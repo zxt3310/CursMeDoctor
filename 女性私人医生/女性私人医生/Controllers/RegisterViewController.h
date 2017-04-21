@@ -34,9 +34,14 @@
 @property (strong, nonatomic) IBOutlet UITextField *passwordField;
 @property (strong, nonatomic) IBOutlet UILabel *cityField;
 
+
 - (IBAction)registerBtnClicked:(id)sender;
 - (IBAction)gotoLoginBtnClicked:(id)sender;
 - (IBAction)selectRegionBtnClicked:(id)sender;
+
+@property (strong, nonatomic) IBOutlet UILabel *line1Lb;
+@property (strong, nonatomic) IBOutlet UILabel *line2Lb;
+
 
 - (void)startLocationManager;
 - (void)stopLocationManager;

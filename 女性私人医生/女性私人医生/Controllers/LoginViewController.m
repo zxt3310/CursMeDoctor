@@ -203,27 +203,27 @@
         // 登录成功，此时发送设备token以及GUID
         updateIOSPushInfo();
 
-        // 此时更新TabBar的页面
-        {
-            // 跳转到“我的咨询”页面
-            CMMainTabViewController *mainTabVC = (CMMainTabViewController *)[[self.navigationController viewControllers] objectAtIndex:0];
-            
-            NSMutableArray *VCs = [[NSMutableArray alloc] initWithArray:[mainTabVC viewControllers]];
-            // “我的咨询”页面
-            UIViewController *listViewController = [VCs objectAtIndex:1];
-            if (![listViewController isKindOfClass:[CMMyChatListViewController class]]) {
-                CMMyChatListViewController *myChatListVC = [[CMMyChatListViewController alloc] initWithNibName:@"CMMyChatListViewController" bundle:nil]; //[[CMMyChatListViewController alloc] initWithStyle:UITableViewStylePlain];
-                [VCs setObject:myChatListVC atIndexedSubscript:1];
-            }
-            
-            // “我的预约”页面
-            listViewController = [VCs objectAtIndex:3];
-            if (![listViewController isKindOfClass:[MyBookListViewController class]]) {
-                MyBookListViewController *myBookListVC = [[MyBookListViewController alloc] initWithNibName:@"MyBookListViewController" bundle:nil];//[[MyBookListViewController alloc] initWithStyle:UITableViewStylePlain];
-                [VCs setObject:myBookListVC atIndexedSubscript:3];
-            }
-            [mainTabVC setViewControllers:[VCs copy]];
-        }
+//        // 此时更新TabBar的页面
+//        {
+//            // 跳转到“我的咨询”页面
+//            CMMainTabViewController *mainTabVC = (CMMainTabViewController *)[[self.navigationController viewControllers] objectAtIndex:0];
+//            
+//            NSMutableArray *VCs = [[NSMutableArray alloc] initWithArray:[mainTabVC viewControllers]];
+//            // “我的咨询”页面
+//            UIViewController *listViewController = [VCs objectAtIndex:1];
+//            if (![listViewController isKindOfClass:[CMMyChatListViewController class]]) {
+//                CMMyChatListViewController *myChatListVC = [[CMMyChatListViewController alloc] initWithNibName:@"CMMyChatListViewController" bundle:nil]; //[[CMMyChatListViewController alloc] initWithStyle:UITableViewStylePlain];
+//                [VCs setObject:myChatListVC atIndexedSubscript:1];
+//            }
+//            
+//            // “我的预约”页面
+//            listViewController = [VCs objectAtIndex:3];
+//            if (![listViewController isKindOfClass:[MyBookListViewController class]]) {
+//                MyBookListViewController *myBookListVC = [[MyBookListViewController alloc] initWithNibName:@"MyBookListViewController" bundle:nil];//[[MyBookListViewController alloc] initWithStyle:UITableViewStylePlain];
+//                [VCs setObject:myBookListVC atIndexedSubscript:3];
+//            }
+//            [mainTabVC setViewControllers:[VCs copy]];
+//        }
 
         [[self navigationController] popToRootViewControllerAnimated:YES];
         //[[self navigationController] popViewControllerAnimated:YES];
