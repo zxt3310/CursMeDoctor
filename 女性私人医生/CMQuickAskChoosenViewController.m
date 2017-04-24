@@ -109,6 +109,7 @@
         currentLocatStr.font = [UIFont systemFontOfSize:15];
         currentLocatStr.textColor = [UIColor grayColor];
         [self.view addSubview:currentLocatStr];
+        _currentLocation = [NSString stringWithFormat:@"%@ %@",[CureMeUtils defaultCureMeUtil].province,[CureMeUtils defaultCureMeUtil].cityOrDistrict];
         
         UILabel *localStr = [[UILabel alloc] initWithFrame:CGRectMake(currentLocatStr.frame.origin.x + currentLocatStr.frame.size.width,15,200,15)];
         localStr.text = _currentLocation;
@@ -295,7 +296,7 @@
             NSString *city = cellRight.textLabel.text;
             
             [self.navigationController popViewControllerAnimated:YES];
-            [_chooseDelegate refreshChosedLocation:province City:city];
+            [_chooseDelegate refreshChosedLocation:province City:city Province:[fullProvinceArray[currentLeftIndex.row] integerValue] userCity:[currentSelectKeyArray[indexPath.row] integerValue]];
         }
         currentRightIndex = indexPath;
     }

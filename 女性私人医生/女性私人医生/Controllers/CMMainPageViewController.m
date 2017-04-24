@@ -681,7 +681,7 @@ BOOL isLFMShow;
        return NO;
 }
 
-- (void)refreshChosedLocation:(NSString *)province City:(NSString *)city{
+- (void)refreshChosedLocation:(NSString *)province City:(NSString *)city Province:(NSInteger)city1 userCity:(NSInteger)city2{
     addressTF.text = [NSString stringWithFormat:@"%@ %@",province,city];
     
     CGRect temp = addressTF.frame;

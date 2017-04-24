@@ -1818,49 +1818,50 @@ NSString *md5Str;
         cdCheckTimer = nil;
         return;
     }
-    NSString *urlStr = [NSString stringWithFormat:@"%@check?imei=%ld&chatid=%ld&maxid=%ld&md5=%@&inputtext=%@&inputstate=%ld",iatao_server_url,(long)[CureMeUtils defaultCureMeUtil].userID,(long)self.chatID,(long)swtMaxID,md5Str,[questionInput.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],(long)(questionInput.text.length>0?1:0)];
-    NSData *response = sendGetReqWithHeaderAndRespDict(urlStr, nil, nil, NO);
-    dispatch_async(dispatch_get_main_queue(), ^{
-    
-        if (response == nil) {
-            NSLog(@"cdCheck response faild");
-            return ;
-        }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSString *urlStr = [NSString stringWithFormat:@"%@check?imei=%ld&chatid=%ld&maxid=%ld&md5=%@&inputtext=%@&inputstate=%ld",iatao_server_url,(long)[CureMeUtils defaultCureMeUtil].userID,(long)self.chatID,(long)swtMaxID,md5Str,[questionInput.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],(long)(questionInput.text.length>0?1:0)];
+        NSData *response = sendGetReqWithHeaderAndRespDict(urlStr, nil, nil, NO);
+        dispatch_async(dispatch_get_main_queue(), ^{
         
-        NSDictionary *jsonData = parseJsonResponse(response);
-        if (jsonData == nil) {
-            NSLog(@"cdCheck jsonData faild");
-            return;
-        }
-        NSNumber *result = JsonValue([jsonData objectForKey:@"err"], CLASS_NUMBER);
-        if (result == nil) {
-            NSLog(@"cdCheck result faild");
-        }
-        if ([result integerValue] != 0) {
-            NSLog(@"cdCheck faild errMsg:%@",JsonValue([jsonData objectForKey:@"ermsg"],CLASS_STRING));
-            return;
-        }
-        
-        NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
-        NSLog(@"%@",replaceUnicode(strResp));
-        
-        NSDictionary *chatData = JsonValue([jsonData objectForKey:@"data"], CLASS_DICTIONARY);
-        NSArray *chatList = JsonValue([chatData objectForKey:@"list"],CLASS_ARRAY);
-        NSDictionary *lastChatDic = JsonValue([chatList lastObject],CLASS_DICTIONARY);
-        NSString *chatStr = JsonValue([lastChatDic objectForKey:@"msg"], CLASS_STRING);
-        NSNumber *newMaxid = JsonValue([chatData objectForKey:@"maxid"],CLASS_NUMBER);
-        if (chatStr.length>0) {
-            [self addDoctorClientMessage:chatStr msgDate:[NSDate date]];
+            if (response == nil) {
+                NSLog(@"cdCheck response faild");
+                return ;
+            }
             
-            [self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
-        }
-        else return;
-        
-        if (newMaxid != nil) {
-            swtMaxID = [newMaxid integerValue];
-            [self sendLogRequest:@"newmsg"];
-        }
-        
+            NSDictionary *jsonData = parseJsonResponse(response);
+            if (jsonData == nil) {
+                NSLog(@"cdCheck jsonData faild");
+                return;
+            }
+            NSNumber *result = JsonValue([jsonData objectForKey:@"err"], CLASS_NUMBER);
+            if (result == nil) {
+                NSLog(@"cdCheck result faild");
+            }
+            if ([result integerValue] != 0) {
+                NSLog(@"cdCheck faild errMsg:%@",JsonValue([jsonData objectForKey:@"ermsg"],CLASS_STRING));
+                return;
+            }
+            
+            NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",replaceUnicode(strResp));
+            
+            NSDictionary *chatData = JsonValue([jsonData objectForKey:@"data"], CLASS_DICTIONARY);
+            NSArray *chatList = JsonValue([chatData objectForKey:@"list"],CLASS_ARRAY);
+            NSDictionary *lastChatDic = JsonValue([chatList lastObject],CLASS_DICTIONARY);
+            NSString *chatStr = JsonValue([lastChatDic objectForKey:@"msg"], CLASS_STRING);
+            NSNumber *newMaxid = JsonValue([chatData objectForKey:@"maxid"],CLASS_NUMBER);
+            if (chatStr.length>0) {
+                [self addDoctorClientMessage:chatStr msgDate:[NSDate date]];
+                
+                [self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
+            }
+            else return;
+            
+            if (newMaxid != nil) {
+                swtMaxID = [newMaxid integerValue];
+                [self sendLogRequest:@"newmsg"];
+            }            
+        });
     });
 }
 //------------------------
@@ -2404,6 +2405,7 @@ NSString *md5Str;
                 welcomeStr = [listDic[0] objectForKey:@"msg"];
             }
             cdCheckTimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(cdCheckRequestIAT:) userInfo:nil repeats:YES];
+            [[NSRunLoop currentRunLoop] addTimer:cdCheckTimer forMode:NSRunLoopCommonModes];
             [self reloadIATinfoView];
 //            welcomeStr = @"问来问去不如问医生，请把您的问题输入下面聊天框，将由专人为您解答！";
             if (welcomeStr.length>0) {

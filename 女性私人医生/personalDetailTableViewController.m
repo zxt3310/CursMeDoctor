@@ -140,7 +140,7 @@
                 [cell.contentView addSubview:lable];
             }
             UILabel *lable = (UILabel *)[cell.contentView viewWithTag:1];
-            lable.text = [NSString stringWithFormat:@"%@ %@", [CureMeUtils defaultCureMeUtil].province,[[NSUserDefaults standardUserDefaults] objectForKey:USER_CITY_NAME]];
+            lable.text = [NSString stringWithFormat:@"%@ %@",[[CureMeUtils defaultCureMeUtil] regionWithRegionID:[[[NSUserDefaults standardUserDefaults] objectForKey:USER_REGION] integerValue]],[[NSUserDefaults standardUserDefaults] objectForKey:USER_CITY_NAME]];
             CGRect temp = lable.frame;
             temp.size.width = lable.font.pointSize * lable.text.length;
             temp.origin.x = SCREEN_WIDTH - temp.size.width - 17;

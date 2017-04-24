@@ -189,15 +189,15 @@ void uncaughtExceptionHandler(NSException *exception)
     
     // 2. 我的咨询Page
     UIViewController *listViewController = nil;
-    if ([CureMeUtils defaultCureMeUtil].hasLogin) {
+//    if ([CureMeUtils defaultCureMeUtil].hasLogin) {
         CMMyChatListViewController *myChatListVC = [[CMMyChatListViewController alloc] initWithNibName:@"CMMyChatListViewController" bundle:nil];//[[CMMyChatListViewController alloc] initWithStyle:UITableViewStylePlain];
         myChatListVC.isMainTabController = true;
         listViewController = myChatListVC;
-    }
-    else {
-        CMChooseQueryOfficeTableViewController *chooseVC = [[CMChooseQueryOfficeTableViewController alloc] initWithNibName:@"CMChooseQueryOfficeTableViewController" bundle:nil]; //[[CMChooseQueryOfficeTableViewController alloc] initWithStyle:UITableViewStylePlain];
-        listViewController = chooseVC;
-    }
+ //   }
+//    else {
+//        CMChooseQueryOfficeTableViewController *chooseVC = [[CMChooseQueryOfficeTableViewController alloc] initWithNibName:@"CMChooseQueryOfficeTableViewController" bundle:nil]; //[[CMChooseQueryOfficeTableViewController alloc] initWithStyle:UITableViewStylePlain];
+//        listViewController = chooseVC;
+//    }
     
     // 3. 我的消息Page
     WebViewController *webVC = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
@@ -207,15 +207,15 @@ void uncaughtExceptionHandler(NSException *exception)
 
     // 4. 我的预约Page
     UIViewController *bookListViewController = nil;
-    if ([CureMeUtils defaultCureMeUtil].hasLogin) {
+   // if ([CureMeUtils defaultCureMeUtil].hasLogin) {
         MyBookListViewController *myBookListVC = [[MyBookListViewController alloc] initWithNibName:@"MyBookListViewController" bundle:nil]; //[[MyBookListViewController alloc] initWithStyle:UITableViewStylePlain];
         myBookListVC.isMainTabPage = true;
         bookListViewController = myBookListVC;
-    }
-    else {
-        CMChooseQueryOfficeTableViewController *chooseVC = [[CMChooseQueryOfficeTableViewController alloc] initWithNibName:@"CMChooseQueryOfficeTableViewController" bundle:nil]; //[[CMChooseQueryOfficeTableViewController alloc] initWithStyle:UITableViewStylePlain];
-        bookListViewController = chooseVC;
-    }
+    //}
+//    else {
+//        CMChooseQueryOfficeTableViewController *chooseVC = [[CMChooseQueryOfficeTableViewController alloc] initWithNibName:@"CMChooseQueryOfficeTableViewController" bundle:nil]; //[[CMChooseQueryOfficeTableViewController alloc] initWithStyle:UITableViewStylePlain];
+//        bookListViewController = chooseVC;
+//    }
     
     // 5. 个人中心Page
     PerCenterViewController *perCenterVC = [[PerCenterViewController alloc] initWithStyle:UITableViewStyleGrouped];

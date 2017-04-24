@@ -7,7 +7,8 @@
 //
 
 #import "CustomTableBaseViewController.h"
+#import "CMQuickAskChoosenViewController.h"
 
-@interface RegisteOfficeMemberViewController : CustomTableBaseViewController 
+@interface RegisteOfficeMemberViewController : CustomTableBaseViewController <chooseLocationDelegate,UITextFieldDelegate>
 
 @end

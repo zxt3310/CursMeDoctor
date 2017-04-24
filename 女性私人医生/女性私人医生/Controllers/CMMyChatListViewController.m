@@ -131,12 +131,12 @@
     }
     
     // 如果未登录，但已经显示过一次登录页面
-    if (![CureMeUtils defaultCureMeUtil].hasLogin && !hasShownLoginViewController) {
-        LoginViewController *loginVC = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
-        [self.navigationController pushViewController:loginVC animated:YES];
-        hasShownLoginViewController = true;
-        return;
-    }
+//    if (![CureMeUtils defaultCureMeUtil].hasLogin && !hasShownLoginViewController) {
+//        LoginViewController *loginVC = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+//        [self.navigationController pushViewController:loginVC animated:YES];
+//        hasShownLoginViewController = true;
+//        return;
+//    }
 
     // 如果已登录，并且本次登录ID不同于上次登录ID
 //    if ([CureMeUtils defaultCureMeUtil].hasLogin && lastLoginUserID != [CureMeUtils defaultCureMeUtil].userID) {

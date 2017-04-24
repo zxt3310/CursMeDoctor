@@ -180,7 +180,7 @@
         }
     }
     NSMutableString *post = [[NSMutableString alloc] init];
-    [post appendFormat:@"action=upduserinfo&userid=%ld", (long)[CureMeUtils defaultCureMeUtil].userID];
+    [post appendFormat:@"action=upduserinfo&userid=%ld&username=%@", (long)[CureMeUtils defaultCureMeUtil].userID,[CureMeUtils defaultCureMeUtil].userName];
     switch (_editType) {
         case EDITCELL_AGE:
             [post appendFormat:@"&age=%@", self.stringValue];

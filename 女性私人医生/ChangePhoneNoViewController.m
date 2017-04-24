@@ -78,7 +78,7 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     
         NSString *urlStr = @"http://new.medapp.ranknowcn.com/api/m.php?action=yanzheng_getvcode&version=3.0";
-        NSString *post = [NSString stringWithFormat:@"source=apple&version=3.3&appid=1&switchType=1&os=ios&imei=%@&deviceid=%@&username=%@&mobileTel=%@&userid=",[CureMeUtils defaultCureMeUtil].UDID,[CureMeUtils defaultCureMeUtil].uniID,[CureMeUtils defaultCureMeUtil].userName,PhoneTF.text];
+        NSString *post = [NSString stringWithFormat:@"source=apple&version=3.3&appid=1&switchType=1&os=ios&imei=%@&deviceid=%@&username=%@&mobileTel=%@&userid=%ld",[CureMeUtils defaultCureMeUtil].UDID,[CureMeUtils defaultCureMeUtil].uniID,[CureMeUtils defaultCureMeUtil].userName,PhoneTF.text,[CureMeUtils defaultCureMeUtil].userID];
         NSData *response = sendFullRequest(urlStr, post, nil, NO, NO);
         dispatch_async(dispatch_get_main_queue(), ^{
             if (!response) {
@@ -160,7 +160,7 @@
         
         NSDictionary *returnDic = parseJsonResponse(response);
         if (!returnDic) {
-            [self presentAlert:@"验证码发送失败，返回错误数据"];
+            [self presentAlert:@"修改失败，返回错误数据"];
             return;
         }
         NSNumber *result = JsonValue([returnDic objectForKey:@"result"], CLASS_NUMBER);

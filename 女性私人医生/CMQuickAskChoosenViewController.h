@@ -12,7 +12,7 @@
 
 @protocol chooseLocationDelegate <NSObject>
 @optional
-- (void)refreshChosedLocation:(NSString *) province City:(NSString *) city;
+- (void)refreshChosedLocation:(NSString *) province City:(NSString *) city Province:(NSInteger) city1 userCity:(NSInteger) city2;
 @end
 
 @interface CMQuickAskChoosenAndLocationViewController : CustomBaseViewController <UITableViewDelegate,UITableViewDataSource,CMQuickAskLocationDeletage>
