@@ -519,25 +519,25 @@ NSString *saveTitle;
     }
 }*/
 
-- (void)initSubTypeView
-{
-    if (!subTypeView || subTypeView.officeType != _officeType) {
-        CGRect frame;
-        [subTypeView removeFromSuperview];
-        
-        subTypeView = [[CMQAOfficeSubTypeView alloc] initWithFrame:CGRectZero];
-        [subTypeView setOfficeType:_officeType];
-        [subTypeView clearAllSubTypeBtns];
-        [subTypeView initSubTypeButtons];
-        [subTypeView switchViewTypeToQuery];
-        [subTypeView updateBackgroundImage:[UIImage imageNamed:@"layout_bg.png"]];
-        [subTypeView setHidden:NO];
-        frame = subTypeView.frame;
-        frame.origin.y = 0;
-        subTypeView.frame = frame;
-        [self.view addSubview:subTypeView];
-    }
-}
+//- (void)initSubTypeView
+//{
+//    if (!subTypeView || subTypeView.officeType != _officeType) {
+//        CGRect frame;
+//        [subTypeView removeFromSuperview];
+//        
+//        subTypeView = [[CMQAOfficeSubTypeView alloc] initWithFrame:CGRectZero];
+//        [subTypeView setOfficeType:_officeType];
+//        [subTypeView clearAllSubTypeBtns];
+//        [subTypeView initSubTypeButtons];
+//        [subTypeView switchViewTypeToQuery];
+//        [subTypeView updateBackgroundImage:[UIImage imageNamed:@"layout_bg.png"]];
+//        [subTypeView setHidden:NO];
+//        frame = subTypeView.frame;
+//        frame.origin.y = 0;
+//        subTypeView.frame = frame;
+//        [self.view addSubview:subTypeView];
+//    }
+//}
 
 //- (void)keyboardWillShow:(NSNotification *)notification {
 //    

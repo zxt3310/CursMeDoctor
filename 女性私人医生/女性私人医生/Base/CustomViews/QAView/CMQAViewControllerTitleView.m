@@ -33,14 +33,14 @@
         
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 7.0, 80, 30)];
         _titleLabel.text = officeStringWithType(_officeID);
-        [_titleLabel setFont:[UIFont boldSystemFontOfSize:20]];
+        [_titleLabel setFont:[UIFont boldSystemFontOfSize:18]];
         if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0)
             [_titleLabel setTextAlignment:NSTextAlignmentCenter];
         else
             [_titleLabel setTextAlignment:NSTextAlignmentCenter];
         [_titleLabel setBackgroundColor:[UIColor clearColor]];
         [_titleLabel setMinimumFontSize:12];
-        [_titleLabel setTextColor:[UIColor whiteColor]];
+        [_titleLabel setTextColor:[UIColor blackColor]];
         [self addSubview:_titleLabel];
         
         _titleTriangleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"triang.png"]];
@@ -61,20 +61,20 @@
     _titleTriangleView.image = [UIImage imageNamed:@"triang.png"];
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [super touchesEnded:touches withEvent:event];
-        
-    if (_qaViewController) {
-        if (isTypesExpanded) {
-            [_qaViewController dismissLeveyPopListView];
-        }
-        else {
-            [_qaViewController showAllOfficeTypeView];
-            [self rotateTitleTriangle];
-        }
-    }
-}
+//- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    [super touchesEnded:touches withEvent:event];
+//        
+//    if (_qaViewController) {
+//        if (isTypesExpanded) {
+//            [_qaViewController dismissLeveyPopListView];
+//        }
+//        else {
+//            [_qaViewController showAllOfficeTypeView];
+//            [self rotateTitleTriangle];
+//        }
+//    }
+//}
 
 - (void)rotateTitleTriangle
 {

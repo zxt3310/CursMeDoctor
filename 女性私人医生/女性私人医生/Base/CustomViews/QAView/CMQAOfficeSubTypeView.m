@@ -29,7 +29,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+
         [self setBackgroundColor:[UIColor clearColor]];
         
         _backgroundImage = [[UIImageView alloc] initWithImage:[CMImageUtils defaultImageUtil].qaCellAnswerTailImage];
@@ -43,11 +43,11 @@
         // 整个View的高度
         _viewHeight = 39;
 
-        CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-        [opacityAnimation setFromValue:[NSNumber numberWithFloat:0.0]];
-        [opacityAnimation setToValue:[NSNumber numberWithFloat:1.0]];
-        [opacityAnimation setDuration:1.0];
-        [self.layer addAnimation:opacityAnimation forKey:@"InitShow"];
+//        CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+//        [opacityAnimation setFromValue:[NSNumber numberWithFloat:0.0]];
+//        [opacityAnimation setToValue:[NSNumber numberWithFloat:1.0]];
+//        [opacityAnimation setDuration:1.0];
+//        [self.layer addAnimation:opacityAnimation forKey:@"InitShow"];
     }
     return self;
 }

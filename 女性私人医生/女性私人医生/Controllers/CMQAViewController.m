@@ -18,9 +18,19 @@
 #import "WebViewController.h"
 #import "CMNewQueryViewController.h"
 
-
+#define FF_HEADER_BGCOLOR [UIColor colorWithRed:255.0/255 green:140.0/255 blue:164.0/255 alpha:1.0]
+#define FF_TEXTCOLOR_BLACK [UIColor colorWithRed:74.0/255 green:74.0/255 blue:74.0/255 alpha:1.0]
 @interface CMQAViewController ()
+{
+    UIScrollView *navView;
+    UIButton *currentNavBtn;
+    CGFloat split_width;
+    NSDictionary *typeDataQA;
+    
+    UIView *qa_selectNavView;
+    CGPoint qa_navViewStartPosPoint;
 
+}
 @end
 
 @implementation CMQAViewController
@@ -81,8 +91,6 @@ UIView *protocolView1;
         // 1. 更新QAViewController的控件高度
         CGRect frame = _qaTable.frame;
         if (IOS_VERSION >= 7.0) {
-            //frame.origin.y = 20 + NAVIGATIONBAR_HEIGHT;
-            //frame.size.height -= NAVIGATIONBAR_HEIGHT;
             frame.size.height += 14;
         }
         else {
@@ -139,7 +147,108 @@ UIView *protocolView1;
         [noBtn addTarget:self action:@selector(noBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
         [protocolView1 addSubview:noBtn];
     }
+    
+    
+    split_width = 15;
+    
+    navView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
+    navView.showsHorizontalScrollIndicator = NO;
+    navView.showsVerticalScrollIndicator = NO;
+    navView.panGestureRecognizer.delaysTouchesBegan = YES;//按钮滑动流畅
+    navView.backgroundColor = [UIColor whiteColor];//[UIColor colorWithRed:252.0/255 green:190.0/255 blue:203.0/255 alpha:1.0];
+    //navView.delegate = self;
+    [self.view addSubview:navView];
+    
+    CGFloat navStartPos = split_width;
+    currentNavBtn = [self createNavButton:@"全部" index:0 startPos:navStartPos width:2*14+2];
+    [currentNavBtn setTitleColor:FF_HEADER_BGCOLOR forState:UIControlStateNormal];
+    [navView addSubview:currentNavBtn];
+    navStartPos += 2*14+2 + split_width*2;
+    
+    typeDataQA = [[CMDataUtils defaultDataUtil].officeTypeDict objectForKey:[NSNumber numberWithInteger:_officeType]];
+    
+    if (typeDataQA) {
+       // for (NSInteger i = 0; i<[typeDataQA count]; i++) {
+            //NSDictionary *officeDic = typeDataQA[i];
+            for (NSString *key in typeDataQA) {
+                NSString *btnName = [typeDataQA objectForKey:key];
+                int length = [self countAsciiLength:btnName];
+                CGFloat btnWidth = length*14+2;
+                [navView addSubview:[self createNavButton:btnName index:[key integerValue] startPos:navStartPos width:btnWidth]];
+                navStartPos += btnWidth + split_width*2;
+            
+        }
+    }
+    qa_selectNavView = [[UIView alloc] initWithFrame:CGRectMake(split_width, 35, 2*14+2, 3)];
+    qa_selectNavView.backgroundColor = FF_HEADER_BGCOLOR;//[UIColor colorWithRed:255.0/255 green:205.0/255 blue:206.0/255 alpha:1.0];
+    [navView addSubview:qa_selectNavView];
+    CGSize contentSize = CGSizeMake(navStartPos, 40);
+    navView.contentSize = contentSize;
+
 }
+
+-(void)navBtnClicked:(UIButton *)sender{
+    [currentNavBtn setTitleColor:FF_TEXTCOLOR_BLACK forState:UIControlStateNormal];
+    currentNavBtn = sender;
+    [currentNavBtn setTitleColor:FF_HEADER_BGCOLOR forState:UIControlStateNormal];
+    
+    [self moveSelectView:sender.tag];
+    //self.navigationItem.title = sender.titleLabel.text;
+    if (sender.tag == 0) {
+        [self officeSubTypeSelected:0];
+    }else{
+        [self officeSubTypeSelected:sender.tag];
+    }
+}
+
+-(void)moveSelectView:(NSInteger)index{
+    CGFloat spos = split_width;
+    CGFloat swidth = 14*2+2;
+    if (typeDataQA && index !=0) {
+        
+        for (NSString *key in typeDataQA) {
+            NSString *btnName = [typeDataQA objectForKey:key];
+            int length = [self countAsciiLength:btnName];
+            spos += swidth + split_width*2;
+            swidth = length*14+2;
+            
+            if ([key integerValue] == index)
+                break;
+        }
+    }
+    
+    CGRect frame = CGRectMake(spos, 35, swidth, 3);
+    qa_selectNavView.frame = frame;
+}
+
+-(UIButton *)createNavButton:(NSString *)title index:(NSInteger)index startPos:(CGFloat)startPos width:(CGFloat)width{
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(startPos, 0+6, width, 28);
+    button.titleLabel.font = [UIFont systemFontOfSize:14.0];
+    [button setTitle:title forState:UIControlStateNormal];
+    //[button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button setTitleColor:FF_TEXTCOLOR_BLACK forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(navBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    button.tag = index;
+    return button;
+}
+
+- (int)countAsciiLength:(NSString*)strtemp {
+    int strlength = 0;
+    char* p = (char*)[strtemp cStringUsingEncoding:NSUnicodeStringEncoding];
+    for (int i=0 ; i<[strtemp lengthOfBytesUsingEncoding:NSUnicodeStringEncoding] ;i++) {
+        if (*p) {
+            p++;
+            strlength++;
+        }
+        else {
+            p++;
+        }
+    }
+    return (strlength+1)/2;
+}
+
+//-------------------------------------------------------------------------------
 
 -(void)yesBtnClicked:(UIButton *)sender{
     protocolView1.hidden = YES;
@@ -274,111 +383,111 @@ UIView *protocolView1;
     [self.view becomeFirstResponder];
 }
 
-- (void)keyboardWillShow:(NSNotification *)notification {
-    
-    /*
-     Reduce the size of the text view so that it's not obscured by the keyboard.
-     Animate the resize so that it's in sync with the appearance of the keyboard.
-     */
-    
-    NSDictionary *userInfo = [notification userInfo];
-    
-    // Get the origin of the keyboard when it's displayed.
-    NSValue* aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-    
-    // Get the top of the keyboard as the y coordinate of its origin in self's view's coordinate system. The bottom of the text view's frame should align with the top of the keyboard's final position.
-    CGRect keyboardRect = [aValue CGRectValue];
-    
-    // Get the duration of the animation.
-    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-    NSTimeInterval animationDuration;
-    [animationDurationValue getValue:&animationDuration];
-    
-    // Animate the resize of the text view's frame in sync with the keyboard's appearance.
-    [self moveInputBarWithKeyboardHeight:keyboardRect.size.height withDuration:animationDuration];
-}
-
-
-- (void)keyboardWillHide:(NSNotification *)notification {
-    
-    NSDictionary* userInfo = [notification userInfo];
-    
-    /*
-     Restore the size of the text view (fill self's view).
-     Animate the resize so that it's in sync with the disappearance of the keyboard.
-     */
-    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-    NSTimeInterval animationDuration;
-    [animationDurationValue getValue:&animationDuration];
-    
-    [self moveInputBarWithKeyboardHeight:0.0 withDuration:animationDuration];
-}
-
-- (void)moveInputBarWithKeyboardHeight:(float)height withDuration:(NSTimeInterval)duration
-{
-    // 如果是键盘还原
-    if (height < 0.0001 && height > -0.0001) {
-        // 1. 还原键盘
-//        float originY = [[UIScreen mainScreen] applicationFrame].size.height;
-//        _sendAreaView.frame = CGRectMake(0, originY - 44 - 44, 320, 44);
-//        [_sendAreaView setHidden:YES];
-
-        // 2. 隐藏咨询子分类View
-        [querySubTypeView setHidden:YES];
-        
-        // 3.
-        [_startQueryView setHidden:NO];
-        
-        // 4. 调整Nav元素显示
-        self.navigationItem.title = nil;
-        self.navigationItem.titleView = titleView;
-        self.navigationItem.rightBarButtonItem = rightBarItem;
-    }
-    // 如果是键盘出现
-    else if (height > 0.0001) {
-        CGRect frame;
-        
-        // 1. 显示子分类View，保证从0高度开始覆盖
-        if (!querySubTypeView || querySubTypeView.officeType != _officeType) {
-            [querySubTypeView removeFromSuperview];
-
-            querySubTypeView = [[CMQAOfficeSubTypeView alloc] initWithFrame:CGRectZero];
-            [querySubTypeView setOfficeType:_officeType];
-            [querySubTypeView clearAllSubTypeBtns];
-            [querySubTypeView initSubTypeButtons];
-            querySubTypeView.delegate = self;
-//            [querySubTypeView setQaViewController:self];
-            // 设置科室的子分类
-            [querySubTypeView switchViewTypeToQuery];
-            [querySubTypeView updateBackgroundImage:[UIImage imageNamed:@"layout_bg.png"]];
-            [querySubTypeView setHidden:NO];
-            frame = querySubTypeView.frame;
-            frame.origin.y = 0;
-            querySubTypeView.frame = frame;
-            [self.view addSubview:querySubTypeView];
-        }
-        
-        // 调整Nav元素显示
-        [self initQueryRightBarItem];
-        self.navigationItem.rightBarButtonItem = confirmRightBarItem;
-        self.navigationItem.titleView = nil;
-        self.navigationItem.title = @"咨询";
-        
-        _queryOfficeSubType = _officeSubType;
-        [querySubTypeView setOfficeSubType:_queryOfficeSubType];
-        NSLog(@"querySubTypeView: %@", querySubTypeView);
-
-//        // 1. 显示键盘
-//        float screenHeight = [[UIScreen mainScreen] applicationFrame].size.height;
-//        float sendAreaHeight = screenHeight - height - 44 - querySubTypeView.frame.size.height;
-//        _sendAreaView.hidden = NO;
-//        _sendAreaView.frame = CGRectMake(0, querySubTypeView.frame.size.height, 320, sendAreaHeight);
-//        frame = _sendAreaView.frame;
-//        _sendAreaSendBtn.frame = CGRectMake(255, frame.size.height - 38, 60, 36);
-//        _sendAreaInputField.frame = CGRectMake(5, 5, 310, frame.size.height - 44);
-//        NSLog(@"sendAreaView: %@ querySubTypeView: %@", _sendAreaView, querySubTypeView);
-    }
-}
+//- (void)keyboardWillShow:(NSNotification *)notification {
+//    
+//    /*
+//     Reduce the size of the text view so that it's not obscured by the keyboard.
+//     Animate the resize so that it's in sync with the appearance of the keyboard.
+//     */
+//    
+//    NSDictionary *userInfo = [notification userInfo];
+//    
+//    // Get the origin of the keyboard when it's displayed.
+//    NSValue* aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+//    
+//    // Get the top of the keyboard as the y coordinate of its origin in self's view's coordinate system. The bottom of the text view's frame should align with the top of the keyboard's final position.
+//    CGRect keyboardRect = [aValue CGRectValue];
+//    
+//    // Get the duration of the animation.
+//    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+//    NSTimeInterval animationDuration;
+//    [animationDurationValue getValue:&animationDuration];
+//    
+//    // Animate the resize of the text view's frame in sync with the keyboard's appearance.
+//    [self moveInputBarWithKeyboardHeight:keyboardRect.size.height withDuration:animationDuration];
+//}
+//
+//
+//- (void)keyboardWillHide:(NSNotification *)notification {
+//    
+//    NSDictionary* userInfo = [notification userInfo];
+//    
+//    /*
+//     Restore the size of the text view (fill self's view).
+//     Animate the resize so that it's in sync with the disappearance of the keyboard.
+//     */
+//    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+//    NSTimeInterval animationDuration;
+//    [animationDurationValue getValue:&animationDuration];
+//    
+//    [self moveInputBarWithKeyboardHeight:0.0 withDuration:animationDuration];
+//}
+//
+//- (void)moveInputBarWithKeyboardHeight:(float)height withDuration:(NSTimeInterval)duration
+//{
+//    // 如果是键盘还原
+//    if (height < 0.0001 && height > -0.0001) {
+//        // 1. 还原键盘
+////        float originY = [[UIScreen mainScreen] applicationFrame].size.height;
+////        _sendAreaView.frame = CGRectMake(0, originY - 44 - 44, 320, 44);
+////        [_sendAreaView setHidden:YES];
+//
+//        // 2. 隐藏咨询子分类View
+//        [querySubTypeView setHidden:YES];
+//        
+//        // 3.
+//        [_startQueryView setHidden:NO];
+//        
+//        // 4. 调整Nav元素显示
+//        self.navigationItem.title = nil;
+//        self.navigationItem.titleView = titleView;
+//        self.navigationItem.rightBarButtonItem = rightBarItem;
+//    }
+//    // 如果是键盘出现
+//    else if (height > 0.0001) {
+//        CGRect frame;
+//        
+//        // 1. 显示子分类View，保证从0高度开始覆盖
+//        if (!querySubTypeView || querySubTypeView.officeType != _officeType) {
+//            [querySubTypeView removeFromSuperview];
+//
+//            querySubTypeView = [[CMQAOfficeSubTypeView alloc] initWithFrame:CGRectZero];
+//            [querySubTypeView setOfficeType:_officeType];
+//            [querySubTypeView clearAllSubTypeBtns];
+//            [querySubTypeView initSubTypeButtons];
+//            querySubTypeView.delegate = self;
+////            [querySubTypeView setQaViewController:self];
+//            // 设置科室的子分类
+//            [querySubTypeView switchViewTypeToQuery];
+//            [querySubTypeView updateBackgroundImage:[UIImage imageNamed:@"layout_bg.png"]];
+//            [querySubTypeView setHidden:NO];
+//            frame = querySubTypeView.frame;
+//            frame.origin.y = 0;
+//            querySubTypeView.frame = frame;
+//            [self.view addSubview:querySubTypeView];
+//        }
+//        
+//        // 调整Nav元素显示
+//        [self initQueryRightBarItem];
+//        self.navigationItem.rightBarButtonItem = confirmRightBarItem;
+//        self.navigationItem.titleView = nil;
+//        self.navigationItem.title = @"咨询";
+//        
+//        _queryOfficeSubType = _officeSubType;
+//        [querySubTypeView setOfficeSubType:_queryOfficeSubType];
+//        NSLog(@"querySubTypeView: %@", querySubTypeView);
+//
+////        // 1. 显示键盘
+////        float screenHeight = [[UIScreen mainScreen] applicationFrame].size.height;
+////        float sendAreaHeight = screenHeight - height - 44 - querySubTypeView.frame.size.height;
+////        _sendAreaView.hidden = NO;
+////        _sendAreaView.frame = CGRectMake(0, querySubTypeView.frame.size.height, 320, sendAreaHeight);
+////        frame = _sendAreaView.frame;
+////        _sendAreaSendBtn.frame = CGRectMake(255, frame.size.height - 38, 60, 36);
+////        _sendAreaInputField.frame = CGRectMake(5, 5, 310, frame.size.height - 44);
+////        NSLog(@"sendAreaView: %@ querySubTypeView: %@", _sendAreaView, querySubTypeView);
+//    }
+//}
 
 #pragma mark CMQOfficeSubTypeViewDelegate
 - (void)officeSubTypeSelected:(NSInteger)officeSubType

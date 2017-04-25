@@ -30,10 +30,10 @@
     lastScrollYOffset = 0;
 
     // 添加科室子分类的View
-    subTypeView = [[CMQAOfficeSubTypeView alloc] initWithFrame:CGRectMake(0, 0, 320, 39)];
-    subTypeView.delegate = self;
-    [self addSubview:subTypeView];
-    NSLog(@"CMQATableView subTypeView: %@", subTypeView);
+//    subTypeView = [[CMQAOfficeSubTypeView alloc] initWithFrame:CGRectMake(0, 0, 320, 39)];
+//    subTypeView.delegate = self;
+//    [self addSubview:subTypeView];
+//    NSLog(@"CMQATableView subTypeView: %@", subTypeView);
     
     self.delegate = self;
     self.dataSource = self;
