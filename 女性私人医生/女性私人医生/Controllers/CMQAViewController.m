@@ -18,6 +18,7 @@
 #import "WebViewController.h"
 #import "CMNewQueryViewController.h"
 
+
 #define FF_HEADER_BGCOLOR [UIColor colorWithRed:255.0/255 green:140.0/255 blue:164.0/255 alpha:1.0]
 #define FF_TEXTCOLOR_BLACK [UIColor colorWithRed:74.0/255 green:74.0/255 blue:74.0/255 alpha:1.0]
 @interface CMQAViewController ()
@@ -29,6 +30,7 @@
     
     UIView *qa_selectNavView;
     CGPoint qa_navViewStartPosPoint;
+    CMQAProtocolView *protcolView;
 
 }
 @end
@@ -118,36 +120,9 @@ UIView *protocolView1;
     
     NSNumber *hasMarkApp = [[NSUserDefaults standardUserDefaults] objectForKey:HAS_AGREEPROTOCOL];
     if (!hasMarkApp || hasMarkApp.integerValue == 0) {
-        protocolView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64)];
-        protocolView1.backgroundColor = CM_BACKGROUND_COLOR;
-        [self.view addSubview:protocolView1];
-        protocolView1.hidden = YES;
-        UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-40)];
-        webView.backgroundColor = [UIColor whiteColor];
-        [protocolView1 addSubview:webView];
-        NSString* path=[[NSBundle mainBundle] pathForResource:@"protocol" ofType:@".html"];
-        NSURL* url=[NSURL fileURLWithPath:path];
-        [webView loadRequest:[NSURLRequest requestWithURL:url]];
-        
-        UIButton *yesBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [yesBtn setBackgroundColor:CM_BACKGROUND_RED];
-        [yesBtn setTitle:@"同意" forState:UIControlStateNormal];
-        yesBtn.layer.masksToBounds = YES;
-        [yesBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        yesBtn.frame = CGRectMake(SCREEN_WIDTH*0.75-32, SCREEN_HEIGHT-64-40+3, 64, 34);
-        [yesBtn addTarget:self action:@selector(yesBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [protocolView1 addSubview:yesBtn];
-        
-        UIButton *noBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [noBtn setBackgroundColor:CM_BACKGROUND_RED];
-        [noBtn setTitle:@"取消" forState:UIControlStateNormal];
-        noBtn.layer.masksToBounds = YES;
-        [noBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        noBtn.frame = CGRectMake(SCREEN_WIDTH/4.0-32, SCREEN_HEIGHT-64-40+3, 64, 34);
-        [noBtn addTarget:self action:@selector(noBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [protocolView1 addSubview:noBtn];
-    }
-    
+        protcolView = [[CMQAProtocolView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        protcolView.CmLocationDelegate = self;
+    }    
     
     split_width = 15;
     
@@ -168,15 +143,13 @@ UIView *protocolView1;
     typeDataQA = [[CMDataUtils defaultDataUtil].officeTypeDict objectForKey:[NSNumber numberWithInteger:_officeType]];
     
     if (typeDataQA) {
-       // for (NSInteger i = 0; i<[typeDataQA count]; i++) {
-            //NSDictionary *officeDic = typeDataQA[i];
-            for (NSString *key in typeDataQA) {
-                NSString *btnName = [typeDataQA objectForKey:key];
-                int length = [self countAsciiLength:btnName];
-                CGFloat btnWidth = length*14+2;
-                [navView addSubview:[self createNavButton:btnName index:[key integerValue] startPos:navStartPos width:btnWidth]];
-                navStartPos += btnWidth + split_width*2;
-            
+
+        for (NSString *key in typeDataQA) {
+            NSString *btnName = [typeDataQA objectForKey:key];
+            int length = [self countAsciiLength:btnName];
+            CGFloat btnWidth = length*14+2;
+            [navView addSubview:[self createNavButton:btnName index:[key integerValue] startPos:navStartPos width:btnWidth]];
+            navStartPos += btnWidth + split_width*2;            
         }
     }
     qa_selectNavView = [[UIView alloc] initWithFrame:CGRectMake(split_width, 35, 2*14+2, 3)];
@@ -904,15 +877,15 @@ UIView *protocolView1;
 - (IBAction)startQueryBtnClicked:(id)sender {
     // 准备提交咨询的时候，发起一次定位
     [[CureMeUtils defaultCureMeUtil] startLocationing];
-    NSNumber *regionNum = [[NSUserDefaults standardUserDefaults] objectForKey:USER_REGION];
-    if (!regionNum) {
-        [self popPickerView];
-        return;
-    }
+//    NSNumber *regionNum = [[NSUserDefaults standardUserDefaults] objectForKey:USER_REGION];
+//    if (!regionNum) {
+//        [self popPickerView];
+//        return;
+//    }
     
     NSNumber *hasMarkApp = [[NSUserDefaults standardUserDefaults] objectForKey:HAS_AGREEPROTOCOL];
     if (!hasMarkApp || hasMarkApp.integerValue == 0) {
-        protocolView1.hidden = NO;
+        [self.view addSubview:protcolView];
         return;
     }
 
@@ -1040,4 +1013,12 @@ UIView *protocolView1;
     NSLog(@"post: %@ resp: %@", post, strResp);
 }
 
+- (void)pushNewQuary:(NSInteger)office1 and:(NSInteger)office2{
+    CMNewQueryViewController *queryVC = [CMNewQueryViewController new];
+    queryVC.officeType = _officeType;
+    queryVC.subOfficeType = _officeSubType;
+    queryVC.chatUserID = [CureMeUtils defaultCureMeUtil].userID;
+    [self.navigationController pushViewController:queryVC animated:YES];
+
+}
 @end

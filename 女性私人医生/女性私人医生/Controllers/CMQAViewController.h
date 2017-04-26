@@ -14,7 +14,7 @@
 #import "CMQAOfficeSubTypeView.h"
 #import "CMAlertViewController.h"
 #import "CMPickerViewController.h"
-
+#import "CMQAProtocolView.h"
 
 // 咨询列表页面，标题View
 @class CMQAViewControllerTitleView;
@@ -22,7 +22,7 @@
 // 发起咨询时显示的子分类View
 @class CMQAQueryOfficeSubTypeView;
 
-@interface CMQAViewController : CustomBaseViewController<ImageDownloadHelperDelegate, CMPickerDelegate, LeveyPopListViewDelegate, CMAlertViewControllerDelegate, CMQAOfficeSubTypeViewDelegate>
+@interface CMQAViewController : CustomBaseViewController<ImageDownloadHelperDelegate, CMPickerDelegate, LeveyPopListViewDelegate, CMAlertViewControllerDelegate, CMQAOfficeSubTypeViewDelegate,CMQuickAskLocationDeletage>
 
 {
     ImageDownloadHelper *imageDownloadHelper;

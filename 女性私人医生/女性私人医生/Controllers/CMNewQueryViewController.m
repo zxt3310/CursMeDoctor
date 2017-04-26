@@ -148,8 +148,10 @@ NSString *md5Str;
     doctorLabel.text = @"";
     [infoView addSubview:doctorLabel];
     
-    queryInputView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-64-40, SCREEN_WIDTH, 40)];
+    queryInputView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-64-50, SCREEN_WIDTH, 50)];
     queryInputView.backgroundColor = CM_BACKGROUND_COLOR;
+    queryInputView.layer.borderWidth = 0.5;
+    queryInputView.layer.borderColor = UIColorFromHex(0x9b9b9b, 0.51).CGColor;
     
     UIImageView *picImg = [[UIImageView alloc] initWithFrame:CGRectMake(5, 0, 40, 40)];
     picImg.image = [UIImage imageNamed:@"jiaoliu_tupian"];
@@ -163,22 +165,26 @@ NSString *md5Str;
     picBtn.frame = CGRectMake(5, 0, 40, 40);
     [picBtn addTarget:self action:@selector(picBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [queryInputView addSubview:picBtn];
+    //隐藏图片按钮
+    picBtn.hidden = YES;
+    picImg.hidden = YES;
     
     queryBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [queryBtn setBackgroundColor:CM_BACKGROUND_RED];
     [queryBtn setTitle:@"发送" forState:UIControlStateNormal];
     queryBtn.layer.masksToBounds = YES;
     [queryBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    queryBtn.frame = CGRectMake(SCREEN_WIDTH-5-65, 3, 65, 34);
+    queryBtn.frame = CGRectMake(SCREEN_WIDTH-5-65, 8, 65, 34);
     [queryBtn addTarget:self action:@selector(queryBtnClicked) forControlEvents:UIControlEventTouchUpInside];
     [queryInputView addSubview:queryBtn];
     
     
     UITapGestureRecognizer *queryTapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapQueryContainer)];
-    UIView *query_container = [[UIView alloc] initWithFrame:CGRectMake(50, 0, SCREEN_WIDTH-50-75, 40)];
-    questionInput = [[UITextField alloc] initWithFrame:CGRectMake(0, 4, SCREEN_WIDTH - 50 - 75, 32)];
+    UIView *query_container = [[UIView alloc] initWithFrame:CGRectMake(10, 5, SCREEN_WIDTH-50-75 + 40, 40)];
+    questionInput = [[UITextField alloc] initWithFrame:CGRectMake(0, 2, SCREEN_WIDTH - 50 - 75 + 40, 36)];
     questionInput.borderStyle = UITextBorderStyleRoundedRect;
-    //questionInput.placeholder = @"请输入您的问题";
+    questionInput.placeholder = @"请输入您要咨询的问题";
+    questionInput.layer.cornerRadius = 5;
     [query_container addSubview:questionInput];
     [query_container addGestureRecognizer:queryTapgr];
     [queryInputView addSubview:query_container];

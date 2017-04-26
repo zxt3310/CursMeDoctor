@@ -150,13 +150,13 @@
         
         imageView = [[UIImageView alloc] initWithImage:[CMImageUtils defaultImageUtil].doctorDefaultHeadMImage];
         [imageView setFrame:CGRectMake(5, 4.5, 45, 45)];
-        [[imageView layer] setCornerRadius:3.0];
+        [[imageView layer] setCornerRadius:20];
         [imageView setClipsToBounds:YES];
         [imageView setUserInteractionEnabled:YES];
         [imageView setBackgroundColor:[UIColor clearColor]];
         [imageView setContentMode:UIViewContentModeScaleAspectFit];
         
-        imageViewFrame = [[UIImageView alloc] initWithImage:[CMImageUtils defaultImageUtil].doctorDefaultBGMImage];
+        imageViewFrame = [[UIImageView alloc] init];
         [imageViewFrame addSubview:imageView];
         imageViewFrame.userInteractionEnabled = YES;
         [self addSubview:imageViewFrame];

@@ -122,6 +122,7 @@ static bool needStopDetectReplies;
 @property NSInteger sourceID;   // 源ID，可能是reply，可能是doctor
 
 @property (strong, nonatomic) IBOutlet UITextField *inputField;
+@property (strong, nonatomic) IBOutlet UILabel *lineLb;
 @property NSInteger officeType;
 
 // 发起评价事件
@@ -130,9 +131,11 @@ static bool needStopDetectReplies;
 // 立即咨询View
 @property (strong, nonatomic) IBOutlet UIView *startQueryView;
 - (IBAction)startQueryBtnClicked:(id)sender;
+- (IBAction)startBookBtnClicked:(id)sender;
 
 // 发送咨询输入View
 - (IBAction)sendQueryBtnClicked:(id)sender;
+
 
 @property (nonatomic, strong) NSString *talkerName;
 @property NSInteger talkerID;

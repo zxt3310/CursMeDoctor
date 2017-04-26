@@ -81,11 +81,7 @@ NSString *saveTitle;
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
-//        UITabBarItem *tBI = [self tabBarItem];
-//        [tBI setTitle:@"我的聊天"];
-//        tBI.image = [UIImage imageNamed:@"164-glasses-2.png"];
-//        bubbleTable.delegate = self;
+
     }
     return self;
 }
@@ -122,16 +118,6 @@ NSString *saveTitle;
 {
     [super viewDidLoad];
     
-//    if (_talkerID <= 0) {
-//        UIAlertView *alert = [[UIAlertView alloc]
-//                              initWithTitle:@"聊天"
-//                              message:@"聊天对象ID为设置"
-//                              delegate:self
-//                              cancelButtonTitle:@"OK"
-//                              otherButtonTitles:nil];
-//        [alert show];
-//    }
-    
     chatBookID = 0;
     
     // 1. 初始化DataSource
@@ -152,6 +138,9 @@ NSString *saveTitle;
         [sendMsgBtn setHidden:YES];
         [addImageBtn setHidden:YES];
         [_inputField setHidden:YES];
+        _lineLb.layer.borderColor = UIColorFromHex(0xbcbcbc, 1).CGColor;
+        _startQueryView.layer.borderWidth = 0.5;
+        _startQueryView.layer.borderColor = UIColorFromHex(0x9b9a9b, 0.51).CGColor;
     }
     // 如果Reply用户是登录用户，显示输入聊天按钮
     else {
@@ -285,6 +274,9 @@ NSString *saveTitle;
     [super viewDidUnload];
 }
 
+- (IBAction)startBookBtnClicked:(id)sender{
+    [self startBooking:nil];
+}
 - (IBAction)startBooking:(id)sender
 {
     if (!_doctor) {

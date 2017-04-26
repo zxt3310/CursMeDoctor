@@ -306,13 +306,12 @@
         QAMoreHistoryCell *moreHisCell = [tableView dequeueReusableCellWithIdentifier:MoreHisCellID];
         if (!moreHisCell) {
             moreHisCell = [[QAMoreHistoryCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MoreHisCellID];
+            UILabel *moreHisLb = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, SCREEN_WIDTH, 20)];
+            moreHisLb.text = @"点击获取更多历史咨询";
+            [moreHisLb setTextAlignment:NSTextAlignmentCenter];
+            [moreHisLb setFont:[UIFont systemFontOfSize:15]];
+            [moreHisCell.contentView addSubview:moreHisLb];
         }
-        
-        [moreHisCell.textLabel setText:@"点击获取更多历史咨询"];
-
-        [moreHisCell.textLabel setTextAlignment:UITextAlignmentCenter];
-        [moreHisCell.textLabel setFont:[UIFont systemFontOfSize:15]];
-        moreHisCell.contentView.frame = CGRectMake(0, 0, 320, 18);
 
         return moreHisCell;
     }
@@ -360,7 +359,7 @@
         }
     }
     else if (indexPath.section == 2) {
-        return 36;
+        return 100;
     }
     
     return 0;

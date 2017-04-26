@@ -120,10 +120,10 @@
         
         bubbleImage.image = [CMImageUtils defaultImageUtil].chatOtherBubbleImage;
         if (_dataInternal.data.msgImage) {
-            bubbleImage.frame = CGRectMake(x - 16, y - 5, _dataInternal.labelSize.width + 30, _dataInternal.labelSize.height + 15);
+            bubbleImage.frame = CGRectMake(x - 16, y - 5, _dataInternal.labelSize.width + 30, _dataInternal.labelSize.height + 20);
         }
         else {
-            bubbleImage.frame = CGRectMake(x - 16, y - 4, _dataInternal.labelSize.width + 30, _dataInternal.labelSize.height + 15);
+            bubbleImage.frame = CGRectMake(x - 16, y - 4, _dataInternal.labelSize.width + 30, _dataInternal.labelSize.height + 20);
         }
 //        if ([self dataInternal].data.headImage) {
 //            headImage.image = _dataInternal.data.headImage;
