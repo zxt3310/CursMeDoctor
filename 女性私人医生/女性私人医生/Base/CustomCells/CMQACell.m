@@ -32,15 +32,16 @@
         [self addSubview:qBgImageView];
 
         questionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [questionLabel setFont:[UIFont fontWithName:@"Arial" size:15]];
+        [questionLabel setFont:[UIFont fontWithName:@"Arial" size:16]];
+        [questionLabel setTextColor:UIColorFromHex(0x4a4a4a,1)];
         [questionLabel setNumberOfLines:3];
         [questionLabel setLineBreakMode:NSLineBreakByTruncatingTail];
         [questionLabel setBackgroundColor:[UIColor clearColor]];
         [self addSubview:questionLabel];
         
         timeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [timeLabel setFont:[UIFont systemFontOfSize:12]];
-        [timeLabel setTextColor:[UIColor lightGrayColor]];
+        [timeLabel setFont:[UIFont systemFontOfSize:10]];
+        [timeLabel setTextColor:UIColorFromHex(0x9b9b9b, 1)];
         [timeLabel setBackgroundColor:[UIColor clearColor]];
         [self addSubview:timeLabel];
         
@@ -48,6 +49,7 @@
         [replyCountLabel setFont:[UIFont systemFontOfSize:12]];
         [replyCountLabel setTextColor:[UIColor lightGrayColor]];
         [replyCountLabel setBackgroundColor:[UIColor clearColor]];
+        replyCountLabel.hidden = YES;
         [self addSubview:replyCountLabel];
         
         qImageView = [[UIImageView alloc] initWithImage:[CMImageUtils defaultImageUtil].qaListQuestionDefultImage];
@@ -70,7 +72,7 @@
     qImageView.frame = CGRectMake(14 + inset, inset * 2, 27, 24);
     
     questionLabel.text = _question.question;
-    CGSize qSize = [questionLabel.text sizeWithFont:[UIFont fontWithName:@"Arial" size:15] constrainedToSize:CGSizeMake(249, 60) lineBreakMode:NSLineBreakByTruncatingTail];
+    CGSize qSize = [questionLabel.text sizeWithFont:[UIFont fontWithName:@"Arial" size:16] constrainedToSize:CGSizeMake(249, 60) lineBreakMode:NSLineBreakByTruncatingTail];
     questionLabel.frame = CGRectMake(67, inset * 2, 249 *SCREEN_WIDTH/320, qSize.height);
     
     timeLabel.text = [[CureMeUtils defaultCureMeUtil].dateFormatter stringFromDate:_question.questionTime];
@@ -130,21 +132,22 @@
         [self addSubview:aBgImageView];
 
         answerLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [answerLabel setFont:[UIFont fontWithName:@"Arial" size:15]];
+        [answerLabel setFont:[UIFont fontWithName:@"Arial" size:14]];
         [answerLabel setNumberOfLines:3];
+        [answerLabel setTextColor:UIColorFromHex(0x4a4a4a, 1)];
         [answerLabel setLineBreakMode:NSLineBreakByTruncatingTail];
         [answerLabel setBackgroundColor:[UIColor clearColor]];
         [self addSubview:answerLabel];
         
         nameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [nameLabel setFont:[UIFont systemFontOfSize:14]];
-        [nameLabel setTextColor:[UIColor colorWithRed:200.0/255 green:62.0/255 blue:101.0/255 alpha:1.0]];
+        [nameLabel setFont:[UIFont systemFontOfSize:16]];
+        [nameLabel setTextColor:UIColorFromHex(0x4a4a4a, 1)];//setTextColor:[UIColor colorWithRed:200.0/255 green:62.0/255 blue:101.0/255 alpha:1.0]];
         [nameLabel setBackgroundColor:[UIColor clearColor]];
         [self addSubview:nameLabel];
         
         infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [infoLabel setFont:[UIFont systemFontOfSize:12]];
-        [infoLabel setTextColor:[UIColor lightGrayColor]];
+        [infoLabel setFont:[UIFont systemFontOfSize:13]];
+        [infoLabel setTextColor:UIColorFromHex(0x9b9b9b, 1)];
         [infoLabel setBackgroundColor:[UIColor clearColor]];
         [self addSubview:infoLabel];
         
@@ -160,6 +163,10 @@
         [imageViewFrame addSubview:imageView];
         imageViewFrame.userInteractionEnabled = YES;
         [self addSubview:imageViewFrame];
+        
+        seporatLb = [[UILabel alloc] init];
+        seporatLb.backgroundColor = UIColorFromHex(0xf9f9f9, 1);
+        [self addSubview:seporatLb];
                 
         self.clipsToBounds = YES;
     }
@@ -188,39 +195,46 @@
     nameLabel.frame = CGRectMake(67, inset, 52 *SCREEN_WIDTH, 20);
     
     infoLabel.text = [NSString stringWithFormat:@"%@ %@", _answer.doctorTitle, _answer.hospitalName];
-    infoLabel.frame = CGRectMake(161 *SCREEN_WIDTH/320, inset * 2, 165 *SCREEN_WIDTH/320, 15);
+    infoLabel.frame = CGRectMake(nameLabel.frame.origin.x + nameLabel.text.length * 16 + 7, inset * 2, 165 *SCREEN_WIDTH/320, 15);
     
     answerLabel.text = _answer.answer;
-    CGSize answerSize = [answerLabel.text sizeWithFont:[UIFont fontWithName:@"Arial" size:15] constrainedToSize:CGSizeMake(249 *SCREEN_WIDTH/320, 60) lineBreakMode:NSLineBreakByTruncatingTail];
+    CGSize answerSize = [answerLabel.text sizeWithFont:[UIFont fontWithName:@"Arial" size:14] constrainedToSize:CGSizeMake(249 *SCREEN_WIDTH/320, 60) lineBreakMode:NSLineBreakByTruncatingTail];
     answerLabel.frame = CGRectMake(67, 20 + inset * 2, 249 *SCREEN_WIDTH/320, answerSize.height);
     
-    self.frame = CGRectMake(0, initHeight, SCREEN_WIDTH, _answer.answerViewHeight);
-    
-    UIImage *bgImage = nil;
-    if (_isLastAnswer) {
-        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0) {
-            bgImage = [[CMImageUtils defaultImageUtil].qaCellAnswerTailImage imageWithAlignmentRectInsets:UIEdgeInsetsMake(8, 8, 0, 0)];
-        }
-        else {
-            bgImage = [[CMImageUtils defaultImageUtil].qaCellAnswerTailImage stretchableImageWithLeftCapWidth:8.0 topCapHeight:8.0];
-        }
-    }
-    else {
-        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0) {
-            bgImage = [[CMImageUtils defaultImageUtil].qaCellAnswerMidImage imageWithAlignmentRectInsets:UIEdgeInsetsMake(8, 8, 0, 0)];
-        }
-        else {
-            bgImage = [[CMImageUtils defaultImageUtil].qaCellAnswerMidImage stretchableImageWithLeftCapWidth:8.0 topCapHeight:8.0];
-        }
+    if (infoLabel.frame.origin.x + infoLabel.frame.size.width > answerLabel.frame.origin.x + answerLabel.frame.size.width) {
+        CGRect temp = infoLabel.frame;
+        temp.size.width = answerLabel.frame.origin.x + answerLabel.frame.size.width - infoLabel.frame.origin.x;
+        infoLabel.frame = temp;
     }
     
-    if (_isLastAnswer) {
-        aBgImageView.frame = CGRectMake(0, 1, 320, self.frame.size.height - 1);
-    }
-    else {
-        aBgImageView.frame = CGRectMake(0, 1, 320, self.frame.size.height);
-    }
-    aBgImageView.image = bgImage;
+    self.frame = CGRectMake(0, initHeight, SCREEN_WIDTH, _answer.answerViewHeight + 5);
+    
+//    UIImage *bgImage = nil;
+//    if (_isLastAnswer) {
+//        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0) {
+//            bgImage = [[CMImageUtils defaultImageUtil].qaCellAnswerTailImage imageWithAlignmentRectInsets:UIEdgeInsetsMake(8, 8, 0, 0)];
+//        }
+//        else {
+//            bgImage = [[CMImageUtils defaultImageUtil].qaCellAnswerTailImage stretchableImageWithLeftCapWidth:8.0 topCapHeight:8.0];
+//        }
+//    }
+//    else {
+//        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0) {
+//            bgImage = [[CMImageUtils defaultImageUtil].qaCellAnswerMidImage imageWithAlignmentRectInsets:UIEdgeInsetsMake(8, 8, 0, 0)];
+//        }
+//        else {
+//            bgImage = [[CMImageUtils defaultImageUtil].qaCellAnswerMidImage stretchableImageWithLeftCapWidth:8.0 topCapHeight:8.0];
+//        }
+//    }
+//    
+//    if (_isLastAnswer) {
+//        aBgImageView.frame = CGRectMake(0, 1, SCREEN_WIDTH, self.frame.size.height - 1);
+//    }
+//    else {
+//        aBgImageView.frame = CGRectMake(0, 1, SCREEN_WIDTH, self.frame.size.height);
+//    }
+//    aBgImageView.image = bgImage;
+    seporatLb.frame = CGRectMake(0 , self.frame.size.height - 8, SCREEN_WIDTH, 10);
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event

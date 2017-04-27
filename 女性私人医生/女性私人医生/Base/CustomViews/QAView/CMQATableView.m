@@ -355,7 +355,7 @@
         if (_qaArray && _qaArray.count > indexPath.row) {
             QuestionAnswers *qa = (QuestionAnswers *)[_qaArray objectAtIndex:indexPath.row];
 //            NSLog(@"heightForRowAtIndexPath: %@  %.2f", indexPath, qa.cellHeight);
-            return qa.cellHeight;
+            return qa.cellHeight + 5;
         }
     }
     else if (indexPath.section == 2) {

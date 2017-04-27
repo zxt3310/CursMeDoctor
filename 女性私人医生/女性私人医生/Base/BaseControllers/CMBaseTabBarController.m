@@ -93,9 +93,9 @@
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 5.0) {
         // iOS 5 code
         [self.navigationController.navigationBar setBackgroundImage:buttonImageFromColor([UIColor whiteColor]) forBarMetrics:UIBarMetricsDefault];
-        self.navigationController.navigationBar.layer.shadowColor = [UIColor blackColor].CGColor;
-        self.navigationController.navigationBar.layer.shadowOffset = CGSizeMake(0, 2);
-        self.navigationController.navigationBar.layer.shadowOpacity = 0.3;
+//        self.navigationController.navigationBar.layer.shadowColor = [UIColor blackColor].CGColor;
+//        self.navigationController.navigationBar.layer.shadowOffset = CGSizeMake(0, 2);
+//        self.navigationController.navigationBar.layer.shadowOpacity = 0.3;
     }
     else {
         // iOS 4.x code

@@ -130,7 +130,7 @@
                        [[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN]];
         }
         
-        URL = [[NSURL alloc] initWithString:_strURL];
+        URL = [[NSURL alloc] initWithString:[_strURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         
         NSLog(@"WebViewController URL: %@", URL);
         

@@ -365,6 +365,8 @@ NSString *officeStringWithType(NSInteger officeType)
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:USER_CITY_NAME];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:USER_AGE];
     
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:HAS_AGREEPROTOCOL];
+    
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

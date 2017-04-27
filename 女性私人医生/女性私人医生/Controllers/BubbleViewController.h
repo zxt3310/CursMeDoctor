@@ -16,6 +16,8 @@
 #import "ChatPopupRemindView.h"
 #import "CMMarkDoctorViewController.h"
 #import "CMPickerViewController.h"
+#import "CMQAProtocolView.h"
+
 //20140519 jongs 增加无地域选择下立即查询需要选择地域
 
 enum ScrollAdjustType {
@@ -51,7 +53,7 @@ static bool needStopDetectReplies;
 @class CMQAOfficeSubTypeView;
 @class LoadingView;
 
-@interface BubbleViewController : CustomBaseViewController <UIBubbleTableViewDataSource, UINavigationControllerDelegate, UIImagePickerControllerDelegate, EGORefreshTableHeaderDelegate, ImageDownloadHelperDelegate, CMMarkDoctorViewControllerDelegate, CMPickerDelegate>
+@interface BubbleViewController : CustomBaseViewController <UIBubbleTableViewDataSource, UINavigationControllerDelegate, UIImagePickerControllerDelegate, EGORefreshTableHeaderDelegate, ImageDownloadHelperDelegate, CMMarkDoctorViewControllerDelegate, CMPickerDelegate,CMQuickAskLocationDeletage>
 
 {
     IBOutlet UIBubbleTableView *bubbleTable;
@@ -60,6 +62,7 @@ static bool needStopDetectReplies;
     IBOutlet UIButton *sendMsgBtn;
     IBOutlet UIImageView *sendQuestionImage;
     IBOutlet UILabel *sendQuestionLabel;
+    IBOutlet UIView *queryInputView;
 
     NSMutableArray *bubbleData;
     NSMutableDictionary *doctorImages;

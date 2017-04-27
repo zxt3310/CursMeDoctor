@@ -74,7 +74,7 @@ CMActionSheet *actionSheet;
 @synthesize chatOpenType = _chatOpenType;
 @synthesize doctor = _doctor;
 
-UIView *protocolView;
+CMQAProtocolView *protocolView;
 NSString *saveTitle;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -208,34 +208,8 @@ NSString *saveTitle;
     
     NSNumber *hasMarkApp = [[NSUserDefaults standardUserDefaults] objectForKey:HAS_AGREEPROTOCOL];
     if (!hasMarkApp || hasMarkApp.integerValue == 0) {
-        protocolView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64)];
-        protocolView.backgroundColor = CM_BACKGROUND_COLOR;
-        [self.view addSubview:protocolView];
-        protocolView.hidden = YES;
-        UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-40)];
-        webView.backgroundColor = [UIColor whiteColor];
-        [protocolView addSubview:webView];
-        NSString* path=[[NSBundle mainBundle] pathForResource:@"protocol" ofType:@".html"];
-        NSURL* url=[NSURL fileURLWithPath:path];
-        [webView loadRequest:[NSURLRequest requestWithURL:url]];
-        
-        UIButton *yesBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [yesBtn setBackgroundColor:CM_BACKGROUND_RED];
-        [yesBtn setTitle:@"同意" forState:UIControlStateNormal];
-        yesBtn.layer.masksToBounds = YES;
-        [yesBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        yesBtn.frame = CGRectMake(SCREEN_WIDTH*0.75-32, SCREEN_HEIGHT-64-40+3, 64, 34);
-        [yesBtn addTarget:self action:@selector(yesBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [protocolView addSubview:yesBtn];
-        
-        UIButton *noBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [noBtn setBackgroundColor:CM_BACKGROUND_RED];
-        [noBtn setTitle:@"取消" forState:UIControlStateNormal];
-        noBtn.layer.masksToBounds = YES;
-        [noBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        noBtn.frame = CGRectMake(SCREEN_WIDTH/4.0-32, SCREEN_HEIGHT-64-40+3, 64, 34);
-        [noBtn addTarget:self action:@selector(noBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [protocolView addSubview:noBtn];
+        protocolView = [[CMQAProtocolView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        protocolView.CmLocationDelegate = self;
     }
 }
 
@@ -1826,7 +1800,8 @@ NSString *saveTitle;
     NSInteger hospID = (_doctor.hospitalID <= 0) ? _metaInfoData.identifier : _doctor.hospitalID;
 
     WebViewController *webVC = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
-    [webVC setStrURL:[NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/hospital/hinfo.php?hid=%ld", (long)hospID]];
+    //[webVC setStrURL:[NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/hospital/hinfo.php?hid=%ld", (long)hospID]];
+    [webVC setStrURL:[NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/h5_new/server/app.php?type=doctorinfo&hid=%ld&did=%ld&hname=%@&appid=1",(long)hospID,(long)_doctor.doctorID,_doctor.hospitalName]];
     [self.navigationController pushViewController:webVC animated:YES];
 }
 
@@ -1836,9 +1811,10 @@ NSString *saveTitle;
         NSLog(@"showDoctorDetailPage doctor data invalid");
         return;
     }
-    
+    NSInteger hospID = (_doctor.hospitalID <= 0) ? _metaInfoData.identifier : _doctor.hospitalID;
     WebViewController *webVC = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
-    [webVC setStrURL:[NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/hospital/dinfo.php?did=%ld", (long)_doctor.doctorID]];
+    //[webVC setStrURL:[NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/hospital/dinfo.php?did=%ld", (long)_doctor.doctorID]];
+    [webVC setStrURL:[NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/h5_new/server/app.php?type=doctorinfo&hid=%ld&did=%ld&hname=%@&appid=1",(long)hospID,(long)_doctor.doctorID,_doctor.hospitalName]];
     [self.navigationController pushViewController:webVC animated:YES];
     
 //    DoctorInfoViewController *doctorInfoVC = [[DoctorInfoViewController alloc] initWithNibName:@"DoctorInfoViewController" bundle:nil];
@@ -2434,6 +2410,10 @@ NSString *saveTitle;
             NSLog(@"%@", strURL);
 
             NSMutableDictionary *headers = [[NSMutableDictionary alloc] init];
+            if (!modifyTime || modifyTime.length <= 0) {
+                [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:@"ModifyTime"];
+                modifyTime = @"0";
+            }
             [headers setObject:modifyTime forKey:@"If-Modified-Since"];
             
             if ([lastModifyTime isEqualToString:modifyTime]) {
@@ -2556,7 +2536,7 @@ NSString *saveTitle;
     NSLog(@"add time interval for last msg: %@", date);
     
     // 创建聊天消息
-    NSBubbleData *chatData = [NSBubbleData dataWithTextRemind:@"由于隐私限制，更多对话将不显示" andData:date andType:BubbleTypeSomeoneElse andTalkerID:_chatUserID andCellType:CellTypeTextRemind];
+    NSBubbleData *chatData = [NSBubbleData dataWithTextRemind:@"          由于隐私限制，更多对话将不显示" andData:date andType:BubbleTypeSomeoneElse andTalkerID:_chatUserID andCellType:CellTypeTextRemind];
 
     [bubbleData addObject:chatData];
     
@@ -2590,17 +2570,17 @@ NSString *saveTitle;
 - (IBAction)startQueryBtnClicked:(id)sender {
     // 准备提交咨询的时候，发起一次定位
     [[CureMeUtils defaultCureMeUtil] startLocationing];
-    NSNumber *regionNum = [[NSUserDefaults standardUserDefaults] objectForKey:USER_REGION];
-    if (!regionNum) {
-        [self popPickerView];
-        return;
-    }
+//    NSNumber *regionNum = [[NSUserDefaults standardUserDefaults] objectForKey:USER_REGION];
+//    if (!regionNum) {
+//        [self popPickerView];
+//        return;
+//    }
     
     NSNumber *hasMarkApp = [[NSUserDefaults standardUserDefaults] objectForKey:HAS_AGREEPROTOCOL];
     if (!hasMarkApp || hasMarkApp.integerValue == 0) {
-        protocolView.hidden = NO;
-        saveTitle = self.navigationItem.title;
-        [self.navigationItem setTitle:@"用户协议"];
+        [self.view addSubview:protocolView];
+//        saveTitle = self.navigationItem.title;
+//        [self.navigationItem setTitle:@"用户协议"];
         return;
     }
     
@@ -2772,4 +2752,14 @@ NSString *saveTitle;
 //    _sendQueryTextField.text = @"";
 //    [_sendQueryTextField endEditing:YES];
 }
+
+- (void)pushNewQuary:(NSInteger)office1 and:(NSInteger)office2{
+    CMNewQueryViewController *queryVC = [CMNewQueryViewController new];
+    queryVC.officeType = _officeType;
+    queryVC.subOfficeType = _officeSubType;
+    queryVC.chatUserID = [CureMeUtils defaultCureMeUtil].userID;
+    [self.navigationController pushViewController:queryVC animated:YES];
+
+}
+
 @end

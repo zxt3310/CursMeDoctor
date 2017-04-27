@@ -15,6 +15,7 @@
                 <outlet property="bubbleTable" destination="4" id="5"/>
                 <outlet property="inputField" destination="6" id="9"/>
                 <outlet property="lineLb" destination="vXr-Cq-oOL" id="j4F-ZK-M6Z"/>
+                <outlet property="queryInputView" destination="40" id="PE3-80-wIx"/>
                 <outlet property="sendMsgBtn" destination="8" id="18"/>
                 <outlet property="sendQuestionImage" destination="23" id="24"/>
                 <outlet property="startQueryView" destination="27" id="37"/>

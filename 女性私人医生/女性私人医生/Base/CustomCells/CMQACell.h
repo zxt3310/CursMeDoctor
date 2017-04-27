@@ -43,6 +43,7 @@
     UIImageView *imageView;     // 医生头像
     UIImageView *imageViewFrame;    // 医生头像边框
     UIImageView *aBgImageView;
+    UILabel *seporatLb;
 }
 
 @property (nonatomic, strong) CMQAViewController *qaViewController;

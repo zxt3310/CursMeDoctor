@@ -1715,9 +1715,12 @@ NSString *md5Str;
             _doctorID = [hospitalParams[@"doctorid"] integerValue];
             NSString *tmp = [hospitalParams[@"welcome"] stringByReplacingOccurrencesOfString:@"%u" withString:@"\\u"];
             tmp = [tmp stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-            welcomeStr = replaceUnicode(tmp);
-            [self addSWTDoctorClientMessage:welcomeStr msgDate:[NSDate date]];
-            [self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
+            if (tmp) {
+                welcomeStr = replaceUnicode(tmp);
+                [self addSWTDoctorClientMessage:welcomeStr msgDate:[NSDate date]];
+
+            }
+               [self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
         });
     });
 }

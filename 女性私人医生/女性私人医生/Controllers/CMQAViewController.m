@@ -130,9 +130,11 @@ UIView *protocolView1;
     navView.showsHorizontalScrollIndicator = NO;
     navView.showsVerticalScrollIndicator = NO;
     navView.panGestureRecognizer.delaysTouchesBegan = YES;//按钮滑动流畅
-    navView.backgroundColor = [UIColor whiteColor];//[UIColor colorWithRed:252.0/255 green:190.0/255 blue:203.0/255 alpha:1.0];
-    //navView.delegate = self;
-    [self.view addSubview:navView];
+    navView.backgroundColor = [UIColor whiteColor];
+    navView.layer.shadowColor = [UIColor blackColor].CGColor;
+    navView.layer.shadowOffset = CGSizeMake(0, 2);
+    navView.layer.shadowOpacity = 0.3;
+    navView.clipsToBounds = NO;
     
     CGFloat navStartPos = split_width;
     currentNavBtn = [self createNavButton:@"全部" index:0 startPos:navStartPos width:2*14+2];
@@ -157,7 +159,8 @@ UIView *protocolView1;
     [navView addSubview:qa_selectNavView];
     CGSize contentSize = CGSizeMake(navStartPos, 40);
     navView.contentSize = contentSize;
-
+    
+    [self.view addSubview:navView];
 }
 
 -(void)navBtnClicked:(UIButton *)sender{
