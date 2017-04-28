@@ -31,6 +31,8 @@
 @property bool isMainTabPage;
 @property (nonatomic, strong) NSString *strURL;
 @property (strong, nonatomic) IBOutlet UIWebView *html5View;
+@property NSInteger subOfficeId;
+@property NSInteger childOfficeId;
 
 // 接收未读消息的更新通知
 - (void)ntfUpdateUnreadMsgCount:(NSNotification *)note;

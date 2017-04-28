@@ -23,6 +23,7 @@
 #import "CMMainPageViewController.h"
 
 #import <sys/utsname.h>
+#import "GuideView.h"
 
 /**
  * 实现NSUncaughtExceptionHandler方法
@@ -151,6 +152,11 @@ void uncaughtExceptionHandler(NSException *exception)
     }
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     
+    if([self isFirstLauch])
+    {
+        GuideView *guide = [[GuideView alloc] initWithFrame:self.window.bounds];
+        [self.window addSubview:guide];
+    }
     //    sleep(1);
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -566,6 +572,24 @@ void uncaughtExceptionHandler(NSException *exception)
 
     return nil;
 }
+
+#pragma mark - 判断是不是首次登录或者版本更新
+-(BOOL )isFirstLauch{
+    //获取当前版本号
+    NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
+    NSString *currentAppVersion = infoDic[@"CFBundleShortVersionString"];
+    //获取上次启动应用保存的appVersion
+    NSString *version = [[NSUserDefaults standardUserDefaults] objectForKey:@"kAppVersion"];
+    //版本升级或首次登录
+    if (version == nil || ![version isEqualToString:currentAppVersion]) {
+        [[NSUserDefaults standardUserDefaults] setObject:currentAppVersion forKey:@"kAppVersion"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        return YES;
+    }else{
+        return NO;
+    }
+}
+
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     NSLog(@"Regist fail%@",error);

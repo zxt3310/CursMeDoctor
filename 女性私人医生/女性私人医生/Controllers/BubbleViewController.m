@@ -211,6 +211,20 @@ NSString *saveTitle;
         protocolView = [[CMQAProtocolView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
         protocolView.CmLocationDelegate = self;
     }
+    
+    /**
+     *  @author Zxt, 17-04-28 10:04:11
+     *
+     *  修改咨询文本框样式
+     */
+    addImageBtn.hidden = YES;
+    sendQuestionImage.hidden = YES;
+    queryInputView.layer.borderWidth = 0.5;
+    queryInputView.layer.borderColor = UIColorFromHex(0x9b9b9b, 0.51).CGColor;
+    _inputField.placeholder = @"请输入您要咨询的问题";
+    _inputField.layer.cornerRadius = 5;
+    _inputField.layer.borderWidth = 0.5;
+    _inputField.layer.borderColor = queryInputView.layer.borderColor;
 }
 
 -(void)yesBtnClicked:(UIButton *)sender{
@@ -372,12 +386,12 @@ NSString *saveTitle;
         frame.origin.y = 64;
         frame.size.height = SCREEN_HEIGHT-64-height;
         self.view.frame = frame;
-        bubbleTable.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-40-height);
+        bubbleTable.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-45-height);
     }else{
-        frame.origin.y = 0;
-        frame.size.height = SCREEN_HEIGHT;
+        frame.origin.y = 64;
+        frame.size.height = SCREEN_HEIGHT-64;
         self.view.frame = frame;
-        bubbleTable.frame = CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64-40);
+        bubbleTable.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-45);
     }
     //bubbleTable.frame = CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64-40-height);
     /*if (height<1){
@@ -1668,7 +1682,7 @@ NSString *saveTitle;
     
     // 计算MetaDataCell的高度
     CGSize textSize = [_metaInfoData.intro sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(292, 100) lineBreakMode:NSLineBreakByTruncatingTail];
-    _metaInfoData.metaDataHeight = 10 + 48 + 4 + textSize.height + 4 + 40 + 10;
+    _metaInfoData.metaDataHeight = 10 + 48 + 4 + textSize.height;
 }
 
 - (void)threadGetDoctorHeadImage:(NSString *)imageKey
@@ -1802,6 +1816,8 @@ NSString *saveTitle;
     WebViewController *webVC = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
     //[webVC setStrURL:[NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/hospital/hinfo.php?hid=%ld", (long)hospID]];
     [webVC setStrURL:[NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/h5_new/server/app.php?type=doctorinfo&hid=%ld&did=%ld&hname=%@&appid=1",(long)hospID,(long)_doctor.doctorID,_doctor.hospitalName]];
+    webVC.subOfficeId = self.officeSubType;
+    webVC.childOfficeId = self.officeType;
     [self.navigationController pushViewController:webVC animated:YES];
 }
 
@@ -1815,6 +1831,8 @@ NSString *saveTitle;
     WebViewController *webVC = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
     //[webVC setStrURL:[NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/hospital/dinfo.php?did=%ld", (long)_doctor.doctorID]];
     [webVC setStrURL:[NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/h5_new/server/app.php?type=doctorinfo&hid=%ld&did=%ld&hname=%@&appid=1",(long)hospID,(long)_doctor.doctorID,_doctor.hospitalName]];
+    webVC.subOfficeId = self.officeSubType;
+    webVC.childOfficeId = self.officeType;
     [self.navigationController pushViewController:webVC animated:YES];
     
 //    DoctorInfoViewController *doctorInfoVC = [[DoctorInfoViewController alloc] initWithNibName:@"DoctorInfoViewController" bundle:nil];

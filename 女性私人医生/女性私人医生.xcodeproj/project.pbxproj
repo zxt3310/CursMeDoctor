@@ -315,6 +315,7 @@
 		70762FF91EB08B9D00C36982 /* ico_yygh.png in Resources */ = {isa = PBXBuildFile; fileRef = 70762FF81EB08B9D00C36982 /* ico_yygh.png */; };
 		707871BA1E7947430051C8A4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 707871B91E7947430051C8A4 /* libz.tbd */; };
 		707871BC1E7947590051C8A4 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 707871BB1E7947590051C8A4 /* libxml2.tbd */; };
+		70B2BAFD1EB3308600B92A99 /* GuideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70B2BAFB1EB3308600B92A99 /* GuideView.m */; };
 		70B568E81E9610C700E3D4CF /* ico_msg_and.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B568E71E9610C700E3D4CF /* ico_msg_and.png */; };
 		70B970FF1EB0714200ECBE49 /* iconMsg.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B970FC1EB0714200ECBE49 /* iconMsg.png */; };
 		70B971001EB0714200ECBE49 /* iconMsg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70B970FD1EB0714200ECBE49 /* iconMsg@2x.png */; };
@@ -1160,6 +1161,8 @@
 		70762FF81EB08B9D00C36982 /* ico_yygh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ico_yygh.png; path = "女性私人医生/Resources/images/ico_yygh.png"; sourceTree = "<group>"; };
 		707871B91E7947430051C8A4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		707871BB1E7947590051C8A4 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		70B2BAFB1EB3308600B92A99 /* GuideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuideView.m; sourceTree = "<group>"; };
+		70B2BAFC1EB3308600B92A99 /* GuideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideView.h; sourceTree = "<group>"; };
 		70B568E71E9610C700E3D4CF /* ico_msg_and.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ico_msg_and.png; path = "女性私人医生/Resources/images/ico_msg_and.png"; sourceTree = "<group>"; };
 		70B970FC1EB0714200ECBE49 /* iconMsg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iconMsg.png; path = "女性私人医生/Resources/images/iconMsg.png"; sourceTree = "<group>"; };
 		70B970FD1EB0714200ECBE49 /* iconMsg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iconMsg@2x.png"; path = "女性私人医生/Resources/images/iconMsg@2x.png"; sourceTree = "<group>"; };
@@ -1661,6 +1664,8 @@
 		22FA969C169D06870058E8D4 /* 女性私人医生 */ = {
 			isa = PBXGroup;
 			children = (
+				70B2BAFB1EB3308600B92A99 /* GuideView.m */,
+				70B2BAFC1EB3308600B92A99 /* GuideView.h */,
 				22FA96A5169D06870058E8D4 /* CMAppDelegate.h */,
 				22FA96A6169D06870058E8D4 /* CMAppDelegate.m */,
 				705BFAD91E9773D5000DDEE8 /* Images.xcassets */,
@@ -3018,6 +3023,7 @@
 				2204C26F169FC7900037BE18 /* UserDetailInfoViewController.m in Sources */,
 				2204C274169FC8C10037BE18 /* ChangePasswordViewController.m in Sources */,
 				229D6DE7169FF5B600D6DB94 /* CMBaseTabBarController.m in Sources */,
+				70B2BAFD1EB3308600B92A99 /* GuideView.m in Sources */,
 				229D6E0116A28ACD00D6DB94 /* CMImageUtils.m in Sources */,
 				702B8CA51EA7487E002E726E /* AboutUsViewController.m in Sources */,
 				22FD131716A5BD3A00B1F69C /* CMChatHeaderBtnView.m in Sources */,

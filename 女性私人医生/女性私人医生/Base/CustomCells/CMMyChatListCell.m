@@ -49,6 +49,7 @@
     
     headImageFrame = [[UIImageView alloc] initWithImage:[CMImageUtils defaultImageUtil].doctorDefaultBGMImage];
     headImageFrame.frame = CGRectMake(12, inset * 2, 51, 54);
+    headImageFrame.image = nil;
     [headImageFrame setBackgroundColor:[UIColor clearColor]];
     [headImageFrame addSubview:headImage];
     [self addSubview:headImageFrame];

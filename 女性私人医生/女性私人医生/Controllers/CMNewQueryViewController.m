@@ -88,6 +88,9 @@ UIButton *picBtn;
 UIButton *queryBtn;
 NSString *md5Str;
 
+UILabel *nameLabel;
+UIView *infoView;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     isUserActive = YES;
@@ -116,7 +119,7 @@ NSString *md5Str;
     [self.navigationItem setTitle:@"专家咨询"];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
     
-    UIView *infoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 46)];
+    infoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 46)];
     infoView.backgroundColor = CM_BACKGROUND_COLOR;
     [self.view addSubview:infoView];
     
@@ -124,7 +127,7 @@ NSString *md5Str;
     doctorImg.image = [UIImage imageNamed:@"doctor_b"];
     [infoView addSubview:doctorImg];
     
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 6, 45, 15)];
+    nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 6, 45, 15)];
     nameLabel.font = [UIFont boldSystemFontOfSize:14];
     nameLabel.textColor = [UIColor blackColor];
     nameLabel.text = @"医院：";
@@ -275,7 +278,21 @@ NSString *md5Str;
     infoLabel.text = @"介绍：";
     [self.navigationItem setTitle:[NSString stringWithFormat:@"专家咨询"]];
     hospitalLabel.text = hospitalName;
-    doctorLabel.text = [NSString stringWithFormat:@"%@", hospitalIntro];
+    if (hospitalIntro.length > 0) {
+        doctorLabel.text = [NSString stringWithFormat:@"%@", hospitalIntro];
+    }
+    else{
+        CGRect temp = hospitalLabel.frame;
+        temp.origin.y = infoView.frame.size.height / 2 - hospitalLabel.frame.size.height/2;
+        hospitalLabel.frame = temp;
+        
+        temp = nameLabel.frame;
+        temp.origin.y = hospitalLabel.frame.origin.y;
+        nameLabel.frame = temp;
+        
+        infoLabel.text = @"";
+        doctorLabel.text = @"";
+    }
 }
 /**
  *  @author Zxt, 17-03-29 14:03:23
@@ -392,7 +409,7 @@ NSString *md5Str;
 
 - (void)moveQueryView:(CGFloat)height
 {
-    queryInputView.frame = CGRectMake(0, SCREEN_HEIGHT-64-40-height, SCREEN_WIDTH, 40);
+    queryInputView.frame = CGRectMake(0, SCREEN_HEIGHT-64-50-height, SCREEN_WIDTH, 50);
 }
 
 -(void)tapQueryContainer{
@@ -2421,6 +2438,18 @@ NSString *md5Str;
                 [self addSWTDoctorClientMessage:welcomeStr msgDate:[NSDate date]];
             }
             [self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
+            /**
+             *  @author Zxt, 17-04-28 15:04:23
+             *
+             *  医爱淘没有介绍，重设标题位置；
+             */
+            CGRect temp = hospitalLabel.frame;
+            temp.origin.y = infoView.frame.size.height / 2 - hospitalLabel.frame.size.height/2;
+            hospitalLabel.frame = temp;
+            
+            temp = nameLabel.frame;
+            temp.origin.y = hospitalLabel.frame.origin.y;
+            nameLabel.frame = temp;
             
             //当前分配为医爱淘
             isIAT = YES;

@@ -14,9 +14,13 @@
 //#import "MyChatsViewController.h"
 #import "MyBookListViewController.h"
 #import "BookDetailInfoViewController.h"
+#import "CMNewQueryViewController.h"
+#import "CMQAProtocolView.h"
 
 @interface WebViewController ()
-
+{
+    CMQAProtocolView *protocolView;
+}
 @end
 
 @implementation WebViewController
@@ -76,6 +80,8 @@
 
     // Do any additional setup after loading the view from its nib.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ntfUpdateUnreadMsgCount:) name:NTF_UNREADMSGCOUNT_UPDATED object:nil];
+    
+    protocolView = [[CMQAProtocolView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     
 }
 
@@ -283,6 +289,10 @@
         }
 
     }
+    else if ([[firstParam lowercaseString] isEqualToString:@"quickask"]){
+        [self processNewChatQueryUrl:paramArray];
+    }
+    
     else if ([[firstParam lowercaseString] isEqualToString:@"mybookinglist"]) {
         [self processBookingListURL:paramArray];
     }
@@ -383,6 +393,28 @@
     MyBookListViewController *bookListVC = [[MyBookListViewController alloc] initWithNibName:@"MyBookListViewController" bundle:nil];//[[MyBookListViewController alloc] initWithStyle:UITableViewStylePlain];
     
     [self.navigationController pushViewController:bookListVC animated:YES];
+}
+
+- (void)processNewChatQueryUrl:(NSArray *)paramArray{
+    if (!paramArray || paramArray.count < 2) {
+        NSLog(@"processNewBookingURL paramArray invalid: %@", paramArray);
+        return;
+    }
+    // 准备提交咨询的时候，发起一次定位
+    [[CureMeUtils defaultCureMeUtil] startLocationing];
+    
+    NSNumber *hasMarkApp = [[NSUserDefaults standardUserDefaults] objectForKey:HAS_AGREEPROTOCOL];
+    if (!hasMarkApp || hasMarkApp.integerValue == 0) {
+        [self.view addSubview:protocolView];
+        return;
+    }
+    
+    CMNewQueryViewController *queryVC = [CMNewQueryViewController new];
+    queryVC.officeType = _childOfficeId;
+    queryVC.subOfficeType = _subOfficeId;
+    queryVC.chatUserID = [CureMeUtils defaultCureMeUtil].userID;
+    [self.navigationController pushViewController:queryVC animated:YES];
+
 }
 
 - (void)processNewBookingURL:(NSArray *)paramArray

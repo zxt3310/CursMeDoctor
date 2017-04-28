@@ -296,14 +296,16 @@
     if (indexPath.section == 0) {
         
         if (![CureMeUtils defaultCureMeUtil].hasLogin) {
-            if (![CureMeUtils defaultCureMeUtil].isUnRegLoginUser) {
-                LoginViewController *loginVC = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
-                [self.navigationController pushViewController:loginVC animated:YES];
-                hasShownLoginViewController = true;
-                return;
-            }
-            else{
+            LoginViewController *loginVC = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+            [self.navigationController pushViewController:loginVC animated:YES];
+            hasShownLoginViewController = true;
+            return;
+        }
+        else{
+            if ([CureMeUtils defaultCureMeUtil].isUnRegLoginUser) {
+                
                 [self registOfficeMember];
+                return;
             }
         }
         

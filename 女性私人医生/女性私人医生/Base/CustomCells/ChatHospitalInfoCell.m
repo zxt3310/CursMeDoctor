@@ -103,7 +103,7 @@
         _nameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         [_nameLabel setBackgroundColor:[UIColor clearColor]];
         [_nameLabel setFont:[UIFont boldSystemFontOfSize:14]];
-        [_nameLabel setTextAlignment:UITextAlignmentCenter];
+        [_nameLabel setTextAlignment:NSTextAlignmentCenter];
         _nameLabel.text = @"医院：";
         [self.contentView addSubview:_nameLabel];
         
@@ -117,7 +117,7 @@
         _infoLabel.text = @"姓名：";
         [_infoLabel setBackgroundColor:[UIColor clearColor]];
         [_infoLabel setFont:[UIFont boldSystemFontOfSize:14]];
-        [_infoLabel setTextAlignment:UITextAlignmentCenter];
+        [_infoLabel setTextAlignment:NSTextAlignmentCenter];
         [self.contentView addSubview:_infoLabel];
         
         _info = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -133,88 +133,88 @@
         [_intro setNumberOfLines:4];
         [self.contentView addSubview:_intro];
 
-        _hospitalInfoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_hospitalInfoBtn setTitle:@"医院介绍" forState:UIControlStateNormal];
-        [_hospitalInfoBtn setTitle:@"医院介绍" forState:UIControlStateHighlighted];
-        [_hospitalInfoBtn setTitle:@"医院介绍" forState:UIControlStateSelected];
-        [_hospitalInfoBtn setBackgroundImage:[UIImage imageNamed:@"左_n.png"] forState:UIControlStateNormal];
-        [_hospitalInfoBtn setBackgroundImage:[UIImage imageNamed:@"左_p.png"] forState:UIControlStateSelected];
-        [_hospitalInfoBtn setBackgroundImage:[UIImage imageNamed:@"左_p.png"] forState:UIControlStateHighlighted];
-        _hospitalInfoBtn.frame = CGRectMake(0, 0, 75, 40);
-        [_hospitalInfoBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
-        [_hospitalInfoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [_hospitalInfoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
-        [_hospitalInfoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
-//        [_hospitalInfoBtn setTitleColor:[UIColor colorWithRed:232.0/255 green:66.0/255 blue:86.0/255 alpha:1] forState:UIControlStateNormal];
-//        [_hospitalInfoBtn setTitleColor:[UIColor colorWithRed:232.0/255 green:66.0/255 blue:86.0/255 alpha:1] forState:UIControlStateHighlighted];
-//        [_hospitalInfoBtn setTitleColor:[UIColor colorWithRed:232.0/255 green:66.0/255 blue:86.0/255 alpha:1] forState:UIControlStateSelected];
-        [_hospitalInfoBtn setUserInteractionEnabled:YES];
-        [_hospitalInfoBtn addTarget:self action:@selector(hospitalInfoBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [_hospitalInfoBtn setHidden:YES];
-        [self.contentView addSubview:_hospitalInfoBtn];
-        
-        // 科室介绍按钮
-        _officeInfoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_officeInfoBtn setTitle:@"科室介绍" forState:UIControlStateNormal];
-        [_officeInfoBtn setBackgroundImage:[UIImage imageNamed:@"中_n.png"] forState:UIControlStateNormal];
-        [_officeInfoBtn setTitle:@"科室介绍" forState:UIControlStateSelected];
-        [_officeInfoBtn setBackgroundImage:[UIImage imageNamed:@"中_p.png"] forState:UIControlStateSelected];
-        [_officeInfoBtn setTitle:@"科室介绍" forState:UIControlStateHighlighted];
-        [_officeInfoBtn setBackgroundImage:[UIImage imageNamed:@"中_p.png"] forState:UIControlStateHighlighted];
-        [_officeInfoBtn setFrame:CGRectMake(0, 0, 75, 40)];
-        [_officeInfoBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
-        [_officeInfoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [_officeInfoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
-        [_officeInfoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
-//        [_officeInfoBtn setTitleColor:[UIColor colorWithRed:232.0/255 green:66.0/255 blue:86.0/255 alpha:1] forState:UIControlStateNormal];
-//        [_officeInfoBtn setTitleColor:[UIColor colorWithRed:232.0/255 green:66.0/255 blue:86.0/255 alpha:1] forState:UIControlStateHighlighted];
-//        [_officeInfoBtn setTitleColor:[UIColor colorWithRed:232.0/255 green:66.0/255 blue:86.0/255 alpha:1] forState:UIControlStateSelected];
-        [_officeInfoBtn setUserInteractionEnabled:YES];
-        [_officeInfoBtn addTarget:self action:@selector(officeInfoBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [_officeInfoBtn setHidden:YES];
-        [self.contentView addSubview:_officeInfoBtn];
-        
-        // 专家介绍按钮
-        _doctorInfoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_doctorInfoBtn setTitle:@"专家介绍" forState:UIControlStateNormal];
-        [_doctorInfoBtn setBackgroundImage:[UIImage imageNamed:@"中_n.png"] forState:UIControlStateNormal];
-        [_doctorInfoBtn setTitle:@"专家介绍" forState:UIControlStateSelected];
-        [_doctorInfoBtn setBackgroundImage:[UIImage imageNamed:@"中_p.png"] forState:UIControlStateSelected];
-        [_doctorInfoBtn setTitle:@"专家介绍" forState:UIControlStateHighlighted];
-        [_doctorInfoBtn setBackgroundImage:[UIImage imageNamed:@"中_p.png"] forState:UIControlStateHighlighted];
-        [_doctorInfoBtn setFrame:CGRectMake(0, 0, 75, 40)];
-        [_doctorInfoBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
-        [_doctorInfoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [_doctorInfoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
-        [_doctorInfoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
-//        [_doctorInfoBtn setTitleColor:[UIColor colorWithRed:232.0/255 green:66.0/255 blue:86.0/255 alpha:1] forState:UIControlStateNormal];
-//        [_doctorInfoBtn setTitleColor:[UIColor colorWithRed:232.0/255 green:66.0/255 blue:86.0/255 alpha:1] forState:UIControlStateHighlighted];
-//        [_doctorInfoBtn setTitleColor:[UIColor colorWithRed:232.0/255 green:66.0/255 blue:86.0/255 alpha:1] forState:UIControlStateSelected];
-        [_doctorInfoBtn setUserInteractionEnabled:YES];
-        [_doctorInfoBtn addTarget:self action:@selector(doctorInfoBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [_doctorInfoBtn setHidden:YES];
-        [self.contentView addSubview:_doctorInfoBtn];
-        
-        // 预约挂号按钮
-        _bookBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_bookBtn setTitle:@"预约挂号" forState:UIControlStateNormal];
-        [_bookBtn setBackgroundImage:[UIImage imageNamed:@"右_n.png"] forState:UIControlStateNormal];
-        [_bookBtn setTitle:@"预约挂号" forState:UIControlStateSelected];
-        [_bookBtn setBackgroundImage:[UIImage imageNamed:@"右_p.png"] forState:UIControlStateSelected];
-        [_bookBtn setTitle:@"预约挂号" forState:UIControlStateHighlighted];
-        [_bookBtn setBackgroundImage:[UIImage imageNamed:@"右_p.png"] forState:UIControlStateHighlighted];
-        [_bookBtn setFrame:CGRectMake(0, 0, 75, 40)];
-        [_bookBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
-        [_bookBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [_bookBtn setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
-        [_bookBtn setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
-//        [_bookBtn setTitleColor:[UIColor colorWithRed:232.0/255 green:66.0/255 blue:86.0/255 alpha:1] forState:UIControlStateNormal];
-//        [_bookBtn setTitleColor:[UIColor colorWithRed:232.0/255 green:66.0/255 blue:86.0/255 alpha:1] forState:UIControlStateHighlighted];
-//        [_bookBtn setTitleColor:[UIColor colorWithRed:232.0/255 green:66.0/255 blue:86.0/255 alpha:1] forState:UIControlStateSelected];
-        [_bookBtn setUserInteractionEnabled:YES];
-        [_bookBtn setHidden:YES];
-        [_bookBtn addTarget:self action:@selector(bookBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [self.contentView addSubview:_bookBtn];
+//        _hospitalInfoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        [_hospitalInfoBtn setTitle:@"医院介绍" forState:UIControlStateNormal];
+//        [_hospitalInfoBtn setTitle:@"医院介绍" forState:UIControlStateHighlighted];
+//        [_hospitalInfoBtn setTitle:@"医院介绍" forState:UIControlStateSelected];
+//        [_hospitalInfoBtn setBackgroundImage:[UIImage imageNamed:@"左_n.png"] forState:UIControlStateNormal];
+//        [_hospitalInfoBtn setBackgroundImage:[UIImage imageNamed:@"左_p.png"] forState:UIControlStateSelected];
+//        [_hospitalInfoBtn setBackgroundImage:[UIImage imageNamed:@"左_p.png"] forState:UIControlStateHighlighted];
+//        _hospitalInfoBtn.frame = CGRectMake(0, 0, 75, 40);
+//        [_hospitalInfoBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
+//        [_hospitalInfoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//        [_hospitalInfoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+//        [_hospitalInfoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
+////        [_hospitalInfoBtn setTitleColor:[UIColor colorWithRed:232.0/255 green:66.0/255 blue:86.0/255 alpha:1] forState:UIControlStateNormal];
+////        [_hospitalInfoBtn setTitleColor:[UIColor colorWithRed:232.0/255 green:66.0/255 blue:86.0/255 alpha:1] forState:UIControlStateHighlighted];
+////        [_hospitalInfoBtn setTitleColor:[UIColor colorWithRed:232.0/255 green:66.0/255 blue:86.0/255 alpha:1] forState:UIControlStateSelected];
+//        [_hospitalInfoBtn setUserInteractionEnabled:YES];
+//        [_hospitalInfoBtn addTarget:self action:@selector(hospitalInfoBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//        [_hospitalInfoBtn setHidden:YES];
+//        [self.contentView addSubview:_hospitalInfoBtn];
+//        
+//        // 科室介绍按钮
+//        _officeInfoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        [_officeInfoBtn setTitle:@"科室介绍" forState:UIControlStateNormal];
+//        [_officeInfoBtn setBackgroundImage:[UIImage imageNamed:@"中_n.png"] forState:UIControlStateNormal];
+//        [_officeInfoBtn setTitle:@"科室介绍" forState:UIControlStateSelected];
+//        [_officeInfoBtn setBackgroundImage:[UIImage imageNamed:@"中_p.png"] forState:UIControlStateSelected];
+//        [_officeInfoBtn setTitle:@"科室介绍" forState:UIControlStateHighlighted];
+//        [_officeInfoBtn setBackgroundImage:[UIImage imageNamed:@"中_p.png"] forState:UIControlStateHighlighted];
+//        [_officeInfoBtn setFrame:CGRectMake(0, 0, 75, 40)];
+//        [_officeInfoBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
+//        [_officeInfoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//        [_officeInfoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+//        [_officeInfoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
+////        [_officeInfoBtn setTitleColor:[UIColor colorWithRed:232.0/255 green:66.0/255 blue:86.0/255 alpha:1] forState:UIControlStateNormal];
+////        [_officeInfoBtn setTitleColor:[UIColor colorWithRed:232.0/255 green:66.0/255 blue:86.0/255 alpha:1] forState:UIControlStateHighlighted];
+////        [_officeInfoBtn setTitleColor:[UIColor colorWithRed:232.0/255 green:66.0/255 blue:86.0/255 alpha:1] forState:UIControlStateSelected];
+//        [_officeInfoBtn setUserInteractionEnabled:YES];
+//        [_officeInfoBtn addTarget:self action:@selector(officeInfoBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//        [_officeInfoBtn setHidden:YES];
+//        [self.contentView addSubview:_officeInfoBtn];
+//        
+//        // 专家介绍按钮
+//        _doctorInfoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        [_doctorInfoBtn setTitle:@"专家介绍" forState:UIControlStateNormal];
+//        [_doctorInfoBtn setBackgroundImage:[UIImage imageNamed:@"中_n.png"] forState:UIControlStateNormal];
+//        [_doctorInfoBtn setTitle:@"专家介绍" forState:UIControlStateSelected];
+//        [_doctorInfoBtn setBackgroundImage:[UIImage imageNamed:@"中_p.png"] forState:UIControlStateSelected];
+//        [_doctorInfoBtn setTitle:@"专家介绍" forState:UIControlStateHighlighted];
+//        [_doctorInfoBtn setBackgroundImage:[UIImage imageNamed:@"中_p.png"] forState:UIControlStateHighlighted];
+//        [_doctorInfoBtn setFrame:CGRectMake(0, 0, 75, 40)];
+//        [_doctorInfoBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
+//        [_doctorInfoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//        [_doctorInfoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+//        [_doctorInfoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
+////        [_doctorInfoBtn setTitleColor:[UIColor colorWithRed:232.0/255 green:66.0/255 blue:86.0/255 alpha:1] forState:UIControlStateNormal];
+////        [_doctorInfoBtn setTitleColor:[UIColor colorWithRed:232.0/255 green:66.0/255 blue:86.0/255 alpha:1] forState:UIControlStateHighlighted];
+////        [_doctorInfoBtn setTitleColor:[UIColor colorWithRed:232.0/255 green:66.0/255 blue:86.0/255 alpha:1] forState:UIControlStateSelected];
+//        [_doctorInfoBtn setUserInteractionEnabled:YES];
+//        [_doctorInfoBtn addTarget:self action:@selector(doctorInfoBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//        [_doctorInfoBtn setHidden:YES];
+//        [self.contentView addSubview:_doctorInfoBtn];
+//        
+//        // 预约挂号按钮
+//        _bookBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        [_bookBtn setTitle:@"预约挂号" forState:UIControlStateNormal];
+//        [_bookBtn setBackgroundImage:[UIImage imageNamed:@"右_n.png"] forState:UIControlStateNormal];
+//        [_bookBtn setTitle:@"预约挂号" forState:UIControlStateSelected];
+//        [_bookBtn setBackgroundImage:[UIImage imageNamed:@"右_p.png"] forState:UIControlStateSelected];
+//        [_bookBtn setTitle:@"预约挂号" forState:UIControlStateHighlighted];
+//        [_bookBtn setBackgroundImage:[UIImage imageNamed:@"右_p.png"] forState:UIControlStateHighlighted];
+//        [_bookBtn setFrame:CGRectMake(0, 0, 75, 40)];
+//        [_bookBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
+//        [_bookBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//        [_bookBtn setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+//        [_bookBtn setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
+////        [_bookBtn setTitleColor:[UIColor colorWithRed:232.0/255 green:66.0/255 blue:86.0/255 alpha:1] forState:UIControlStateNormal];
+////        [_bookBtn setTitleColor:[UIColor colorWithRed:232.0/255 green:66.0/255 blue:86.0/255 alpha:1] forState:UIControlStateHighlighted];
+////        [_bookBtn setTitleColor:[UIColor colorWithRed:232.0/255 green:66.0/255 blue:86.0/255 alpha:1] forState:UIControlStateSelected];
+//        [_bookBtn setUserInteractionEnabled:YES];
+//        [_bookBtn setHidden:YES];
+//        [_bookBtn addTarget:self action:@selector(bookBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//        [self.contentView addSubview:_bookBtn];
     }
     
     return self;
@@ -298,6 +298,7 @@
         }
     }
     _headImageFrame.frame = CGRectMake(10, 10, 48, 48);
+    _headImageFrame.image = nil;
     _headImageFrame.hidden = NO;
     
     // 医院信息
@@ -323,18 +324,18 @@
     CGSize textSize = [_intro.text sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(292, 100) lineBreakMode:NSLineBreakByTruncatingTail];
     _intro.frame = CGRectMake(10 + inset, 10 + 46 + inset, 292, textSize.height);
 
-    // 1. 医院介绍按钮
-    _hospitalInfoBtn.hidden = NO;
-    _hospitalInfoBtn.frame = CGRectMake(10, 56 + inset * 2 + textSize.height, 88.75, 40);
-    // 2. 科室介绍按钮
-    _officeInfoBtn.hidden = NO;
-    _officeInfoBtn.frame = CGRectMake(10 + 88.75, 56 + inset * 2 + textSize.height, 88.75, 40);
-    // 3. 专家介绍按钮
-    _doctorInfoBtn.hidden = NO;
-    _doctorInfoBtn.frame = CGRectMake(10 + 177.5, 56 + inset * 2 + textSize.height, 88.75, 40);
-    // 4. 预约挂号按钮
-    _bookBtn.hidden = NO;
-    _bookBtn.frame = CGRectMake(10 + 266.25, 56 + inset * 2 + textSize.height, 88.75, 40);
+//    // 1. 医院介绍按钮
+//    _hospitalInfoBtn.hidden = NO;
+//    _hospitalInfoBtn.frame = CGRectMake(10, 56 + inset * 2 + textSize.height, 88.75, 40);
+//    // 2. 科室介绍按钮
+//    _officeInfoBtn.hidden = NO;
+//    _officeInfoBtn.frame = CGRectMake(10 + 88.75, 56 + inset * 2 + textSize.height, 88.75, 40);
+//    // 3. 专家介绍按钮
+//    _doctorInfoBtn.hidden = NO;
+//    _doctorInfoBtn.frame = CGRectMake(10 + 177.5, 56 + inset * 2 + textSize.height, 88.75, 40);
+//    // 4. 预约挂号按钮
+//    _bookBtn.hidden = NO;
+//    _bookBtn.frame = CGRectMake(10 + 266.25, 56 + inset * 2 + textSize.height, 88.75, 40);
 }
 
 - (void)setChatMetaInfoData:(ChatMetaInfoData *)metaData

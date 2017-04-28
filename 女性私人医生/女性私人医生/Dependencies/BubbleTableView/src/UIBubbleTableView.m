@@ -125,27 +125,27 @@
 #pragma mark ScrollView Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    // 本次滚动的偏移
-    float curOffset = scrollView.contentOffset.y - lastYOffset;
-    lastYOffset = scrollView.contentOffset.y;
-    // 顶部医院Cell的高度
-    float metaHeight = _chatViewController.metaInfoData ? _chatViewController.metaInfoData.metaDataHeight : CHATINFOCELL_MIN_HEIGHT;
-    // 滚动总偏移
-    totalYOffset += curOffset;
-    
-    // 如果滚动总偏移小于顶部医院Cell的高度时，隐藏缩略信息View
-    if (totalYOffset < metaHeight) {
-        [headBtnView hide];
-        // 如果总偏移小于0，置0
-        if (totalYOffset < 0)
-            totalYOffset = 0;
-    }
-    // 如果滚动总偏移大于顶部医院Cell的高度时，显示缩略信息View
-    else if (totalYOffset >= metaHeight) {
-        [headBtnView show:YES];
-    }
-    
-    //jongs add
+//    // 本次滚动的偏移
+//    float curOffset = scrollView.contentOffset.y - lastYOffset;
+//    lastYOffset = scrollView.contentOffset.y;
+//    // 顶部医院Cell的高度
+//    float metaHeight = _chatViewController.metaInfoData ? _chatViewController.metaInfoData.metaDataHeight : CHATINFOCELL_MIN_HEIGHT;
+//    // 滚动总偏移
+//    totalYOffset += curOffset;
+//    
+//    // 如果滚动总偏移小于顶部医院Cell的高度时，隐藏缩略信息View
+//    if (totalYOffset < metaHeight) {
+//        [headBtnView hide];
+//        // 如果总偏移小于0，置0
+//        if (totalYOffset < 0)
+//            totalYOffset = 0;
+//    }
+//    // 如果滚动总偏移大于顶部医院Cell的高度时，显示缩略信息View
+//    else if (totalYOffset >= metaHeight) {
+//        [headBtnView show:YES];
+//    }
+//    
+//    //jongs add
     [_chatViewController closeKeyboard];
 }
 
@@ -217,7 +217,7 @@
         }
     }
     
-    [headBtnView updateData];
+    //[headBtnView updateData];
     [super reloadData];
 }
 
@@ -643,6 +643,10 @@
 {
     if (indexPath.section == 0 && indexPath.row == 1) {
         [_chatViewController loadMoreHistoryMessage];
+    }
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        ChatHospitalInfoCell *cell = (ChatHospitalInfoCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        [cell hospitalInfoBtnClick:nil];
     }
 }
 
