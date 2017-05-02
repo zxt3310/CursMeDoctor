@@ -72,6 +72,15 @@
 - (void)setupInternalTextImageData
 {
 //    [headImage setUserInteractionEnabled:YES];
+    /**
+     加载头像
+     - author: Zxt
+     - date: 17-05-02 18:05:30
+     
+     - returns: <#return value description#>
+     */
+    headImage = [[UIImageView alloc] init];
+    [self.contentView addSubview:headImage];
     
     if (self.dataInternal.header)
     {
@@ -86,11 +95,11 @@
     NSBubbleType type = self.dataInternal.data.type;
     
     // +30图片宽度 +2图片与气泡间距
-//    float picSize = _dataInternal.data.headImage ? HEADIMAGE_EDGE + 2: 0;
-//    float headSize = _dataInternal.data.headImage ? HEADIMAGE_EDGE : 0;
-//    float nameHeight = 12;
-    float x = (type == BubbleTypeSomeoneElse) ? 20 : self.frame.size.width - 15 - _dataInternal.labelSize.width;
-//    float x = (type == BubbleTypeSomeoneElse) ? 20 + picSize : self.frame.size.width - 30 - 5 - picSize - _dataInternal.labelSize.width;
+    float picSize = _dataInternal.data.headImage ? HEADIMAGE_EDGE + 2: 0;
+    float headSize = _dataInternal.data.headImage ? HEADIMAGE_EDGE : 0;
+    float nameHeight = 12;
+//    float x = (type == BubbleTypeSomeoneElse) ? 20 : self.frame.size.width - 15 - _dataInternal.labelSize.width;
+    float x = (type == BubbleTypeSomeoneElse) ? 20 + picSize : self.frame.size.width - 30 - 5 - picSize - _dataInternal.labelSize.width - 10;
     float y = 10 + (self.dataInternal.header ? 30 : 0);
     
     if (_dataInternal.data.msgImage) {
@@ -109,14 +118,12 @@
     
     if (type == BubbleTypeSomeoneElse)
     {
-//        [[headImage layer] setCornerRadius:3.0];
-//        [[headImage layer] setBorderWidth:2.0];
-//        [[headImage layer] setBorderColor:[UIColor colorWithRed:249.0/255 green:208.0/255 blue:214.0/255 alpha:1.0].CGColor];
-//        [headImage setBackgroundColor:[UIColor clearColor]];
-//        [headImage setContentMode:UIViewContentModeScaleAspectFit];
-//        [headImage setBackgroundColor:[UIColor whiteColor]];
-//        [headImage setHidden:NO];
-//        [headImage setClipsToBounds:YES];
+        [[headImage layer] setCornerRadius:3.0];
+        [headImage setBackgroundColor:[UIColor clearColor]];
+        [headImage setContentMode:UIViewContentModeScaleAspectFit];
+        [headImage setBackgroundColor:[UIColor whiteColor]];
+        [headImage setHidden:NO];
+        [headImage setClipsToBounds:YES];
         
         bubbleImage.image = [CMImageUtils defaultImageUtil].chatOtherBubbleImage;
         if (_dataInternal.data.msgImage) {
@@ -125,22 +132,22 @@
         else {
             bubbleImage.frame = CGRectMake(x - 16, y - 4, _dataInternal.labelSize.width + 30, _dataInternal.labelSize.height + 20);
         }
-//        if ([self dataInternal].data.headImage) {
-//            headImage.image = _dataInternal.data.headImage;
-//            headImage.frame = CGRectMake(2, _dataInternal.height - picSize - nameHeight, headSize, headSize);
-//            [doctorNameLabel setHidden:NO];
-//            [doctorNameLabel setFont:[UIFont systemFontOfSize:12]];
-//            [doctorNameLabel setText:_dataInternal.data.talkerName];
-//            [doctorNameLabel setBackgroundColor:[UIColor clearColor]];
-//            doctorNameLabel.frame = CGRectMake(2, _dataInternal.height - nameHeight, headSize, nameHeight);
-//        }
-//        else {
-//            [doctorNameLabel setHidden:YES];
-//        }
+        if ([self dataInternal].data.headImage) {
+            headImage.image = _dataInternal.data.headImage;
+            headImage.frame = CGRectMake(2, bubbleImage.frame.origin.y, headSize, headSize);
+            [doctorNameLabel setHidden:NO];
+            [doctorNameLabel setFont:[UIFont systemFontOfSize:12]];
+            [doctorNameLabel setText:_dataInternal.data.talkerName];
+            [doctorNameLabel setBackgroundColor:[UIColor clearColor]];
+            doctorNameLabel.frame = CGRectMake(2, _dataInternal.height - nameHeight, headSize, nameHeight);
+        }
+        else {
+            [doctorNameLabel setHidden:YES];
+        }
     }
     else {
-//        [headImage setHidden:YES];
-//        [doctorNameLabel setHidden:YES];
+        [headImage setHidden:YES];
+        [doctorNameLabel setHidden:YES];
         
         bubbleImage.image = [CMImageUtils defaultImageUtil].chatSelfBubbleImage;
         if (_dataInternal.data.msgImage) {
@@ -148,7 +155,6 @@
         }
         else {
             bubbleImage.frame = CGRectMake(x - 15, y - 4, self.dataInternal.labelSize.width + 20, self.dataInternal.labelSize.height + 15);
-            
         }
     }
     

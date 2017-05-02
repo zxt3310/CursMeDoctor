@@ -653,6 +653,18 @@
 		70C18C141E81310B00A82F46 /* ico_naobu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22A2CABE188F9697006BB056 /* ico_naobu@2x.png */; };
 		70C18C151E81310B00A82F46 /* naobu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22A2CABF188F9697006BB056 /* naobu@2x.png */; };
 		70DE110E1EA9F1BC001DFDAF /* RegisteOfficeMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DE110D1EA9F1BC001DFDAF /* RegisteOfficeMemberViewController.m */; };
+		70EA7CDD1EB8241300AFF7B3 /* 引导页1-960.png in Resources */ = {isa = PBXBuildFile; fileRef = 70EA7CD11EB8241300AFF7B3 /* 引导页1-960.png */; };
+		70EA7CDE1EB8241300AFF7B3 /* 引导页1.png in Resources */ = {isa = PBXBuildFile; fileRef = 70EA7CD21EB8241300AFF7B3 /* 引导页1.png */; };
+		70EA7CDF1EB8241300AFF7B3 /* 引导页1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70EA7CD31EB8241300AFF7B3 /* 引导页1@2x.png */; };
+		70EA7CE01EB8241300AFF7B3 /* 引导页1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70EA7CD41EB8241300AFF7B3 /* 引导页1@3x.png */; };
+		70EA7CE11EB8241300AFF7B3 /* 引导页2-960.png in Resources */ = {isa = PBXBuildFile; fileRef = 70EA7CD51EB8241300AFF7B3 /* 引导页2-960.png */; };
+		70EA7CE21EB8241300AFF7B3 /* 引导页2.png in Resources */ = {isa = PBXBuildFile; fileRef = 70EA7CD61EB8241300AFF7B3 /* 引导页2.png */; };
+		70EA7CE31EB8241300AFF7B3 /* 引导页2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70EA7CD71EB8241300AFF7B3 /* 引导页2@2x.png */; };
+		70EA7CE41EB8241300AFF7B3 /* 引导页2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70EA7CD81EB8241300AFF7B3 /* 引导页2@3x.png */; };
+		70EA7CE51EB8241300AFF7B3 /* 引导页3-960.png in Resources */ = {isa = PBXBuildFile; fileRef = 70EA7CD91EB8241300AFF7B3 /* 引导页3-960.png */; };
+		70EA7CE61EB8241300AFF7B3 /* 引导页3.png in Resources */ = {isa = PBXBuildFile; fileRef = 70EA7CDA1EB8241300AFF7B3 /* 引导页3.png */; };
+		70EA7CE71EB8241300AFF7B3 /* 引导页3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70EA7CDB1EB8241300AFF7B3 /* 引导页3@2x.png */; };
+		70EA7CE81EB8241300AFF7B3 /* 引导页3@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70EA7CDC1EB8241300AFF7B3 /* 引导页3@3x.png */; };
 		70F050391EA4CCDF00E43BFD /* ico_wdyy.png in Resources */ = {isa = PBXBuildFile; fileRef = 70F050361EA4CCDF00E43BFD /* ico_wdyy.png */; };
 		70F0503A1EA4CCDF00E43BFD /* ico_msg_wdzx.png in Resources */ = {isa = PBXBuildFile; fileRef = 70F050371EA4CCDF00E43BFD /* ico_msg_wdzx.png */; };
 		70F0503B1EA4CCDF00E43BFD /* ico_set.png in Resources */ = {isa = PBXBuildFile; fileRef = 70F050381EA4CCDF00E43BFD /* ico_set.png */; };
@@ -1171,6 +1183,18 @@
 		70C18C1A1E81310B00A82F46 /* 女性私人医生 copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "女性私人医生 copy-Info.plist"; path = "/Users/zhangxintao/Documents/女性私人医生/女性私人医生 copy-Info.plist"; sourceTree = "<absolute>"; };
 		70DE110C1EA9F1BC001DFDAF /* RegisteOfficeMemberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisteOfficeMemberViewController.h; sourceTree = "<group>"; };
 		70DE110D1EA9F1BC001DFDAF /* RegisteOfficeMemberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisteOfficeMemberViewController.m; sourceTree = "<group>"; };
+		70EA7CD11EB8241300AFF7B3 /* 引导页1-960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "引导页1-960.png"; sourceTree = "<group>"; };
+		70EA7CD21EB8241300AFF7B3 /* 引导页1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "引导页1.png"; sourceTree = "<group>"; };
+		70EA7CD31EB8241300AFF7B3 /* 引导页1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "引导页1@2x.png"; sourceTree = "<group>"; };
+		70EA7CD41EB8241300AFF7B3 /* 引导页1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "引导页1@3x.png"; sourceTree = "<group>"; };
+		70EA7CD51EB8241300AFF7B3 /* 引导页2-960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "引导页2-960.png"; sourceTree = "<group>"; };
+		70EA7CD61EB8241300AFF7B3 /* 引导页2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "引导页2.png"; sourceTree = "<group>"; };
+		70EA7CD71EB8241300AFF7B3 /* 引导页2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "引导页2@2x.png"; sourceTree = "<group>"; };
+		70EA7CD81EB8241300AFF7B3 /* 引导页2@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "引导页2@3x.png"; sourceTree = "<group>"; };
+		70EA7CD91EB8241300AFF7B3 /* 引导页3-960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "引导页3-960.png"; sourceTree = "<group>"; };
+		70EA7CDA1EB8241300AFF7B3 /* 引导页3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "引导页3.png"; sourceTree = "<group>"; };
+		70EA7CDB1EB8241300AFF7B3 /* 引导页3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "引导页3@2x.png"; sourceTree = "<group>"; };
+		70EA7CDC1EB8241300AFF7B3 /* 引导页3@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "引导页3@3x.png"; sourceTree = "<group>"; };
 		70F050361EA4CCDF00E43BFD /* ico_wdyy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ico_wdyy.png; path = "女性私人医生/Resources/images/ico_wdyy.png"; sourceTree = "<group>"; };
 		70F050371EA4CCDF00E43BFD /* ico_msg_wdzx.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ico_msg_wdzx.png; path = "女性私人医生/Resources/images/ico_msg_wdzx.png"; sourceTree = "<group>"; };
 		70F050381EA4CCDF00E43BFD /* ico_set.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ico_set.png; path = "女性私人医生/Resources/images/ico_set.png"; sourceTree = "<group>"; };
@@ -1853,6 +1877,7 @@
 			isa = PBXGroup;
 			children = (
 				702B8CA61EA749AB002E726E /* woman.png */,
+				70EA7CD01EB8241300AFF7B3 /* 私人引导页 */,
 				DEEFA96B1C27FA6B006E85CA /* Images_3x */,
 				22FA96D2169D09920058E8D4 /* Images */,
 			);
@@ -2297,6 +2322,25 @@
 			name = Chat;
 			sourceTree = "<group>";
 		};
+		70EA7CD01EB8241300AFF7B3 /* 私人引导页 */ = {
+			isa = PBXGroup;
+			children = (
+				70EA7CD11EB8241300AFF7B3 /* 引导页1-960.png */,
+				70EA7CD21EB8241300AFF7B3 /* 引导页1.png */,
+				70EA7CD31EB8241300AFF7B3 /* 引导页1@2x.png */,
+				70EA7CD41EB8241300AFF7B3 /* 引导页1@3x.png */,
+				70EA7CD51EB8241300AFF7B3 /* 引导页2-960.png */,
+				70EA7CD61EB8241300AFF7B3 /* 引导页2.png */,
+				70EA7CD71EB8241300AFF7B3 /* 引导页2@2x.png */,
+				70EA7CD81EB8241300AFF7B3 /* 引导页2@3x.png */,
+				70EA7CD91EB8241300AFF7B3 /* 引导页3-960.png */,
+				70EA7CDA1EB8241300AFF7B3 /* 引导页3.png */,
+				70EA7CDB1EB8241300AFF7B3 /* 引导页3@2x.png */,
+				70EA7CDC1EB8241300AFF7B3 /* 引导页3@3x.png */,
+			);
+			path = "私人引导页";
+			sourceTree = "<group>";
+		};
 		DE016F77199C8669007F38AF /* Exception */ = {
 			isa = PBXGroup;
 			children = (
@@ -2491,6 +2535,7 @@
 				DE5347CC1C1AA7E50066AA54 /* readd@2x.png in Resources */,
 				22FA97B6169D1E1F0058E8D4 /* BookDetailInfoViewController.xib in Resources */,
 				22FA97BC169D1E640058E8D4 /* QueryViewController.xib in Resources */,
+				70EA7CE51EB8241300AFF7B3 /* 引导页3-960.png in Resources */,
 				22FA97D3169D1FC20058E8D4 /* FullPictureViewController.xib in Resources */,
 				22FA97D8169D20480058E8D4 /* DoctorInfoViewController.xib in Resources */,
 				22FA97E2169D20A40058E8D4 /* MapViewController.xib in Resources */,
@@ -2517,6 +2562,7 @@
 				22FA980C169D213E0058E8D4 /* action-white-button.png in Resources */,
 				22FA980D169D213E0058E8D4 /* action-white-button@2x.png in Resources */,
 				22FA984F169D716B0058E8D4 /* TabBarView.xib in Resources */,
+				70EA7CDF1EB8241300AFF7B3 /* 引导页1@2x.png in Resources */,
 				22FA9861169D7A630058E8D4 /* activity@2x.png in Resources */,
 				22FA9862169D7A630058E8D4 /* cooperation hospital@2x.png in Resources */,
 				705BFAD81E9769F4000DDEE8 /* ico_msg_min.png in Resources */,
@@ -2540,6 +2586,7 @@
 				22FA9871169D7A630058E8D4 /* zhongyi@2x.png in Resources */,
 				22FCC41D169DB8C50004278B /* personal center_n@2x.png in Resources */,
 				22FCC41E169DB8C50004278B /* personal center_p@2x.png in Resources */,
+				70EA7CE61EB8241300AFF7B3 /* 引导页3.png in Resources */,
 				22FA2562169E760300AEDF55 /* CMQAViewController.xib in Resources */,
 				22FA2565169E76DB00AEDF55 /* send@2x.png in Resources */,
 				22FA2574169EB12400AEDF55 /* ico_new@2x.png in Resources */,
@@ -2603,6 +2650,7 @@
 				2277C2E416A7DDFB00CCB7C8 /* blueArrow@2x.png in Resources */,
 				DEEFAA001C27FAC7006E85CA /* wdxx_n@3x.png in Resources */,
 				22DA63B916A802020024E622 /* line@2x.png in Resources */,
+				70EA7CE31EB8241300AFF7B3 /* 引导页2@2x.png in Resources */,
 				22FAE15216A953CE00D9338A /* home_bg_btn_n@2x.png in Resources */,
 				70F0503A1EA4CCDF00E43BFD /* ico_msg_wdzx.png in Resources */,
 				22FAE15316A953CE00D9338A /* home_bg_btn_p@2x.png in Resources */,
@@ -2621,12 +2669,16 @@
 				DEBF72BE19ECDB16000D1941 /* icon_tangniaobing@2x.png in Resources */,
 				22F8914416ABA6FB007C5E89 /* 立即咨询_bg@2x.png in Resources */,
 				22F8914816ABB772007C5E89 /* 立即咨询_n@2x.png in Resources */,
+				70EA7CE11EB8241300AFF7B3 /* 引导页2-960.png in Resources */,
 				22F8914916ABB772007C5E89 /* 立即咨询_p@2x.png in Resources */,
 				22F8914C16ABDDDD007C5E89 /* jiaoliu_down_tupian@2x.png in Resources */,
 				22F8914D16ABDDDD007C5E89 /* jiaoliu_tupian@2x.png in Resources */,
 				22F8915516ABE457007C5E89 /* CMMyChatListViewController.xib in Resources */,
 				228D77AF16ACE2000013AA04 /* CMPickerViewController.xib in Resources */,
+				70EA7CE41EB8241300AFF7B3 /* 引导页2@3x.png in Resources */,
 				222CAD7516AD826E004C533C /* bg_02@2x.jpg in Resources */,
+				70EA7CDD1EB8241300AFF7B3 /* 引导页1-960.png in Resources */,
+				70EA7CE81EB8241300AFF7B3 /* 引导页3@3x.png in Resources */,
 				222CAD7B16AD8787004C533C /* CMMarkDoctorViewController.xib in Resources */,
 				222CAD7E16AD892A004C533C /* 评价_n@2x.png in Resources */,
 				22A04D1418D2BB5500B4F936 /* mapapi.bundle in Resources */,
@@ -2662,11 +2714,14 @@
 				22F88F3316BBA2E100D1192D /* home_top@2x.png in Resources */,
 				2206DDA116BF6DB700752314 /* 57.png in Resources */,
 				2206DDA416BF6DBB00752314 /* 114.png in Resources */,
+				70EA7CE01EB8241300AFF7B3 /* 引导页1@3x.png in Resources */,
 				2206DDA916BF8DBA00752314 /* CMDatePickerViewController.xib in Resources */,
+				70EA7CE71EB8241300AFF7B3 /* 引导页3@2x.png in Resources */,
 				22F8212A16C0F4510096DDCB /* win7效果@2x.png in Resources */,
 				22F8212B16C0F4510096DDCB /* no@2x.png in Resources */,
 				22FCB8B316E5E3C50080C625 /* kouqiang@2x.png in Resources */,
 				DEEFAA051C27FAC7006E85CA /* wdzx_p@3x.png in Resources */,
+				70EA7CDE1EB8241300AFF7B3 /* 引导页1.png in Resources */,
 				22FCB8B516E5E65F0080C625 /* ico_kouqiang@2x.png in Resources */,
 				DEBF72BB19ECDB16000D1941 /* icon_byby@2x.png in Resources */,
 				222786D916FEA8B900125596 /* Loading@2x.gif in Resources */,
@@ -2684,6 +2739,7 @@
 				2204660D17F673D100DDC7D0 /* CMRateAppAlertViewController.xib in Resources */,
 				226B39BB1871745A00860FB8 /* jiakang@2x.png in Resources */,
 				226B39BD1871749D00860FB8 /* ico_jiakang@2x.png in Resources */,
+				70EA7CE21EB8241300AFF7B3 /* 引导页2.png in Resources */,
 				22A2CAC0188F9697006BB056 /* ganbing@2x.png in Resources */,
 				DEF938ED1C1AFAE1000AA4B9 /* choose_n@2x.png in Resources */,
 				22A2CAC1188F9697006BB056 /* gutou@2x.png in Resources */,

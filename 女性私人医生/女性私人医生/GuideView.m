@@ -30,8 +30,8 @@
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*(i-1), 0, SCREEN_WIDTH,SCREEN_HEIGHT)];
             [imageView setBackgroundColor:[UIColor whiteColor]];
             [imageView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"引导页%d",i]]];
-            if ([UIScreen mainScreen].bounds.size.height == 1136) {
-                [imageView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"引导页%d-1136",i]]];
+            if ([UIScreen mainScreen].bounds.size.height == 960) {
+                [imageView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"引导页%d-960.png",i]]];
             }
             [self addSubview:imageView];
             if (i == DEF_GUIDE_COUNT - 1) {
@@ -42,6 +42,15 @@
                 imageView.userInteractionEnabled = YES;
                 [imageView addSubview:button];
             }
+            
+            UIButton *skipBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            skipBtn.frame = CGRectMake(SCREEN_WIDTH - 85 *SCREEN_WIDTH/375,
+                                       28 *SCREEN_HEIGHT/667,
+                                       60 *SCREEN_WIDTH/375,
+                                       42 *SCREEN_HEIGHT/667);
+            [skipBtn addTarget:self action:@selector(beginClick) forControlEvents:UIControlEventTouchUpInside];
+            imageView.userInteractionEnabled = YES;
+            [imageView addSubview:skipBtn];
         }
     }
     return self;
@@ -66,6 +75,7 @@
         [self removeFromSuperview];
     }];
 }
+
 
 @end
 

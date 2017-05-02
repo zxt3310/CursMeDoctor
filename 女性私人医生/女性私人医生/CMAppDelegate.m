@@ -151,12 +151,6 @@ void uncaughtExceptionHandler(NSException *exception)
         pushJsonData = nil;
     }
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
-    
-    if([self isFirstLauch])
-    {
-        GuideView *guide = [[GuideView alloc] initWithFrame:self.window.bounds];
-        [self.window addSubview:guide];
-    }
     //    sleep(1);
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -179,7 +173,6 @@ void uncaughtExceptionHandler(NSException *exception)
     // {"result":true,"msg":1000001,"unreadcount":{"replycount":0,"channelcount":0,"chatcount":0},"chatservers":{"chatserver":"n2.medapp.ranknowcn.com","chatport":"3810","chatnport":"3820"}}
     if ([CureMeUtils defaultCureMeUtil].userID > 0) {
         NSString *urlStr = @"http://new.medapp.ranknowcn.com/api/m.php?action=login&version=3.0";
-//        NSString *post = [[NSString alloc] initWithFormat:@"action=login&username=%@&password=%@&token=%@", [[CureMeUtils defaultCureMeUtil].userName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], [[CureMeUtils defaultCureMeUtil].password stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], [[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN]];
         
         NSString *post = [NSString stringWithFormat:@"username=%@&password=%@&token=%@&version=3.3&deviceid=%@&source=apple",[CureMeUtils defaultCureMeUtil].userName,[CureMeUtils defaultCureMeUtil].password,[[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN],[CureMeUtils defaultCureMeUtil].uniID];
         NSData *response = sendRequestWithCookie(urlStr, post, @"", true);
@@ -240,6 +233,12 @@ void uncaughtExceptionHandler(NSException *exception)
 //    [self.window addSubview:navigationController.view];
     [[self window] setRootViewController:_navigationController];
     [self.window makeKeyAndVisible];
+    
+    if([self isFirstLauch])
+    {
+        GuideView *guide = [[GuideView alloc] initWithFrame:self.window.bounds];
+        [self.window addSubview:guide];
+    }
     
     if (IOS_VERSION < 8.0) {
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert];

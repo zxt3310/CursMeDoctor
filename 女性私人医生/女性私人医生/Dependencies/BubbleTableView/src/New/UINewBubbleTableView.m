@@ -207,7 +207,7 @@
         // 医生姓名
         [dataInternal.data setTalkerName:[_chatViewController doctorNameWithDoctorID:dataInternal.data.talkerID]];
         // 医生头像
-        UIImage *headImage = [_chatViewController doctorHeadImageWithImageKey:dataInternal.data.headImageKey];
+        UIImage *headImage = [CMImageUtils defaultImageUtil].doctorDefaultHeadLImage;//[_chatViewController doctorHeadImageWithImageKey:dataInternal.data.headImageKey];
         if (headImage)
             dataInternal.data.headImage = headImage;
     }
