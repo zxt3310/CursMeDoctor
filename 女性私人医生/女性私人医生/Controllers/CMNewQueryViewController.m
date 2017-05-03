@@ -1612,7 +1612,7 @@ UIView *infoView;
 
 - (void)connectSWT {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *urlStr = [NSString stringWithFormat:@"api2/connectswt/%ld/%ld/%ld/%ld", (long)[CureMeUtils defaultCureMeUtil].userSWTID, (long)cityid, (long)_officeType, (long)city2id];
+        NSString *urlStr = [NSString stringWithFormat:@"api2/connectswt/%ld/%ld/%ld/%ld/%ld?imei=%@", (long)[CureMeUtils defaultCureMeUtil].userSWTID, (long)cityid, (long)_officeType, (long)city2id,(long)_subOfficeType,[CureMeUtils defaultCureMeUtil].UDID];
         NSMutableDictionary *respDict = [[NSMutableDictionary alloc] init];
         NSData *response = sendRequestWithFullURLNAP([@"http://exswt.ranknowcn.com/" stringByAppendingString:urlStr], respDict);
         
@@ -1717,7 +1717,7 @@ UIView *infoView;
             }
             hospitalParams = jsonData[@"data"];
             NSString *action = hospitalParams[@"action"];
-            if (action && [action isEqualToString:@"forward"]) {
+            if (action && ([action isEqualToString:@"forward"] || [action isEqualToString:@"directmed"])) {
                 [self cancelSWTForError];
                 return;
             }

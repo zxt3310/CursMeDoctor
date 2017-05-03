@@ -234,7 +234,7 @@ void uncaughtExceptionHandler(NSException *exception)
     [[self window] setRootViewController:_navigationController];
     [self.window makeKeyAndVisible];
     
-    if([self isFirstLauch])
+    if(![self isFirstLauch])
     {
         GuideView *guide = [[GuideView alloc] initWithFrame:self.window.bounds];
         [self.window addSubview:guide];

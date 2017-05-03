@@ -50,7 +50,7 @@
 {
     // UITableView properties
     
-    self.backgroundColor = [UIColor clearColor];
+    self.backgroundColor = [UIColor whiteColor];
     self.separatorStyle = UITableViewCellSeparatorStyleNone;
     assert(self.style == UITableViewStylePlain);
     

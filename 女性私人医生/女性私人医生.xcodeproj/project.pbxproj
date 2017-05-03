@@ -652,6 +652,12 @@
 		70C18C131E81310B00A82F46 /* 消息_n@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = DEEFA9801C27FAC7006E85CA /* 消息_n@3x.png */; };
 		70C18C141E81310B00A82F46 /* ico_naobu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22A2CABE188F9697006BB056 /* ico_naobu@2x.png */; };
 		70C18C151E81310B00A82F46 /* naobu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22A2CABF188F9697006BB056 /* naobu@2x.png */; };
+		70D9A5B81EB97BBE00E2BD43 /* dchat.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D9A5B21EB97BBE00E2BD43 /* dchat.png */; };
+		70D9A5B91EB97BBE00E2BD43 /* dchat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D9A5B31EB97BBE00E2BD43 /* dchat@2x.png */; };
+		70D9A5BA1EB97BBE00E2BD43 /* dchat@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D9A5B41EB97BBE00E2BD43 /* dchat@3x.png */; };
+		70D9A5BB1EB97BBE00E2BD43 /* mchat.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D9A5B51EB97BBE00E2BD43 /* mchat.png */; };
+		70D9A5BC1EB97BBE00E2BD43 /* mchat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D9A5B61EB97BBE00E2BD43 /* mchat@2x.png */; };
+		70D9A5BD1EB97BBE00E2BD43 /* mchat@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70D9A5B71EB97BBE00E2BD43 /* mchat@3x.png */; };
 		70DE110E1EA9F1BC001DFDAF /* RegisteOfficeMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 70DE110D1EA9F1BC001DFDAF /* RegisteOfficeMemberViewController.m */; };
 		70EA7CDD1EB8241300AFF7B3 /* 引导页1-960.png in Resources */ = {isa = PBXBuildFile; fileRef = 70EA7CD11EB8241300AFF7B3 /* 引导页1-960.png */; };
 		70EA7CDE1EB8241300AFF7B3 /* 引导页1.png in Resources */ = {isa = PBXBuildFile; fileRef = 70EA7CD21EB8241300AFF7B3 /* 引导页1.png */; };
@@ -1181,6 +1187,12 @@
 		70B970FE1EB0714200ECBE49 /* iconMsg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iconMsg@3x.png"; path = "女性私人医生/Resources/images/iconMsg@3x.png"; sourceTree = "<group>"; };
 		70C18C191E81310B00A82F46 /* 男性私人医生.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "男性私人医生.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		70C18C1A1E81310B00A82F46 /* 女性私人医生 copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "女性私人医生 copy-Info.plist"; path = "/Users/zhangxintao/Documents/女性私人医生/女性私人医生 copy-Info.plist"; sourceTree = "<absolute>"; };
+		70D9A5B21EB97BBE00E2BD43 /* dchat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dchat.png; sourceTree = "<group>"; };
+		70D9A5B31EB97BBE00E2BD43 /* dchat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dchat@2x.png"; sourceTree = "<group>"; };
+		70D9A5B41EB97BBE00E2BD43 /* dchat@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dchat@3x.png"; sourceTree = "<group>"; };
+		70D9A5B51EB97BBE00E2BD43 /* mchat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mchat.png; sourceTree = "<group>"; };
+		70D9A5B61EB97BBE00E2BD43 /* mchat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mchat@2x.png"; sourceTree = "<group>"; };
+		70D9A5B71EB97BBE00E2BD43 /* mchat@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mchat@3x.png"; sourceTree = "<group>"; };
 		70DE110C1EA9F1BC001DFDAF /* RegisteOfficeMemberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisteOfficeMemberViewController.h; sourceTree = "<group>"; };
 		70DE110D1EA9F1BC001DFDAF /* RegisteOfficeMemberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisteOfficeMemberViewController.m; sourceTree = "<group>"; };
 		70EA7CD11EB8241300AFF7B3 /* 引导页1-960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "引导页1-960.png"; sourceTree = "<group>"; };
@@ -2305,6 +2317,12 @@
 		22FFA85316A678E500E0978C /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				70D9A5B21EB97BBE00E2BD43 /* dchat.png */,
+				70D9A5B31EB97BBE00E2BD43 /* dchat@2x.png */,
+				70D9A5B41EB97BBE00E2BD43 /* dchat@3x.png */,
+				70D9A5B51EB97BBE00E2BD43 /* mchat.png */,
+				70D9A5B61EB97BBE00E2BD43 /* mchat@2x.png */,
+				70D9A5B71EB97BBE00E2BD43 /* mchat@3x.png */,
 				22F88F2F16BBA2B100D1192D /* chat_bg_m_normal@2x.png */,
 				22D1EFDB16BA721B005AEAEF /* tel_s@2x.png */,
 				22D1EFD916BA71D7005AEAEF /* 地图@2x.png */,
@@ -2569,6 +2587,7 @@
 				22FA9863169D7A630058E8D4 /* dermatology@2x.png in Resources */,
 				22FA9864169D7A630058E8D4 /* fuke@2x.png in Resources */,
 				22FA9866169D7A630058E8D4 /* obstetrics@2x.png in Resources */,
+				70D9A5BB1EB97BBE00E2BD43 /* mchat.png in Resources */,
 				22FA9867169D7A630058E8D4 /* srys_n@2x.png in Resources */,
 				22FA9868169D7A630058E8D4 /* srys_p@2x.png in Resources */,
 				22FA9869169D7A630058E8D4 /* zxwz_n@2x.png in Resources */,
@@ -2618,6 +2637,7 @@
 				221E301818E5289500EAC44D /* MyBookListViewController.xib in Resources */,
 				70B970FF1EB0714200ECBE49 /* iconMsg.png in Resources */,
 				229D6DE9169FF61600D6DB94 /* back_button_alpha@2x.png in Resources */,
+				70D9A5B81EB97BBE00E2BD43 /* dchat.png in Resources */,
 				229D6DFE16A285FC00D6DB94 /* an_n@2x.png in Resources */,
 				229D6E1416A2E95B00D6DB94 /* ico_ck_n@2x.png in Resources */,
 				229D6E1516A2E95B00D6DB94 /* ico_fk_n@2x.png in Resources */,
@@ -2635,9 +2655,11 @@
 				22FD130A16A59A1E00B1F69C /* 左_n@2x.png in Resources */,
 				22FD130B16A59A1E00B1F69C /* 中_n@2x.png in Resources */,
 				22FD130C16A59A1E00B1F69C /* 右_n@2x.png in Resources */,
+				70D9A5BD1EB97BBE00E2BD43 /* mchat@3x.png in Resources */,
 				22FD130D16A59A1E00B1F69C /* 全_n@2x.png in Resources */,
 				22FD130E16A59A1E00B1F69C /* 左_p@2x.png in Resources */,
 				22FD130F16A59A1E00B1F69C /* 中_p@2x.png in Resources */,
+				70D9A5B91EB97BBE00E2BD43 /* dchat@2x.png in Resources */,
 				22FD131016A59A1E00B1F69C /* 全_p@2x.png in Resources */,
 				22FD131116A59A1E00B1F69C /* 右_p@2x.png in Resources */,
 				22FFA85716A678F400E0978C /* chat_bg_right_normal@2x.png in Resources */,
@@ -2668,8 +2690,10 @@
 				22A43CD416AA876E0084E657 /* 我的预约@2x.png in Resources */,
 				DEBF72BE19ECDB16000D1941 /* icon_tangniaobing@2x.png in Resources */,
 				22F8914416ABA6FB007C5E89 /* 立即咨询_bg@2x.png in Resources */,
+				70D9A5BC1EB97BBE00E2BD43 /* mchat@2x.png in Resources */,
 				22F8914816ABB772007C5E89 /* 立即咨询_n@2x.png in Resources */,
 				70EA7CE11EB8241300AFF7B3 /* 引导页2-960.png in Resources */,
+				70D9A5BA1EB97BBE00E2BD43 /* dchat@3x.png in Resources */,
 				22F8914916ABB772007C5E89 /* 立即咨询_p@2x.png in Resources */,
 				22F8914C16ABDDDD007C5E89 /* jiaoliu_down_tupian@2x.png in Resources */,
 				22F8914D16ABDDDD007C5E89 /* jiaoliu_tupian@2x.png in Resources */,

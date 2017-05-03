@@ -192,7 +192,7 @@
     imageViewFrame.frame = CGRectMake(inset * 2, inset, 55, 58);
 
     nameLabel.text = _answer.doctorName;
-    nameLabel.frame = CGRectMake(67, inset, 52 *SCREEN_WIDTH, 20);
+    nameLabel.frame = CGRectMake(67, inset, 140 *SCREEN_WIDTH/375, 20);
     
     infoLabel.text = [NSString stringWithFormat:@"%@ %@", _answer.doctorTitle, _answer.hospitalName];
     infoLabel.frame = CGRectMake(nameLabel.frame.origin.x + nameLabel.text.length * 16 + 7, inset * 2, 165 *SCREEN_WIDTH/320, 15);

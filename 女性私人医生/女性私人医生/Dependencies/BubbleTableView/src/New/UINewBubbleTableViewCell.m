@@ -76,11 +76,13 @@
      加载头像
      - author: Zxt
      - date: 17-05-02 18:05:30
-     
-     - returns: <#return value description#>
      */
+    
     headImage = [[UIImageView alloc] init];
-    [self.contentView addSubview:headImage];
+    [self addSubview:headImage];
+    
+    UIImageView *rectangleView = [[UIImageView alloc] init];
+    [self addSubview:rectangleView];
     
     if (self.dataInternal.header)
     {
@@ -99,8 +101,8 @@
     float headSize = _dataInternal.data.headImage ? HEADIMAGE_EDGE : 0;
     float nameHeight = 12;
 //    float x = (type == BubbleTypeSomeoneElse) ? 20 : self.frame.size.width - 15 - _dataInternal.labelSize.width;
-    float x = (type == BubbleTypeSomeoneElse) ? 20 + picSize : self.frame.size.width - 30 - 5 - picSize - _dataInternal.labelSize.width - 10;
-    float y = 10 + (self.dataInternal.header ? 30 : 0);
+    float x = (type == BubbleTypeSomeoneElse) ? 20 + picSize + 3 : SCREEN_WIDTH - 30 - 5 - picSize - _dataInternal.labelSize.width - 15;
+    float y = 10 + (self.dataInternal.header ? 20 : 0);
     
     if (_dataInternal.data.msgImage) {
         [contentLabel setHidden:YES];
@@ -114,6 +116,7 @@
         contentLabel.font = [UIFont systemFontOfSize:15];
         contentLabel.frame = CGRectMake(x, y, _dataInternal.labelSize.width, _dataInternal.labelSize.height);
         contentLabel.text = self.dataInternal.data.text;
+        contentLabel.textColor = UIColorFromHex(0x707070, 1);
     }
     
     if (type == BubbleTypeSomeoneElse)
@@ -125,16 +128,24 @@
         [headImage setHidden:NO];
         [headImage setClipsToBounds:YES];
         
-        bubbleImage.image = [CMImageUtils defaultImageUtil].chatOtherBubbleImage;
+        bubbleImage.image = [[UIImage alloc] init]; //[CMImageUtils defaultImageUtil].chatOtherBubbleImage;
         if (_dataInternal.data.msgImage) {
-            bubbleImage.frame = CGRectMake(x - 16, y - 5, _dataInternal.labelSize.width + 30, _dataInternal.labelSize.height + 20);
+            bubbleImage.frame = CGRectMake(x - 16, y - 5, _dataInternal.labelSize.width + 30, _dataInternal.labelSize.height + 10);
         }
         else {
-            bubbleImage.frame = CGRectMake(x - 16, y - 4, _dataInternal.labelSize.width + 30, _dataInternal.labelSize.height + 20);
+            bubbleImage.frame = CGRectMake(x - 16, y - 4, _dataInternal.labelSize.width + 30, _dataInternal.labelSize.height + 10);
         }
+        
+        rectangleView.image = [UIImage imageNamed:@"dchat"];
+        rectangleView.frame = CGRectMake(bubbleImage.frame.origin.x - 9, bubbleImage.frame.origin.y + 10, 10, 10);
+        
+        bubbleImage.layer.borderWidth = 1;
+        bubbleImage.layer.borderColor = [UIColor colorWithRed:219.0/255 green:219.0/255 blue:219.0/255 alpha:1.0].CGColor;
+        bubbleImage.backgroundColor = UIColorFromHex(0xfbfbfb, 1);
+        
         if ([self dataInternal].data.headImage) {
             headImage.image = _dataInternal.data.headImage;
-            headImage.frame = CGRectMake(2, bubbleImage.frame.origin.y, headSize, headSize);
+            headImage.frame = CGRectMake(5, bubbleImage.frame.origin.y - 5, headSize, headSize);
             [doctorNameLabel setHidden:NO];
             [doctorNameLabel setFont:[UIFont systemFontOfSize:12]];
             [doctorNameLabel setText:_dataInternal.data.talkerName];
@@ -146,17 +157,28 @@
         }
     }
     else {
-        [headImage setHidden:YES];
+        
         [doctorNameLabel setHidden:YES];
         
-        bubbleImage.image = [CMImageUtils defaultImageUtil].chatSelfBubbleImage;
+        bubbleImage.image = [[UIImage alloc] init]; //[CMImageUtils defaultImageUtil].chatSelfBubbleImage;
         if (_dataInternal.data.msgImage) {
-            bubbleImage.frame = CGRectMake(x - 8, y - 5, _dataInternal.labelSize.width + 30, _dataInternal.labelSize.height + 15);
+            bubbleImage.frame = CGRectMake(x - 8, y - 5, _dataInternal.labelSize.width + 30, _dataInternal.labelSize.height + 10);
         }
         else {
-            bubbleImage.frame = CGRectMake(x - 15, y - 4, self.dataInternal.labelSize.width + 20, self.dataInternal.labelSize.height + 15);
+            bubbleImage.frame = CGRectMake(x - 15, y - 4, self.dataInternal.labelSize.width + 20, self.dataInternal.labelSize.height + 10);
         }
+        
+        rectangleView.image = [UIImage imageNamed:@"mchat"];
+        rectangleView.frame = CGRectMake(bubbleImage.frame.origin.x + bubbleImage.frame.size.width - 1, bubbleImage.frame.origin.y + 10, 7, 10);
+        
+        headImage.image = [CMImageUtils defaultImageUtil].userHeadImage;
+        headImage.frame = CGRectMake(SCREEN_WIDTH - 40, bubbleImage.frame.origin.y - 5, 35, 35);
+        bubbleImage.backgroundColor = [UIColor colorWithRed:163.0/255 green:192.0/255 blue:245.0/255 alpha:1.0];
+        contentLabel.textColor = [UIColor whiteColor];
     }
+    
+    bubbleImage.layer.cornerRadius = 5;
+    
     
     if (_dataInternal.height < MIN_BUBBLECELL_HEIGHT) {
         _dataInternal.height = MIN_BUBBLECELL_HEIGHT;

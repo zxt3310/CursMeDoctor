@@ -627,8 +627,7 @@ NSString *officeStringWithType(NSInteger officeType)
 {
     if (!_dateFormatter) {
         _dateFormatter = [[NSDateFormatter alloc] init];
-        [_dateFormatter setDateStyle:NSDateFormatterShortStyle];
-        [_dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+        [_dateFormatter setDateFormat:@"yy-MM-dd HH:mm"];
     }
     
     return _dateFormatter;
