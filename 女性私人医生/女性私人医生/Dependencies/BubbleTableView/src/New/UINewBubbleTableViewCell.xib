@@ -47,13 +47,23 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" id="MLE-6g-4lF">
+                        <rect key="frame" x="8" y="12" width="32" height="34"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" id="kbV-8q-kE6">
+                        <rect key="frame" x="31" y="46" width="23" height="24"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="bubbleImage" destination="9" id="11"/>
                 <outlet property="contentLabel" destination="4" id="8"/>
+                <outlet property="headImage" destination="MLE-6g-4lF" id="G5j-sS-TmF"/>
                 <outlet property="headerLabel" destination="3" id="5"/>
                 <outlet property="msgImage" destination="14" id="15"/>
+                <outlet property="rectangleView" destination="kbV-8q-kE6" id="ymY-V5-ofC"/>
             </connections>
         </tableViewCell>
     </objects>

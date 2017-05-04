@@ -85,7 +85,7 @@ NSString* getUDID()
 // 默认所有调用此函数的请求，都发送至 medapp.ranknowcn.com/api/m.php
 NSData *sendRequest(NSString *phpFile, NSString *post)
 {
-    NSString *finalPost = [[NSString alloc] initWithFormat:@"%@&version=3.3&deviceid=%@&appid=1&source=apple&imei=%@", post, [[NSUserDefaults standardUserDefaults] objectForKey:USER_UNIQUE_ID],[CureMeUtils defaultCureMeUtil].UDID];
+    NSString *finalPost = [[NSString alloc] initWithFormat:@"%@&deviceid=%@&appid=1&source=apple&imei=%@", post, [[NSUserDefaults standardUserDefaults] objectForKey:USER_UNIQUE_ID],[CureMeUtils defaultCureMeUtil].UDID];
     NSLog(@"sendRequest: %@", finalPost);
     
     NSDictionary *additionalHeader = nil;
@@ -307,6 +307,7 @@ NSData * sendRequestWithHeaderAndResponse(NSString *phpFile, NSString *post, NSD
             }
         }
         [request setHTTPMethod:@"POST"];
+        [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
         [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
         [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
         [request setHTTPBody:postData];

@@ -2191,6 +2191,11 @@ NSString *saveTitle;
         NSString *post = [[NSString alloc] initWithFormat:@"action=chat_post2&hospitalid=%ld&fromid=%ld&toid=%ld&chatid=%ld&msg=%@&img=&type=text", (long)(_doctor.doctorID > 0 ? _doctor.hospitalID : _metaInfoData.identifier), (long)[CureMeUtils defaultCureMeUtil].userID, (long)_chatUserID, (long)_chatID, encodeMessage];
         NSData *response = sendRequest(@"msg.php", post);
         
+//        NSString *urlStr = @"http://new.medapp.ranknowcn.com/api/msg.php?action=chat_post2&version=3.0";
+//        NSString *post = [[NSString alloc] initWithFormat:@"hospitalid=%ld&fromid=%ld&toid=%ld&chatid=%ld&msg=%@&img=&type=text", (long)(_doctor.doctorID > 0 ? _doctor.hospitalID : _metaInfoData.identifier), (long)[CureMeUtils defaultCureMeUtil].userID, (long)_chatUserID, (long)_chatID, encodeMessage];
+//        
+//        NSData *response = sendFullRequest(urlStr, post, nil, NO, NO);
+        
         NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
         NSLog(@"chat_post2: %@ resp: %@", post, strResp);
         
@@ -2422,8 +2427,8 @@ NSString *saveTitle;
                 break;
 
             NSString *strURL = [NSString stringWithFormat:@"http://%@:%@/activity?id=%ld&module=iph&log_id=%d",
-                                [CureMeUtils defaultCureMeUtil].pollServer ? [CureMeUtils defaultCureMeUtil].pollServer : @"n2.medapp.ranknowcn.com",
-                                [CureMeUtils defaultCureMeUtil].pollServerPort ? [CureMeUtils defaultCureMeUtil].pollServerPort : @"3820",
+                                [CureMeUtils defaultCureMeUtil].pollServer ? [CureMeUtils defaultCureMeUtil].pollServer : @"n.medapp.ranknowcn.com",
+                                [CureMeUtils defaultCureMeUtil].pollServerPort ? [CureMeUtils defaultCureMeUtil].pollServerPort : @"3810",
                                 (long)[CureMeUtils defaultCureMeUtil].userID, rand()];
             NSLog(@"%@", strURL);
 
@@ -2494,7 +2499,7 @@ NSString *saveTitle;
             if (needStopDetectReplies == true || curChatSeed != [CureMeUtils defaultCureMeUtil].curChatHeartBreakSeed)
                 break;
             
-            sleep(1);
+            sleep(5);
         }
         
         NSLog(@"threadDetectReplies end: %@ seed: %ld", [NSDate date], (long)curChatSeed);

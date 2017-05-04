@@ -299,6 +299,9 @@
 		22FFA85816A678F400E0978C /* chat_bg_left_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22FFA85616A678F400E0978C /* chat_bg_left_normal@2x.png */; };
 		700FC2DB1E9B5A9400614277 /* CMQuickAskChoosenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 700FC2DA1E9B5A9400614277 /* CMQuickAskChoosenViewController.m */; };
 		7014D1D91EA5EE2500A3245F /* personalDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7014D1D81EA5EE2500A3245F /* personalDetailTableViewController.m */; };
+		701884C81EBB221C00B59169 /* 引导页2-1136.png in Resources */ = {isa = PBXBuildFile; fileRef = 701884C51EBB221C00B59169 /* 引导页2-1136.png */; };
+		701884C91EBB221C00B59169 /* 引导页3-1136.png in Resources */ = {isa = PBXBuildFile; fileRef = 701884C61EBB221C00B59169 /* 引导页3-1136.png */; };
+		701884CA1EBB221C00B59169 /* 引导页1-1136.png in Resources */ = {isa = PBXBuildFile; fileRef = 701884C71EBB221C00B59169 /* 引导页1-1136.png */; };
 		70257CA91E8F471C0064C517 /* ico_head_hos@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 70257CA81E8F471C0064C517 /* ico_head_hos@2x.png */; };
 		70257CAB1E8F499A0064C517 /* icon_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 70257CAA1E8F499A0064C517 /* icon_back.png */; };
 		702B8CA21EA7424A002E726E /* CMPersonSetingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 702B8CA11EA7424A002E726E /* CMPersonSetingViewController.m */; };
@@ -1158,6 +1161,9 @@
 		700FC2DA1E9B5A9400614277 /* CMQuickAskChoosenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMQuickAskChoosenViewController.m; sourceTree = "<group>"; };
 		7014D1D71EA5EE2500A3245F /* personalDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = personalDetailTableViewController.h; sourceTree = "<group>"; };
 		7014D1D81EA5EE2500A3245F /* personalDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = personalDetailTableViewController.m; sourceTree = "<group>"; };
+		701884C51EBB221C00B59169 /* 引导页2-1136.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "引导页2-1136.png"; sourceTree = "<group>"; };
+		701884C61EBB221C00B59169 /* 引导页3-1136.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "引导页3-1136.png"; sourceTree = "<group>"; };
+		701884C71EBB221C00B59169 /* 引导页1-1136.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "引导页1-1136.png"; sourceTree = "<group>"; };
 		70257CA81E8F471C0064C517 /* ico_head_hos@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ico_head_hos@2x.png"; path = "女性私人医生/Resources/images/drawable-xxxhdpi/ico_head_hos@2x.png"; sourceTree = "<group>"; };
 		70257CAA1E8F499A0064C517 /* icon_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_back.png; path = "女性私人医生/Resources/images/icon_back.png"; sourceTree = "<group>"; };
 		702B8CA01EA7424A002E726E /* CMPersonSetingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMPersonSetingViewController.h; sourceTree = "<group>"; };
@@ -2343,6 +2349,9 @@
 		70EA7CD01EB8241300AFF7B3 /* 私人引导页 */ = {
 			isa = PBXGroup;
 			children = (
+				701884C51EBB221C00B59169 /* 引导页2-1136.png */,
+				701884C61EBB221C00B59169 /* 引导页3-1136.png */,
+				701884C71EBB221C00B59169 /* 引导页1-1136.png */,
 				70EA7CD11EB8241300AFF7B3 /* 引导页1-960.png */,
 				70EA7CD21EB8241300AFF7B3 /* 引导页1.png */,
 				70EA7CD31EB8241300AFF7B3 /* 引导页1@2x.png */,
@@ -2595,6 +2604,7 @@
 				705D5B691E8FA61C00D4E090 /* icon_trash.png in Resources */,
 				22FA986A169D7A630058E8D4 /* zxwz_p@2x.png in Resources */,
 				22FA986B169D7A630058E8D4 /* wdyy_n@2x.png in Resources */,
+				701884C91EBB221C00B59169 /* 引导页3-1136.png in Resources */,
 				22FA986C169D7A630058E8D4 /* wdyy_p@2x.png in Resources */,
 				22FA986D169D7A630058E8D4 /* wdzx_n@2x.png in Resources */,
 				22FA986E169D7A630058E8D4 /* wdzx_p@2x.png in Resources */,
@@ -2692,6 +2702,7 @@
 				22F8914416ABA6FB007C5E89 /* 立即咨询_bg@2x.png in Resources */,
 				70D9A5BC1EB97BBE00E2BD43 /* mchat@2x.png in Resources */,
 				22F8914816ABB772007C5E89 /* 立即咨询_n@2x.png in Resources */,
+				701884CA1EBB221C00B59169 /* 引导页1-1136.png in Resources */,
 				70EA7CE11EB8241300AFF7B3 /* 引导页2-960.png in Resources */,
 				70D9A5BA1EB97BBE00E2BD43 /* dchat@3x.png in Resources */,
 				22F8914916ABB772007C5E89 /* 立即咨询_p@2x.png in Resources */,
@@ -2758,6 +2769,7 @@
 				2273AAE917D83030006E4A5C /* twddh_p@2x.png in Resources */,
 				DEEFA9C21C27FAC7006E85CA /* 评分_p@3x.png in Resources */,
 				2273AAEA17D83030006E4A5C /* twdzx_n@2x.png in Resources */,
+				701884C81EBB221C00B59169 /* 引导页2-1136.png in Resources */,
 				2273AAEB17D83030006E4A5C /* twdzx_p@2x.png in Resources */,
 				2204660717F6733100DDC7D0 /* CMQueryViewController.xib in Resources */,
 				2204660D17F673D100DDC7D0 /* CMRateAppAlertViewController.xib in Resources */,

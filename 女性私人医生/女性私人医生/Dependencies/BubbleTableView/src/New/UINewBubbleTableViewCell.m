@@ -78,12 +78,6 @@
      - date: 17-05-02 18:05:30
      */
     
-    headImage = [[UIImageView alloc] init];
-    [self addSubview:headImage];
-    
-    UIImageView *rectangleView = [[UIImageView alloc] init];
-    [self addSubview:rectangleView];
-    
     if (self.dataInternal.header)
     {
         headerLabel.hidden = NO;
@@ -130,18 +124,18 @@
         
         bubbleImage.image = [[UIImage alloc] init]; //[CMImageUtils defaultImageUtil].chatOtherBubbleImage;
         if (_dataInternal.data.msgImage) {
-            bubbleImage.frame = CGRectMake(x - 16, y - 5, _dataInternal.labelSize.width + 30, _dataInternal.labelSize.height + 10);
+            bubbleImage.frame = CGRectMake(x - 16, y - 5, _dataInternal.labelSize.width + 20, _dataInternal.labelSize.height + 15);
         }
         else {
-            bubbleImage.frame = CGRectMake(x - 16, y - 4, _dataInternal.labelSize.width + 30, _dataInternal.labelSize.height + 10);
+            bubbleImage.frame = CGRectMake(x - 16, y - 4, _dataInternal.labelSize.width + 20, _dataInternal.labelSize.height + 15);
         }
         
         rectangleView.image = [UIImage imageNamed:@"dchat"];
         rectangleView.frame = CGRectMake(bubbleImage.frame.origin.x - 9, bubbleImage.frame.origin.y + 10, 10, 10);
         
-        bubbleImage.layer.borderWidth = 1;
+        //bubbleImage.layer.borderWidth = 1;
         bubbleImage.layer.borderColor = [UIColor colorWithRed:219.0/255 green:219.0/255 blue:219.0/255 alpha:1.0].CGColor;
-        bubbleImage.backgroundColor = UIColorFromHex(0xfbfbfb, 1);
+        bubbleImage.backgroundColor = UIColorFromHex(0xfcfcfc, 1);
         
         if ([self dataInternal].data.headImage) {
             headImage.image = _dataInternal.data.headImage;
@@ -160,19 +154,22 @@
         
         [doctorNameLabel setHidden:YES];
         
+        
         bubbleImage.image = [[UIImage alloc] init]; //[CMImageUtils defaultImageUtil].chatSelfBubbleImage;
         if (_dataInternal.data.msgImage) {
-            bubbleImage.frame = CGRectMake(x - 8, y - 5, _dataInternal.labelSize.width + 30, _dataInternal.labelSize.height + 10);
+            bubbleImage.frame = CGRectMake(x - 8, y - 5, _dataInternal.labelSize.width + 20, _dataInternal.labelSize.height + 15);
         }
         else {
-            bubbleImage.frame = CGRectMake(x - 15, y - 4, self.dataInternal.labelSize.width + 20, self.dataInternal.labelSize.height + 10);
+            bubbleImage.frame = CGRectMake(x - 15, y - 4, self.dataInternal.labelSize.width + 20, self.dataInternal.labelSize.height + 15);
         }
         
         rectangleView.image = [UIImage imageNamed:@"mchat"];
         rectangleView.frame = CGRectMake(bubbleImage.frame.origin.x + bubbleImage.frame.size.width - 1, bubbleImage.frame.origin.y + 10, 7, 10);
         
+        if (![self dataInternal].data.headImage) {
         headImage.image = [CMImageUtils defaultImageUtil].userHeadImage;
         headImage.frame = CGRectMake(SCREEN_WIDTH - 40, bubbleImage.frame.origin.y - 5, 35, 35);
+        }
         bubbleImage.backgroundColor = [UIColor colorWithRed:163.0/255 green:192.0/255 blue:245.0/255 alpha:1.0];
         contentLabel.textColor = [UIColor whiteColor];
     }
@@ -188,6 +185,10 @@
         }
         self.contentView.frame = frame;
     }
+    
+    CGRect temp = contentLabel.frame;
+    temp.origin.y = contentLabel.frame.origin.y + 2.5;
+    contentLabel.frame = temp;
 }
 
 - (void)setupInternalTelephoneData

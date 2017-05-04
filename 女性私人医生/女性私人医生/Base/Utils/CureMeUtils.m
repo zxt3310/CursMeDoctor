@@ -408,7 +408,7 @@ NSString *officeStringWithType(NSInteger officeType)
     }
     
     self.pollServer = [serverDict objectForKey:@"chatserver"];
-    self.pollServerPort = [serverDict objectForKey:@"chatnport"];
+    self.pollServerPort = [serverDict objectForKey:@"chatport"];
 }
 
 // 判断是否为整形

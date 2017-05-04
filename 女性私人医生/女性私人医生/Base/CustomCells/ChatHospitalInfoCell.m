@@ -86,9 +86,9 @@
         [self setUserInteractionEnabled:YES];
         [self.contentView setUserInteractionEnabled:YES];
         [self setSelectionStyle:UITableViewCellSelectionStyleNone];
-        [self.contentView setBackgroundColor:[UIColor clearColor]];
+        [self.contentView setBackgroundColor:UIColorFromHex(0xfcfcfc, 1)];
         
-        _backgroundImage = [[UIImageView alloc] initWithImage:[CMImageUtils defaultImageUtil].qaCellQuestionBgAllImage];
+        _backgroundImage = [[UIImageView alloc] initWithImage:nil];//[CMImageUtils defaultImageUtil].qaCellQuestionBgAllImage];
         _backgroundImage.hidden = YES;
         [self.contentView addSubview:_backgroundImage];
         
