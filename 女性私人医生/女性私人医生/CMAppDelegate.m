@@ -252,6 +252,13 @@ void uncaughtExceptionHandler(NSException *exception)
     return YES;
 }
 
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(nonnull UIUserNotificationSettings *)notificationSettings{
+    
+    if (notificationSettings.types != UIRemoteNotificationTypeNone){
+        
+    }
+    
+}
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     
     //    NSString* oldToken = [dataModel deviceToken];
