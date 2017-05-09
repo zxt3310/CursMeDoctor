@@ -1225,10 +1225,31 @@ UIView *infoView;
     if (_chatID==0) {
         [self sendFirstQueryToMed:question];
     }else{
-        [self sendMessageToMed:question];
+        [self newSendMessageToMed:question];
     }
 }
 
+//修改私人医生对话机制
+- (void)newSendMessageToMed:(NSString *)question{
+    [HiChat sendMessage:[NSString stringWithFormat:@"%ld",_doctorID] withBody:question withAttachType:ATTACHMENT_NONE withAttachName:nil withAttachData:nil completion:^(NSError *error){
+        if (!error) {
+            NSDate *msgTime = [NSDate date];
+            
+            [self.bubbleData addObject:[NSBubbleData  dataWithText:[NSString stringWithFormat:@"%@", question] andDate:msgTime andType:BubbleTypeMine andImage:nil andTalkerID:0 andCellType:CellTypeDetail]];
+            
+            [CureMeUtils defaultCureMeUtil].lastQueryString = question;
+            questionInput.text = @"";
+            [questionInput resignFirstResponder];
+            
+            // 先ReloadData，确保能够正确初始化TableView的Section
+            [self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
+        }
+        else{
+            NSLog(@"send message Faild %@",error);
+        }
+        
+    }];
+}
 
 - (void)sendMessageToMed:(NSString*)question
 {
@@ -2068,7 +2089,7 @@ UIView *infoView;
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSString *urlStr = [NSString stringWithFormat:@"api/m.php?action=citytypegethospitalinfo&step=%@", step];
-        NSString *post = [NSString stringWithFormat:@"addrdetail=%@&token=%@&type=%ld&typechild=%ld&imei=%@", [CureMeUtils defaultCureMeUtil].encodedLocateInfo, [[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN], (long)self.officeType, (long)self.subOfficeType,[CureMeUtils defaultCureMeUtil].UDID];
+        NSString *post = [NSString stringWithFormat:@"addrdetail=%@&token=%@&type=%ld&typechild=%ld&imei=%@", [CureMeUtils defaultCureMeUtil].encodedLocateInfo, nil, (long)self.officeType, (long)self.subOfficeType,[CureMeUtils defaultCureMeUtil].UDID];
         NSData *response = sendRequestWithFullURL([@"http://new.medapp.ranknowcn.com/" stringByAppendingString:urlStr], post);
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -2154,6 +2175,13 @@ UIView *infoView;
                 [self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
                 isSWT = NO;
                 isReady = YES;
+                
+                //登录对话服务
+                [HiChat login:[NSString stringWithFormat:@"%ld",[CureMeUtils defaultCureMeUtil].userID] withPassword:@"" completion:^(NSError *error){
+                    if (error) {
+                        NSLog(@"%@",error);
+                    }
+                }];
             }
         });
     });

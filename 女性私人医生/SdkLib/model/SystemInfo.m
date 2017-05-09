@@ -52,8 +52,8 @@ static SystemInfo *ins = nil;
         //Sim卡串号imsi
         self.imsi = @"";
         
-        //设备imei
-        self.imei = [NSString macAddress];
+        //设备imei 最大64位
+        self.imei = [CureMeUtils defaultCureMeUtil].UDID;
         
         //设备型号
         self.device = [[UIDevice currentDevice] systemVersion];
@@ -69,7 +69,7 @@ static SystemInfo *ins = nil;
         self.pnToken = @""; //ED20B74F5B60B64FE9646D14
         
         //pn的类型，和信的pn还是google的pn
-        self.pnType = @"HPNS";
+        self.pnType = @"APNS";
 //        [[NSUserDefaults standardUserDefaults] setObject:dTokenStr forKey:NSU_PN_TOKEN];
 //        [[NSUserDefaults standardUserDefaults] synchronize];
         self.pnToken = [Config getPnToken];

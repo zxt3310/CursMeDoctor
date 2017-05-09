@@ -24,6 +24,7 @@
 
 #import <sys/utsname.h>
 #import "GuideView.h"
+#import "HiChat.h"
 
 /**
  * 实现NSUncaughtExceptionHandler方法
@@ -239,15 +240,11 @@ void uncaughtExceptionHandler(NSException *exception)
         GuideView *guide = [[GuideView alloc] initWithFrame:self.window.bounds];
         [self.window addSubview:guide];
     }
+
+    //初始化Hichat 并注册APNS
+    [HiChat init:Hichat_App_Key];
     
-    if (IOS_VERSION < 8.0) {
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert];
-    }
-    else {
-        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
-        
-        [[UIApplication sharedApplication] registerForRemoteNotifications];
-    }
+    [HiChat apnsInitInFinishLaunch:[UIApplication sharedApplication]];
     
     return YES;
 }
@@ -289,6 +286,8 @@ void uncaughtExceptionHandler(NSException *exception)
     // 如果获得的token与保存的不一致
     [[NSUserDefaults standardUserDefaults] setObject:newToken forKey:PUSH_TOKEN];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [HiChat submitDeviceToken:deviceToken];
     
     // 如果此时已经获得激活的GUID，则发送更新Token请求
     updateIOSPushInfo();

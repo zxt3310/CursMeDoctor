@@ -128,7 +128,7 @@ static callBackReceiptMsg receiptMsgBlock;
         boSendApnsToken = nil;
     }
     SystemInfo* si = [SystemInfo getSingleton];
-    NSString* hpnsToken = si.pnToken;
+    //NSString* hpnsToken = si.pnToken;
     NSString* hpnsType = si.pnType;
     si.pnToken =  deviceToken;
     si.pnType = @"APNS";
@@ -143,7 +143,8 @@ static callBackReceiptMsg receiptMsgBlock;
     [actionInfo setDeviceToken:[deviceToken substringToIndex:31]];
     [boSendApnsToken setResponseCls: [RespBase class]];
     [boSendApnsToken request:req withBaseUrl:LOGIN_URL Completed: ^(NSObject* owner, NSObject* data, int code) {
-        si.pnToken =  hpnsToken;
+        [Config savePnToken:deviceToken];
+        si.pnToken =  deviceToken;
         si.pnType = hpnsType;
     }];
 }
@@ -151,7 +152,7 @@ static callBackReceiptMsg receiptMsgBlock;
 +(void)init:(NSString*)appKey {
     [Config saveAppKey:appKey];
     [Config saveLoginStatus:HICHAT_OFFLINE];
-    [[HiChat instance] initPN];
+   // [[HiChat instance] initPN];
 }
 
 -(void)procMsgReceipt: (NSArray *)listMsgIds {
@@ -372,7 +373,7 @@ static callBackReceiptMsg receiptMsgBlock;
     [actionInfo setUserId:[Config getUserAccount]];
     [actionInfo setAppKey:[Config getAppKey]];
     [actionInfo setUserSource:ACTION_USRER_SRC_MOBILE];
-    [actionInfo setUserType:ACTION_USRER_TYPE_COMMON_USER];
+    //[actionInfo setUserType:ACTION_USRER_TYPE_COMMON_USER];
     MessageInfo* mi = [[MessageInfo alloc] init];
 
     [mi setTo:customerServiceAccount];
@@ -448,7 +449,7 @@ static callBackReceiptMsg receiptMsgBlock;
         NSString* path = [AttachInfo getAttachPath:type withName:name];
         [ai setPath:path];
         [attachData writeToFile:path atomically:YES];
-        [ai setAttachment:[GTMBase64 encodeString:attachData]];
+        [ai setAttachment:[GTMBase64 stringByEncodingData:attachData]];
     }
     [HiChat sendMessage:customerServiceAccount withBody:body withAttach:ai completion:block];
 }

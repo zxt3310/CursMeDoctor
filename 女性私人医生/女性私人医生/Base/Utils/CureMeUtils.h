@@ -65,6 +65,10 @@
 //1(女性私人医生).2（1-apple,2-91, 5-haima）.3.0(ver)
 #define APP_VERSION @"1.1.3.0"
 
+#define Hichat_App_Key @"805372035"
+#define Hichat_account @"test@126.com"
+#define Hichat_password @"123654"
+
 #define IS_IPHONE_5 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
 
 typedef enum {

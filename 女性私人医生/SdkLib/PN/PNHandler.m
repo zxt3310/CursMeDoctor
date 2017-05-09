@@ -26,7 +26,8 @@ void pnInit(int appId, char* accountId, ABlock callback) {
     NSString *docDir = [paths objectAtIndex:0];
     char *charDocDir = [docDir cStringUsingEncoding:NSASCIIStringEncoding];
     hpnsSetSystemDirectory(charDocDir);
-    blockx = Block_copy(callback);
+    //blockx = Block_copy(callback);
+    blockx = [callback copy];
     nmSystemInit();
     
     SHpnsRegInfo appprofile = {0};
@@ -63,7 +64,7 @@ void pnRegister(int appId, char regId[], int code)
 void pnUnRegister()
 {
     if (nil != blockx) {
-        Block_release(blockx);
+        //Block_release(blockx);
         blockx = nil;
     }
 

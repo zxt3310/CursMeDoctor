@@ -12,6 +12,7 @@
 #import "UINewBubbleTableViewDataSource.h"
 #import "Doctor.h"
 #import "ImageDownloadHelper.h"
+#import "HiChat.h"
 
 enum NewScrollAdjustType {
     NSCROLLTOEND = 0,

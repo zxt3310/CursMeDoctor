@@ -33,7 +33,7 @@ typedef enum {
 #define MAX_VIDEO_SIZE 1024*1024*5
 #define MAX_AUDIO_TIME 60;
 
-#define LOGIN_URL @"http://211.151.62.41:9190"
+#define LOGIN_URL @"http://180.76.137.158:8090"
 #define DOMAIN_NAME @"hichat.hesine.com"
 
 #define HICHAT_LOGIN 0

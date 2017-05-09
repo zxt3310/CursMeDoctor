@@ -11,7 +11,7 @@
 
 - (void)dealloc
 {
-    self.HisMsgParam = nil;
+    self.hisMsgParam = nil;
 }
 
 @end

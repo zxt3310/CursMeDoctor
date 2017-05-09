@@ -104,16 +104,20 @@
             userName.text = @"手机号";
             break;
         case 3:
+        {
             userName.text = @"验证码";
             CGRect temp = contentTF.frame;
             temp.size.width -= 70;
             contentTF.frame = temp;
             codeBtn.hidden = NO;
+        }
             break;
         case 4:
+        {
             userName.text = @"地区";
             contentTF.placeholder = @"请选择所在地区";
             contentTF.delegate = self;
+        }
             break;
         default:
             break;
