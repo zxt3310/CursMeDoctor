@@ -164,7 +164,7 @@
     // tim.wangj.remind 如果用户未登录，添加createuserdata调用
     // 1. 如果未登录，发送激活默认账户请求
     if (![CureMeUtils defaultCureMeUtil].hasLogin) {
-        NSString *post = [NSString stringWithFormat:@"action=createuserdata&deviceid=%@&appid=1&addrdetail=%@&token=%@", [CureMeUtils defaultCureMeUtil].uniID, [CureMeUtils defaultCureMeUtil].encodedLocateInfo, [[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN]];
+        NSString *post = [NSString stringWithFormat:@"action=createuserdata&deviceid=%@&appid=1&addrdetail=%@&token=%@", [CureMeUtils defaultCureMeUtil].uniID, [CureMeUtils defaultCureMeUtil].encodedLocateInfo, nil];
         NSData *response = sendRequest(@"m.php", post);
         NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
         NSLog(@"createuserdata resp: %@", strResp);

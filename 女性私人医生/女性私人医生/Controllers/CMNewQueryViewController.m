@@ -21,7 +21,9 @@
 #define iatao_server_url @"http://yiaitao.lifehealthcare.com/api/"
 
 @interface CMNewQueryViewController ()
-
+{
+    NSInteger *msgMaxId;
+}
 @end
 
 @implementation CMNewQueryViewController
@@ -468,98 +470,141 @@ UIView *infoView;
     // 1. 轮询Pull消息
     @autoreleasepool {
         // 获得当前聊天窗口seed
-        NSInteger curChatSeed = [CureMeUtils defaultCureMeUtil].curChatHeartBreakSeed;
-        
-        NSString *modifyTime = [[NSUserDefaults standardUserDefaults] stringForKey:@"ModifyTime"];
-        if (!modifyTime || modifyTime.length <= 0) {
-            [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:@"ModifyTime"];
-            modifyTime = @"0";
-        }
-        
-        NSString *lastModifyTime = @"";
-        
-        NSLog(@"modifyTime: %@", modifyTime);
-        
-        NSLog(@"threadDetactReplies begin: %@", [NSDate date]);
-        
-        NSInteger eTag = 0;
-        
+//        NSInteger curChatSeed = [CureMeUtils defaultCureMeUtil].curChatHeartBreakSeed;
+//        
+//        NSString *modifyTime = [[NSUserDefaults standardUserDefaults] stringForKey:@"ModifyTime"];
+//        if (!modifyTime || modifyTime.length <= 0) {
+//            [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:@"ModifyTime"];
+//            modifyTime = @"0";
+//        }
+//        
+//        NSString *lastModifyTime = @"";
+//        
+//        NSLog(@"modifyTime: %@", modifyTime);
+//        
+//        NSLog(@"threadDetactReplies begin: %@", [NSDate date]);
+//        
+//        NSInteger eTag = 0;
+//        
+//        while (true) {
+//            if (needStopDetectReplies == true || curChatSeed != [CureMeUtils defaultCureMeUtil].curChatHeartBreakSeed)
+//                break;
+//            
+//            NSString *strURL = [NSString stringWithFormat:@"http://%@:%@/activity?id=%ld&module=iph&log_id=%d",
+//                                [CureMeUtils defaultCureMeUtil].pollServer ? [CureMeUtils defaultCureMeUtil].pollServer : @"n.medapp.ranknowcn.com",
+//                                [CureMeUtils defaultCureMeUtil].pollServerPort ? [CureMeUtils defaultCureMeUtil].pollServerPort : @"3810",
+//                                (long)[CureMeUtils defaultCureMeUtil].userID, rand()];
+//            NSLog(@"%@", strURL);
+//            
+//            NSMutableDictionary *headers = [[NSMutableDictionary alloc] init];
+//            [headers setObject:modifyTime forKey:@"If-Modified-Since"];
+//            
+//            if ([lastModifyTime isEqualToString:modifyTime]) {
+//                [headers setObject:[[NSString alloc] initWithFormat:@"%ld", (long)eTag] forKey:@"If-None-Match"];
+//            }
+//            else {
+//                eTag = 0;
+//            }
+//            
+//            NSMutableDictionary *respDict = [[NSMutableDictionary alloc] init];
+//            NSData *response = sendGetReqWithHeaderAndRespDict(strURL, headers, respDict, false);
+//            if (!response) {
+//                continue;
+//            }
+//            
+//            // <notify type="PostMsg" chat_id="241" from="3" time="1348716813" randnum="193921944" />
+//            NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
+//            NSLog(@"activity resp: %@ with headers: %@", strResp, respDict);
+//            
+//            if (needStopDetectReplies == true || curChatSeed != [CureMeUtils defaultCureMeUtil].curChatHeartBreakSeed)
+//                break;
+//            
+//            // 保存上次modifyTime
+//            lastModifyTime = modifyTime;
+//            // 获取本次modifyTime
+//            modifyTime = [respDict objectForKey:@"Last-Modified"];
+//            [[NSUserDefaults standardUserDefaults] setObject:modifyTime forKey:@"ModifyTime"];
+//            NSLog(@"ModifyTime: %@ talkerID: %ld", modifyTime, (long)_doctorID);
+//            
+//            eTag = [[respDict objectForKey:@"Etag"] integerValue];
+//            
+//            // <notify type="PostMsg" from=发起消息的用户id to=接受消息用户的id />
+//            NSError *error = nil;
+//            DDXMLDocument *document = [[DDXMLDocument alloc] initWithData:response options:0 error:&error];
+//            NSLog(@"activity document: %@", document);
+//            //        NSArray *children = [document children];
+//            DDXMLElement *rootElem = [document rootElement];
+//            
+//            if ([[rootElem attributeForName:@"type"].stringValue isEqualToString:@"PostMsg"]) {
+//                DDXMLNode *chat_ID = [rootElem attributeForName:@"chat_id"];
+//                NSInteger chatID = [chat_ID.stringValue integerValue];
+//                if (chatID != _chatID) {
+//                    NSLog(@"activity chat_id: %ld is not equal to current chatID: %ld", (long)chatID, (long)_chatID);
+//                    continue;
+//                }
+//                
+//                DDXMLNode *fromID = [rootElem attributeForName:@"from"];
+//                NSInteger iFromID = [fromID.stringValue integerValue];
+//                
+//                // 发送Notification，通知Pull最新消息
+//                NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:iFromID] forKey:@"talkerID"];
+//                NSNotification *note = [NSNotification notificationWithName:NTF_PullNewChatMsgs object:self userInfo:userInfo];
+//                [[NSNotificationCenter defaultCenter] postNotification:note];
+//            }
+//            else {
+//                NSLog(@"Other type notify");
+//            }
+//            
+//            if (needStopDetectReplies == true || curChatSeed != [CureMeUtils defaultCureMeUtil].curChatHeartBreakSeed)
+//                break;
+//            
+//            sleep(1);
+//        }
+//        
+//        NSLog(@"threadDetectReplies end: %@ seed: %ld", [NSDate date], (long)curChatSeed);
+        msgMaxId = 0;
         while (true) {
-            if (needStopDetectReplies == true || curChatSeed != [CureMeUtils defaultCureMeUtil].curChatHeartBreakSeed)
-                break;
             
-            NSString *strURL = [NSString stringWithFormat:@"http://%@:%@/activity?id=%ld&module=iph&log_id=%d",
-                                [CureMeUtils defaultCureMeUtil].pollServer ? [CureMeUtils defaultCureMeUtil].pollServer : @"n.medapp.ranknowcn.com",
-                                [CureMeUtils defaultCureMeUtil].pollServerPort ? [CureMeUtils defaultCureMeUtil].pollServerPort : @"3810",
-                                (long)[CureMeUtils defaultCureMeUtil].userID, rand()];
-            NSLog(@"%@", strURL);
+            NSString *post = [[NSString alloc] initWithFormat:@"action=chat_pull2&owner=%ld&chatid=%ld", (long)[CureMeUtils defaultCureMeUtil].userID, (long)_chatID];
+            NSData *response = sendRequest(@"msg.php", post);
             
-            NSMutableDictionary *headers = [[NSMutableDictionary alloc] init];
-            [headers setObject:modifyTime forKey:@"If-Modified-Since"];
-            
-            if ([lastModifyTime isEqualToString:modifyTime]) {
-                [headers setObject:[[NSString alloc] initWithFormat:@"%ld", (long)eTag] forKey:@"If-None-Match"];
-            }
-            else {
-                eTag = 0;
-            }
-            
-            NSMutableDictionary *respDict = [[NSMutableDictionary alloc] init];
-            NSData *response = sendGetReqWithHeaderAndRespDict(strURL, headers, respDict, false);
-            if (!response) {
-                continue;
-            }
-            
-            // <notify type="PostMsg" chat_id="241" from="3" time="1348716813" randnum="193921944" />
             NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
-            NSLog(@"activity resp: %@ with headers: %@", strResp, respDict);
+            NSLog(@"action=getnewmessage resp: %@", strResp);
             
-            if (needStopDetectReplies == true || curChatSeed != [CureMeUtils defaultCureMeUtil].curChatHeartBreakSeed)
-                break;
+            NSDictionary *jsonData = parseJsonResponse(response);
+            if (!jsonData || jsonData.count <= 0) {
+                NSLog(@"action=getnewmessage resp json invalid: %@", strResp);
+                return;
+            }
             
-            // 保存上次modifyTime
-            lastModifyTime = modifyTime;
-            // 获取本次modifyTime
-            modifyTime = [respDict objectForKey:@"Last-Modified"];
-            [[NSUserDefaults standardUserDefaults] setObject:modifyTime forKey:@"ModifyTime"];
-            NSLog(@"ModifyTime: %@ talkerID: %ld", modifyTime, (long)_doctorID);
+            // {"result":true,"msg":[{"from":367,"to":"","data":"{\"text\":\"\",\"image\":\"\",\"type\":\"book\",\"data\":\"432\"}","time":1352089227,"chat_id":11912}],"doctors":[{"did":367,"dname":"ggggg","dpic":""}]}
+            NSNumber *result = [jsonData objectForKey:@"result"];
+            if (!result || result.integerValue != 1) {
+                NSLog(@"action=getnewmessage resp result invalid %@", [jsonData objectForKey:@"msg"]);
+            }
             
-            eTag = [[respDict objectForKey:@"Etag"] integerValue];
+            // 获得医生信息
+            //NSArray *doctorInfos = [jsonData objectForKey:@"doctors"];
+            //[self addDoctorsInfo:doctorInfos];
             
-            // <notify type="PostMsg" from=发起消息的用户id to=接受消息用户的id />
-            NSError *error = nil;
-            DDXMLDocument *document = [[DDXMLDocument alloc] initWithData:response options:0 error:&error];
-            NSLog(@"activity document: %@", document);
-            //        NSArray *children = [document children];
-            DDXMLElement *rootElem = [document rootElement];
+            NSArray *msgs = [jsonData objectForKey:@"msg"];
+            NSLog(@"action=getnewmessage msgs: %@", msgs);
+            if (!msgs || msgs.count <= 0) {
+                return;
+            }
             
-            if ([[rootElem attributeForName:@"type"].stringValue isEqualToString:@"PostMsg"]) {
-                DDXMLNode *chat_ID = [rootElem attributeForName:@"chat_id"];
-                NSInteger chatID = [chat_ID.stringValue integerValue];
-                if (chatID != _chatID) {
-                    NSLog(@"activity chat_id: %ld is not equal to current chatID: %ld", (long)chatID, (long)_chatID);
-                    continue;
+            if (msgs && msgs.count > 0) {
+                for (NSDictionary *msg in msgs) {
+                    if (![self addSingleHisMessage:msg]) {
+                        NSLog(@"getneewmessage addSingleHisMessage failed: %@", msg);
+                        return;
+                    }
                 }
-                
-                DDXMLNode *fromID = [rootElem attributeForName:@"from"];
-                NSInteger iFromID = [fromID.stringValue integerValue];
-                
-                // 发送Notification，通知Pull最新消息
-                NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:iFromID] forKey:@"talkerID"];
-                NSNotification *note = [NSNotification notificationWithName:NTF_PullNewChatMsgs object:self userInfo:userInfo];
-                [[NSNotificationCenter defaultCenter] postNotification:note];
-            }
-            else {
-                NSLog(@"Other type notify");
             }
             
-            if (needStopDetectReplies == true || curChatSeed != [CureMeUtils defaultCureMeUtil].curChatHeartBreakSeed)
-                break;
-            
-            sleep(1);
+            [self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
         }
         
-        NSLog(@"threadDetectReplies end: %@ seed: %ld", [NSDate date], (long)curChatSeed);
     }
 }
 
@@ -1185,7 +1230,7 @@ UIView *infoView;
     }
     
     if (![CureMeUtils defaultCureMeUtil].hasLogin) {
-        NSString *post = [NSString stringWithFormat:@"action=createuserdata&deviceid=%@&appid=1&addrdetail=%@&token=%@", [CureMeUtils defaultCureMeUtil].uniID, [CureMeUtils defaultCureMeUtil].encodedLocateInfo, [[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN]];
+        NSString *post = [NSString stringWithFormat:@"action=createuserdata&deviceid=%@&appid=1&addrdetail=%@&token=%@", [CureMeUtils defaultCureMeUtil].uniID, [CureMeUtils defaultCureMeUtil].encodedLocateInfo, nil];
         NSData *response = sendRequest(@"m.php", post);
         NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
         NSLog(@"createuserdata resp: %@", strResp);
@@ -1563,7 +1608,7 @@ UIView *infoView;
 
 - (void)getSWTuserid {
     if (![CureMeUtils defaultCureMeUtil].hasLogin) {
-        NSString *post = [NSString stringWithFormat:@"action=createuserdata&deviceid=%@&appid=1&addrdetail=%@&token=%@", [CureMeUtils defaultCureMeUtil].uniID, [CureMeUtils defaultCureMeUtil].encodedLocateInfo, [[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN]];
+        NSString *post = [NSString stringWithFormat:@"action=createuserdata&deviceid=%@&appid=1&addrdetail=%@&token=%@", [CureMeUtils defaultCureMeUtil].uniID, [CureMeUtils defaultCureMeUtil].encodedLocateInfo, nil];
         NSData *response = sendRequest(@"m.php", post);
         NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
         NSLog(@"createuserdata resp: %@", strResp);
@@ -1990,7 +2035,7 @@ UIView *infoView;
     loopCount += 1;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSString *urlStr = [NSString stringWithFormat:@"api/m.php?action=questionidgetanswerchat&questionid=%@", [_questionID stringValue]];
-        NSData *response = sendRequestWithFullURL([@"http://new.medapp.ranknowcn.com/" stringByAppendingString:urlStr], @"");
+        NSData *response = sendRequestWithFullURL([@"http://bd.yiaitao.net/" stringByAppendingString:urlStr], @"");
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if (isQuit)
@@ -2119,7 +2164,7 @@ UIView *infoView;
             if (_isAllowToiatao == YES) {
                 //没有账号创建临时账号
                 if (![CureMeUtils defaultCureMeUtil].hasLogin) {
-                    NSString *post = [NSString stringWithFormat:@"action=createuserdata&deviceid=%@&appid=1&addrdetail=%@&token=%@", [CureMeUtils defaultCureMeUtil].uniID, [CureMeUtils defaultCureMeUtil].encodedLocateInfo, [[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN]];
+                    NSString *post = [NSString stringWithFormat:@"action=createuserdata&deviceid=%@&appid=1&addrdetail=%@&token=%@", [CureMeUtils defaultCureMeUtil].uniID, [CureMeUtils defaultCureMeUtil].encodedLocateInfo, nil];
                     NSData *response = sendRequest(@"m.php", post);
                     NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
                     NSLog(@"createuserdata resp: %@", strResp);
@@ -2142,6 +2187,7 @@ UIView *infoView;
                     [[NSUserDefaults standardUserDefaults] setObject:SWTID forKey:USER_SWT_ID];
                     [CureMeUtils defaultCureMeUtil].userName = [CureMeUtils defaultCureMeUtil].uniID;
                     [[NSUserDefaults standardUserDefaults] setObject:[CureMeUtils defaultCureMeUtil].uniID forKey:USER_REGISTERNAME];
+                    
                     [[NSUserDefaults standardUserDefaults] synchronize];
                 }
                 
@@ -2182,6 +2228,16 @@ UIView *infoView;
                         NSLog(@"%@",error);
                     }
                 }];
+                
+                NSData *deviceToken = [NSData dataWithData:[[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN_NSDATA]];
+                if (!deviceToken) {
+                    
+                    NSLog(@"push token is nil fail to submit");
+                    
+                    return;
+                }
+                
+                [HiChat submitDeviceToken:deviceToken];
             }
         });
     });
@@ -2373,7 +2429,7 @@ UIView *infoView;
         NSString *mdtStr = [NSString stringWithFormat:@"rankswtapp_%@_%ld",curStr,(long)[CureMeUtils defaultCureMeUtil].userID];
         md5Str = [self getmd5WithString:mdtStr];
         
-        NSString *urlStr = [NSString stringWithFormat:@"%@where?imei=%ld&city1=%ld&city2=%ld&office1=%ld&office2=%ld&md5=%@&pn=%@&source=apple&app=1&newimei=%@&version=3.3",iatao_server_url,(long)[CureMeUtils defaultCureMeUtil].userID,(long)city1,(long)city2,(long)self.officeType,(long)self.subOfficeType,md5Str,[[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN],[CureMeUtils defaultCureMeUtil].UDID];
+        NSString *urlStr = [NSString stringWithFormat:@"%@where?imei=%ld&city1=%ld&city2=%ld&office1=%ld&office2=%ld&md5=%@&pn=%@&source=apple&app=1&newimei=%@&version=3.3",iatao_server_url,(long)[CureMeUtils defaultCureMeUtil].userID,(long)city1,(long)city2,(long)self.officeType,(long)self.subOfficeType,md5Str,nil,[CureMeUtils defaultCureMeUtil].UDID];
         
         NSData *response = sendGetReqWithHeaderAndRespDict(urlStr, nil, nil, NO);
         dispatch_async(dispatch_get_main_queue(), ^{

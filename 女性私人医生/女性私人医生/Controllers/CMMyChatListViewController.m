@@ -468,7 +468,7 @@
          *  新增医爱淘 接口更新
          */
         NSString *strUrl = [NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/api/m.php?action=userallchatlist&version=3.0"];
-        post = [NSString stringWithFormat:@"source=apple&imei=%@&token=%@&version=3.3&appid=1&deviceid=%@&swtuserid=%ld&os=ios&userid=%ld",[CureMeUtils defaultCureMeUtil].UDID,[[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN],[[NSUserDefaults standardUserDefaults] objectForKey:USER_UNIQUE_ID],[CureMeUtils defaultCureMeUtil].userSWTID,[CureMeUtils defaultCureMeUtil].userID];
+        post = [NSString stringWithFormat:@"source=apple&imei=%@&token=%@&version=3.3&appid=1&deviceid=%@&swtuserid=%ld&os=ios&userid=%ld",[CureMeUtils defaultCureMeUtil].UDID,nil,[[NSUserDefaults standardUserDefaults] objectForKey:USER_UNIQUE_ID],[CureMeUtils defaultCureMeUtil].userSWTID,[CureMeUtils defaultCureMeUtil].userID];
         
         NSData *response = sendFullRequest(strUrl, post, nil, NO, NO);
         //NSData *response = sendRequest(@"m.php", post);
@@ -698,7 +698,7 @@
     UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
     
         NSString *urlStr = @"http://new.medapp.ranknowcn.com/api/m.php?action=userallchatlisthide";
-        NSString *post = [NSString stringWithFormat:@"imei=%@&token=%@&chatid=%ld&chattype=%@&questionid=%ld&userid=%ld&os=ios",[CureMeUtils defaultCureMeUtil].UDID,[[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN],chatId,unit.isSWT?unit.chattype:@"medapp",unit.questionID,[CureMeUtils defaultCureMeUtil].userID];
+        NSString *post = [NSString stringWithFormat:@"imei=%@&token=%@&chatid=%ld&chattype=%@&questionid=%ld&userid=%ld&os=ios",[CureMeUtils defaultCureMeUtil].UDID,nil,chatId,unit.isSWT?unit.chattype:@"medapp",unit.questionID,[CureMeUtils defaultCureMeUtil].userID];
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSData *response = sendRequestWithFullURL(urlStr, post);

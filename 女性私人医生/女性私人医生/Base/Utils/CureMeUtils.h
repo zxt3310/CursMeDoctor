@@ -55,6 +55,7 @@
 #define USER_UNIQUE_ID @"UserUniqueID"
 // 苹果Push返回的设备Token
 #define PUSH_TOKEN @"ApplePushToken"
+#define PUSH_TOKEN_NSDATA @"AppleOringPushToken"
 
 #define LOCATION_ADDRESS @"LocationAddress"
 

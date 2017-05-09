@@ -236,7 +236,7 @@
     }
     // 如果是“全新注册用户”
     else {
-        post = [[NSString alloc] initWithFormat:@"action=register&mobile=&username=%@&password=%@&city=%ld&city2=%ld&addrdetail=%@&token=%@", encodedUserName, encodedPassword, (long)userRegion, (long)cityID.integerValue, encodeAddr ? encodeAddr : @"", [[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN]];
+        post = [[NSString alloc] initWithFormat:@"action=register&mobile=&username=%@&password=%@&city=%ld&city2=%ld&addrdetail=%@&token=%@", encodedUserName, encodedPassword, (long)userRegion, (long)cityID.integerValue, encodeAddr ? encodeAddr : @"", nil];
     }
     returnData = sendRequest(@"m.php", post);
     

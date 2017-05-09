@@ -21,7 +21,7 @@
 
 @implementation BoBase
 
-#define BASE_URL @"http://211.151.62.41:8082"
+#define BASE_URL @"http://180.76.137.158:8080"
 //#define SESSIONKEY @"0B41883A7B4599F51C1462CF9606CE3C"
 
 - (void)request:(JSONModel*)reqObj Completed:(complete) callback {

@@ -175,7 +175,7 @@ void uncaughtExceptionHandler(NSException *exception)
     if ([CureMeUtils defaultCureMeUtil].userID > 0) {
         NSString *urlStr = @"http://new.medapp.ranknowcn.com/api/m.php?action=login&version=3.0";
         
-        NSString *post = [NSString stringWithFormat:@"username=%@&password=%@&token=%@&version=3.3&deviceid=%@&source=apple",[CureMeUtils defaultCureMeUtil].userName,[CureMeUtils defaultCureMeUtil].password,[[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN],[CureMeUtils defaultCureMeUtil].uniID];
+        NSString *post = [NSString stringWithFormat:@"username=%@&password=%@&token=%@&version=3.3&deviceid=%@&source=apple",[CureMeUtils defaultCureMeUtil].userName,[CureMeUtils defaultCureMeUtil].password,nil,[CureMeUtils defaultCureMeUtil].uniID];
         NSData *response = sendRequestWithCookie(urlStr, post, @"", true);
         NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
         NSLog(@"application loading loginCookie resp: %@", strResp);
@@ -285,9 +285,8 @@ void uncaughtExceptionHandler(NSException *exception)
     
     // 如果获得的token与保存的不一致
     [[NSUserDefaults standardUserDefaults] setObject:newToken forKey:PUSH_TOKEN];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    [HiChat submitDeviceToken:deviceToken];
+    [[NSUserDefaults standardUserDefaults] setObject:deviceToken forKey:PUSH_TOKEN_NSDATA];
+    [[NSUserDefaults standardUserDefaults] synchronize];   
     
     // 如果此时已经获得激活的GUID，则发送更新Token请求
     updateIOSPushInfo();
@@ -615,13 +614,13 @@ void uncaughtExceptionHandler(NSException *exception)
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    [[UIApplication sharedApplication] scheduledLocalNotifications];
+
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

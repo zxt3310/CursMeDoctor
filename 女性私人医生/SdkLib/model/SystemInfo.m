@@ -53,7 +53,8 @@ static SystemInfo *ins = nil;
         self.imsi = @"";
         
         //设备imei 最大64位
-        self.imei = [CureMeUtils defaultCureMeUtil].UDID;
+        NSString *IFDA = [CureMeUtils defaultCureMeUtil].UDID;
+        self.imei = @"867451022317702"; //[IFDA stringByReplacingOccurrencesOfString:@"-" withString:@""];
         
         //设备型号
         self.device = [[UIDevice currentDevice] systemVersion];

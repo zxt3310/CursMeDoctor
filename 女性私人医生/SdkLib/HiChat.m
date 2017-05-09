@@ -127,6 +127,7 @@ static callBackReceiptMsg receiptMsgBlock;
         //[boSendApnsToken release];
         boSendApnsToken = nil;
     }
+    
     SystemInfo* si = [SystemInfo getSingleton];
     //NSString* hpnsToken = si.pnToken;
     NSString* hpnsType = si.pnType;
@@ -196,6 +197,10 @@ static callBackReceiptMsg receiptMsgBlock;
         //[boLogin release];
         boLogin = nil;
     }
+    if (![Config getUserAccount]) {
+        [Config saveUserAccount:account];
+    }
+    
     boLogin = [[BoBase alloc] init];
     ReqBase* req = [[ReqBase alloc] init];
     ActionInfo* actionInfo = [req actionInfo];
