@@ -51,7 +51,10 @@ CMActionSheet *actionSheet;
 
 
 @interface BubbleViewController ()
-
+{
+    NSInteger maxId;
+    BOOL talking;
+}
 @end
 
 @implementation BubbleViewController
@@ -119,6 +122,8 @@ NSString *saveTitle;
     [super viewDidLoad];
     
     chatBookID = 0;
+    maxId = 0;
+    talking = YES;
     
     // 1. 初始化DataSource
     bubbleTable.bubbleDataSource = self;
@@ -244,6 +249,7 @@ NSString *saveTitle;
 {
     NSLog(@"BubbleViewController back");
     [self.view endEditing:YES];
+    talking = NO;
 
     [super back:sender];
     
@@ -383,30 +389,13 @@ NSString *saveTitle;
 {
     CGRect frame = self.view.frame;
     if (height>0){
-        frame.origin.y = 64;
-        frame.size.height = SCREEN_HEIGHT-64-height;
+        frame.origin.y = 64 - height;
         self.view.frame = frame;
-        bubbleTable.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-45-height);
+        //bubbleTable.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-45-height);
     }else{
         frame.origin.y = 64;
-        frame.size.height = SCREEN_HEIGHT-64;
         self.view.frame = frame;
-        bubbleTable.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-45);
     }
-    //bubbleTable.frame = CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64-40-height);
-    /*if (height<1){
-     CGRect tableFrame = inputView.frame;
-     tableFrame.origin.y = SCREEN_HEIGHT-40;
-     inputView.frame = tableFrame;
-     
-     CGRect inputFrame = _inputField.frame;
-     inputFrame.origin.y = SCREEN_HEIGHT-40+4;
-     _inputField.frame = inputFrame;
-     
-     CGRect startFrame = _startQueryView.frame;
-     startFrame.origin.y = SCREEN_HEIGHT-44;
-     _startQueryView.frame = startFrame;
-     }*/
 }
 /*
 - (void)keyboardWillShow:(NSNotification *)notification {
@@ -982,6 +971,63 @@ NSString *saveTitle;
         return true;
     }
 }
+
+- (bool)addTalkingHisMessage:(NSDictionary *)messageOriginal
+{
+    @autoreleasepool {
+        NSLog(@"addSingleHisMessage jsonData: %@", messageOriginal);
+        
+        if (!messageOriginal || messageOriginal.count <= 0) {
+            NSLog(@"addSingleHisMessage messageOriginal invalid");
+            return false;
+        }
+        
+        NSNumber *chat_id = [messageOriginal objectForKey:@"chat_id"];
+        if (!chat_id || chat_id.integerValue != _chatID) {
+            NSLog(@"addSingleHisMessage chatID not match: %ld, %ld", (long)chat_id.integerValue, (long)_chatID);
+            return false;
+        }
+        NSDate *msgTime = [[NSDate alloc] initWithTimeIntervalSince1970:[[messageOriginal objectForKey:@"time"] integerValue]];
+        NSNumber *fromID = [[NSNumber alloc] initWithInteger:[[messageOriginal objectForKey:@"from"] integerValue]];
+        
+        NSDictionary *messageInternal = parseJsonString([messageOriginal objectForKey:@"msg"]);
+        maxId = [[messageOriginal objectForKey:@"msgid"] integerValue];
+        
+        NSString *text = nil;
+        NSInteger talkerID = (fromID.integerValue == _chatUserID) ? 0 : fromID.integerValue;
+        NSInteger bubbleType = (fromID.integerValue == _chatUserID) ? BubbleTypeMine : BubbleTypeSomeoneElse;
+        if (bubbleType == BubbleTypeMine) {
+            return true;
+        }
+        
+        // 0. 如果消息不是按照Json格式组装，直接显示Data内容
+        if (!messageInternal || messageInternal.count < 2) {
+            text = [messageOriginal objectForKey:@"msg"];
+            UIImage *headImage = (bubbleType == BubbleTypeMine) ? nil : [[CMImageUtils defaultImageUtil] doctorDefaultHeadSImage];
+            NSBubbleData *chatData = [NSBubbleData dataWithText:text
+                                                        andDate:msgTime
+                                                        andType:bubbleType
+                                                       andImage:headImage
+                                                    andTalkerID:talkerID
+                                                    andCellType:CellTypeDetail];
+            // 医生头像图片ImageKey
+            if (bubbleType == BubbleTypeSomeoneElse) {
+                NSNumber *TID = [[NSNumber alloc] initWithInteger:talkerID];
+                NSString *headImageKey = [[self doctorIDImageKeys] objectForKey:TID];
+                if (headImageKey) {
+                    chatData.headImageKey = headImageKey;
+                }
+            }
+            
+            [bubbleData addObject:chatData];
+            NSLog(@"messageInternal: %@ text: %@ time: %@", messageInternal, text, msgTime);
+            return true;
+        }
+        return true;
+    }
+}
+
+
 
 - (void)setBookInfoUnit:(BookInfoUnit *)bookInfoUnit
 {
@@ -2182,19 +2228,10 @@ NSString *saveTitle;
         
         // 3. 以下，发送消息
         NSString *encodeMessage = [message stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-
-        //    NSString *encodeMessage = (NSString *)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)message, nil, nil, kCFStringEncodingUTF8);
-        // http://n2.medapp.ranknowcn.com:3810/message/post?from=0002&to=0001&data=123123
         
-        // 发送消息新请求 action=sendmessage&fromid=xxx&chatid=xxx&msg=xxxxx&img=xxx&hospitalid=xxx
-//        NSString *post = [[NSString alloc] initWithFormat:@"action=sendmessage&fromid=%d&chatid=%d&msg=%@&img=", [CureMeUtils defaultCureMeUtil].userID, _chatID, encodeMessage];
+        // 发送消息新请求
         NSString *post = [[NSString alloc] initWithFormat:@"action=chat_post2&hospitalid=%ld&fromid=%ld&toid=%ld&chatid=%ld&msg=%@&img=&type=text", (long)(_doctor.doctorID > 0 ? _doctor.hospitalID : _metaInfoData.identifier), (long)[CureMeUtils defaultCureMeUtil].userID, (long)_chatUserID, (long)_chatID, encodeMessage];
         NSData *response = sendRequest(@"msg.php", post);
-        
-//        NSString *urlStr = @"http://new.medapp.ranknowcn.com/api/msg.php?action=chat_post2&version=3.0";
-//        NSString *post = [[NSString alloc] initWithFormat:@"hospitalid=%ld&fromid=%ld&toid=%ld&chatid=%ld&msg=%@&img=&type=text", (long)(_doctor.doctorID > 0 ? _doctor.hospitalID : _metaInfoData.identifier), (long)[CureMeUtils defaultCureMeUtil].userID, (long)_chatUserID, (long)_chatID, encodeMessage];
-//        
-//        NSData *response = sendFullRequest(urlStr, post, nil, NO, NO);
         
         NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
         NSLog(@"chat_post2: %@ resp: %@", post, strResp);
@@ -2218,6 +2255,7 @@ NSString *saveTitle;
         _inputField.text = nil;
         [_inputField endEditing:YES];
         
+        [NSThread detachNewThreadSelector:@selector(threadDetectReplies) toTarget:self withObject:nil];
         // 先ReloadData，确保能够正确初始化TableView的Section
         [self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
     }
@@ -2240,8 +2278,8 @@ NSString *saveTitle;
     CGPoint newPosition = bubbleTable.contentOffset;
     NSLog(@"contentOffset x: %.2f y: %.2f", newPosition.x, newPosition.y);
     NSLog(@"contentSize width: %.2f height: %.2f", bubbleTable.contentSize.width, bubbleTable.contentSize.height);
-    if (bubbleTable.contentSize.height >= 370) {
-        newPosition.y = bubbleTable.contentSize.height - 370;
+    if (bubbleTable.contentSize.height >= 400 *SCREEN_HEIGHT/480) {
+        newPosition.y = bubbleTable.contentSize.height - 400 *SCREEN_HEIGHT/480;
     }
 
     [bubbleTable setContentOffset:newPosition animated:YES];
@@ -2393,9 +2431,9 @@ NSString *saveTitle;
         [self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
         
         // 在查看自己对话时，开启轮询更新消息线程
-        if (_chatUserID == [CureMeUtils defaultCureMeUtil].userID) {
-            [NSThread detachNewThreadSelector:@selector(threadDetectReplies) toTarget:self withObject:nil];
-        }
+//        if (_chatUserID == [CureMeUtils defaultCureMeUtil].userID) {
+//            [NSThread detachNewThreadSelector:@selector(threadDetectReplies) toTarget:self withObject:nil];
+//        }
         
         [[CureMeUtils defaultCureMeUtil] updateUnreadMsgCount];
     }
@@ -2405,104 +2443,58 @@ NSString *saveTitle;
 {
     // 1. 轮询Pull消息
     @autoreleasepool {
-        // 获得当前聊天窗口seed
-        NSInteger curChatSeed = [CureMeUtils defaultCureMeUtil].curChatHeartBreakSeed;
-        
-        NSString *modifyTime = [[NSUserDefaults standardUserDefaults] stringForKey:@"ModifyTime"];
-        if (!modifyTime || modifyTime.length <= 0) {
-            [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:@"ModifyTime"];
-            modifyTime = @"0";
-        }
-
-        NSString *lastModifyTime = @"";
-        
-        NSLog(@"modifyTime: %@", modifyTime);
-
-        NSLog(@"threadDetactReplies begin: %@", [NSDate date]);
-        
-        NSInteger eTag = 0;
-        
-        while (true) {
-            if (needStopDetectReplies == true || curChatSeed != [CureMeUtils defaultCureMeUtil].curChatHeartBreakSeed)
-                break;
-
-            NSString *strURL = [NSString stringWithFormat:@"http://%@:%@/activity?id=%ld&module=iph&log_id=%d",
-                                [CureMeUtils defaultCureMeUtil].pollServer ? [CureMeUtils defaultCureMeUtil].pollServer : @"n.medapp.ranknowcn.com",
-                                [CureMeUtils defaultCureMeUtil].pollServerPort ? [CureMeUtils defaultCureMeUtil].pollServerPort : @"3810",
-                                (long)[CureMeUtils defaultCureMeUtil].userID, rand()];
-            NSLog(@"%@", strURL);
-
-            NSMutableDictionary *headers = [[NSMutableDictionary alloc] init];
-            if (!modifyTime || modifyTime.length <= 0) {
-                [[NSUserDefaults standardUserDefaults] setObject:@"0" forKey:@"ModifyTime"];
-                modifyTime = @"0";
-            }
-            [headers setObject:modifyTime forKey:@"If-Modified-Since"];
+        maxId = 0;
+        while (talking == YES) {
             
-            if ([lastModifyTime isEqualToString:modifyTime]) {
-                [headers setObject:[[NSString alloc] initWithFormat:@"%ld", (long)eTag] forKey:@"If-None-Match"];
-            }
-            else {
-                eTag = 0;
-            }
-
-            NSMutableDictionary *respDict = [[NSMutableDictionary alloc] init];
-            NSData *response = sendGetReqWithHeaderAndRespDict(strURL, headers, respDict, false);
-            if (!response) {
-                
+            NSString *post = [[NSString alloc] initWithFormat:@"action=chat_pull2&msg_max_id=%ld&chatid=%ld", (long)maxId, (long)_chatID];
+            NSData *response = sendRequest(@"msg.php", post);
+            
+            NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
+            NSLog(@"action=getnewmessage resp: %@", strResp);
+            
+            NSDictionary *jsonData = parseJsonResponse(response);
+            if (!jsonData || jsonData.count <= 0) {
+                NSLog(@"action=getnewmessage resp json invalid: %@", strResp);
+                sleep(3);
                 continue;
             }
             
-            // <notify type="PostMsg" chat_id="241" from="3" time="1348716813" randnum="193921944" />
-            NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
-            NSLog(@"activity resp: %@ with headers: %@", strResp, respDict);
-
-            if (needStopDetectReplies == true || curChatSeed != [CureMeUtils defaultCureMeUtil].curChatHeartBreakSeed)
-                break;
-
-            // 保存上次modifyTime
-            lastModifyTime = modifyTime;
-            // 获取本次modifyTime
-            modifyTime = [respDict objectForKey:@"Last-Modified"];
-            [[NSUserDefaults standardUserDefaults] setObject:modifyTime forKey:@"ModifyTime"];
-            NSLog(@"ModifyTime: %@ talkerID: %ld", modifyTime, (long)_talkerID);
+            NSNumber *result = [jsonData objectForKey:@"result"];
+            if (!result || result.integerValue != 1) {
+                NSLog(@"action=getnewmessage resp result invalid %@", [jsonData objectForKey:@"msg"]);
+                sleep(3);
+                continue;
+            }
             
-            eTag = [[respDict objectForKey:@"Etag"] integerValue];
             
-            // <notify type="PostMsg" from=发起消息的用户id to=接受消息用户的id />
-            NSError *error = nil;
-            DDXMLDocument *document = [[DDXMLDocument alloc] initWithData:response options:0 error:&error];
-            NSLog(@"activity document: %@", document);
-            //        NSArray *children = [document children];
-            DDXMLElement *rootElem = [document rootElement];
+            NSArray *msgs = [jsonData objectForKey:@"msg"];
             
-            if ([[rootElem attributeForName:@"type"].stringValue isEqualToString:@"PostMsg"]) {
-                DDXMLNode *chat_ID = [rootElem attributeForName:@"chat_id"];
-                NSInteger chatID = [chat_ID.stringValue integerValue];
-                if (chatID != _chatID) {
-                    NSLog(@"activity chat_id: %ld is not equal to current chatID: %ld", (long)chatID, (long)_chatID);
-                    continue;
+            NSLog(@"action=getnewmessage msgs: %@", msgs);
+            if (!msgs || msgs.count <= 0) {
+                sleep(3);
+                continue;
+            }
+            
+            if (msgs && msgs.count > 0) {
+                for (NSDictionary *msg in msgs) {
+                    if (maxId == 0) {
+                        if ([msg isEqual:msgs[msgs.count - 1]]) {
+                            maxId = [[msg objectForKey:@"msgid"] integerValue];
+                        }
+                        continue;
+                    }
+                    if (![self addTalkingHisMessage:msg]) {
+                        NSLog(@"getneewmessage addSingleHisMessage failed: %@", msg);
+                        sleep(3);
+                        break;
+                    }
                 }
-
-                DDXMLNode *fromID = [rootElem attributeForName:@"from"];
-                NSInteger iFromID = [fromID.stringValue integerValue];
-                
-                // 发送Notification，通知Pull最新消息
-                NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:iFromID] forKey:@"talkerID"];
-                NSNotification *note = [NSNotification notificationWithName:NTF_PullNewChatMsgs object:self userInfo:userInfo];
-                [[NSNotificationCenter defaultCenter] postNotification:note];
-            }
-            else {
-                NSLog(@"Other type notify");
             }
             
-            if (needStopDetectReplies == true || curChatSeed != [CureMeUtils defaultCureMeUtil].curChatHeartBreakSeed)
-                break;
-            
-            sleep(5);
+            [self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
+            sleep(3);
+            continue;
         }
-        
-        NSLog(@"threadDetectReplies end: %@ seed: %ld", [NSDate date], (long)curChatSeed);
     }
 }
 

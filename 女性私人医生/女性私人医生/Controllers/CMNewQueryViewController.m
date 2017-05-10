@@ -23,6 +23,7 @@
 @interface CMNewQueryViewController ()
 {
     NSInteger *msgMaxId;
+    BOOL talking;
 }
 @end
 
@@ -107,6 +108,13 @@ UIView *infoView;
     hasCancelSWT = NO;
     heartBeatTimer = nil;
     cdCheckTimer = nil;
+    /**
+     *  @author Zxt, 17-05-10 11:05:01
+     *
+     *  私人医生端轮询标记
+     */
+    talking = YES;
+    
     [CureMeUtils defaultCureMeUtil].isInNewQuery = YES;
     /**
      *  @author Zxt, 17-03-27 10:03:19
@@ -353,6 +361,8 @@ UIView *infoView;
     [CureMeUtils defaultCureMeUtil].isInNewQuery = NO;
     [self.view endEditing:YES];
     
+    talking = NO;
+    
     isUserActive = NO;
     
     [super back:sender];
@@ -563,9 +573,9 @@ UIView *infoView;
 //        
 //        NSLog(@"threadDetectReplies end: %@ seed: %ld", [NSDate date], (long)curChatSeed);
         msgMaxId = 0;
-        while (true) {
+        while (talking == YES) {
             
-            NSString *post = [[NSString alloc] initWithFormat:@"action=chat_pull2&owner=%ld&chatid=%ld", (long)[CureMeUtils defaultCureMeUtil].userID, (long)_chatID];
+            NSString *post = [[NSString alloc] initWithFormat:@"action=chat_pull2&msg_max_id=%ld&chatid=%ld", (long)msgMaxId, (long)_chatID];
             NSData *response = sendRequest(@"msg.php", post);
             
             NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
@@ -574,37 +584,42 @@ UIView *infoView;
             NSDictionary *jsonData = parseJsonResponse(response);
             if (!jsonData || jsonData.count <= 0) {
                 NSLog(@"action=getnewmessage resp json invalid: %@", strResp);
-                return;
+                sleep(3);
+                continue;
             }
             
             // {"result":true,"msg":[{"from":367,"to":"","data":"{\"text\":\"\",\"image\":\"\",\"type\":\"book\",\"data\":\"432\"}","time":1352089227,"chat_id":11912}],"doctors":[{"did":367,"dname":"ggggg","dpic":""}]}
             NSNumber *result = [jsonData objectForKey:@"result"];
             if (!result || result.integerValue != 1) {
                 NSLog(@"action=getnewmessage resp result invalid %@", [jsonData objectForKey:@"msg"]);
+                sleep(3);
+                continue;
             }
             
-            // 获得医生信息
-            //NSArray *doctorInfos = [jsonData objectForKey:@"doctors"];
-            //[self addDoctorsInfo:doctorInfos];
             
             NSArray *msgs = [jsonData objectForKey:@"msg"];
+            
             NSLog(@"action=getnewmessage msgs: %@", msgs);
             if (!msgs || msgs.count <= 0) {
-                return;
+                sleep(3);
+                continue;
             }
             
             if (msgs && msgs.count > 0) {
                 for (NSDictionary *msg in msgs) {
                     if (![self addSingleHisMessage:msg]) {
                         NSLog(@"getneewmessage addSingleHisMessage failed: %@", msg);
-                        return;
+                        sleep(3);
+                        continue;
                     }
                 }
             }
             
             [self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
+            sleep(3);
+            continue;
         }
-        
+        [NSThread exit];
     }
 }
 
@@ -714,16 +729,20 @@ UIView *infoView;
         
         //        NSLog(@"addSingleHisMessage messageOriginal: %@", messageOriginal);
         
-        NSDictionary *messageInternal = parseJsonString([messageOriginal objectForKey:@"data"]);
+        NSDictionary *messageInternal = parseJsonString([messageOriginal objectForKey:@"msg"]);
+        msgMaxId = [[messageOriginal objectForKey:@"msgid"] integerValue];
         
         NSString *text = nil;
         NSInteger talkerID = (fromID.integerValue == _chatUserID) ? 0 : fromID.integerValue;
         NSBubbleType bubbleType = (fromID.integerValue == _chatUserID) ? BubbleTypeMine : BubbleTypeSomeoneElse;
+        if (bubbleType == BubbleTypeMine) {
+            return true;
+        }
         //        NSInteger bubbleType = (fromID.integerValue == [CureMeUtils defaultCureMeUtil].userID) ? BubbleTypeMine : BubbleTypeSomeoneElse;
         
         // 0. 如果消息不是按照Json格式组装，直接显示Data内容
         if (!messageInternal || messageInternal.count < 2) {
-            text = [messageOriginal objectForKey:@"data"];
+            text = [messageOriginal objectForKey:@"msg"];
             UIImage *headImage = (bubbleType == BubbleTypeMine) ? nil : [[CMImageUtils defaultImageUtil] doctorDefaultHeadSImage];
             NSBubbleData *chatData = [NSBubbleData dataWithText:text
                                                         andDate:msgTime
@@ -1270,7 +1289,7 @@ UIView *infoView;
     if (_chatID==0) {
         [self sendFirstQueryToMed:question];
     }else{
-        [self newSendMessageToMed:question];
+        [self sendMessageToMed:question];
     }
 }
 
@@ -1526,7 +1545,13 @@ UIView *infoView;
             hospitalIntro = jsonData[@"data"][@"hintro"];
             hospitalParams = jsonData[@"data"][@"swt_json"];
             _doctorID = [jsonData[@"data"][@"doctorid"] integerValue];
-            swtMaxID = [hospitalParams[@"maxid"] integerValue];
+            if ([_chatHistoryType isEqualToString:@"swt"]) {
+                swtMaxID = [hospitalParams[@"maxid"] integerValue];
+            }
+            else{
+                swtMaxID = [jsonData[@"data"][@"maxid"] integerValue];
+                _chatID = _chatSWTID;
+            }
             if (swtMaxID==0) {
                 isReady = YES;
                 isSWT = YES;
@@ -1550,21 +1575,34 @@ UIView *infoView;
             }else{
                 hospitalCookie = jsonData[@"data"][@"swt_json"][@"cookie"];
                 isReady = YES;
-                isSWT = YES;
-                heartBeatTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(heartBeat:) userInfo:nil repeats:YES];
-                cdCheckTimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(cdCheck:) userInfo:nil repeats:YES];
-                [self enterSWT];
+                if ([_chatHistoryType isEqualToString:@"swt"]) {
+
+                    isSWT = YES;
+                    heartBeatTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(heartBeat:) userInfo:nil repeats:YES];
+                    cdCheckTimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(cdCheck:) userInfo:nil repeats:YES];
+                    [self enterSWT];
+                }
+                else{
+                    isIAT = YES;
+                    cdCheckTimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(cdCheckRequestIAT:) userInfo:nil repeats:YES];
+                    [[NSRunLoop currentRunLoop] addTimer:cdCheckTimer forMode:NSRunLoopCommonModes];
+                }
                 
                 [self reloadSWTInfoView];
                 NSString *tmp = [hospitalParams[@"welcome"] stringByReplacingOccurrencesOfString:@"%u" withString:@"\\u"];
                 tmp = [tmp stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                if (!tmp) {
+                    tmp = @"";
+                }
                 welcomeStr = replaceUnicode(tmp);
                 NSArray *history = jsonData[@"data"][@"history"];
                 if (history.count==0) {
                     [self addDoctorClientMessage:welcomeStr msgDate:[NSDate date]];
                 }else{
-                    NSDate *firstMsgTime = [[NSDate alloc] initWithTimeIntervalSince1970:[[[history objectAtIndex:0] objectForKey:@"create_at"] integerValue]];
-                    [self addSWTDoctorClientMessage:welcomeStr msgDate:firstMsgTime];
+                    if (tmp.length > 0) {
+                        NSDate *firstMsgTime = [[NSDate alloc] initWithTimeIntervalSince1970:[[[history objectAtIndex:0] objectForKey:@"create_at"] integerValue]];
+                        [self addSWTDoctorClientMessage:welcomeStr msgDate:firstMsgTime];
+                    }
                     for (NSUInteger i=0;i<history.count;i++) {
                         NSDictionary *msgDict = [history objectAtIndex:i];
                         NSInteger from_id = [msgDict[@"from_id"] integerValue];
