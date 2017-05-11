@@ -120,10 +120,11 @@ NSString *saveTitle;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationItem.rightBarButtonItem = nil;
     
     chatBookID = 0;
     maxId = 0;
-    talking = YES;
+    talking = NO;
     
     // 1. 初始化DataSource
     bubbleTable.bubbleDataSource = self;
@@ -1572,7 +1573,7 @@ NSString *saveTitle;
         // 医生信息
         if (_doctor) {
             if (_doctor.isOnline && _chatUserID == [CureMeUtils defaultCureMeUtil].userID) {
-                [self performSelectorOnMainThread:@selector(startRemindViewTimer:) withObject:[NSDictionary dictionaryWithObjectsAndKeys:@"医生当前在线，您可以和医生直接进行交流", @"remind", [[NSNumber alloc] initWithInt:1], @"interval", nil] waitUntilDone:NO];
+                //[self performSelectorOnMainThread:@selector(startRemindViewTimer:) withObject:[NSDictionary dictionaryWithObjectsAndKeys:@"医生当前在线，您可以和医生直接进行交流", @"remind", [[NSNumber alloc] initWithInt:1], @"interval", nil] waitUntilDone:NO];
 //                [self performSelectorOnMainThread:@selector(showRemindView:) withObject:@"医生当前在线，快来聊聊" waitUntilDone:NO];
             }
 
@@ -2255,8 +2256,11 @@ NSString *saveTitle;
         _inputField.text = nil;
         [_inputField endEditing:YES];
         
-        [NSThread detachNewThreadSelector:@selector(threadDetectReplies) toTarget:self withObject:nil];
-        // 先ReloadData，确保能够正确初始化TableView的Section
+        if (!talking) {
+            talking = YES;
+            [NSThread detachNewThreadSelector:@selector(threadDetectReplies) toTarget:self withObject:nil];
+        }
+                // 先ReloadData，确保能够正确初始化TableView的Section
         [self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
     }
 }

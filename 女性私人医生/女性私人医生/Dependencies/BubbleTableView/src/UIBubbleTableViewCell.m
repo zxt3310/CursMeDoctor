@@ -110,7 +110,7 @@
         contentLabel.font = [UIFont systemFontOfSize:15];
         contentLabel.frame = CGRectMake(x-2, y+2.5, _dataInternal.labelSize.width, _dataInternal.labelSize.height);
         contentLabel.text = self.dataInternal.data.text;
-        contentLabel.textColor = UIColorFromHex(0x707070, 1);
+        contentLabel.textColor = UIColorFromHex(0x5e5e5e, 1);
     }
     
     if (type == BubbleTypeSomeoneElse)
@@ -135,7 +135,7 @@
         
         //bubbleImage.layer.borderWidth = 1;
         bubbleImage.layer.borderColor = [UIColor colorWithRed:219.0/255 green:219.0/255 blue:219.0/255 alpha:1.0].CGColor;
-        bubbleImage.backgroundColor = UIColorFromHex(0xfcfcfc, 1);
+        bubbleImage.backgroundColor = UIColorFromHex(0xf1f1f1, 1);
         
         if ([self dataInternal].data.headImage) {
             headImage.image = _dataInternal.data.headImage;

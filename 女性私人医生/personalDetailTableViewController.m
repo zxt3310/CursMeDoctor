@@ -18,6 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.rightBarButtonItem = nil;
     self.title = @"我的账户";
     self.tableView.tableFooterView = [[UITableView alloc] initWithFrame:CGRectZero];
     self.tableView.scrollEnabled = NO;

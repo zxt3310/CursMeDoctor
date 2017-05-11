@@ -43,7 +43,7 @@
     
     headImage = [[UIImageView alloc] initWithImage:[CMImageUtils defaultImageUtil].doctorDefaultHeadMImage];
     headImage.frame = CGRectMake(5, 4.5, 41, 41);
-    [headImage.layer setCornerRadius:3.0];
+    [headImage.layer setCornerRadius:20.0];
     [headImage setClipsToBounds:YES];
     [headImage setBackgroundColor:[UIColor clearColor]];
     

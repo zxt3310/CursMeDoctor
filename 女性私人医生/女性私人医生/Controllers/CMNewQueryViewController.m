@@ -124,7 +124,18 @@ UIView *infoView;
     _isAllowToiatao = YES;
     isIAT = NO;
     isIATquit = NO;
-    
+    /**
+     *  @author Zxt, 17-05-11 10:05:41
+     *
+     *  更新MD5值
+     */
+    NSDate *currentDate = [NSDate date];
+    NSDateFormatter *formator = [[NSDateFormatter alloc] init];
+    [formator setDateFormat:@"yyyyMMdd"];
+    NSString *curStr = [formator stringFromDate:currentDate];
+    NSString *mdtStr = [NSString stringWithFormat:@"rankswtapp_%@_%ld",curStr,(long)[CureMeUtils defaultCureMeUtil].userID];
+    md5Str = [self getmd5WithString:mdtStr];
+
     // Do any additional setup after loading the view.
     [self.navigationItem setTitle:@"专家咨询"];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
@@ -1553,26 +1564,53 @@ UIView *infoView;
                 _chatID = _chatSWTID;
             }
             if (swtMaxID==0) {
-                isReady = YES;
-                isSWT = YES;
-                swtClosed = YES;
-                [self reloadSWTInfoView];
-                NSArray *history = jsonData[@"data"][@"history"];
-                if (history.count>0) {
-                    for (NSUInteger i=0;i<history.count;i++) {
-                        NSDictionary *msgDict = [history objectAtIndex:i];
-                        NSInteger from_id = [msgDict[@"from_id"] integerValue];
-                        NSString *message = msgDict[@"message"];
-                        NSDate *msgTime = [[NSDate alloc] initWithTimeIntervalSince1970:[[msgDict objectForKey:@"create_at"] integerValue]];
-                        if (from_id==1) {
-                            [self addSWTDoctorClientMessage:message msgDate:msgTime];
-                        }else{
-                            [self addUserClientMessage:message msgDate:msgTime];
+                if ([_chatHistoryType isEqualToString:@"swt"]) {
+                    isReady = YES;
+                    isSWT = YES;
+                    swtClosed = YES;
+                    [self reloadSWTInfoView];
+                    NSArray *history = jsonData[@"data"][@"history"];
+                    if (history.count>0) {
+                        for (NSUInteger i=0;i<history.count;i++) {
+                            NSDictionary *msgDict = [history objectAtIndex:i];
+                            NSInteger from_id = [msgDict[@"from_id"] integerValue];
+                            NSString *message = msgDict[@"message"];
+                            NSDate *msgTime = [[NSDate alloc] initWithTimeIntervalSince1970:[[msgDict objectForKey:@"create_at"] integerValue]];
+                            if (from_id==1) {
+                                [self addSWTDoctorClientMessage:message msgDate:msgTime];
+                            }else{
+                                [self addUserClientMessage:message msgDate:msgTime];
+                            }
                         }
                     }
+                    [self addSWTDoctorClientMessage:@"咨询已经结束" msgDate:[NSDate date]];
                 }
-                [self addSWTDoctorClientMessage:@"咨询已经结束" msgDate:[NSDate date]];
-            }else{
+                else{
+                    NSInteger *status = [jsonData[@"data"][@"status"] integerValue];
+                    isReady = YES;
+                    isIAT = YES;
+                    isIATquit = YES;
+                    [self reloadSWTInfoView];
+                    NSArray *history = jsonData[@"data"][@"history"];
+                    if (history.count>0) {
+                        for (NSUInteger i=0;i<history.count;i++) {
+                            NSDictionary *msgDict = [history objectAtIndex:i];
+                            NSInteger from_id = [msgDict[@"from_id"] integerValue];
+                            NSString *message = msgDict[@"message"];
+                            NSDate *msgTime = [[NSDate alloc] initWithTimeIntervalSince1970:[[msgDict objectForKey:@"create_at"] integerValue]];
+                            if (from_id==1) {
+                                [self addSWTDoctorClientMessage:message msgDate:msgTime];
+                            }else{
+                                [self addUserClientMessage:message msgDate:msgTime];
+                            }
+                        }
+                    }
+                    if (status != 0) {
+                        [self addSWTDoctorClientMessage:@"咨询已经结束" msgDate:[NSDate date]];
+                    }
+                }
+            }
+            else{
                 hospitalCookie = jsonData[@"data"][@"swt_json"][@"cookie"];
                 isReady = YES;
                 if ([_chatHistoryType isEqualToString:@"swt"]) {
@@ -2274,8 +2312,10 @@ UIView *infoView;
                     
                     return;
                 }
+                else{
+                    [HiChat submitDeviceToken:deviceToken];
+                }
                 
-                [HiChat submitDeviceToken:deviceToken];
             }
         });
     });
@@ -2460,12 +2500,6 @@ UIView *infoView;
  */
 - (void)isAllowToConnectIatao:(NSInteger) city1 and:(NSInteger) city2{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0), ^{
-        NSDate *currentDate = [NSDate date];
-        NSDateFormatter *formator = [[NSDateFormatter alloc] init];
-        [formator setDateFormat:@"yyyyMMdd"];
-        NSString *curStr = [formator stringFromDate:currentDate];
-        NSString *mdtStr = [NSString stringWithFormat:@"rankswtapp_%@_%ld",curStr,(long)[CureMeUtils defaultCureMeUtil].userID];
-        md5Str = [self getmd5WithString:mdtStr];
         
         NSString *urlStr = [NSString stringWithFormat:@"%@where?imei=%ld&city1=%ld&city2=%ld&office1=%ld&office2=%ld&md5=%@&pn=%@&source=apple&app=1&newimei=%@&version=3.3",iatao_server_url,(long)[CureMeUtils defaultCureMeUtil].userID,(long)city1,(long)city2,(long)self.officeType,(long)self.subOfficeType,md5Str,nil,[CureMeUtils defaultCureMeUtil].UDID];
         

@@ -44,7 +44,7 @@
                                                                         114 *SCREEN_HEIGHT/667)];
     adviceUV.text = @"世界很美好，需要健康的体魄去探寻。\n\n有诗有远方，我们更需要有健康的身体。\n\n私人医生，为您提供贴心服务。";
     adviceUV.editable = NO;
-    adviceUV.font = [UIFont fontWithName:@"PingFangSC-Thin" size:15];
+    adviceUV.font = [UIFont fontWithName:@"PingFangSC-Thin" size:15 ];
     adviceUV.textColor = UIColorFromHex(0x343434, 1);
     adviceUV.textAlignment = NSTextAlignmentCenter;
     adviceUV.backgroundColor = [UIColor clearColor];

@@ -141,7 +141,7 @@ static callBackReceiptMsg receiptMsgBlock;
     [actionInfo setAppKey:[Config getAppKey]];
     [actionInfo setUserSource:ACTION_USRER_SRC_MOBILE];
     [actionInfo setUserType:ACTION_USRER_TYPE_COMMON_USER];
-    [actionInfo setDeviceToken:[deviceToken substringToIndex:31]];
+    [actionInfo setDeviceToken:deviceToken];
     [boSendApnsToken setResponseCls: [RespBase class]];
     [boSendApnsToken request:req withBaseUrl:LOGIN_URL Completed: ^(NSObject* owner, NSObject* data, int code) {
         [Config savePnToken:deviceToken];

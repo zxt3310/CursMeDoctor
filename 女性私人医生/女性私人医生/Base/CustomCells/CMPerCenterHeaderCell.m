@@ -41,7 +41,7 @@
     headImgVew.image = [CMImageUtils defaultImageUtil].userHeadImage;
     [self.contentView addSubview:headImgVew];
     
-    UILabel *userNameLb = [[UILabel alloc] initWithFrame:CGRectMake(82, 16, 100, 20)];
+    UILabel *userNameLb = [[UILabel alloc] initWithFrame:CGRectMake(82, 16, 300, 20)];
     userNameLb.text = [CureMeUtils defaultCureMeUtil].userName;
     userNameLb.font = [UIFont systemFontOfSize:14];
     [self.contentView addSubview:userNameLb];

@@ -88,14 +88,14 @@
     }
     [newMsgView addSubview:_unreadMsgBtn];
     
-    UIBarButtonItem *rightBarItem = [[UIBarButtonItem alloc] initWithCustomView:newMsgView];
-    if ([[[[UIDevice currentDevice] systemVersion] substringToIndex:1] intValue]>=7) {
-        UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-        negativeSpacer.width = -10;
-        self.navigationItem.rightBarButtonItems = @[negativeSpacer, rightBarItem];
-    }else{
-        self.navigationItem.rightBarButtonItem = rightBarItem;
-    }
+//    UIBarButtonItem *rightBarItem = [[UIBarButtonItem alloc] initWithCustomView:newMsgView];
+//    if ([[[[UIDevice currentDevice] systemVersion] substringToIndex:1] intValue]>=7) {
+//        UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+//        negativeSpacer.width = -10;
+//        self.navigationItem.rightBarButtonItems = @[negativeSpacer, rightBarItem];
+//    }else{
+//        self.navigationItem.rightBarButtonItem = rightBarItem;
+//    }
     //self.navigationItem.rightBarButtonItem = rightBarItem;
 
     // 初始化Activity Indicator
