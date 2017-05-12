@@ -404,6 +404,7 @@
     if (unit.isSWT) {
         CMNewQueryViewController *chatViewController = [CMNewQueryViewController new];
         [chatViewController setChatSWTID:unit.chatID];
+        [chatViewController setChatUserID:[CureMeUtils defaultCureMeUtil].userID];
         if ([unit.chattype isEqualToString:@"swt"]) {
             chatViewController.chatHistoryType = @"swt";
         }

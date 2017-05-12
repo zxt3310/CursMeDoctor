@@ -414,6 +414,23 @@ UIView *infoView;
     
     [[self imageDownloader] setShouldEnd:true];
     isQuit = YES;
+    
+    if (self.bubbleData.count>0) {
+        NSMutableArray *array = [[NSMutableArray alloc] init];
+        for (id obj in self.bubbleData) {
+            NSBubbleData *data = (NSBubbleData *)obj;
+            NSData *chatData = [NSKeyedArchiver archivedDataWithRootObject:data];
+            [array addObject:chatData];
+        }
+        NSArray *saveAry = [array copy];
+        if (isIAT) {
+            [[NSUserDefaults standardUserDefaults] setObject:saveAry forKey:[NSString stringWithFormat:@"%ld",_chatID]];
+        }
+        if (isSWT) {
+            [[NSUserDefaults standardUserDefaults] setObject:saveAry forKey:[NSString stringWithFormat:@"%ld",_chatSWTID]];
+        }
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
 }
 
 - (void)keyboardWillShow:(NSNotification *)aNotification
@@ -1877,9 +1894,20 @@ UIView *infoView;
             
             [self reloadSWTInfoView];
             _doctorID = [hospitalParams[@"doctorid"] integerValue];
+            
+            NSArray *outAry = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%ld",_chatSWTID]];
+            if (outAry) {
+                for (NSData *chatData in outAry) {
+                    NSBubbleData *data = (NSBubbleData *)[NSKeyedUnarchiver unarchiveObjectWithData:chatData];
+                    if (data) {
+                        [self.bubbleData addObject:data];
+                    }
+                }
+            }
+            
             NSString *tmp = [hospitalParams[@"welcome"] stringByReplacingOccurrencesOfString:@"%u" withString:@"\\u"];
             tmp = [tmp stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-            if (tmp) {
+            if (tmp && !outAry) {
                 welcomeStr = replaceUnicode(tmp);
                 [self addSWTDoctorClientMessage:welcomeStr msgDate:[NSDate date]];
 
@@ -2297,25 +2325,6 @@ UIView *infoView;
                 [self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
                 isSWT = NO;
                 isReady = YES;
-                
-                //登录对话服务
-                [HiChat login:[NSString stringWithFormat:@"%ld",[CureMeUtils defaultCureMeUtil].userID] withPassword:@"" completion:^(NSError *error){
-                    if (error) {
-                        NSLog(@"%@",error);
-                    }
-                }];
-                
-                NSData *deviceToken = [NSData dataWithData:[[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN_NSDATA]];
-                if (!deviceToken) {
-                    
-                    NSLog(@"push token is nil fail to submit");
-                    
-                    return;
-                }
-                else{
-                    [HiChat submitDeviceToken:deviceToken];
-                }
-                
             }
         });
     });
@@ -2594,10 +2603,21 @@ UIView *infoView;
             cdCheckTimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(cdCheckRequestIAT:) userInfo:nil repeats:YES];
             [[NSRunLoop currentRunLoop] addTimer:cdCheckTimer forMode:NSRunLoopCommonModes];
             [self reloadIATinfoView];
-//            welcomeStr = @"问来问去不如问医生，请把您的问题输入下面聊天框，将由专人为您解答！";
-            if (welcomeStr.length>0) {
+            
+            NSArray *outAry = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%ld",_chatID]];
+            if (outAry) {
+                for (NSData *chatData in outAry) {
+                    NSBubbleData *data = (NSBubbleData *)[NSKeyedUnarchiver unarchiveObjectWithData:chatData];
+                    if (data) {
+                        [self.bubbleData addObject:data];
+                    }
+                }
+            }
+            
+            if (welcomeStr.length>0 && !outAry) {
                 [self addSWTDoctorClientMessage:welcomeStr msgDate:[NSDate date]];
             }
+            
             [self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
             /**
              *  @author Zxt, 17-04-28 15:04:23
@@ -2657,6 +2677,11 @@ UIView *infoView;
         }
     }
 }
+#pragma mark same chat pull history
+- (void)threadPullHistory{
+    
+}
+
 - (NSString*)getmd5WithString:(NSString *)string
 
 {

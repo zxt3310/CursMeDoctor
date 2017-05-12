@@ -187,7 +187,7 @@
         dataInternal.labelSize = [(dataInternal.data.text ? dataInternal.data.text : @"") sizeWithFont:[UIFont systemFontOfSize:16] constrainedToSize:CGSizeMake(220, 9999) lineBreakMode:NSLineBreakByWordWrapping];
     }
     
-    dataInternal.height = dataInternal.labelSize.height + 5 + 11;
+    dataInternal.height = dataInternal.labelSize.height + 5 + 20;
     
     dataInternal.header = nil;
     

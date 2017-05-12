@@ -14,6 +14,10 @@
 #import "NSBubbleData.h"
 
 @implementation NSBubbleData
+{
+    NSInteger bubbleTypeInt;
+    NSInteger cellTypeInt;
+}
 
 @synthesize date = _date;
 @synthesize type = _type;
@@ -159,10 +163,10 @@
     {
         _text = initText ? initText : @"";
         _date = initDate;
-        _type = initType;
+        self.type = initType;
         _headImage = image;
         _talkerID = tID;
-        _cellType = cType;
+        self.cellType = cType;
     }
 
     return self;
@@ -183,6 +187,86 @@
     NSString *dscp = [[NSString alloc] initWithFormat:@"BubbleData text:%@\nimageKey:%@\ntalkerID:%ld\ntime:%@\nCellType:%d\nBookID:%ld", _text, _imageKey, (long)_talkerID, _date, _cellType, (long)_bookID];
     
     return dscp;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeObject:self.date forKey:@"date"];
+    [aCoder encodeInteger:bubbleTypeInt forKey:@"type"];
+    [aCoder encodeObject:self.text forKey:@"text"];
+    [aCoder encodeObject:self.headImage forKey:@"headImage"];
+    [aCoder encodeObject:self.msgImage forKey:@"msgImage"];
+    [aCoder encodeObject:self.imageKey forKey:@"imageKey"];
+    [aCoder encodeObject:self.headImageKey forKey:@"headImageKey"];
+    [aCoder encodeInteger:self.talkerID forKey:@"talkerID"];
+    [aCoder encodeObject:self.talkerName forKey:@"talkerName"];
+    [aCoder encodeInteger:cellTypeInt forKey:@"cellType"];
+    [aCoder encodeDouble:self.mapLatitude forKey:@"mapLatitude"];
+    [aCoder encodeDouble:self.mapLongitude forKey:@"mapLongitude"];
+    [aCoder encodeObject:self.telephone forKey:@"telephone"];
+    [aCoder encodeInteger:self.bookID forKey:@"bookID"];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder{
+    if (self = [self init]) {
+        _date = [aDecoder decodeObjectForKey:@"date"];
+        bubbleTypeInt = [aDecoder decodeIntegerForKey:@"type"];
+        _text = [aDecoder decodeObjectForKey:@"text"];
+        _headImage = [aDecoder decodeObjectForKey:@"headImage"];
+        _msgImage = [aDecoder decodeObjectForKey:@"msgImage"];
+        _imageKey = [aDecoder decodeObjectForKey:@"imageKey"];
+        _headImageKey = [aDecoder decodeObjectForKey:@"headImageKey"];
+        _talkerID = [aDecoder decodeIntegerForKey:@"talkerID"];
+        _talkerName = [aDecoder decodeObjectForKey:@"talkerName"];
+        cellTypeInt = [aDecoder decodeIntegerForKey:@"cellType"];
+        _mapLatitude = [aDecoder decodeDoubleForKey:@"mapLatitude"];
+        _mapLongitude = [aDecoder decodeDoubleForKey:@"mapLongitude"];
+        _telephone = [aDecoder decodeObjectForKey:@"telephone"];
+        _bookID = [aDecoder decodeIntegerForKey:@"bookID"];
+        
+        [self encodeBubbleType];
+        [self encodeCellType];
+    }
+    return self;
+}
+
+- (void)setType:(NSBubbleType)type{
+    _type = type;
+    if (type == BubbleTypeMine) {
+        bubbleTypeInt = 0;
+    }
+    else{
+        bubbleTypeInt = 1;
+    }
+}
+
+- (void)setCellType:(NSBubbleCellType)cellType{
+    _cellType = cellType;
+    if (cellType == CellTypeList) {
+        cellTypeInt = 0;
+    }
+    else if (cellType == CellTypeDetail){
+        cellTypeInt = 1;
+    }
+    else{
+        cellType = 2;
+    }
+}
+
+- (void)encodeBubbleType{
+    if (bubbleTypeInt == 0) {
+        _type = BubbleTypeMine;
+    }
+    else if(bubbleTypeInt == 1){
+        _type = BubbleTypeSomeoneElse;
+    }
+}
+- (void)encodeCellType{
+    if (cellTypeInt == 0) {
+        _cellType = CellTypeList;
+    }
+    else if (cellTypeInt == 1){
+        _cellType = CellTypeDetail;
+    }
 }
 
 @end

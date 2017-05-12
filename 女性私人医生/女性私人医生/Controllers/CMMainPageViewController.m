@@ -46,30 +46,6 @@ BOOL isLFMShow;
 
     // 2. 初始化所有科室的子分类(在后台线程完成)
     [[CMDataUtils defaultDataUtil] initAllOfficeSubTypeData];
-
-    // Do any additional setup after loading the view from its nib.
-//    CGRect frame = _entranceScrollView.frame;
-//    frame.origin.y = 20;
-//    frame.size.height = 441;
-//    if (IS_IPHONE_5) {
-//        frame.size.height += 57;
-//    }
-//    _entranceScrollView.frame = frame;
-//    [_entranceScrollView setContentSize:CGSizeMake(320, 601)];
-//    _entranceScrollView.delegate = self;
-//    [self.view addSubview:_entranceScrollView];
-//    NSLog(@"mainPageScroll: %@", _entranceScrollView);
-//    
-//    CGRect frameTop = _homeTopView.frame;
-//    frameTop.origin.y = 20;
-//    _homeTopView.frame = frameTop;
-//    
-//    [self.view sendSubviewToBack:_homeTopView];
-    /**
-     *  @author Zxt, 17-04-07 13:04:43
-     *
-     *  顶部logo及快速问答
-     */
     
     html5WebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 108, SCREEN_WIDTH, SCREEN_HEIGHT-157)];
     [self.view addSubview:html5WebView];
@@ -219,13 +195,6 @@ BOOL isLFMShow;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    //[self.view bringSubviewToFront:_homeTopView];
-    //[self.view bringSubviewToFront:_entranceScrollView];
-    
-    //if (IOS_VERSION >= 7.0) {
-    //    self.tabBarController.navigationController.navigationBar.alpha = 0;
-    //}
-    //[self.tabBarController.navigationController setNavigationBarHidden:YES];
     
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0 && [CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

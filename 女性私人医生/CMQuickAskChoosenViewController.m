@@ -306,6 +306,7 @@
     CMNewQueryViewController *queryVC = [CMNewQueryViewController new];
     queryVC.officeType = office1;
     queryVC.subOfficeType = office2;
+    queryVC.chatUserID = [CureMeUtils defaultCureMeUtil].userID;
     [self.navigationController pushViewController:queryVC animated:YES];
 }
 

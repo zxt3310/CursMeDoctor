@@ -254,7 +254,6 @@ void uncaughtExceptionHandler(NSException *exception)
     if (notificationSettings.types != UIRemoteNotificationTypeNone){
         
     }
-    
 }
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     
@@ -268,13 +267,6 @@ void uncaughtExceptionHandler(NSException *exception)
     newToken = [newToken substringToIndex:newToken.length - 1];
     NSLog(@"newToken: %@", newToken);
     //注册成功，将deviceToken保存到应用服务器数据库中
-/*   UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"newToken"
-                          message:newToken
-                          delegate:nil
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles:nil];
-    [alert show];*/
     
     NSString *savedToken = [[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN];
     // 如果获得的token与保存的一致，不做操作
@@ -290,35 +282,60 @@ void uncaughtExceptionHandler(NSException *exception)
     
     // 如果此时已经获得激活的GUID，则发送更新Token请求
     updateIOSPushInfo();
+    
+    if (!deviceToken) {
+        NSLog(@"push token is nil fail to submit");
+    }
+    else{
+        [HiChat submitDeviceToken:deviceToken];
+    }
 }
-
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
     // 处理推送消息
     
     NSLog(@"%@", userInfo);
     
-    NSDictionary *jsonData = [userInfo objectForKey:@"data"];
-    NSLog(@"dataJson: %@", jsonData);
+//    NSDictionary *jsonData = [userInfo objectForKey:@"data"];
+//    NSLog(@"dataJson: %@", jsonData);
+//    
+//    if (!jsonData || jsonData.count <= 0) {
+//        NSLog(@"pushnote datainvalide: %@", userInfo);
+//        return;
+//    }
+//    
+//    NSDictionary *aps = [userInfo objectForKey:@"aps"];
+//    NSLog(@"aps: %@", aps);
+//    if (aps) {
+//        if ([CureMeUtils defaultCureMeUtil].isInNewQuery) {
+//            pushJsonData = jsonData;
+//            return;
+//        }
+//        NSString *message = [aps objectForKey:@"alert"];
+//        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"通知" message:message delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:@"查看", nil];
+//        [alert show];
+//    }
     
-    if (!jsonData || jsonData.count <= 0) {
-        NSLog(@"pushnote datainvalide: %@", userInfo);
-        return;
-    }
+//    pushJsonData = jsonData;
     
     NSDictionary *aps = [userInfo objectForKey:@"aps"];
-    NSLog(@"aps: %@", aps);
-    if (aps) {
-        if ([CureMeUtils defaultCureMeUtil].isInNewQuery) {
-            pushJsonData = jsonData;
-            return;
-        }
-        NSString *message = [aps objectForKey:@"alert"];
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"通知" message:message delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:@"查看", nil];
-        [alert show];
+    NSString *alert = [aps objectForKey:@"alert"];
+    NSArray *pushAry = [alert componentsSeparatedByString:@","];
+    NSInteger usserAcount = [[pushAry lastObject] integerValue];
+    if (usserAcount != [CureMeUtils defaultCureMeUtil].userID) {
+        NSLog(@"push wrong user");
+        return;
     }
+    [HiChat pullHistoryMessage:@"" withLimit:20 completion:^(NSArray *array,NSError *error){
+        if (error) {
+            NSLog(@"%@",error);
+        }
+        else{
+            NSLog(@"%@",array);
+        }
+    }];
     
-    pushJsonData = jsonData;
+    
 }
 
 // 当App处于后台/未启动时，处理Json并返回相应ViewController

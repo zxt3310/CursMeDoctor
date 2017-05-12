@@ -20,6 +20,7 @@
 #include <sys/sysctl.h>
 #include <net/if.h>
 #include <net/if_dl.h>
+#import "HiChat.h"
 
 
 // 基站定位文件
@@ -816,6 +817,26 @@ NSString *officeStringWithType(NSInteger officeType)
                 //                [[CureMeUtils defaultCureMeUtil] sendUserLocationInfo];
             }
         }
+        
+        //登录对话服务
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            
+            [HiChat login:[NSString stringWithFormat:@"%ld",[CureMeUtils defaultCureMeUtil].userID] withPassword:@"" completion:^(NSError *error){
+                if (error) {
+                    NSLog(@"%@",error);
+                }
+                
+                NSData *deviceToken = [NSData dataWithData:[[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN_NSDATA]];
+                if (!deviceToken) {
+                    NSLog(@"push token is nil fail to submit");
+                }
+                else{
+                    [HiChat submitDeviceToken:deviceToken];
+                }
+
+            }];
+    });
         
         // 如果未登录，则不获取
         if (!_hasLogin) {

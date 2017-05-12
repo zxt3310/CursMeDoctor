@@ -128,6 +128,10 @@ static callBackReceiptMsg receiptMsgBlock;
         boSendApnsToken = nil;
     }
     
+    if (![Config getUserAccount]) {
+        [Config saveUserAccount:[CureMeUtils defaultCureMeUtil].uniID];
+    }
+    
     SystemInfo* si = [SystemInfo getSingleton];
     //NSString* hpnsToken = si.pnToken;
     NSString* hpnsType = si.pnType;

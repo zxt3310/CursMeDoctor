@@ -30,7 +30,7 @@ typedef enum _NSBubbleCellType
     CellTypeTextRemind      // 文字提示Cell
 } NSBubbleCellType;
 
-@interface NSBubbleData : NSObject
+@interface NSBubbleData : NSObject <NSCoding>
 
 @property (readonly, nonatomic, strong) NSDate *date;
 @property (readonly, nonatomic) NSBubbleType type;
