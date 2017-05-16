@@ -194,7 +194,7 @@ static CMDataUtils *defaultDataU;
         }
         NSLog(@"officeSubTypeData: %@", _officeTypeDict);
         
-        NSString *urlStr = [NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/api/m.php?action=getallqtypebyappidandgps&version=3.0&appid=1&source=apple&addrdetail=%@",[CureMeUtils defaultCureMeUtil].encodedLocateInfo];
+        NSString *urlStr = [NSString stringWithFormat:@"http://%@/api/m.php?action=getallqtypebyappidandgps&version=3.0&appid=1&source=apple&addrdetail=%@",DOMAIN_NAME,[CureMeUtils defaultCureMeUtil].encodedLocateInfo];
         
         //NSString *post = [NSString stringWithFormat:@"action=questiontypechild"];
         //NSData *response = sendRequest(@"m.php", post);

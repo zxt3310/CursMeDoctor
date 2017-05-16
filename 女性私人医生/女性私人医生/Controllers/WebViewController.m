@@ -126,7 +126,8 @@
 
     if (!hasNavigated) {
         if (!_strURL  || _strURL.length <= 0) {
-            _strURL = [[NSString alloc] initWithFormat:@"http://new.medapp.ranknowcn.com/html5/?device=iphone&userid=%ld&city=%@&citycode=%ld&jingwei=%@,%@&deviceid=%@&token=%@",
+            _strURL = [[NSString alloc] initWithFormat:@"http://%@/html5/?device=iphone&userid=%ld&city=%@&citycode=%ld&jingwei=%@,%@&deviceid=%@&token=%@",
+                       DOMAIN_NAME,
                        (long)[CureMeUtils defaultCureMeUtil].userID,
                        [[CureMeUtils defaultCureMeUtil].province stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
                        (long)[CureMeUtils defaultCureMeUtil].cityCode,
@@ -341,7 +342,8 @@
         return;
     }
     
-    NSString *strURL = [[NSString alloc] initWithFormat:@"http://new.medapp.ranknowcn.com/html5/more.php?id=%ld&userid=%ld&city=%@&citycode=%ld&jingwei=%@,%@&deviceid=%@&token=%@",
+    NSString *strURL = [[NSString alloc] initWithFormat:@"http://%@/html5/more.php?id=%ld&userid=%ld&city=%@&citycode=%ld&jingwei=%@,%@&deviceid=%@&token=%@",
+                        DOMAIN_NAME,
                         (long)huodongID.integerValue,
                         (long)[CureMeUtils defaultCureMeUtil].userID,
                         [[CureMeUtils defaultCureMeUtil].province stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
@@ -365,7 +367,8 @@
         return;
     }
     
-    NSString *strURL = [[NSString alloc] initWithFormat:@"http://new.medapp.ranknowcn.com/html5/index.php?userid=%ld&city=%@&citycode=%ld&jingwei=%@,%@&deviceid=%@&token=%@",
+    NSString *strURL = [[NSString alloc] initWithFormat:@"http://%@/html5/index.php?userid=%ld&city=%@&citycode=%ld&jingwei=%@,%@&deviceid=%@&token=%@",
+                        DOMAIN_NAME,
                         (long)[CureMeUtils defaultCureMeUtil].userID,
                         [[CureMeUtils defaultCureMeUtil].province stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
                         (long)[CureMeUtils defaultCureMeUtil].cityCode,

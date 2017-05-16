@@ -160,6 +160,10 @@ static callBackReceiptMsg receiptMsgBlock;
    // [[HiChat instance] initPN];
 }
 
++(void)procMsgReceipt{
+    [[HiChat instance] procMsgReceipt:nil];
+}
+
 -(void)procMsgReceipt: (NSArray *)listMsgIds {
     if (nil != boMsgReceipt) {
         //[boMsgReceipt release];
@@ -366,11 +370,12 @@ static callBackReceiptMsg receiptMsgBlock;
                 [listMsgIds addObject:[hMessageInfo msgId]];
             }
             [[HiChat instance] procMsgReceipt:listMsgIds];
-            receiveMsgBlock(list, nil);
+            receiveMsgBlock([list copy], nil);
         } else {
             NSError *err =  [NSError errorWithDomain:@"send msg fail"
                                                 code:1
                                             userInfo:nil];
+            receiveMsgBlock(nil,err);
         }
     }];
 }
@@ -546,7 +551,7 @@ static callBackReceiptMsg receiptMsgBlock;
     [actionInfo setUserType:ACTION_USRER_TYPE_COMMON_USER];
     HisMsgParam* hisMsgParam = [[HisMsgParam alloc] init];
     [hisMsgParam setLimit:limit];
-    [hisMsgParam setDestUserId:customerServiceAccount];
+    //[hisMsgParam setDestUserId:customerServiceAccount];
     [req setHisMsgParam:hisMsgParam];
     [boHistoryList setResponseCls:[RespRecvMsg class]];
     [boHistoryList request:req Completed:^(NSObject *request, NSObject *data, int code) {

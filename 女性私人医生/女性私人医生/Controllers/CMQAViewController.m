@@ -750,7 +750,7 @@ UIView *protocolView1;
     }
     
     WebViewController *webVC = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
-    [webVC setStrURL:[NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/hospital/dinfo.php?did=%ld", (long)doctorID]];
+    [webVC setStrURL:[NSString stringWithFormat:@"http://%@/hospital/dinfo.php?did=%ld",DOMAIN_NAME, (long)doctorID]];
     [self.navigationController pushViewController:webVC animated:YES];
 
 //    // 以下显示医生信息页面

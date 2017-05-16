@@ -86,4 +86,6 @@ typedef enum {
 
 +(void)pullHistoryMessage:(NSString*) customerServiceAccount withLimit:(int) limit completion:(callBackReceiveMsg) block;
 
++(void)procMsgReceipt;
+
 @end

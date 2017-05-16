@@ -1113,7 +1113,7 @@ UIView *infoView;
         NSData *newImageData = UIImageJPEGRepresentation(newImage, 0.8);
         
         // 2. 发送压缩后的图片，并获得图片key
-        NSString *strUrl = [NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/api/m.php?action=uploadimage&rn=%.2f&version=2.2", [[[NSDate alloc] init] timeIntervalSince1970]];
+        NSString *strUrl = [NSString stringWithFormat:@"http://%@/api/m.php?action=uploadimage&rn=%.2f&version=2.2",DOMAIN_NAME, [[[NSDate alloc] init] timeIntervalSince1970]];
         NSData *newImageResponse = sendRequestWithData(strUrl, newImageData);
         
         NSString *strResp = [[NSString alloc] initWithData:newImageResponse encoding:NSUTF8StringEncoding];
@@ -2191,7 +2191,7 @@ UIView *infoView;
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSString *urlStr = [NSString stringWithFormat:@"api/m.php?action=doctorinfo&doctorid=%ld", (long)doctID];
-        NSData *response = sendRequestWithFullURL([@"http://new.medapp.ranknowcn.com/" stringByAppendingString:urlStr], @"");
+        NSData *response = sendRequestWithFullURL([[NSString stringWithFormat: @"http://%@/",DOMAIN_NAME] stringByAppendingString:urlStr], @"");
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if (isQuit)
@@ -2239,7 +2239,7 @@ UIView *infoView;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSString *urlStr = [NSString stringWithFormat:@"api/m.php?action=citytypegethospitalinfo&step=%@", step];
         NSString *post = [NSString stringWithFormat:@"addrdetail=%@&token=%@&type=%ld&typechild=%ld&imei=%@", [CureMeUtils defaultCureMeUtil].encodedLocateInfo, nil, (long)self.officeType, (long)self.subOfficeType,[CureMeUtils defaultCureMeUtil].UDID];
-        NSData *response = sendRequestWithFullURL([@"http://new.medapp.ranknowcn.com/" stringByAppendingString:urlStr], post);
+        NSData *response = sendRequestWithFullURL([[NSString stringWithFormat:@"http://%@/",DOMAIN_NAME] stringByAppendingString:urlStr], post);
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if (isQuit)

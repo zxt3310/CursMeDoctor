@@ -90,7 +90,7 @@
     if (![self isValidateEmail:mailTf.text]) {
         [self presentAlert:@"请正确输入邮箱地址"];
     }
-    NSString *urlStr = @"http://new.medapp.ranknowcn.com/api/m.php?action=userfeedback&version=3.0";
+    NSString *urlStr = [NSString stringWithFormat:@"http://%@/api/m.php?action=userfeedback&version=3.0",DOMAIN_NAME];
     NSString *post = [NSString stringWithFormat:@"source=apple&os=ios&appid=1&version=3.3&deviceid=%@&userid=%ld&imei=%@&content=%@&contacts=%@",[CureMeUtils defaultCureMeUtil].uniID,[CureMeUtils defaultCureMeUtil].userID,[CureMeUtils defaultCureMeUtil].UDID,feedView.text,mailTf.text];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSData *response = sendFullRequest(urlStr, post, nil, NO, NO);

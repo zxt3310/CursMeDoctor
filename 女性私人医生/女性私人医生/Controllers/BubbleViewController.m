@@ -1838,7 +1838,7 @@ NSString *saveTitle;
     NSString *hospName = (_doctor.hospitalName) ? _doctor.hospitalName : _metaInfoData.name;
     
     WebViewController *webVC = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
-    [webVC setStrURL:[NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/hospital/rooms.php?hid=%ld&hname=%@", (long)hospID, hospName]];
+    [webVC setStrURL:[NSString stringWithFormat:@"http://%@/hospital/rooms.php?hid=%ld&hname=%@",DOMAIN_NAME, (long)hospID, hospName]];
     [self.navigationController pushViewController:webVC animated:YES];
     
 //    OfficeListInfoTableViewController *officeListTVC = [[OfficeListInfoTableViewController alloc] initWithStyle:UITableViewStylePlain];
@@ -1862,7 +1862,7 @@ NSString *saveTitle;
 
     WebViewController *webVC = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
     //[webVC setStrURL:[NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/hospital/hinfo.php?hid=%ld", (long)hospID]];
-    [webVC setStrURL:[NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/h5_new/server/app.php?type=doctorinfo&hid=%ld&did=%ld&hname=%@&appid=1",(long)hospID,(long)_doctor.doctorID,_doctor.hospitalName]];
+    [webVC setStrURL:[NSString stringWithFormat:@"http://%@/h5_new/server/app.php?type=doctorinfo&hid=%ld&did=%ld&hname=%@&appid=1",DOMAIN_NAME,(long)hospID,(long)_doctor.doctorID,_doctor.hospitalName]];
     webVC.subOfficeId = self.officeSubType;
     webVC.childOfficeId = self.officeType;
     [self.navigationController pushViewController:webVC animated:YES];
@@ -1877,7 +1877,7 @@ NSString *saveTitle;
     NSInteger hospID = (_doctor.hospitalID <= 0) ? _metaInfoData.identifier : _doctor.hospitalID;
     WebViewController *webVC = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
     //[webVC setStrURL:[NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/hospital/dinfo.php?did=%ld", (long)_doctor.doctorID]];
-    [webVC setStrURL:[NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/h5_new/server/app.php?type=doctorinfo&hid=%ld&did=%ld&hname=%@&appid=1",(long)hospID,(long)_doctor.doctorID,_doctor.hospitalName]];
+    [webVC setStrURL:[NSString stringWithFormat:@"http://%@/h5_new/server/app.php?type=doctorinfo&hid=%ld&did=%ld&hname=%@&appid=1",DOMAIN_NAME,(long)hospID,(long)_doctor.doctorID,_doctor.hospitalName]];
     webVC.subOfficeId = self.officeSubType;
     webVC.childOfficeId = self.officeType;
     [self.navigationController pushViewController:webVC animated:YES];
@@ -2087,7 +2087,7 @@ NSString *saveTitle;
         NSData *newImageData = UIImageJPEGRepresentation(newImage, 0.8);
         
         // 2. 发送压缩后的图片，并获得图片key
-        NSString *strUrl = [NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/api/m.php?action=uploadimage&rn=%.2f&version=2.2", [[[NSDate alloc] init] timeIntervalSince1970]];
+        NSString *strUrl = [NSString stringWithFormat:@"http://%@/api/m.php?action=uploadimage&rn=%.2f&version=2.2",DOMAIN_NAME, [[[NSDate alloc] init] timeIntervalSince1970]];
         NSData *newImageResponse = sendRequestWithData(strUrl, newImageData);
         
         NSString *strResp = [[NSString alloc] initWithData:newImageResponse encoding:NSUTF8StringEncoding];

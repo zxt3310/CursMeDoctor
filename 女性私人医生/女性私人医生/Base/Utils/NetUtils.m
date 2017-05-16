@@ -296,7 +296,7 @@ NSData * sendRequestWithHeaderAndResponse(NSString *phpFile, NSString *post, NSD
         postData = [finalPost dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
         postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-        NSString *fullURL = [NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/api/%@?%@&version=3.0", phpFile,actionStr];
+        NSString *fullURL = [NSString stringWithFormat:@"http://%@/api/%@?%@&version=3.0",DOMAIN_NAME,phpFile,actionStr];
         [request setURL:[NSURL URLWithString:fullURL]];
         if (additionalHeader) {
             NSArray *keys = additionalHeader.allKeys;

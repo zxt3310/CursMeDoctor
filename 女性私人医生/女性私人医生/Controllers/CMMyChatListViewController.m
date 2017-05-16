@@ -468,7 +468,7 @@
          *
          *  新增医爱淘 接口更新
          */
-        NSString *strUrl = [NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/api/m.php?action=userallchatlist&version=3.0"];
+        NSString *strUrl = [NSString stringWithFormat:@"http://%@/api/m.php?action=userallchatlist&version=3.0",DOMAIN_NAME];
         post = [NSString stringWithFormat:@"source=apple&imei=%@&token=%@&version=3.3&appid=1&deviceid=%@&swtuserid=%ld&os=ios&userid=%ld",[CureMeUtils defaultCureMeUtil].UDID,nil,[[NSUserDefaults standardUserDefaults] objectForKey:USER_UNIQUE_ID],[CureMeUtils defaultCureMeUtil].userSWTID,[CureMeUtils defaultCureMeUtil].userID];
         
         NSData *response = sendFullRequest(strUrl, post, nil, NO, NO);
@@ -698,7 +698,7 @@
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
     
-        NSString *urlStr = @"http://new.medapp.ranknowcn.com/api/m.php?action=userallchatlisthide";
+        NSString *urlStr = [NSString stringWithFormat:@"http://%@/api/m.php?action=userallchatlisthide",DOMAIN_NAME];
         NSString *post = [NSString stringWithFormat:@"imei=%@&token=%@&chatid=%ld&chattype=%@&questionid=%ld&userid=%ld&os=ios",[CureMeUtils defaultCureMeUtil].UDID,nil,chatId,unit.isSWT?unit.chattype:@"medapp",unit.questionID,[CureMeUtils defaultCureMeUtil].userID];
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{

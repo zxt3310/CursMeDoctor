@@ -43,7 +43,7 @@ void uncaughtExceptionHandler(NSException *exception)
 {
     // 调用堆栈
     NSArray *arr = [exception callStackSymbols];
-    // 错误reason
+    // 错误reaso
     NSString *reason = [exception reason];
     // exception name
     NSString *name = [exception name];
@@ -173,7 +173,7 @@ void uncaughtExceptionHandler(NSException *exception)
     // 3. 如果UserID有效，则更新一次LoginCookie
     // {"result":true,"msg":1000001,"unreadcount":{"replycount":0,"channelcount":0,"chatcount":0},"chatservers":{"chatserver":"n2.medapp.ranknowcn.com","chatport":"3810","chatnport":"3820"}}
     if ([CureMeUtils defaultCureMeUtil].userID > 0) {
-        NSString *urlStr = @"http://new.medapp.ranknowcn.com/api/m.php?action=login&version=3.0";
+        NSString *urlStr = [NSString stringWithFormat:@"http://%@/api/m.php?action=login&version=3.0",DOMAIN_NAME];
         
         NSString *post = [NSString stringWithFormat:@"username=%@&password=%@&token=%@&version=3.3&deviceid=%@&source=apple",[CureMeUtils defaultCureMeUtil].userName,[CureMeUtils defaultCureMeUtil].password,nil,[CureMeUtils defaultCureMeUtil].uniID];
         NSData *response = sendRequestWithCookie(urlStr, post, @"", true);
@@ -202,7 +202,7 @@ void uncaughtExceptionHandler(NSException *exception)
     // 3. 我的消息Page
     WebViewController *webVC = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
     //[webVC setStrURL:[[NSString alloc] initWithFormat:@"%@/html5/myxiaoxi.php?userid=%ld&deviceid=%@", MEDAPP_MAINDOMAIN, (long)[CureMeUtils defaultCureMeUtil].userID, [[NSUserDefaults standardUserDefaults] objectForKey:USER_UNIQUE_ID]]];
-    [webVC setStrURL:[[NSString alloc] initWithFormat:@"http://new.medapp.ranknowcn.com/h5_new/news.html?appid=1&addrdetail=%@&source=apple",[CureMeUtils defaultCureMeUtil].encodedLocateInfo]];
+    [webVC setStrURL:[[NSString alloc] initWithFormat:@"http://%@/h5_new/news.html?appid=1&addrdetail=%@&source=apple",DOMAIN_NAME,[CureMeUtils defaultCureMeUtil].encodedLocateInfo]];
     webVC.isMainTabPage = true;
 
     // 4. 我的预约Page
@@ -296,46 +296,37 @@ void uncaughtExceptionHandler(NSException *exception)
     
     NSLog(@"%@", userInfo);
     
-//    NSDictionary *jsonData = [userInfo objectForKey:@"data"];
-//    NSLog(@"dataJson: %@", jsonData);
-//    
-//    if (!jsonData || jsonData.count <= 0) {
-//        NSLog(@"pushnote datainvalide: %@", userInfo);
-//        return;
-//    }
-//    
-//    NSDictionary *aps = [userInfo objectForKey:@"aps"];
-//    NSLog(@"aps: %@", aps);
-//    if (aps) {
-//        if ([CureMeUtils defaultCureMeUtil].isInNewQuery) {
-//            pushJsonData = jsonData;
-//            return;
-//        }
-//        NSString *message = [aps objectForKey:@"alert"];
-//        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"通知" message:message delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:@"查看", nil];
-//        [alert show];
-//    }
-    
-//    pushJsonData = jsonData;
-    
     NSDictionary *aps = [userInfo objectForKey:@"aps"];
-    NSString *alert = [aps objectForKey:@"alert"];
-    NSArray *pushAry = [alert componentsSeparatedByString:@","];
-    NSInteger usserAcount = [[pushAry lastObject] integerValue];
+    
+    
+    NSInteger usserAcount = [[aps objectForKey:@"sound"] integerValue];
     if (usserAcount != [CureMeUtils defaultCureMeUtil].userID) {
         NSLog(@"push wrong user");
         return;
     }
-    [HiChat pullHistoryMessage:@"" withLimit:20 completion:^(NSArray *array,NSError *error){
-        if (error) {
-            NSLog(@"%@",error);
-        }
-        else{
-            NSLog(@"%@",array);
+    
+    if (application.applicationState == UIApplicationStateActive) {
+        
+        NSInteger count = [CureMeUtils defaultCureMeUtil].unreadMessageCount;
+        [CureMeUtils defaultCureMeUtil].unreadMessageCount = count+1;
+        [[NSNotificationCenter defaultCenter] postNotificationName:NTF_UNREADMSGCOUNT_UPDATED object:nil];
+    }
+    if (application.applicationState == UIApplicationStateInactive) {
+        [mainTabViewController tabWasSelected:1];
+    }
+    
+    [HiChat registerMessageReceiveCallback:^(NSArray <MessageInfo *> *array,NSError *error){
+        if (array) {
+            NSLog(@"");
         }
     }];
     
-    
+    [HiChat registerMessageReceiptCallback:^(HMessageInfo *msg,NSError *error){
+        if (msg) {
+            
+        }
+    }];
+    [HiChat pullNewestMessage];
 }
 
 // 当App处于后台/未启动时，处理Json并返回相应ViewController
@@ -541,7 +532,8 @@ void uncaughtExceptionHandler(NSException *exception)
         return nil;
     }
     
-    NSString *strURL = [[NSString alloc] initWithFormat:@"http://new.medapp.ranknowcn.com/html5/more.php?id=%ld&userid%ldd&city=%@&citycod%ld&jingwei=%@,%@&deviceid=%@&token=%@",
+    NSString *strURL = [[NSString alloc] initWithFormat:@"http://%@/html5/more.php?id=%ld&userid%ldd&city=%@&citycod%ld&jingwei=%@,%@&deviceid=%@&token=%@",
+                        DOMAIN_NAME,
                         (long)huodongID.integerValue,
                         (long)[CureMeUtils defaultCureMeUtil].userID,
                         [[CureMeUtils defaultCureMeUtil].province stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
@@ -559,7 +551,8 @@ void uncaughtExceptionHandler(NSException *exception)
 
 - (UIViewController *)processHuodongListPush
 {
-    NSString *strURL = [[NSString alloc] initWithFormat:@"http://new.medapp.ranknowcn.com/html5/index.php?&userid=%ld&city=%@&citycode%ldd&jingwei=%@,%@&deviceid=%@&token=%@",
+    NSString *strURL = [[NSString alloc] initWithFormat:@"http://%@/html5/index.php?&userid=%ld&city=%@&citycode%ldd&jingwei=%@,%@&deviceid=%@&token=%@",
+                        DOMAIN_NAME,
                         (long)[CureMeUtils defaultCureMeUtil].userID,
                         [[CureMeUtils defaultCureMeUtil].province stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],
                         (long)[CureMeUtils defaultCureMeUtil].cityCode,
@@ -636,7 +629,7 @@ void uncaughtExceptionHandler(NSException *exception)
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    [[UIApplication sharedApplication] scheduledLocalNotifications];
+    
 
 }
 

@@ -997,7 +997,7 @@ NSString *officeStringWithType(NSInteger officeType)
         
         // 2. 如果没有找到本地图片，下载并保存图片，然后返回图片
         // http://medapp.ranknowcn.com/client/image.php?key=5047263e88bf9&type=s
-        NSString *post = [NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/client/image.php?key=%@&type=%@&version=2.2", key, size];
+        NSString *post = [NSString stringWithFormat:@"http://%@/client/image.php?key=%@&type=%@&version=2.2",DOMAIN_NAME, key, size];
         NSData *response = sendGETRequest(post);
         if (![fileManager createFileAtPath:imageName contents:response attributes:nil]) {
             NSLog(@"try to save image at: %@ failed", imageName);

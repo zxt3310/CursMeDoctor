@@ -50,7 +50,7 @@ BOOL isLFMShow;
     html5WebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 108, SCREEN_WIDTH, SCREEN_HEIGHT-157)];
     [self.view addSubview:html5WebView];
     html5WebView.delegate = self;
-    NSURLRequest *url = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/h5_new/index.html?appid=1&addrdetail=%@&source=apple",[CureMeUtils defaultCureMeUtil].encodedLocateInfo]]];
+    NSURLRequest *url = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/h5_new/index.html?appid=1&addrdetail=%@&source=apple",DOMAIN_NAME,[CureMeUtils defaultCureMeUtil].encodedLocateInfo]]];
     [html5WebView loadRequest:url];
     
     [self setTopView];
@@ -134,7 +134,7 @@ BOOL isLFMShow;
         }
         else if ([request.URL.absoluteString containsString:@"news"]){
             WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
-            webViewController.strURL = [NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/h5_new/news.html?appid=1&addrdetail=%@&source=apple",[CureMeUtils defaultCureMeUtil].encodedLocateInfo];
+            webViewController.strURL = [NSString stringWithFormat:@"http://%@/h5_new/news.html?appid=1&addrdetail=%@&source=apple",DOMAIN_NAME,[CureMeUtils defaultCureMeUtil].encodedLocateInfo];
             [self.navigationController pushViewController:webViewController animated:YES];
             return NO;
         }
@@ -352,7 +352,7 @@ BOOL isLFMShow;
     addressTF.frame = temp;
     
     //reload 主页
-    NSURLRequest *url = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/h5_new/index.html?appid=1&addrdetail=%@&source=apple",[CureMeUtils defaultCureMeUtil].encodedLocateInfo]]];
+    NSURLRequest *url = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/h5_new/index.html?appid=1&addrdetail=%@&source=apple",DOMAIN_NAME,[CureMeUtils defaultCureMeUtil].encodedLocateInfo]]];
     [html5WebView loadRequest:url];
 
 }
@@ -447,7 +447,7 @@ BOOL isLFMShow;
     WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
 
     NSNumber *region = (NSNumber *)[[NSUserDefaults standardUserDefaults] objectForKey:USER_REGION];
-    NSString *strUrl = [NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/hospital/?citycode=%ld&deviceid=%@", (long)region.integerValue, [[NSUserDefaults standardUserDefaults] objectForKey:USER_UNIQUE_ID]];
+    NSString *strUrl = [NSString stringWithFormat:@"http://%@/hospital/?citycode=%ld&deviceid=%@",DOMAIN_NAME, (long)region.integerValue, [[NSUserDefaults standardUserDefaults] objectForKey:USER_UNIQUE_ID]];
     [webViewController setStrURL:strUrl];
     NSLog(@"CorpHospital: %@", strUrl);
 
