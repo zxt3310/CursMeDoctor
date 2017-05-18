@@ -136,7 +136,7 @@ static callBackReceiptMsg receiptMsgBlock;
     //NSString* hpnsToken = si.pnToken;
     NSString* hpnsType = si.pnType;
     si.pnToken =  deviceToken;
-    si.pnType = @"APNS";
+    si.pnType = WOMAN;
     boSendApnsToken = [[BoBase alloc] init];
     ReqBase* req = [[ReqBase alloc] init];
     ActionInfo* actionInfo = [req actionInfo];

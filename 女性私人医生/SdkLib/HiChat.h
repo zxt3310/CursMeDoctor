@@ -11,6 +11,7 @@
 #import "CustomerInfo.h"
 #import "HServiceInfo.h"
 
+#define WOMAN @"APNS_woman"
 typedef void(^callBackSimple)(NSError* error);
 
 typedef void(^callBackServiceList)(NSArray<HServiceInfo>* array, NSError* error);

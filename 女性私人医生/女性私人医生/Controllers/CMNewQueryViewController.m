@@ -376,6 +376,8 @@ UIView *infoView;
     
     isUserActive = NO;
     
+    swtMaxID = nil;
+    
     [super back:sender];
     if (loopGetChatIDTimer)
     {
@@ -1577,7 +1579,6 @@ UIView *infoView;
                 swtMaxID = [hospitalParams[@"maxid"] integerValue];
             }
             else{
-                swtMaxID = [jsonData[@"data"][@"maxid"] integerValue];
                 _chatID = _chatSWTID;
             }
             if (swtMaxID==0) {
@@ -1604,6 +1605,7 @@ UIView *infoView;
                 }
                 else{
                     NSInteger *status = [jsonData[@"data"][@"status"] integerValue];
+                    swtMaxID = [jsonData[@"data"][@"maxid"] integerValue];
                     isReady = YES;
                     isIAT = YES;
                     isIATquit = YES;
