@@ -836,6 +836,14 @@ NSString *officeStringWithType(NSInteger officeType)
                 }
 
             }];
+            
+//            NSData *deviceToken = [NSData dataWithData:[[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN_NSDATA]];
+//            if (!deviceToken) {
+//                NSLog(@"push token is nil fail to submit");
+//            }
+//            else{
+//                [HiChat submitDeviceToken:deviceToken];
+//            }
     });
         
         // 如果未登录，则不获取

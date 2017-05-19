@@ -70,7 +70,7 @@ static SystemInfo *ins = nil;
         self.pnToken = @""; //ED20B74F5B60B64FE9646D14
         
         //pn的类型，和信的pn还是google的pn
-        self.pnType = @"APNS_woman";
+        self.pnType = WOMAN;
 //        [[NSUserDefaults standardUserDefaults] setObject:dTokenStr forKey:NSU_PN_TOKEN];
 //        [[NSUserDefaults standardUserDefaults] synchronize];
         self.pnToken = [Config getPnToken];

@@ -3257,6 +3257,7 @@
 					};
 					70C18AC51E81310B00A82F46 = {
 						DevelopmentTeam = 429WZWZX68;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -4227,6 +4228,11 @@
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "女性私人医生/女性私人医生-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"DEVELOPMENT=0",
+				);
 				HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2/**";
 				INFOPLIST_FILE = "女性私人医生/女性私人医生-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -4264,6 +4270,8 @@
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "女性私人医生/女性私人医生-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "DEVELOPMENT=0";
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = "";
 				HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2/**";
 				INFOPLIST_FILE = "女性私人医生/女性私人医生-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -4330,6 +4338,11 @@
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "女性私人医生/女性私人医生-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"DEVELOPMENT=1",
+				);
 				HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2/**";
 				INFOPLIST_FILE = "女性私人医生 copy-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -4337,6 +4350,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/女性私人医生/Dependencies/BaiduMapApi_Lib_iOS_1.2.1/libs",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ranknowcn.healthyBoy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "77fcc1ec-1161-4cd4-a9bd-39b2d02ce483";
@@ -4361,6 +4375,7 @@
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "女性私人医生/女性私人医生-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "DEVELOPMENT=1";
 				HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2/**";
 				INFOPLIST_FILE = "女性私人医生 copy-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -4368,6 +4383,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/女性私人医生/Dependencies/BaiduMapApi_Lib_iOS_1.2.1/libs",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ranknowcn.healthyBoy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "77fcc1ec-1161-4cd4-a9bd-39b2d02ce483";

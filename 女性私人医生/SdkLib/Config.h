@@ -10,6 +10,7 @@
 
 @interface Config : NSObject
 
+#define WOMAN @"APNS"
 +(void)saveUserAccount:(NSString*)account;
 +(NSString*)getUserAccount;
 +(void)savePassword:(NSString*)password;

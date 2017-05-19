@@ -377,6 +377,10 @@ UIView *infoView;
     isUserActive = NO;
     
     swtMaxID = nil;
+    isIAT= NO;
+    isSWT = NO;
+    isIATquit = NO;
+    isQuit = NO;
     
     [super back:sender];
     if (loopGetChatIDTimer)
@@ -1604,11 +1608,11 @@ UIView *infoView;
                     [self addSWTDoctorClientMessage:@"咨询已经结束" msgDate:[NSDate date]];
                 }
                 else{
-                    NSInteger *status = [jsonData[@"data"][@"status"] integerValue];
+                    NSInteger status = [jsonData[@"data"][@"status"] integerValue];
                     swtMaxID = [jsonData[@"data"][@"maxid"] integerValue];
                     isReady = YES;
                     isIAT = YES;
-                    isIATquit = YES;
+                    isIATquit = NO;
                     [self reloadSWTInfoView];
                     NSArray *history = jsonData[@"data"][@"history"];
                     if (history.count>0) {
@@ -1625,7 +1629,12 @@ UIView *infoView;
                         }
                     }
                     if (status != 0) {
+                        isIATquit = YES;
                         [self addSWTDoctorClientMessage:@"咨询已经结束" msgDate:[NSDate date]];
+                    }
+                    else{
+                        cdCheckTimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(cdCheckRequestIAT:) userInfo:nil repeats:YES];
+                        [[NSRunLoop currentRunLoop] addTimer:cdCheckTimer forMode:NSRunLoopCommonModes];
                     }
                 }
             }
@@ -1639,11 +1648,11 @@ UIView *infoView;
                     cdCheckTimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(cdCheck:) userInfo:nil repeats:YES];
                     [self enterSWT];
                 }
-                else{
-                    isIAT = YES;
-                    cdCheckTimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(cdCheckRequestIAT:) userInfo:nil repeats:YES];
-                    [[NSRunLoop currentRunLoop] addTimer:cdCheckTimer forMode:NSRunLoopCommonModes];
-                }
+//                else{
+//                    isIAT = YES;
+//                    cdCheckTimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(cdCheckRequestIAT:) userInfo:nil repeats:YES];
+//                    [[NSRunLoop currentRunLoop] addTimer:cdCheckTimer forMode:NSRunLoopCommonModes];
+//                }
                 
                 [self reloadSWTInfoView];
                 NSString *tmp = [hospitalParams[@"welcome"] stringByReplacingOccurrencesOfString:@"%u" withString:@"\\u"];
