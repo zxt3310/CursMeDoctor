@@ -4656,11 +4656,11 @@
                   moduleName = "CureMe"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhangxintao/Documents/CurseMeDoctor/%E5%A5%B3%E6%80%A7%E7%A7%81%E4%BA%BA%E5%8C%BB%E7%94%9F/SdkLib/bo/BoBase.m"
-                  timestampString = "516708906.703666"
+                  timestampString = "517116590.374793"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "33"
-                  endingLineNumber = "33"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
                   offsetFromSymbolStart = "176">
                </Location>
                <Location
@@ -4671,11 +4671,11 @@
                   moduleName = "CureMe"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhangxintao/Documents/CurseMeDoctor/%E5%A5%B3%E6%80%A7%E7%A7%81%E4%BA%BA%E5%8C%BB%E7%94%9F/SdkLib/bo/BoBase.m"
-                  timestampString = "516708906.709485"
+                  timestampString = "517116590.379881"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "34"
-                  endingLineNumber = "34"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33"
                   offsetFromSymbolStart = "80">
                </Location>
             </Locations>
@@ -5580,7 +5580,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "&#x5973;&#x6027;&#x79c1;&#x4eba;&#x533b;&#x751f;/CMAppDelegate.m"
@@ -6438,6 +6438,22 @@
             startingLineNumber = "1631"
             endingLineNumber = "1631"
             landmarkName = "-initSWTChat"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SdkLib/bo/BoBase.m"
+            timestampString = "517116641.546871"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "-request:withBaseUrl:Completed:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

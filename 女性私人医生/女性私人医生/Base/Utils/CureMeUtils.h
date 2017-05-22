@@ -44,7 +44,7 @@
 #define HAS_SENT_LOCATIONINFO @"HasSentLocationInfo"
 #define LAST_SEND_LOCATION_TIME @"LastSendLocationTime"
 
-#define DOMAIN_NAME @"qhp.medapp.ranknowcn.com"
+#define DOMAIN_NAME @"new.medapp.ranknowcn.com"
 
 // 是否同意过用户协议
 #define HAS_AGREEPROTOCOL @"HasAgreeProtocol"
