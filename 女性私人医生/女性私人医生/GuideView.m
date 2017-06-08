@@ -30,7 +30,7 @@
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*(i-1), 0, SCREEN_WIDTH,SCREEN_HEIGHT)];
             [imageView setBackgroundColor:[UIColor whiteColor]];
             [imageView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"引导页%d-1136.png",i]]];
-            if ([UIScreen mainScreen].bounds.size.height == 960) {
+            if ([UIScreen mainScreen].bounds.size.height == 480) {
                 [imageView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"引导页%d-960.png",i]]];
             }
             [self addSubview:imageView];

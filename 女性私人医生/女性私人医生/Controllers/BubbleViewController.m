@@ -2642,6 +2642,20 @@ NSString *saveTitle;
         [CureMeUtils defaultCureMeUtil].userName = [CureMeUtils defaultCureMeUtil].uniID;
         [[NSUserDefaults standardUserDefaults] setObject:[CureMeUtils defaultCureMeUtil].uniID forKey:USER_REGISTERNAME];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [HiChat login:[NSString stringWithFormat:@"%ld",[CureMeUtils defaultCureMeUtil].userID] withPassword:@"" completion:^(NSError *error){
+            if (error) {
+                NSLog(@"%@",error);
+            }
+            
+            NSData *deviceToken = [NSData dataWithData:[[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN_NSDATA]];
+            if (!deviceToken) {
+                NSLog(@"push token is nil fail to submit");
+            }
+            else{
+                [HiChat submitDeviceToken:deviceToken];
+            }
+        }];
     }
     
     // 初始化选择地区的Modal ViewController

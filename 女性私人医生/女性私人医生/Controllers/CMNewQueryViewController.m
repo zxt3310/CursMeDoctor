@@ -1307,6 +1307,20 @@ UIView *infoView;
         [CureMeUtils defaultCureMeUtil].userName = [CureMeUtils defaultCureMeUtil].uniID;
         [[NSUserDefaults standardUserDefaults] setObject:[CureMeUtils defaultCureMeUtil].uniID forKey:USER_REGISTERNAME];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [HiChat login:[NSString stringWithFormat:@"%ld",[CureMeUtils defaultCureMeUtil].userID] withPassword:@"" completion:^(NSError *error){
+            if (error) {
+                NSLog(@"%@",error);
+            }
+            
+            NSData *deviceToken = [NSData dataWithData:[[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN_NSDATA]];
+            if (!deviceToken) {
+                NSLog(@"push token is nil fail to submit");
+            }
+            else{
+                [HiChat submitDeviceToken:deviceToken];
+            }
+        }];
     }
     
     /**
@@ -1736,6 +1750,20 @@ UIView *infoView;
         [CureMeUtils defaultCureMeUtil].userName = [CureMeUtils defaultCureMeUtil].uniID;
         [[NSUserDefaults standardUserDefaults] setObject:[CureMeUtils defaultCureMeUtil].uniID forKey:USER_REGISTERNAME];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [HiChat login:[NSString stringWithFormat:@"%ld",[CureMeUtils defaultCureMeUtil].userID] withPassword:@"" completion:^(NSError *error){
+            if (error) {
+                NSLog(@"%@",error);
+            }
+            
+            NSData *deviceToken = [NSData dataWithData:[[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN_NSDATA]];
+            if (!deviceToken) {
+                NSLog(@"push token is nil fail to submit");
+            }
+            else{
+                [HiChat submitDeviceToken:deviceToken];
+            }
+        }];
     }
     if (hasCancelSWT)
         return;
@@ -2304,6 +2332,20 @@ UIView *infoView;
                     [[NSUserDefaults standardUserDefaults] setObject:[CureMeUtils defaultCureMeUtil].uniID forKey:USER_REGISTERNAME];
                     
                     [[NSUserDefaults standardUserDefaults] synchronize];
+                    
+                    [HiChat login:[NSString stringWithFormat:@"%ld",[CureMeUtils defaultCureMeUtil].userID] withPassword:@"" completion:^(NSError *error){
+                        if (error) {
+                            NSLog(@"%@",error);
+                        }
+                        
+                        NSData *deviceToken = [NSData dataWithData:[[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN_NSDATA]];
+                        if (!deviceToken) {
+                            NSLog(@"push token is nil fail to submit");
+                        }
+                        else{
+                            [HiChat submitDeviceToken:deviceToken];
+                        }
+                    }];
                 }
                 
                 [self isAllowToConnectIatao:[jsonData[@"city"] integerValue] and:[jsonData[@"city2"] integerValue]];

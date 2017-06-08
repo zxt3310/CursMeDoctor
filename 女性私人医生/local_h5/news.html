@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>健康资讯</title>
+    <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width, minimal-ui" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telphone=no" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <script type="text/javascript" src="js/fastclick.js"></script>
+    <script type="text/javascript" src="js/swiper.min.js"></script>
+    <script type="text/javascript" src="js/zepto.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css">
+    <script type="text/javascript">
+    function parseURL(url) {
+        //var url =  location.href;
+        console.log(url);
+        if (url.split("?")[1] == undefined) {
+            return [];
+        }
+        var paramArr = url.split("?")[1].split("&");
+        var parseResult = new Array();
+        for ($i = 0; $i < paramArr.length; $i++) {
+            var eachParam = paramArr[$i].split("=");
+            parseResult[eachParam[0]] = eachParam[1];
+        }
+        return parseResult;
+    }
+    console.log(parseURL(location.href));
+    var urlParam = parseURL(location.href);
+
+    var $GC = {
+        serverUrl: 'http://new.medapp.ranknowcn.com',
+        appid: urlParam['appid'] == undefined ? 1 : urlParam['appid'],
+        addrdetail: urlParam['addrdetail'] == undefined ? "" : urlParam['addrdetail']
+    };
+    console.log("appid:" + $GC.appid);
+
+    if (/iP(hone|od|ad)/.test(navigator.userAgent)) {
+        var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/),
+            version = parseInt(v[1], 10);
+        if (version >= 8) {
+            document.documentElement.classList.add('hairlines');
+        }
+    }
+
+    window.imgError = function(src) {
+        var img = event.srcElement;
+        img.src = src;
+        img.onerror = null;
+    };
+
+    var loader = {
+        init: function() {
+            this.loadData(0, 0);
+        },
+        loadData: function(typeid, isLoadType) {
+            if (typeof typeid == 'undefined') typeid = 0;
+            var e = this;
+            //$("#news").html("");
+            //$("#news_loading").show();
+
+            $.ajax({
+                type: "post",
+                url: $GC.serverUrl + "/h5_new/server/app.php?type=news&appid=" + $GC.appid + "&qtype=" + typeid + "&limit=" + $("#limit").val(),
+                dataType: "jsonp",
+                cache: !1,
+                success: function(t) {
+                    if (t) {
+                        var departList = t.depart_list,
+                            bannerList = t.banner_list,
+                            newsList = t.news_list;
+                        //e.initGroupList(i), e.initSlider(o), e.initDiseaseList(n), e.initHostNews(r)
+                        e.initNewsList(newsList);
+                        //初始化广告
+                        e.initBannerList(bannerList);
+                    }
+                }
+            });
+            if (isLoadType == 0) {
+                //初始化科室类型
+                $.ajax({
+                    type: "post",
+                    url: $GC.serverUrl + "/api/m.php?action=getallqtypebyappidandgps&version=2.3&appid=" + $GC.appid + "&addrdetail=" + $GC.addrdetail,
+                    dataType: "json",
+                    cache: !1,
+                    success: function(t) {
+                        if (t) {
+                            e.initType(t.msg);
+                        }
+                    }
+                });
+            }
+        },
+        initNewsList: function(t) {
+            if (t && t.length > 0) {
+                var n = [];
+                for (var i = 0; i < t.length; i++) {
+                    var r = t[i];
+                    if (r) {
+                        if (r.img == "" || r.img == 'undefined') {
+                            r.img = "./img/ico_default_msg.png"
+                        }
+                        var img = '<div style="background: url(' + r.img + ');background-size:auto 75px;background-repeat:no-repeat;background-position: center;border:1px solid #e3e3e3;;border-radius:5px;width:100%;height:100%"></div>';
+                        n.push("<li>"), n.push('<a href="' + r.url + '">'), n.push('<div class="pic-box">' + img + '</div>'), n.push('<div class="news-box">'), n.push("<h3>" + r.title + "</h3>");
+                        n.push('<p>' + r.summary + "</p>"), n.push("</div>"), n.push("</a>"), n.push("</li>")
+                    }
+                }
+                $("#news").append(n.join("")), $("#news_loading").hide();
+            }
+        },
+        initBannerList: function(t) {
+            if (t && t.length > 0) {
+                var n = [];
+                for (var i = 0; i < t.length; i++) {
+                    var r = t[i];
+                    if (r) {
+                        n.push('<div class="swiper-slide"><a href="'+r.url+'"><img src="' + r.img + '" width="100%"/></a></div>');
+                    }
+                }
+                $("#banners").html(n.join("")), $('#bannerDiv').show();
+
+                var params = {};
+                if( t.length > 1 )
+                    params.pagination = '.swiper-pagination';
+                params.paginationClickable = true;
+                params.spaceBetween = 30;
+                params.centeredSlides = true;
+                params.autoplay = 2500;
+                params.autoplayDisableOnInteraction = false;
+
+                var swiper = new Swiper('.swiper-container', params);
+            } else {
+                $("#bannerDiv").hide();
+            }
+        },
+        initType: function(t) {
+            if (t && t.length > 0) {
+                var n = [];
+                for (var i = 0; i < t.length; i++) {
+                    var r = t[i];
+                    if (r) {
+                        n.push("<li>"), n.push('<a href="javascript:void(0);" onclick="switch_depart(this,' + r.id + ');return false;">' + r.name),
+                            n.push('</a>'), n.push("</li>");
+                    }
+                }
+                $("#news_type_list").append(n.join(""));
+            }
+        },
+    };
+    $(document).ready(function() {
+        loader.init();
+        $(window).scroll(function() {
+            if (document.body.scrollTop + $(window).height() >= $(document).height() - 10) {
+                $("#limit").val(parseInt($("#limit").val()) + 15);
+                loader.loadData(typeid, 1);
+            }
+        });
+    });
+
+    function switch_depart(that, typeid) {
+        $("#news").html("");
+        $("#limit").val('0');
+        $("#news_loading").show();
+        $('#news_type_list > li').removeClass('selected');
+        $(that).parent().addClass('selected');
+        $("#typeid").val(typeid);
+        loader.loadData(typeid, 1);
+    }
+    </script>
+</head>
+
+<body>
+    <div class="med-news">
+        <div class="news-depart-list">
+            <ul id="news_type_list">
+                <li class="selected"><a href="javascript:void(0);" onclick="switch_depart(this,0);return false;">全部</a></li>
+            </ul>
+        </div>
+        <div style="height: 40px"></div>
+        <div id="bannerDiv">
+            <div class="swiper-container" style="width:100%">
+                <div class="swiper-wrapper" id="banners"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+        <div class="med-box" style="padding:0">
+            <input type="hidden" name="limit" value="0" id="limit">
+            <input type="hidden" name="typeid" value="0" id="typeid">
+            <div class="loading" id="news_loading" style="position:relative; width:100%; height:100px"></div>
+            <ul class="news-list" id="news"></ul>
+        </div>
+    </div>
+</body>
+
+</html>

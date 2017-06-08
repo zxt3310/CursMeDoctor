@@ -155,9 +155,13 @@ BOOL isLFMShow;
     return NO;
 }
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [webView reload];
-    });
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [webView reload];
+//    });
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html" inDirectory:@"local_h5"];
+    NSURL *url = [NSURL fileURLWithPath:path];
+    [webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
 - (void)dealloc

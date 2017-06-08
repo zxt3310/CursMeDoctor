@@ -188,6 +188,8 @@
         [CureMeUtils defaultCureMeUtil].userName = [CureMeUtils defaultCureMeUtil].uniID;
         [[NSUserDefaults standardUserDefaults] setObject:[CureMeUtils defaultCureMeUtil].uniID forKey:USER_REGISTERNAME];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        
     }
 
     // 发送正式咨询请求

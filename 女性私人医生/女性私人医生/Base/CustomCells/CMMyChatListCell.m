@@ -61,14 +61,14 @@
     myHeadImage.hidden = YES;
     [self addSubview:myHeadImage];
     
-    doctorName = [[UILabel alloc] initWithFrame:CGRectMake(70, inset * 2 + 2, 55, 17)];
+    doctorName = [[UILabel alloc] initWithFrame:CGRectMake(70, inset * 2 + 2, 80, 17)];
     [doctorName setFont:[UIFont systemFontOfSize:15]];
     [doctorName setBackgroundColor:[UIColor clearColor]];
     [doctorName setBackgroundColor:[UIColor clearColor]];
     [doctorName setTextColor:[UIColor colorWithRed:200.0/255 green:62.0/255 blue:101.0/255 alpha:1.0]];
     [self addSubview:doctorName];
     
-    doctorInfo = [[UILabel alloc] initWithFrame:CGRectMake(124 *SCREEN_WIDTH / 320, inset * 2 + 4, 185 *SCREEN_WIDTH/320, 15)];
+    doctorInfo = [[UILabel alloc] initWithFrame:CGRectMake(164 *SCREEN_WIDTH / 320, inset * 2 + 4, 185 *SCREEN_WIDTH/320, 15)];
     [doctorInfo setBackgroundColor:[UIColor clearColor]];
     [doctorInfo setTextColor:[UIColor lightGrayColor]];
     [doctorInfo setFont:[UIFont systemFontOfSize:13]];

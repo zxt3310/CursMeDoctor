@@ -36,6 +36,7 @@ typedef enum {
 #define LOGIN_URL @"http://180.76.137.158:8090"
 
 #define BASE_URL @"http://180.76.137.158:8080"
+
 #define DOMAIN_NAME @"hichat.hesine.com"
 
 #define HICHAT_LOGIN 0

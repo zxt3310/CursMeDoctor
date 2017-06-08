@@ -602,6 +602,10 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     NSLog(@"webView didFailLoadWithError: %@", error.description);
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"news" ofType:@"html" inDirectory:@"local_h5"];
+    NSURL *url = [NSURL fileURLWithPath:path];
+    [webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
 @end

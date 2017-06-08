@@ -40,31 +40,31 @@
 
 @property (strong, nonatomic) IBOutlet UIScrollView *entranceScrollView;
 
-- (IBAction)meirongBtnClick:(id)sender;
-- (IBAction)fukeBtnClick:(id)sender;
-- (IBAction)chankeBtnClick:(id)sender;
-- (IBAction)pifukeBtnCick:(id)sender;
-- (IBAction)zhongyiBtnClick:(id)sender;
-- (IBAction)yankeBtnClick:(id)sender;
-- (IBAction)corpHospBtnClick:(id)sender;
-- (IBAction)activityBtnClick:(id)sender;
-- (IBAction)jiakangBtnClick:(id)sender;
-- (IBAction)ganbingBtnClick:(id)sender;
-- (IBAction)naotanBtnBlick:(id)sender;
-- (IBAction)gukeBtnClick:(id)sender;
-- (IBAction)dianxianBtnBlick:(id)sender;
-- (IBAction)gangchangBtnClick:(id)sender;
-// 2014-10-13新增七科室
-- (IBAction)bybyBtnClick:(id)sender;
-- (IBAction)xinzangBtnClick:(id)sender;
-- (IBAction)shenjingBtnClick:(id)sender;
-- (IBAction)erbihouBtnClick:(id)sender;
-- (IBAction)weichangBtnClick:(id)sender;
-- (IBAction)tangniaobingBtnClick:(id)sender;
-- (IBAction)zhongliuBtnClick:(id)sender;
-
-- (IBAction)locateBtnClick:(id)sender;
-- (IBAction)changeLocationBtnClick:(id)sender;
+//- (IBAction)meirongBtnClick:(id)sender;
+//- (IBAction)fukeBtnClick:(id)sender;
+//- (IBAction)chankeBtnClick:(id)sender;
+//- (IBAction)pifukeBtnCick:(id)sender;
+//- (IBAction)zhongyiBtnClick:(id)sender;
+//- (IBAction)yankeBtnClick:(id)sender;
+//- (IBAction)corpHospBtnClick:(id)sender;
+//- (IBAction)activityBtnClick:(id)sender;
+//- (IBAction)jiakangBtnClick:(id)sender;
+//- (IBAction)ganbingBtnClick:(id)sender;
+//- (IBAction)naotanBtnBlick:(id)sender;
+//- (IBAction)gukeBtnClick:(id)sender;
+//- (IBAction)dianxianBtnBlick:(id)sender;
+//- (IBAction)gangchangBtnClick:(id)sender;
+//// 2014-10-13新增七科室
+//- (IBAction)bybyBtnClick:(id)sender;
+//- (IBAction)xinzangBtnClick:(id)sender;
+//- (IBAction)shenjingBtnClick:(id)sender;
+//- (IBAction)erbihouBtnClick:(id)sender;
+//- (IBAction)weichangBtnClick:(id)sender;
+//- (IBAction)tangniaobingBtnClick:(id)sender;
+//- (IBAction)zhongliuBtnClick:(id)sender;
+//
+//- (IBAction)locateBtnClick:(id)sender;
+//- (IBAction)changeLocationBtnClick:(id)sender;
 
 - (void)ntfNetworkNotReachable:(NSNotification *)note;
 - (void)ntfLocationSucceess:(NSNotification *)note;

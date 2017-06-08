@@ -31,8 +31,9 @@
       "scale" : "3x"
     },
     {
-      "idiom" : "iphone",
       "size" : "40x40",
+      "idiom" : "iphone",
+      "filename" : "80.png",
       "scale" : "2x"
     },
     {

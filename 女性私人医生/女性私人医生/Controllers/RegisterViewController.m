@@ -287,6 +287,20 @@
         NSLog(@"RegisterViewController NSUserDefaults synchronize failed!");
     }
     
+    [HiChat login:[NSString stringWithFormat:@"%ld",[CureMeUtils defaultCureMeUtil].userID] withPassword:@"" completion:^(NSError *error){
+        if (error) {
+            NSLog(@"%@",error);
+        }
+        
+        NSData *deviceToken = [NSData dataWithData:[[NSUserDefaults standardUserDefaults] objectForKey:PUSH_TOKEN_NSDATA]];
+        if (!deviceToken) {
+            NSLog(@"push token is nil fail to submit");
+        }
+        else{
+            [HiChat submitDeviceToken:deviceToken];
+        }
+    }];
+    
     [[CureMeUtils defaultCureMeUtil] initUserLoginInfo];
     [[CureMeUtils defaultCureMeUtil] initUserPersonalInfo];
     

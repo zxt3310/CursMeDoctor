@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>首页 </title>
+    <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width, minimal-ui" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telphone=no" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <script type="text/javascript" src="js/fastclick.js"></script>
+    <script type="text/javascript" src="js/swiper.min.js"></script>
+    <script type="text/javascript" src="js/zepto.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css">
+    <script type="text/javascript">
+        function parseURL(url) {
+            //var url =  location.href;
+            console.log(url);
+            if (url.split("?")[1] == undefined) {
+                return [];
+            }
+            var paramArr = url.split("?")[1].split("&");
+            var parseResult = new Array();
+            for ($i = 0; $i < paramArr.length; $i++) {
+                var eachParam = paramArr[$i].split("=");
+                parseResult[eachParam[0]] = eachParam[1];
+            }
+            return parseResult;
+        }
+
+        function uuid(len, radix) {
+            var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+            var uuid = [], i;
+            radix = radix || chars.length;
+
+            if (len) {
+                // Compact form
+                for (i = 0; i < len; i++) uuid[i] = chars[0 | Math.random()*radix];
+            } else {
+                // rfc4122, version 4 form
+                var r;
+
+                // rfc4122 requires these characters
+                uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+                uuid[14] = '4';
+
+                // Fill in random data.  At i==19 set the high bits of clock sequence as
+                // per rfc4122, sec. 4.1.5
+                for (i = 0; i < 36; i++) {
+                    if (!uuid[i]) {
+                        r = 0 | Math.random()*16;
+                        uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r];
+                    }
+                }
+            }
+
+            return uuid.join('');
+        }
+
+        console.log(parseURL(location.href));
+        var urlParam = parseURL(location.href);
+        var $GC = {
+            serverUrl: 'http://new.medapp.ranknowcn.com',
+            appid: urlParam['appid'] == undefined ? 1 : urlParam['appid'],
+            //addrdetail:'31.24069,121.526453,139号,乳山路,浦东新区,上海市,上海市'，为科室需要的参数
+            addrdetail: urlParam['addrdetail'] == undefined ? "" : urlParam['addrdetail'],
+            jihuoid: (urlParam['jihuo']==undefined ? ('T'+uuid(12, 16)) : urlParam['jihuo'])
+        };
+        console.log("appid:" + $GC.appid);
+        if (/iP(hone|od|ad)/.test(navigator.userAgent)) {
+            var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/),
+                    version = parseInt(v[1], 10);
+            if (version >= 8) {
+                document.documentElement.classList.add('hairlines');
+            }
+        }
+
+        window.imgError = function(src) {
+            var img = event.srcElement;
+            img.src = src;
+            img.onerror = null;
+        };
+
+        var loader = {
+            init: function() {
+                this.loadData();
+                this.initLink();
+
+                var avatar = new Image();
+                avatar.src = 'http://idm.bce.baidu.com/t/ping.gif?dm=bce.baidu.com/a1015&ac='+$GC.jihuoid+'&v=bce-1.0&rnd='+Math.random()+'&ext_bce_tid=a1015&ext_bce_pid='+$GC.appid+'&ext_bce_uid='+$GC.jihuoid;
+
+            },
+            loadData: function() {
+                var e = this;
+                $.ajax({
+                    type: "post",
+                    url: $GC.serverUrl + "/h5_new/server/app.php?type=home&appid=" + $GC.appid,
+                    dataType: "jsonp",
+                    cache: !1,
+                    success: function(t) {
+                        if (t) {
+                            var departList = t.depart_list,
+                                    bannerList = t.banner_list,
+                                    newsList = t.news_list;
+                            //初始化广告
+                            e.initBannerList(bannerList);
+                            //初始化资讯
+                            e.initNewsList(newsList);
+                        }
+                    }
+                });
+
+                //初始化科室类型
+                $.ajax({
+                    type: "post",
+                    url: $GC.serverUrl + "/api/m.php?action=getallqtypebyappidandgps&version=3.0&appid=" + $GC.appid + "&addrdetail=" + $GC.addrdetail,
+                    dataType: "json",
+                    cache: !1,
+                    success: function(t) {
+                        if (t) {
+                            e.initType(t.msg);
+                        }
+                    }
+                });
+
+
+                //昨日问题解答数量
+                $.ajax({
+                    type: "post",
+                    url: $GC.serverUrl + "/api/m.php?action=answernum_yesterday&version=3.0" ,
+                    //url :"http://qhp.medapp.ranknowcn.com/api/m.php?action=answernum_yesterday&version=3.0",
+                    dataType: "json",
+                    cache: !1,
+                    success: function(t) {
+                        if (t) {
+                            //alert($GC.serverUrl + "/api/m.php?action=answernum_yesterday&version=3.0");
+                            e.initAnswernum(t.data);
+                        }
+                    }
+                });
+            },
+            initNewsList: function(t) {
+                if (t && t.length > 0) {
+                    var n = [];
+                    for (var i = 0; i < t.length; i++) {
+                        var r = t[i];
+                        if (r) {
+                            if (r.img == "" || r.img == 'undefined') {
+                                r.img = "./img/ico_default_msg.png"
+                            }
+                            var img = '<div style="background: url(' + r.img + ');background-size:auto 75px;background-repeat:no-repeat;background-position: center;border:1px solid #e3e3e3;;border-radius:5px;width:100%;height:100%"></div>';
+                            n.push("<li>"), n.push('<a href="' + $GC.serverUrl + '/MobileWeb_APP/view_appnews/appnewsdetail.php?id=' + r.id + '&appid=' + $GC.appid + '">'),
+                                //n.push('<div class="pic-box"><img src="' + r.img + '" onerror="imgError(\'img/blank.gif\')"/></div>'), n.push('<div class="news-box">'),
+                                    n.push('<div class="pic-box">' + img + '</div>'), n.push('<div class="news-box">'),
+                                    n.push("<h3>" + r.title + "</h3>");
+                            n.push('<p>' + r.summary + "</p>"), n.push("</div>"), n.push("</a>"),
+                                    n.push("</li>")
+                        }
+                    }
+                    $("#news").html(n.join("")), $("#news_loading").hide();
+                }
+            },
+            initBannerList: function(t) {
+                if (t && t.length > 0) {
+                    var n = [];
+                    for (var i = 0; i < t.length; i++) {
+                        var r = t[i];
+                        if (r) {
+                            n.push('<div class="swiper-slide"><a href="'+r.url+'"><img src="' + r.img + '" width="100%"/></a></div>');
+                        }
+                    }
+                    $("#banners").html(n.join("")), $("#banner_loading").hide();
+
+                    var swiper = new Swiper('.swiper-container', {
+                        pagination: '.swiper-pagination',
+                        nextButton: '.swiper-button-next',
+                        prevButton: '.swiper-button-prev',
+                        paginationClickable: true,
+                        spaceBetween: 30,
+                        centeredSlides: true,
+                        autoplay: 2500,
+                        autoplayDisableOnInteraction: false
+                    });
+                } else {
+                    $("#bannerDiv").hide();
+                }
+            },
+            initType: function(t) {
+                if (t && t.length > 0) {
+                    var n = [];
+                    for (var i = 0; i < t.length; i++) {
+                        var r = t[i];
+                        if (r) {
+                            n.push("<li>"), n.push('<a href="medapp://home/depart/' + r.id + '">'), n.push('<i class="icon-departs icon-' + r.id + '"></i><span>' + r.name + '</span></a></li>'), n.push("</li>");
+                        }
+                    }
+                    $("#typeList").html(n.join(""));
+                }
+            },
+            initAnswernum: function(t) {
+                if (t.num) {
+                    var n = [];
+                    n.push(t.num);
+                    $("#answenum").html(n.join(""));
+                }
+            },
+            initLink: function() {
+                // citycode=1000&citycode2=110105&jingwei=39.922287,116.493954&deviceid=56e905112c298&userid=6838271&
+                $("#yiyuan_yuyue").attr("href", $GC.serverUrl + "/hospital/index_guahao.php?appid=" + $GC.appid);
+                //$("#hosp_yuyue").attr("href",$GC.serverUrl+"/h5_new/server/app.php?type=hospitallist&citycode=1000&citycode2=110105&jingwei=39.922287,116.493954&deviceid=56e905112c298&userid=6838271&appid="+$GC.appid);
+                var param = {};
+                if (urlParam['appid'] != undefined) {
+                    param.appid = urlParam['appid']
+                }
+                if (urlParam['citycode'] != undefined) {
+                    param.citycode = urlParam['citycode']
+                }
+                if (urlParam['citycode2'] != undefined) {
+                    param.citycode2 = urlParam['citycode2']
+                }
+                if (urlParam['jingwei'] != undefined) {
+                    param.jingwei = urlParam['jingwei']
+                }
+                if (urlParam['deviceid'] != undefined) {
+                    param.deviceid = urlParam['deviceid']
+                }
+                if (urlParam['userid'] != undefined) {
+                    param.userid = urlParam['userid']
+                }
+                $("#hosp_yuyue").attr("href", $GC.serverUrl + "/h5_new/server/app.php?type=hospitallist&" + $.param(param));
+                $("#fast_question").attr("href", "medapp://home/quickask/");
+            }
+        };
+        $(document).ready(function() {
+            loader.init();
+        });
+    </script>
+</head>
+
+<body>
+<div class="med-home">
+    <div class="med-box home-departs">
+        <ul id="typeList">
+            <li><a href="medapp://home/depart/10"><i class="icon-departs icon-byby"></i><span>不孕不育</span></a></li>
+            <li><a href="medapp://home/depart/11"><i class="icon-departs icon-ck"></i><span>产科</span></a></li>
+        </ul>
+        <div style="clear: both"></div>
+
+        <div style="width:100%;margin:15px auto;text-align: center;font-size: 14px;color:#9B9B9B;">昨日有 <span style="color:#D0021B;;font-weight:bold;" id="answenum"> 12683 </span> 条咨询得到解答</div>
+
+
+    </div>
+
+
+    <div class="med-box thin-box booking-box">
+
+
+        <div style="border-right-width: 1px; -webkit-box-flex: 1; text-align: center; line-height: 120px; height: 120px;position:relative;">
+            <div class="free">免费</div>
+            <a href="#" id="fast_question" class="yy">
+                <h2>快捷提问</h2>
+                <p>描述症状 快速问诊</p>
+            </a>
+        </div>
+        <div style="border-right-width: 1px; -webkit-box-flex: 1; text-align: center; line-height: 120px; height: 120px;">
+            <a href="#" id="hosp_yuyue" class="gh">
+                <h2>预约就诊</h2>
+                <p>快捷预约 就近就诊</p>
+            </a>
+        </div>
+
+    </div>
+
+
+
+
+
+    <!--
+            <div class="med-box thin-box booking-box">
+                <div style="width:100%;display: inline;">
+
+            <div style="border-right-width: 1px; -webkit-box-flex: 1; text-align: center; line-height: 120px; height: 100px;position:relative;display:block;float:left;width:50%">
+                <div class="free">免费</div>
+                <a href="#" id="fast_question" class="yy" style="width:100%">
+                    <h2>快捷提问</h2>
+                    <p>描述症状 快速问诊</p>
+                </a>
+            </div>
+
+            <div style="-webkit-box-flex: 1;  text-align: center; line-height: 120px; height: 100px;display:block;float:left;width:45%">
+                <a href="#" id="hosp_yuyue" class="gh" style="width:100%">
+                    <h2>预约就诊</h2>
+                    <p>快捷预约 就近就诊</p>
+                </a>
+            </div>
+
+        </div>
+
+        <div style="margin:0;padding:0; float:left;width:100%;margin:5px auto;padding:5px 0 0 0;text-align:center;border-top:1px solid #dfdfdf;">
+            <span style="margin:0;text-align: center;font-size: 13px;color:#666;">近7天有<span style="color:#f65378;font-weight:bold;"> 33080 </span>条咨询得到解答</span>
+        </div>
+
+                <ul style="-webkit-box-flex: 2;">
+                    <li style="border-bottom-width: 1px">
+                        <a id="yiyuan_yuyue" href="" class="yy">
+                            <div class="con">
+                                <h3>按医院</h3><p>查找医院列表</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="ks">
+                            <div class="con">
+                                <h3>按科室</h3><p>科室列表找医院</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>-->
+    <div class="med-box thin-box" id="bannerDiv">
+        <div class="loading" id="banner_loading" style="position:relative; width:100%; height:100px"></div>
+        <div class="swiper-container" style="width:100%">
+            <div class="swiper-wrapper" id="banners">
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+    <div class="caption"><span class="best-value">资讯文章</span><a href="medapp://home/news/" style="float:right;font-size:13px;">更多文章<i class="icon-more"></i></a></div>
+    <div class="med-box thin-box">
+        <div class="loading" id="news_loading" style="position:relative; width:100%; height:100px"></div>
+        <ul class="news-list" id="news" style="width: 100%"></ul>
+    </div>
+</div>
+</body>
+
+</html>

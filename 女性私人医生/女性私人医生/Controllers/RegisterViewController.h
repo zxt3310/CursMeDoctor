@@ -12,6 +12,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "CustomBaseViewController.h"
 #import "CMPickerViewController.h"
+#import "HiChat.h"
 
 @class LoginViewController;
 

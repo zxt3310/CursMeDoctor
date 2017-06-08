@@ -1,0 +1,361 @@
+* {
+	-webkit-tap-highlight-color: transparent  
+}
+
+html {
+	font-family: "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", "宋体", Arial,
+		Verdana, sans-serif;
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	font-size: 62.5%
+}
+
+html .hairlines a,html .hairlines div,html .hairlines i,html .hairlines li
+	{
+	border-width: .5px !important
+}
+
+body {
+	background: #ededed;
+	color: #666;
+	line-height: 20px
+}
+
+ul {
+	list-style: none
+}
+
+li {
+	text-align: -webkit-match-parent
+}
+
+a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,caption,center,cite,code,dd,del,details,dfn,div,dl,dt,em,embed,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,nav,object,ol,output,p,pre,q,ruby,s,samp,section,select,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video
+	{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	vertical-align: baseline;
+	font-weight: 400
+}
+
+a {
+	color: #666;
+	text-decoration: none
+}
+
+.med-home {
+	color: #666
+}
+
+.med-home a {
+	color: #666
+}
+
+.med-home .loading {
+	height: 100%;
+	background: url("../img/loading.png") center center no-repeat;
+	background-size: 34px 34px
+}
+
+.med-home .icon-departs {
+	display: inline-block;
+	width: 60px;
+	height: 60px;
+	background: url("../img/ico_depart_all.png?v=20160128") no-repeat;
+	background-size: 1200px 60px
+}
+
+.med-home .icon-departs.icon-17 {/*男科*/
+	background-position: -960px 0
+}
+.med-home .icon-departs.icon-19 {/*前列腺*/
+	background-position: -900px 0
+}
+.med-home .icon-departs.icon-13 {/*皮肤科*/
+	background-position: -600px 0
+}
+.med-home .icon-departs.icon-18 {/*肛肠*/
+	background-position: -420px 0
+}
+.med-home .icon-departs.icon-25 {/*不孕不育*/
+	background-position: 0 0
+}
+.med-home .icon-departs.icon-24 {/*癫痫*/
+	background-position: -180px 0
+}
+.med-home .icon-departs.icon-14 {/*眼科*/
+	background-position: -660px 0
+}
+.med-home .icon-departs.icon-16 {/*口腔*/
+	background-position: -480px 0
+}
+.med-home .icon-departs.icon-29 {/*胃肠*/
+	background-position: -120px 0
+}
+.med-home .icon-departs.icon-28 {/*耳鼻喉*/
+	background-position: -240px 0
+}
+.med-home .icon-departs.icon-21 {/*杆病*/
+	background-position: -360px 0
+}
+.med-home .icon-departs.icon-20 {/*甲状腺*/
+	background-position: -720px 0
+}
+.med-home .icon-departs.icon-10 {/*美容*/
+	background-position: -540px 0
+}
+.med-home .icon-departs.icon-11 {/*妇科*/
+	background-position: -300px 0
+}
+.med-home .icon-departs.icon-12 {/*产科*/
+	background-position: -60px 0
+}
+.med-home .icon-departs.icon-23 {/*骨科*/
+	background-position: -780px 0
+}
+.med-home .icon-departs.icon-31 {/*肿瘤科*/
+	background-position: -840px 0
+}
+
+.med-home .caption {
+	padding: 0 10px 8px 10px
+}
+
+.med-home .caption span.best-value {
+	color: #f65378;
+	font-size: 16px;
+}
+
+.med-home .caption i.icon-more {
+	background: url(../img/icon_more.png) no-repeat;
+	background-size: 100% 100%;
+	width: 8px;
+	height: 18px;
+	margin: -2px 0 0 5px;
+	display: inline-block;
+	vertical-align: middle
+}
+
+.med-home .booking-box a {
+	display: block;
+	font-size: 12px;
+	color: #aaa;
+	line-height: 18px
+}
+
+.med-home .booking-box a.gh {
+	padding-top: 15px;
+	text-align: center
+}
+
+.med-home .booking-box a.gh:before {
+	display: block;
+	content: '';
+	width: 25px;
+	height: 30px;
+	margin: 0 auto;
+	background: url("../img/ico_yyjz_b.png?v=20160128") no-repeat;
+	background-size: 100% 100%
+}
+
+.med-home .booking-box a.gh h2 {
+	padding-top: 10px
+}
+
+.med-home .booking-box a h2 {
+	font-size: 18px;
+	padding-bottom: 6px;
+	color: #333
+}
+
+.med-home .booking-box a h3 {
+	font-size: 14px;
+	color: #333
+}
+
+.med-home .booking-box a.yy {
+	padding: 15px
+}
+.med-home .booking-box .free {
+	color:white;
+	background-color:red;
+	position:absolute;
+	top:5px;
+	right:5px;
+	width:40px;
+	height:18px;
+	border-radius:10px;
+	text-align:center;
+	line-height:18px;
+    font-size: 14px;
+	padding-top:1px;
+}
+.med-home .booking-box a.yy h2 {
+	padding-top: 10px
+}
+
+.med-home .booking-box a.yy:before {		
+	display: block;
+	content: '';
+	width: 30px;
+	height: 30px;
+	margin: 0 auto;
+	background: url("../img/ico_msg_b.png?v=20160128") no-repeat;
+	background-size: 100% 100%
+}
+
+.med-home .booking-box a .con {
+	position: relative
+}
+
+.med-home .booking-box a.ks {
+	padding: 12px
+}
+
+.med-home .booking-box a.ks :after {
+	background: url("../img/ico_ks_b.png?v=20160128") no-repeat;
+	display: block;
+	position: absolute;
+	right: 0;
+	top: -7px;
+	content: '';
+	width: 50px;
+	height: 50px;
+	vertical-align: middle;
+	background-size: 100% 100%
+}
+
+.med-news .news-depart-list {
+	width: 100%;
+	background-color: #f9f9f9;
+	overflow-x: auto;
+	overflow-y: hidden;
+	position:fixed;
+	height: 40px;
+	z-index: 999;
+	top:0px;
+}
+
+.med-news .news-depart-list ul {
+	white-space: nowrap;
+	margin: 0;
+	padding: 0;
+	list-style: none
+}
+
+.med-news .news-depart-list li {
+	display: inline-block
+}
+
+.med-news .news-depart-list li a {
+	display: inline-block;
+	padding: 10px 14px;
+	color: #000;
+	font-size: 16px;
+}
+
+.med-news .news-depart-list li.selected {
+	border-bottom: 3px solid #4a90e2;
+	color: #4a90e2
+}
+
+.med-news .news-depart-list li.selected a {
+	color: #4a90e2
+}
+
+.med-box {
+	background-color: white;
+	border: 1px solid #e3e3e3;
+	padding: 14px 10px;
+	height: auto;
+	overflow: hidden;
+	border-width: 1px 0;
+	border-top: 0;
+	margin-bottom: 12px;	
+}
+
+.thin-box {
+	width:100%;
+	padding: 0;
+	display: -moz-box;
+	display: -webkit-box
+}
+
+.thin-box div,.thin-box li {
+	border-color: #dfdfdf;
+	border-style: solid
+}
+
+.home-departs {
+	width: auto;
+	padding: 15px 10px 0
+}
+
+.home-departs ul li {
+	display: block;
+	float: left;
+	width: 33%;
+	margin: 0 0 10px;
+	font-size: 14px;
+	text-align: center
+}
+
+.home-departs ul li span {
+	display: block
+}
+
+.news-list li {
+	height: 79px;
+	padding: 10px;
+	border-bottom: 1px solid #e3e3e3
+}
+
+.news-list li a {
+	display: block;
+	display: -moz-box;
+	display: -webkit-box
+}
+
+.news-list li a .pic-box {
+	width: 100px;
+	height: 75px;
+	margin-right: 12px
+}
+.news-list li a .pic-box img {
+	width: 100%;
+	height: 100%;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px
+}
+
+.news-list li a .news-box {
+	position: relative;
+	height: 75px;
+	overflow: hidden;
+	-moz-box-flex: 1;
+	-webkit-box-flex: 1;
+	box-flex: 1;
+	line-height: 18px;
+	width: 100%
+}
+
+.news-list li a .news-box h3 {
+	width: 100%;
+	color: #333;
+	font-size: 14px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap
+}
+
+.news-list li a .news-box p {
+	width: 100%;
+	padding-top: 9px;
+	font-size: 12px;
+	color: #999;
+	line-height: 18px;
+	max-height: 36px;
+	overflow: hidden;	
+	width:100%;	
+}

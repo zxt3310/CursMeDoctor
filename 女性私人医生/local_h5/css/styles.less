@@ -1,0 +1,314 @@
+@cache-version: "20160128";
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-family: "Hiragino Sans GB","Microsoft YaHei","微软雅黑","宋体",Arial,Verdana,sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  font-size: 62.5%;
+
+  .hairlines a, .hairlines div, .hairlines i, .hairlines li {
+    border-width: .5px!important;
+  }
+}
+
+body{
+  background: #ededed;
+  color: #666;
+  line-height: 20px;
+}
+
+ul{
+  list-style: none;
+}
+
+li{
+  text-align: -webkit-match-parent;
+}
+
+a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, select, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+  font-weight: 400;
+}
+
+a {
+  color: #666;
+  text-decoration: none;
+}
+
+.med-home{
+  color: #666;
+
+  a {
+    color: #666;
+  }
+
+  .loading {
+    height: 100%;
+    background: url("../img/loading.png") center center no-repeat;
+    background-size: 34px 34px;
+  }
+
+  .icon-departs{
+    display:inline-block;
+    width:60px;
+    height:60px;
+    background:url("../img/ico_depart_all.png?v=@{cache-version}") no-repeat;
+    background-size:1200px 60px;
+
+    &.icon-byby{
+      background-position: -60px 0;
+    }
+    &.icon-ck{
+      background-position: -120px 0;
+    }
+    &.icon-cw{
+      background-position: -180px 0;
+    }
+    &.icon-dx{
+      background-position: -240px 0;
+    }
+    &.icon-ebh{
+      background-position: -300px 0;
+    }
+    &.icon-fk{
+      background-position: -360px 0;
+    }
+    &.icon-gb{
+      background-position: -420px 0;
+    }
+    &.icon-kq{
+      background-position: -480px 0;
+    }
+    &.icon-mrzx{
+      background-position: -540px 0;
+    }
+    &.icon-pfb{
+      background-position: -240px 0;
+    }
+    &.icon-yk{
+      background-position: 0 0;
+    }
+  }
+
+  .caption{
+    padding: 0 10px 8px 10px;
+
+    span.best-value{
+      color: #f65378
+    }
+
+    i.icon-more {
+      background: url(../img/icon_more.png) no-repeat;
+      background-size: 100% 100%;
+      width: 8px;
+      height: 18px;
+      margin: -2px 0 0 5px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  .booking-box {
+    a {
+      display: block;
+      font-size: 12px;
+      color: #aaa;
+      line-height: 18px;
+    }
+
+    a.gh{
+      padding-top: 15px;
+      text-align: center;
+    }
+
+    a.gh:before {
+      display: block;
+      content: '';
+      width: 30px;
+      height: 40px;
+      margin: 0 auto;
+      background: url("../img/ico_yyjz_b.png?v=@{cache-version}") no-repeat;
+      background-size: 100% 100%;
+    }
+
+    a.gh h2 {
+      padding-top: 10px;
+    }
+
+    a h2 {
+      font-size: 18px;
+      padding-bottom: 6px;
+      color: #333;
+    }
+
+    a h3 {
+      font-size: 14px;
+      color: #333;
+    }
+
+    a.yy{
+      padding: 12px;
+
+      :after {
+        background: url("../img/ico_yy_b.png?v=@{cache-version}") no-repeat;
+        display: block;
+        position: absolute;
+        right: 0;
+        top: -7px;
+        content: '';
+        width: 50px;
+        height: 50px;
+        vertical-align: middle;
+        background-size: 100% 100%;
+      }
+    }
+
+    a .con{
+      position: relative;
+    }
+
+    a.ks{
+      padding: 12px;
+
+      :after {
+        background: url("../img/ico_ks_b.png?v=@{cache-version}") no-repeat;
+        display: block;
+        position: absolute;
+        right: 0;
+        top: -7px;
+        content: '';
+        width: 50px;
+        height: 50px;
+        vertical-align: middle;
+        background-size: 100% 100%;
+      }
+    }
+  }
+}
+
+.med-news{
+  .news-depart-list{
+    width:100%;
+    background-color:#f9f9f9;
+    overflow-x:auto;
+    overflow-y: hidden;
+
+    ul {
+      white-space:nowrap;
+      margin: 0;
+      padding: 0;
+      list-style:none;
+    }
+
+    li { display: inline-block; }
+    li a{ display:inline-block; padding: 10px 14px; color: #000; }
+    li.selected{ border-bottom: 3px solid #4a90e2; color: #4a90e2; }
+    li.selected a{ color:#4a90e2; }
+  }
+}
+
+.med-box{
+  background-color: white;
+  border: 1px solid #e3e3e3;
+
+  padding: 14px 10px;
+  height: auto;
+  //overflow: hidden;
+  border-width: 1px 0;
+  border-top: none;
+  margin-bottom: 12px;
+}
+
+
+.thin-box {
+  padding: 0;
+  display: -moz-box;
+  display: -webkit-box;
+
+  div, li {
+    border-color: #dfdfdf;
+    border-style: solid;
+  }
+}
+
+.home-departs{
+  width: auto;
+  padding: 15px 10px 0;
+}
+
+.home-departs ul li {
+  display: block;
+  float: left;
+  width: 33%;
+  margin: 0 0 10px;
+  font-size: 14px;
+  text-align: center;
+
+  span {
+    display: block;
+  }
+}
+
+.news-list{
+  li{
+    height: 79px;
+    padding: 10px;
+    border-bottom: 1px solid #e3e3e3;
+
+    a{
+      display: block;
+      display: -moz-box;
+      display: -webkit-box;
+
+      .pic-box{
+        width: 100px;
+        height: 75px;
+        margin-right: 12px;
+
+        img{
+          width: 100%;
+          height: 100%;
+          border-radius: 4px;
+          -webkit-border-radius: 4px;
+          -moz-border-radius: 4px;
+        }
+      }
+
+      .news-box{
+        position: relative;
+        height: 75px;
+        overflow: hidden;
+        -moz-box-flex: 1;
+        -webkit-box-flex: 1;
+        box-flex: 1;
+        line-height: 18px;
+
+        h3 {
+          width: 100%;
+          color: #333;
+          font-size: 14px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        p {
+          width: 100%;
+          padding-top: 9px;
+          font-size: 12px;
+          color: #999;
+          line-height: 18px;
+        }
+      }
+    }
+  }
+}
+
+
