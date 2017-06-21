@@ -243,6 +243,18 @@
     responseString = [[NSString alloc] initWithData:returnData encoding:NSASCIIStringEncoding];
     NSLog(@"action=register resp: %@", responseString);
     
+    if (!returnData) {
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:@"登录账号"
+                              message:@"无法连接服务器，请检查网络"
+                              delegate:self
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
+        NSLog(@"login fail");
+        return;
+    }
+    
     NSDictionary *jsonData = parseJsonResponse(returnData);
     NSNumber *result = [jsonData objectForKey:@"result"];
     if (!result || result.integerValue != 1) {

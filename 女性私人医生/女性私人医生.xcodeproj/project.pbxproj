@@ -3509,7 +3509,7 @@
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CODE_SIGN_ENTITLEMENTS = "女性私人医生/CureMe.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: ZHENHUA GONG (429WZWZX68)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = 429WZWZX68;
 				ENABLE_BITCODE = NO;
 				GCC_INPUT_FILETYPE = automatic;
@@ -3530,9 +3530,9 @@
 					"$(PROJECT_DIR)/女性私人医生/Dependencies/BaiduMapApi_Lib_iOS_1.2.1/libs_old",
 				);
 				PRODUCT_NAME = CureMe;
-				PROVISIONING_PROFILE = "e7adff09-caf5-4f28-9f23-7beb73a78f89";
+				PROVISIONING_PROFILE = "5ea874d6-7eac-4e3f-8c87-e6f642bbd153";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "77fcc1ec-1161-4cd4-a9bd-39b2d02ce483";
-				PROVISIONING_PROFILE_SPECIFIER = CureMe_devlopment_new;
+				PROVISIONING_PROFILE_SPECIFIER = "XC iOS: com.ranknowcn.CureMe";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
@@ -3551,7 +3551,7 @@
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CODE_SIGN_ENTITLEMENTS = "女性私人医生/CureMe.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: ZHENHUA GONG (429WZWZX68)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = 429WZWZX68;
 				ENABLE_BITCODE = NO;
 				GCC_INPUT_FILETYPE = automatic;
@@ -3569,9 +3569,9 @@
 					"$(PROJECT_DIR)/女性私人医生/Dependencies/BaiduMapApi_Lib_iOS_1.2.1/libs_old",
 				);
 				PRODUCT_NAME = CureMe;
-				PROVISIONING_PROFILE = "4131410b-4f90-4cbd-9b87-e773d51d824b";
+				PROVISIONING_PROFILE = "5ea874d6-7eac-4e3f-8c87-e6f642bbd153";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "77fcc1ec-1161-4cd4-a9bd-39b2d02ce483";
-				PROVISIONING_PROFILE_SPECIFIER = CureMe_devlopment_new;
+				PROVISIONING_PROFILE_SPECIFIER = "XC iOS: com.ranknowcn.CureMe";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};

@@ -24,7 +24,7 @@
     self.tableView.scrollEnabled = NO;
     
     UIButton *logOutBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    logOutBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 100 *SCREEN_HEIGHT/375, SCREEN_HEIGHT- 64 - 130 *SCREEN_HEIGHT/667, 200 *SCREEN_WIDTH/375, 50 *SCREEN_HEIGHT/667);
+    logOutBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 100 *SCREEN_WIDTH/375, SCREEN_HEIGHT- 64 - 130 *SCREEN_HEIGHT/667, 200 *SCREEN_WIDTH/375, 50 *SCREEN_HEIGHT/667);
     logOutBtn.backgroundColor = UIColorFromHex(0xf65378, 1);
     [logOutBtn setTitle:@"退出当前帐号" forState:UIControlStateNormal];
     logOutBtn.titleLabel.textColor = [UIColor whiteColor];
