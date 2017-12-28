@@ -299,7 +299,7 @@
         NSLog(@"RegisterViewController NSUserDefaults synchronize failed!");
     }
     
-    [HiChat login:[NSString stringWithFormat:@"%ld",[CureMeUtils defaultCureMeUtil].userID] withPassword:@"" completion:^(NSError *error){
+    [HiChat login:[NSString stringWithFormat:@"%ld",(long)[CureMeUtils defaultCureMeUtil].userID] withPassword:@"" completion:^(NSError *error){
         if (error) {
             NSLog(@"%@",error);
         }

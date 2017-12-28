@@ -7,6 +7,7 @@
 //
 
 #import "AboutUsViewController.h"
+#import "CMemulateLocationPageController.h"
 
 @interface AboutUsViewController ()
 
@@ -41,7 +42,7 @@
     UITextView *adviceUV = [[UITextView alloc] initWithFrame:CGRectMake(0,
                                                                         202 *SCREEN_HEIGHT/667,
                                                                         SCREEN_WIDTH,
-                                                                        114 *SCREEN_HEIGHT/667)];
+                                                                        120 *SCREEN_HEIGHT/667)];
     adviceUV.text = @"世界很美好，需要健康的体魄去探寻。\n\n有诗有远方，我们更需要有健康的身体。\n\n私人医生，为您提供贴心服务。";
     adviceUV.editable = NO;
     adviceUV.font = [UIFont fontWithName:@"PingFangSC-Thin" size:15 ];
@@ -54,7 +55,7 @@
     UITextView *copyRight = [[UITextView alloc] initWithFrame:CGRectMake(0,
                                                                          526* SCREEN_HEIGHT/667 ,
                                                                          SCREEN_WIDTH,
-                                                                         54 *SCREEN_HEIGHT/667)];
+                                                                         60 *SCREEN_HEIGHT/667)];
     copyRight.text = [NSString stringWithFormat:@"V %@\nICP备12009104号-2.\n北京天亚科创科技有限公司",app_version];
     copyRight.editable = NO;
     copyRight.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:12];
@@ -63,6 +64,15 @@
     copyRight.backgroundColor = [UIColor clearColor];
     copyRight.layer.borderWidth = 0;
     [self.view addSubview:copyRight];
+    
+    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
+    gesture.numberOfTapsRequired = 6;
+    [self.view addGestureRecognizer:gesture];
+}
+
+- (void)tapAction{
+    CMemulateLocationPageController *emulate = [[CMemulateLocationPageController alloc] init];
+    [self.navigationController pushViewController:emulate animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

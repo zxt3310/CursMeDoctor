@@ -85,7 +85,7 @@ NSString* getUDID()
 // 默认所有调用此函数的请求，都发送至 medapp.ranknowcn.com/api/m.php
 NSData *sendRequest(NSString *phpFile, NSString *post)
 {
-    NSString *finalPost = [[NSString alloc] initWithFormat:@"%@&deviceid=%@&appid=1&source=apple&imei=%@", post, [[NSUserDefaults standardUserDefaults] objectForKey:USER_UNIQUE_ID],[CureMeUtils defaultCureMeUtil].UDID];
+    NSString *finalPost = [[NSString alloc] initWithFormat:@"%@&deviceid=%@&appid=1&source=apple&imei=%@&os=ios&version=3.0", post, [[NSUserDefaults standardUserDefaults] objectForKey:USER_UNIQUE_ID],[CureMeUtils defaultCureMeUtil].UDID];//,[CureMeUtils defaultCureMeUtil].appVersion];
     NSLog(@"sendRequest: %@", finalPost);
     
     NSDictionary *additionalHeader = nil;
@@ -94,7 +94,7 @@ NSData *sendRequest(NSString *phpFile, NSString *post)
 
 NSData *sendRequestWithFullURL(NSString *fullURL, NSString *post)
 {
-    NSString *finalPost = [NSString stringWithFormat:@"%@&version=3.0&deviceid=%@&appid=1&source=apple", post, [[NSUserDefaults standardUserDefaults] objectForKey:USER_UNIQUE_ID]];
+    NSString *finalPost = [NSString stringWithFormat:@"%@&version=3.0&deviceid=%@&appid=1&source=apple&os=ios", post, [[NSUserDefaults standardUserDefaults] objectForKey:USER_UNIQUE_ID]];
     NSLog(@"sendRequestWithFullURL:%@ post:%@", fullURL, finalPost);
     
     return sendFullRequest(fullURL, finalPost, nil, true, false);

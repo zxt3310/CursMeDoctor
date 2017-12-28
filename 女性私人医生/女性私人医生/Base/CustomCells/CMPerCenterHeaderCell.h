@@ -12,10 +12,10 @@
 
 @interface CMPerCenterHeaderCell : UITableViewCell
 
-
-- (IBAction)myBookBtnClick:(id)sender;
-- (IBAction)myChatBtnClick:(id)sender;
-- (IBAction)appBtnClick:(id)sender;
+@property id <personHeaderClickDelegate> personalDelegate;
+//- (IBAction)myBookBtnClick:(id)sender;
+//- (IBAction)myChatBtnClick:(id)sender;
+//- (IBAction)appBtnClick:(id)sender;
 
 @property (nonatomic, strong) PerCenterViewController *perCenterViewController;
 

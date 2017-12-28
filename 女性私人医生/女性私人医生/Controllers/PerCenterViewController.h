@@ -9,11 +9,20 @@
 #import <UIKit/UIKit.h>
 #import "CustomTableBaseViewController.h"
 #import "CMStringEditCell.h"
+#import "CMLoginViewController.h"
+//#import "CMPerCenterHeaderCell.h"
 
 @class PerCenterLoginCell;
 @class CMQAViewController;
 
-@interface PerCenterViewController : CustomTableBaseViewController
+@protocol personHeaderClickDelegate <NSObject>
+
+- (void)loginBtnClick;
+- (void)editPersonalBtnClick;
+
+@end
+
+@interface PerCenterViewController : CustomTableBaseViewController <personHeaderClickDelegate>
 
 {
     CMQAViewController *questionViewController;

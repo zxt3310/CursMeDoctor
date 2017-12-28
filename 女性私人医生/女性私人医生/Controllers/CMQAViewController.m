@@ -531,7 +531,7 @@ UIView *protocolView1;
         NSLog(@"action=questionlist param \"msg\" invalid");
         [self performSelectorOnMainThread:@selector(mainThreadRefreshTableView) withObject:nil waitUntilDone:NO];
         return;
-    }
+    } 
 
     _curPageQueryCount = msgArray.count;
     for (int i = 0; i < MIN(20, [msgArray count]); i++) {

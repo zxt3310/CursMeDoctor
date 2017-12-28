@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "CMMainTabViewController.h"
+#import "CMQAProtocolView.h"
 
 @interface CMMainTabViewController (privateMethod)
 

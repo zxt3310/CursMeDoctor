@@ -21,6 +21,100 @@
 #include <net/if.h>
 #include <net/if_dl.h>
 #import "HiChat.h"
+#import "WebViewController.h"
+
+
+
+@implementation WeixinBackTools
+
++ (WeixinBackTools *)sharedInstance{
+    static WeixinBackTools *sharedBackTools = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedBackTools = [self new];
+    });
+    return sharedBackTools;
+}
+
+-(void)sendAuthRequest{
+    SendAuthReq* req =[[SendAuthReq alloc ] init];
+    req.scope = @"snsapi_userinfo,snsapi_base";
+    req.state = @"new.medapp.ranknowcn.com";
+    [WXApi sendReq:req];
+}
+
+- (void)onResp:(BaseResp *)resp
+{
+    if ([resp isKindOfClass:[PayResp class]] && (resp.errCode != -2)) {
+        PayResp *payResp = (PayResp *)resp;
+        [self wxPayResultRefresh:[NSString stringWithFormat:@"%d",payResp.errCode]];
+        
+        return;
+    }
+    
+    if ([resp isKindOfClass:[SendAuthResp class]]) {
+        SendAuthResp *authResp = (SendAuthResp *)resp;
+        if (_wxBackDelegate) {
+            [_wxBackDelegate recieveAuthResponse:YES code:authResp.code];
+        }
+    }
+    
+    SendMessageToWXResp *sendResp = (SendMessageToWXResp *)resp;
+    NSString *str = [NSString stringWithFormat:@"%d---%@",sendResp.errCode,sendResp.errStr];
+    if (sendResp.errCode == -2) {
+        
+    }
+    else if (sendResp.errCode == 0){
+        
+    }
+    NSLog(@"%@",str);
+}
+
+- (void)wxPayResultRefresh:(NSString *)wxPayErrorCode{
+    UIViewController *currentVc = [self getCurrentVC];
+    if ([currentVc isKindOfClass:[WebViewController class]]) {
+        WebViewController *webVc = (WebViewController *)currentVc;
+        
+        NSString *paymentId = [webVc valueForKey:@"paymentIdStr"];
+        if (paymentId.length>0) {
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/famous_doctors/myhz_payment_result.php?paymentid=%@&errcode=%@",paymentId,wxPayErrorCode]];
+            [webVc.html5View loadRequest:[NSURLRequest requestWithURL:url]];
+            [webVc setValue:@"" forKey:@"paymentIdStr"];
+        }
+    }
+}
+
+- (UIViewController *)getCurrentVC
+{
+    UIViewController *result = nil;
+    
+    UIWindow * window = [[UIApplication sharedApplication] keyWindow];
+    if (window.windowLevel != UIWindowLevelNormal)
+    {
+        NSArray *windows = [[UIApplication sharedApplication] windows];
+        for(UIWindow * tmpWin in windows)
+        {
+            if (tmpWin.windowLevel == UIWindowLevelNormal)
+            {
+                window = tmpWin;
+                break;
+            }
+        }
+    }
+    
+    UIView *frontView = [[window subviews] objectAtIndex:0];
+    id nextResponder = [frontView nextResponder];
+    
+    if ([nextResponder isKindOfClass:[UIViewController class]])
+        result = nextResponder;
+    else
+        result = window.rootViewController;
+    
+    return result.childViewControllers.lastObject;
+}
+
+@end
+
 
 
 // 基站定位文件
@@ -116,6 +210,7 @@ NSString *officeStringWithType(NSInteger officeType)
 
 @synthesize cityCode = _cityCode;
 
+@synthesize appVersion = _appVersion;
 @synthesize hasLogin = _hasLogin;
 @synthesize userID = _userID;
 @synthesize userSWTID = _userSWTID;
@@ -264,7 +359,7 @@ NSString *officeStringWithType(NSInteger officeType)
         _password = password;
     }
     
-    if (_userID > 0 && registerName && registerName.length > 0 && password && password.length > 0) {
+    if (_userID > 0 && registerName && registerName.length > 0) {
         _hasLogin = true;
     }
     else
@@ -318,6 +413,13 @@ NSString *officeStringWithType(NSInteger officeType)
     return _uniID;
 }
 
+- (NSString *)appVersion{
+    //获取当前版本号
+    NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
+    NSString *currentAppVersion = infoDic[@"CFBundleShortVersionString"];
+    return currentAppVersion;
+}
+
 - (NSInteger)userID
 {
     if (_userID <= 0) {
@@ -367,6 +469,8 @@ NSString *officeStringWithType(NSInteger officeType)
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:USER_AGE];
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:HAS_AGREEPROTOCOL];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"userType"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"weixinHeadImg"];
     
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
@@ -463,7 +567,7 @@ NSString *officeStringWithType(NSInteger officeType)
     }
     
     NSString *registerName = [infoData objectForKey:@"username"];
-    if (registerName) {
+    if (registerName && ![[[NSUserDefaults standardUserDefaults] objectForKey:@"userType"] isEqualToString:@"weixin"]) {
         [[NSUserDefaults standardUserDefaults] setObject:registerName forKey:USER_REGISTERNAME];
     }
     
@@ -1234,8 +1338,14 @@ NSString *officeStringWithType(NSInteger officeType)
         }
     }
 
-    
-    _encodedLocateInfo = [post stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    //新增虚拟定位
+    NSString *addressStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"emulateLocationAddress"];
+    if (!addressStr || addressStr.length <= 0) {
+        _encodedLocateInfo = [post stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    }
+    else{
+        _encodedLocateInfo = addressStr;
+    }
 
     // 保存地址
     [locateUtils save];
@@ -1304,6 +1414,7 @@ NSString *officeStringWithType(NSInteger officeType)
     
     _province = localInfo.province;
     _encodedLocateInfo = [post stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
 }
 
 @end

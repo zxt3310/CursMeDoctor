@@ -17,9 +17,21 @@
 #import "CMNewQueryViewController.h"
 #import "CMQAProtocolView.h"
 
+#define FF_HEADER_BGCOLOR [UIColor colorWithRed:255.0/255 green:140.0/255 blue:164.0/255 alpha:1.0]
+#define FF_TEXTCOLOR_BLACK [UIColor colorWithRed:74.0/255 green:74.0/255 blue:74.0/255 alpha:1.0]
+
 @interface WebViewController ()
 {
     CMQAProtocolView *protocolView;
+    UIScrollView *navView;
+    UIButton *currentNavBtn;
+    CGFloat split_width;
+    NSDictionary *typeDataQA;
+    
+    UIView *qa_selectNavView;
+    CGPoint qa_navViewStartPosPoint;
+    WebViewCoverView *coverView;
+    NSString *paymentIdStr;
 }
 @end
 
@@ -33,6 +45,15 @@
     if (self) {
         // Custom initialization
         _isMainTabPage = false;
+        _isPaymentPage = NO;
+    }
+    return self;
+}
+
+- (instancetype)init{
+    self = [super init];
+    if (self) {
+        _isPaymentPage = NO;
     }
     return self;
 }
@@ -42,6 +63,11 @@
     [super viewDidLoad];
     
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
+    
+    UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [shareBtn setImage:[UIImage imageNamed:@"share"] forState:UIControlStateNormal];
+    shareBtn.frame = CGRectMake(0, 0, 15, 18);
+    self.tabBarController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:shareBtn];
 
     float topY = 140;
     if ([UIScreen mainScreen].bounds.size.height > 480.0) {
@@ -50,7 +76,6 @@
     loadingView = [[LoadingView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2 - 35, topY, 80, 70)];
     loadingView.hidden = YES;
     [self.view addSubview:loadingView];
-//    [self.view sendSubviewToBack:loadingView];
 
     if (_isMainTabPage) {
         [self.tabBarController.navigationController setNavigationBarHidden:NO];
@@ -83,6 +108,126 @@
     
     protocolView = [[CMQAProtocolView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     
+    split_width = 15;
+    
+    if ([_strURL containsString:@"http://new.medapp.ranknowcn.com/h5_new/news.html"]) {
+        
+        navView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
+        navView.showsHorizontalScrollIndicator = NO;
+        navView.showsVerticalScrollIndicator = NO;
+        navView.panGestureRecognizer.delaysTouchesBegan = YES;//按钮滑动流畅
+        navView.backgroundColor = [UIColor whiteColor];
+        navView.layer.shadowColor = [UIColor blackColor].CGColor;
+        navView.layer.shadowOffset = CGSizeMake(0, 2);
+        navView.layer.shadowOpacity = 0.3;
+        navView.clipsToBounds = NO;
+        
+        CGFloat navStartPos = split_width;
+        currentNavBtn = [self createNavButton:@"全部" index:0 startPos:navStartPos width:2*14+2];
+        [currentNavBtn setTitleColor:FF_HEADER_BGCOLOR forState:UIControlStateNormal];
+        [navView addSubview:currentNavBtn];
+        navStartPos += 2*14+2 + split_width*2;
+        
+        typeDataQA = [CMDataUtils defaultDataUtil].officeSuperTypeDict; //objectForKey:[NSNumber numberWithInteger:_officeType]];
+        
+        if (typeDataQA) {
+            for (NSString *key in typeDataQA) {
+                NSString *btnName = [typeDataQA objectForKey:key];
+                int length = [self countAsciiLength:btnName];
+                CGFloat btnWidth = length*14+2;
+                [navView addSubview:[self createNavButton:btnName index:[key integerValue] startPos:navStartPos width:btnWidth]];
+                navStartPos += btnWidth + split_width*2;
+            }
+        }
+        qa_selectNavView = [[UIView alloc] initWithFrame:CGRectMake(split_width, 35, 2*14+2, 3)];
+        qa_selectNavView.backgroundColor = FF_HEADER_BGCOLOR;//[UIColor colorWithRed:255.0/255 green:205.0/255 blue:206.0/255 alpha:1.0];
+        [navView addSubview:qa_selectNavView];
+        CGSize contentSize = CGSizeMake(navStartPos + 35, 40);
+        navView.contentSize = contentSize;
+        
+        [self.view addSubview:navView];
+        
+        UIView *btnView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 62, 0, 62, 40)];
+        btnView.backgroundColor = [UIColor whiteColor];
+        btnView.layer.shadowOffset = CGSizeMake(-2, 0);
+        btnView.layer.shadowColor = [UIColor blackColor].CGColor;
+        btnView.layer.shadowOpacity = 0.5;
+        
+        UIButton *listBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        listBtn.frame = CGRectMake(22, 11, 18, 18);
+        [listBtn setImage:[UIImage imageNamed:@"listBtn_woman"] forState:UIControlStateNormal];
+        [btnView addSubview:listBtn];
+        [listBtn addTarget:self action:@selector(btnViewClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:btnView];
+        
+        coverView = [[WebViewCoverView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64)];
+        coverView.hidden = YES;
+        coverView.delegate = self;
+        [self.view addSubview:coverView];
+    }
+}
+
+-(UIButton *)createNavButton:(NSString *)title index:(NSInteger)index startPos:(CGFloat)startPos width:(CGFloat)width{
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(startPos, 0+6, width, 28);
+    button.titleLabel.font = [UIFont systemFontOfSize:14.0];
+    [button setTitle:title forState:UIControlStateNormal];
+    //[button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button setTitleColor:FF_TEXTCOLOR_BLACK forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(navBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    button.tag = index;
+    return button;
+}
+
+- (int)countAsciiLength:(NSString*)strtemp {
+    int strlength = 0;
+    char* p = (char*)[strtemp cStringUsingEncoding:NSUnicodeStringEncoding];
+    for (int i=0 ; i<[strtemp lengthOfBytesUsingEncoding:NSUnicodeStringEncoding] ;i++) {
+        if (*p) {
+            p++;
+            strlength++;
+        }
+        else {
+            p++;
+        }
+    }
+    return (strlength+1)/2;
+}
+
+-(void)navBtnClicked:(UIButton *)sender{
+    [currentNavBtn setTitleColor:FF_TEXTCOLOR_BLACK forState:UIControlStateNormal];
+    currentNavBtn = sender;
+    [currentNavBtn setTitleColor:FF_HEADER_BGCOLOR forState:UIControlStateNormal];
+    
+    [self moveSelectView:sender.tag];
+}
+
+-(void)moveSelectView:(NSInteger)index{
+    CGFloat spos = split_width;
+    CGFloat swidth = 14*2+2;
+    if (typeDataQA && index !=0) {
+        
+        for (NSString *key in typeDataQA) {
+            NSString *btnName = [typeDataQA objectForKey:key];
+            int length = [self countAsciiLength:btnName];
+            spos += swidth + split_width*2;
+            swidth = length*14+2;
+            
+            if ([key integerValue] == index)
+                break;
+        }
+    }
+    
+    CGRect frame = CGRectMake(spos, 35, swidth, 3);
+    qa_selectNavView.frame = frame;
+}
+
+- (void)btnViewClick:(UIButton *) sender{
+    coverView.hidden = NO;
+}
+
+- (void)dismissPage{
+    coverView.hidden = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -227,19 +372,27 @@
 
         return FALSE;
     }
+    else if ([[strURL lowercaseString] hasPrefix:@"medapp://"]) {
+        NSString *subURl = [strURL substringFromIndex:[[NSString stringWithFormat:@"medapp://"] length]];
+        NSArray *paramArray = [subURl componentsSeparatedByString:@"/"];
+        NSLog(@"paramArray: %@", paramArray);
+        [self processURL:paramArray andFullURL:subURl];
+        
+        return FALSE;
+    }
     
-//    // 返回按钮
-//    if (_isMainTabPage) {
-//        if ([_html5View canGoBack]) {
-//            leftBarButton.customView.hidden = NO;
-//            self.tabBarController.navigationItem.leftBarButtonItem = leftBarButton;
-//        }
-//        else {
-//            leftBarButton.customView.hidden = YES;
-////            self.tabBarController.navigationItem.leftBarButtonItem = nil;
-//        }
-//    }
-
+    else if ([[strURL lowercaseString] containsString:@"http://new.medapp.ranknowcn.com/famous_doctors/doctor_info.php?did="] && ![[strURL lowercaseString] containsString:@"&"]){
+        
+        if (_isPaymentPage == YES) {
+            return TRUE;
+        }
+        
+        WebViewController *newWeb = [[WebViewController alloc] init];
+        newWeb.strURL = strURL;
+        newWeb.isPaymentPage = YES;
+        [self.navigationController pushViewController:newWeb animated:YES];
+        return FALSE;
+    }
     return TRUE;
 }
 
@@ -303,10 +456,67 @@
     else if ([[firstParam lowercaseString] isEqualToString:@"huodonglist"]) {
         [self processHuodongListURL:paramArray];
     }
-//    else if ([[firstParam lowercaseString] isEqualToString:@"huodong"]) {
-//        [self processHuodongURL:paramArray];
-//    }
+    else if ([[firstParam lowercaseString] isEqualToString:@"weixin"]){
+        [[Mixpanel sharedInstance] track:@"主页-退出-转到微信"];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"weixin://"]];
+    }
+    else if ([[firstParam lowercaseString] isEqualToString:@"openurl"]){
+        
+        [[Mixpanel sharedInstance] track:@"主页-退出-转到微信"];
+        NSString *urlStr = [fullURL stringByReplacingOccurrencesOfString:@"out/openurl/" withString:@""];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
+    }
+    else if ([[firstParam lowercaseString] isEqualToString:@"payment"]){
+        NSString *nameStr = [paramArray[2] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *payNameStr;
+        if (nameStr) {
+            payNameStr = [NSString stringWithFormat:@"私人医生-%@",nameStr];
+        }
+        else{
+            payNameStr = @"私人医生-医生沟通服务费";
+        }
+        paymentIdStr = paramArray[4];
+        [self getPrePayId:[payNameStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] totalFee:paramArray[3] paymentId:paramArray[4] param1:paramArray[5]];
+    }
 }
+
+- (void)getPrePayId:(NSString *)payName totalFee:(NSString *)fee paymentId:(NSString *)paymentId param1:(NSString *)param1{
+    NSString *post = [NSString stringWithFormat:@"body=%@&total_fee=%@&paymentid=%@&param1=%@username=%@&userid=%ld",payName,fee,paymentId,param1,[CureMeUtils defaultCureMeUtil].userName,[CureMeUtils defaultCureMeUtil].userID];
+    NSString *urlStr = [NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/WxpayAPI_v3.0.1/example/native_notify.php"];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *response = sendRequestWithFullURL(urlStr, post);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!response) {
+                return;
+            }
+            NSDictionary *returnDic = parseJsonResponse(response);
+            if (!returnDic) {
+                return;
+            }
+            PayReq *req = [[PayReq alloc] init];
+            req.partnerId = [returnDic objectForKey:@"partnerid"];
+            req.prepayId = [returnDic objectForKey:@"prepayid"];
+            req.package = [returnDic objectForKey:@"package"];
+            req.nonceStr = [returnDic objectForKey:@"noncestr"];
+            req.timeStamp = [[returnDic objectForKey:@"timestamp"] intValue];
+            req.sign = [returnDic objectForKey:@"sign"];
+            
+            [WXApi sendReq:req];
+        });
+    });
+}
+
+- (void)processWeixinUrl:(NSArray *)paramArray{
+    
+    NSMutableString *urlStr = [[NSMutableString alloc] init];
+    for (int i = 2; i<paramArray.count; i++) {
+        [urlStr appendString:[NSString stringWithFormat:@"/%@",paramArray[i]]];
+    }
+    [urlStr replaceCharactersInRange:NSMakeRange(0, 1) withString:@""];
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[urlStr copy]]];
+}
+
 
 // app://message/open/(inner/outer)/ http:\/\/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 - (void)processOpenURL:(NSArray *)paramArray andFullURL:(NSString *)fullURL

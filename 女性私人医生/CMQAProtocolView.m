@@ -8,16 +8,20 @@
 
 #import "CMQAProtocolView.h"
 
-@implementation CMQAProtocolView
+@implementation CMQAProtocolView{
+    UIView *protocolView;
+}
+@synthesize protcolViewFrame = _protcolViewFrame;
 
 - (instancetype) initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.5];
         
-        UIView *protocolView = [[UIView alloc] initWithFrame:CGRectMake(35*SCREEN_WIDTH/375, 110 *SCREEN_HEIGHT/667, 306 *SCREEN_WIDTH/375, 362*SCREEN_HEIGHT/667)];
+        protocolView = [[UIView alloc] initWithFrame:CGRectMake(35*SCREEN_WIDTH/375, 110 *SCREEN_HEIGHT/667, 306 *SCREEN_WIDTH/375, 362*SCREEN_HEIGHT/667)];
         protocolView.backgroundColor = [UIColor whiteColor];
         protocolView.layer.cornerRadius = 10;
+        _protcolViewFrame = protocolView.frame;
         
         UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(117*SCREEN_WIDTH/375, 8, 75 *SCREEN_WIDTH/375, 20)];
         titleLb.font = [UIFont systemFontOfSize:18];
@@ -59,6 +63,15 @@
         [self addGestureRecognizer:tap];
     }
     return self;
+}
+
+- (CGRect)protcolViewFrame{
+    return _protcolViewFrame;
+}
+
+- (void)setProtcolViewFrame:(CGRect)protcolViewFrame{
+    _protcolViewFrame = protcolViewFrame;
+    protocolView.frame = _protcolViewFrame;
 }
 
 - (void)cancleBtnClick{

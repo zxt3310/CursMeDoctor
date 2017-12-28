@@ -1557,7 +1557,6 @@ NSString *saveTitle;
                 continue;
             }
         }
-        
         // 如果不是本人聊天消息，可展示的消息数量受限，显示提示
         if (msgArray && msgArray.count > 3 && (_chatUserID != [CureMeUtils defaultCureMeUtil].userID)) {
             [self performSelectorOnMainThread:@selector(showMsgLimitAlert) withObject:nil waitUntilDone:NO];

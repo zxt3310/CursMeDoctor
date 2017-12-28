@@ -78,7 +78,7 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     
         NSString *urlStr =[NSString stringWithFormat:@"http://%@/api/m.php?action=yanzheng_getvcode&version=3.0",DOMAIN_NAME];
-        NSString *post = [NSString stringWithFormat:@"source=apple&version=3.3&appid=1&switchType=1&os=ios&imei=%@&deviceid=%@&username=%@&mobileTel=%@&userid=%ld",[CureMeUtils defaultCureMeUtil].UDID,[CureMeUtils defaultCureMeUtil].uniID,[CureMeUtils defaultCureMeUtil].userName,PhoneTF.text,[CureMeUtils defaultCureMeUtil].userID];
+        NSString *post = [NSString stringWithFormat:@"source=apple&version=3.3&appid=1&switchType=1&os=ios&imei=%@&deviceid=%@&username=%@&mobileTel=%@&userid=%ld",[CureMeUtils defaultCureMeUtil].UDID,[CureMeUtils defaultCureMeUtil].uniID,[CureMeUtils defaultCureMeUtil].userName,PhoneTF.text,(long)[CureMeUtils defaultCureMeUtil].userID];
         NSData *response = sendFullRequest(urlStr, post, nil, NO, NO);
         dispatch_async(dispatch_get_main_queue(), ^{
             if (!response) {
@@ -147,34 +147,33 @@
     }
     
     NSString *urlStr = [NSString stringWithFormat:@"http://%@/api/m.php?action=upduserinfo&version=3.0",DOMAIN_NAME];
-    NSString *post = [NSString stringWithFormat:@"source=apple&os=ios&appid=1&version=3.3&mobile=%@&mobileverify=%@&deviceid=%@&userid=%ld&username=%@&imei=%@",PhoneTF.text,codeTF.text,[CureMeUtils defaultCureMeUtil].uniID,[CureMeUtils defaultCureMeUtil].userID,[CureMeUtils defaultCureMeUtil].userName,[CureMeUtils defaultCureMeUtil].UDID];
+    NSString *post = [NSString stringWithFormat:@"source=apple&os=ios&appid=1&version=3.3&mobile=%@&mobileverify=%@&deviceid=%@&userid=%ld&username=%@&imei=%@",PhoneTF.text,codeTF.text,[CureMeUtils defaultCureMeUtil].uniID,(long)[CureMeUtils defaultCureMeUtil].userID,[CureMeUtils defaultCureMeUtil].userName,[CureMeUtils defaultCureMeUtil].UDID];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     NSData *response = sendFullRequest(urlStr, post, nil, NO, NO);
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (!response) {
-            [self presentAlert:@"修改失败，请检查网络"];
-            return ;
-        }
-        NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
-        NSLog(@"%@",strResp);
-        
-        NSDictionary *returnDic = parseJsonResponse(response);
-        if (!returnDic) {
-            [self presentAlert:@"修改失败，返回错误数据"];
-            return;
-        }
-        NSNumber *result = JsonValue([returnDic objectForKey:@"result"], CLASS_NUMBER);
-        if ([result integerValue] !=1) {
-            NSString *err = [returnDic objectForKey:@"msg"];
-            [self presentAlert:err];
-            return;
-        }
-        
-        [self.navigationController popViewControllerAnimated:YES];
-        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!response) {
+                [self presentAlert:@"修改失败，请检查网络"];
+                return ;
+            }
+            NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",strResp);
+            
+            NSDictionary *returnDic = parseJsonResponse(response);
+            if (!returnDic) {
+                [self presentAlert:@"修改失败，返回错误数据"];
+                return;
+            }
+            NSNumber *result = JsonValue([returnDic objectForKey:@"result"], CLASS_NUMBER);
+            if ([result integerValue] !=1) {
+                NSString *err = [returnDic objectForKey:@"msg"];
+                [self presentAlert:err];
+                return;
+            }
+            
+            [self.navigationController popViewControllerAnimated:YES];
+            
+        });
     });
-});
-
 }
 
 
