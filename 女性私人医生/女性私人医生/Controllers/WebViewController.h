@@ -9,10 +9,12 @@
 #import "WebViewJavascriptBridge.h"
 #import "CustomBaseViewController.h"
 #import <UIKit/UIKit.h>
+#import "Mixpanel.h"
+#import "WebViewCoverView.h"
 
 @class LoadingView;
 
-@interface WebViewController : CustomBaseViewController<UIWebViewDelegate>
+@interface WebViewController : CustomBaseViewController<UIWebViewDelegate,pageCoverDismissDelegate>
 {
     NSURL *URL;
     WebViewJavascriptBridge *jsBridge;
@@ -33,6 +35,7 @@
 @property (strong, nonatomic) IBOutlet UIWebView *html5View;
 @property NSInteger subOfficeId;
 @property NSInteger childOfficeId;
+@property BOOL isPaymentPage;
 
 // 接收未读消息的更新通知
 - (void)ntfUpdateUnreadMsgCount:(NSNotification *)note;

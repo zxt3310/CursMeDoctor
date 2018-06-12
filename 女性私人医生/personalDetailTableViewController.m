@@ -24,7 +24,7 @@
     self.tableView.scrollEnabled = NO;
     
     UIButton *logOutBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    logOutBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 100 *SCREEN_HEIGHT/375, SCREEN_HEIGHT- 64 - 130 *SCREEN_HEIGHT/667, 200 *SCREEN_WIDTH/375, 50 *SCREEN_HEIGHT/667);
+    logOutBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 100 *SCREEN_WIDTH/375, SCREEN_HEIGHT- 64 - 130 *SCREEN_HEIGHT/667, 200 *SCREEN_WIDTH/375, 50 *SCREEN_HEIGHT/667);
     logOutBtn.backgroundColor = UIColorFromHex(0xf65378, 1);
     [logOutBtn setTitle:@"退出当前帐号" forState:UIControlStateNormal];
     logOutBtn.titleLabel.textColor = [UIColor whiteColor];
@@ -60,96 +60,112 @@
     if (indexPath.section == 2) {
         return 0;
     }
-    return 50 *SCREEN_HEIGHT/667;
+    return 60 *SCREEN_HEIGHT/667;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return 3;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
-    if (section == 2) {
-        return 1;
-    }
-    return 4;
+    
+    return 5;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSString *StringEditCell = @"EditCell";
+   // NSString *StringEditCell = @"EditCell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DefaultCell"];
     if (indexPath.section == 0) {
         
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"DefaultCell"];
+            
+            UILabel *userNameLb = [[UILabel alloc] initWithFrame:CGRectMake(190, 20, SCREEN_WIDTH - 220, 20)];
+            userNameLb.tag = 1;
+            userNameLb.textAlignment = NSTextAlignmentRight;
+            [cell.contentView addSubview:userNameLb];
+            
             if (indexPath.row == 0) {
-                UIImageView *headView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 50 , 10, 30, 30)];
-                headView.image = [CMImageUtils defaultImageUtil].userHeadImage;
+                UIImageView *headView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 50 , 10, 40, 40)];
+                NSData *imgData = [[NSUserDefaults standardUserDefaults] objectForKey:WX_HEAD];
+                if (imgData) {
+                    headView.image = [UIImage imageWithData:imgData];
+                }
+                else{
+                    headView.image = [CMImageUtils defaultImageUtil].userHeadImage;
+                }
+                userNameLb.hidden = YES;
+                headView.clipsToBounds = YES;
+                headView.layer.cornerRadius = 10;
                 [cell.contentView addSubview:headView];
                 
                 cell.textLabel.text = @"头像";
             }
             else if (indexPath.row == 1){
-                UILabel *userNameLb = [[UILabel alloc] initWithFrame:CGRectMake(200, 15, SCREEN_WIDTH - 220, 20)];
-                userNameLb.tag = 1;
-                userNameLb.textAlignment = NSTextAlignmentRight;
-                [cell.contentView addSubview:userNameLb];
-                
-                cell.textLabel.text = @"用户名";
+                userNameLb.text = [CureMeUtils defaultCureMeUtil].userName;
+                cell.textLabel.text = @"昵称";
             }
             else if (indexPath.row == 2){
-                cell.textLabel.text = @"更改密码";
+                cell.textLabel.text = @"手机号";
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                userNameLb.hidden = YES;
             }
             else if (indexPath.row == 3){
-                cell.textLabel.text = @"修改手机号码";
+                cell.textLabel.text = @"密码";
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                userNameLb.text = @"(设置/修改密码)";
+                userNameLb.font = [UIFont fontWithName:@"STHeitiSC-Medium" size:14];
+                userNameLb.textColor = UIColorFromHex(0x9b9b9b, 1);
             }
-        }
-        UILabel *lable = (UILabel *)[cell.contentView viewWithTag:1];
-        lable.text = [CureMeUtils defaultCureMeUtil].userName;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
-    }
-    else if (indexPath.section == 1)
-    {
-        CMStringEditCell *strEditCell = nil;
-        
-        if (indexPath.row == 0) {       // 姓名
-            strEditCell = [[CMStringEditCell alloc] initWithEditType:EDITCELL_NAME reuseIdentifier:StringEditCell];
-            return strEditCell;
-        }
-        else if (indexPath.row == 1) {  // 年龄
-            strEditCell = [[CMStringEditCell alloc] initWithEditType:EDITCELL_AGE reuseIdentifier:StringEditCell];
-            return strEditCell;
-        }
-        else if (indexPath.row == 2) {  // 手机
-            strEditCell = [[CMStringEditCell alloc] initWithEditType:EDITCELL_PHONE reuseIdentifier:StringEditCell];
-            strEditCell.userInteractionEnabled = NO;
-            return strEditCell;
-        }
-        else if (indexPath.row == 3) {  // 地区
-            if (!cell) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:StringEditCell];
-                UILabel *lable = [[UILabel alloc] initWithFrame:CGRectMake(0, 15, 30, 20)];
-                lable.tag = 1;
+            else{
                 cell.textLabel.text = @"地区";
-                [cell.contentView addSubview:lable];
+                userNameLb.font = [UIFont fontWithName:@"STHeitiSC-Medium" size:14];
+                userNameLb.textColor = UIColorFromHex(0x9b9b9b, 1);
+                userNameLb.text = [NSString stringWithFormat:@"%@ %@",[[CureMeUtils defaultCureMeUtil] regionWithRegionID:[[[NSUserDefaults standardUserDefaults] objectForKey:USER_REGION] integerValue]],[[NSUserDefaults standardUserDefaults] objectForKey:USER_CITY_NAME]];
             }
-            UILabel *lable = (UILabel *)[cell.contentView viewWithTag:1];
-            lable.text = [NSString stringWithFormat:@"%@ %@",[[CureMeUtils defaultCureMeUtil] regionWithRegionID:[[[NSUserDefaults standardUserDefaults] objectForKey:USER_REGION] integerValue]],[[NSUserDefaults standardUserDefaults] objectForKey:USER_CITY_NAME]];
-            CGRect temp = lable.frame;
-            temp.size.width = lable.font.pointSize * lable.text.length;
-            temp.origin.x = SCREEN_WIDTH - temp.size.width - 17;
-            lable.frame = temp;
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
+//    else if (indexPath.section == 1)
+//    {
+//        CMStringEditCell *strEditCell = nil;
+//        
+//        if (indexPath.row == 0) {       // 姓名
+//            strEditCell = [[CMStringEditCell alloc] initWithEditType:EDITCELL_NAME reuseIdentifier:StringEditCell];
+//            return strEditCell;
+//        }
+//        else if (indexPath.row == 1) {  // 年龄
+//            strEditCell = [[CMStringEditCell alloc] initWithEditType:EDITCELL_AGE reuseIdentifier:StringEditCell];
+//            return strEditCell;
+//        }
+//        else if (indexPath.row == 2) {  // 手机
+//            strEditCell = [[CMStringEditCell alloc] initWithEditType:EDITCELL_PHONE reuseIdentifier:StringEditCell];
+//            strEditCell.userInteractionEnabled = NO;
+//            return strEditCell;
+//        }
+//        else if (indexPath.row == 3) {  // 地区
+//            if (!cell) {
+//                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:StringEditCell];
+//                UILabel *lable = [[UILabel alloc] initWithFrame:CGRectMake(0, 15, 30, 20)];
+//                lable.tag = 1;
+//                cell.textLabel.text = @"地区";
+//                [cell.contentView addSubview:lable];
+//            }
+//            UILabel *lable = (UILabel *)[cell.contentView viewWithTag:1];
+//            lable.text = [NSString stringWithFormat:@"%@ %@",[[CureMeUtils defaultCureMeUtil] regionWithRegionID:[[[NSUserDefaults standardUserDefaults] objectForKey:USER_REGION] integerValue]],[[NSUserDefaults standardUserDefaults] objectForKey:USER_CITY_NAME]];
+//            CGRect temp = lable.frame;
+//            temp.size.width = lable.font.pointSize * lable.text.length;
+//            temp.origin.x = SCREEN_WIDTH - temp.size.width - 17;
+//            lable.frame = temp;
+//        }
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        return cell;
+//    }
     
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"DefaultCell"];
     return cell;
@@ -158,12 +174,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         if (indexPath.row == 2) {
-            ChangePasswordViewController *changePwdVC = [[ChangePasswordViewController alloc] initWithNibName:@"ChangePasswordViewController" bundle:nil];
-            [self.navigationController pushViewController:changePwdVC animated:YES];
-        }
-        else if (indexPath.row == 3){
+            
             ChangePhoneNoViewController *changePhVc = [[ChangePhoneNoViewController alloc] init];
             [self.navigationController pushViewController:changePhVc animated:YES];
+
+        }
+        else if (indexPath.row == 3){
+            ChangePasswordViewController *changePwdVC = [[ChangePasswordViewController alloc] initWithNibName:@"ChangePasswordViewController" bundle:nil];
+            [self.navigationController pushViewController:changePwdVC animated:YES];
         }
     }
 }

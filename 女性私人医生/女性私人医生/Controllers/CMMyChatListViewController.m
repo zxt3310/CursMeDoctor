@@ -77,15 +77,9 @@
         CGRect tableFrame = self.listTableView.frame;
         //tableFrame.origin.y = 20 + NAVIGATIONBAR_HEIGHT;
         //tableFrame.size.height = SCREEN_HEIGHT - 20 - NAVIGATIONBAR_HEIGHT - 50;
-        tableFrame.size.height = SCREEN_HEIGHT - 49 - 64;
+        tableFrame.size.height = SCREEN_HEIGHT - (FitIpX(49)) - (FitIpX(64));
         self.listTableView.frame = tableFrame;
     }
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -117,7 +111,7 @@
         CGRect tableFrame = self.listTableView.frame;
         //tableFrame.origin.y = 20 + NAVIGATIONBAR_HEIGHT;
         //tableFrame.size.height = SCREEN_HEIGHT - 20 - NAVIGATIONBAR_HEIGHT - 50;
-        tableFrame.size.height = SCREEN_HEIGHT - 49 - 64;
+        tableFrame.size.height = SCREEN_HEIGHT - (FitIpX(49)) - (FitIpX(64));
         self.listTableView.frame = tableFrame;
     }
 }
@@ -167,12 +161,6 @@
     if (!_listTableView.delegate) {
         _listTableView.delegate = self;
         _listTableView.dataSource = self;
-   //     if (IOS_VERSION >= 7.0) {
-   //         CGRect tableFrame = _listTableView.frame;
-   //         tableFrame.origin.y = 20 + NAVIGATIONBAR_HEIGHT;
-   //         tableFrame.size.height = SCREEN_HEIGHT - 20 - NAVIGATIONBAR_HEIGHT - 50;
-   //         _listTableView.frame = tableFrame;
-   //     }
     }
     
     return _listTableView;
@@ -297,44 +285,7 @@
     return MYCHATLIST_CELL_WORDHEIGHT + MYCHATLIST_CELL_INFOHEIGHT +23;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark EGORefreshTableHeaderDelegate Methods
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
@@ -377,13 +328,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
     if (!chatInfoArray || chatInfoArray.count <= indexPath.row) {
         return;
     }
@@ -445,6 +389,12 @@
 - (void)threadInitMyChatListData
 {
     @autoreleasepool {
+        //由于进入私人医生对话页面后返回会造成列表缩短问题，在暂时未找到原因的情况下设置如下代码临时解决
+        if (IOS_VERSION >= 7.0) {
+            CGRect tableFrame = self.listTableView.frame;
+            tableFrame.size.height = SCREEN_HEIGHT - (FitIpX(49)) - (FitIpX(64));
+            self.listTableView.frame = tableFrame;
+        }
         // 如果正在加载数据，则不开始新的加载
         if (isLoadingDataInBackground) {
             return;

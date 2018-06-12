@@ -231,6 +231,19 @@ NSString *saveTitle;
     _inputField.layer.cornerRadius = 5;
     _inputField.layer.borderWidth = 0.5;
     _inputField.layer.borderColor = queryInputView.layer.borderColor;
+    
+    //适配 PHONE X
+    temp = _startQueryView.frame;
+    temp.origin.y = temp.origin.y - (FitIpX(0));
+    _startQueryView.frame = temp;
+    
+//    temp = _queryInputView.frame;
+//    temp.origin.y = temp.origin.y - (FitIpX(0));
+//    _queryInputView.frame = temp;
+    
+//    temp = _queryInputField.frame;
+//    temp.origin.y = temp.origin.y - (FitIpX(0));
+//    _queryInputField.frame = temp;
 }
 
 -(void)yesBtnClicked:(UIButton *)sender{
@@ -1557,7 +1570,6 @@ NSString *saveTitle;
                 continue;
             }
         }
-        
         // 如果不是本人聊天消息，可展示的消息数量受限，显示提示
         if (msgArray && msgArray.count > 3 && (_chatUserID != [CureMeUtils defaultCureMeUtil].userID)) {
             [self performSelectorOnMainThread:@selector(showMsgLimitAlert) withObject:nil waitUntilDone:NO];

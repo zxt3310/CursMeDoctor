@@ -10,6 +10,9 @@
 #import "CMPickerViewController.h"
 #import "CustomBaseViewController.h"
 #import "CMAlertViewController.h"
+#import <WebKit/WebKit.h>
+#import "CMH5NewsWebViewController.h"
+#import "CMMainTabViewController.h"
 /**
  *  @author Zxt, 17-04-11 14:04:21
  *
@@ -18,7 +21,7 @@
 #import "CMQuickAskChoosenViewController.h"
 
 
-@interface CMMainPageViewController : CustomBaseViewController <CMPickerDelegate,UIScrollViewDelegate,UIWebViewDelegate,UITextFieldDelegate,chooseLocationDelegate>
+@interface CMMainPageViewController : CustomBaseViewController <CMPickerDelegate,UIScrollViewDelegate,UIWebViewDelegate,UITextFieldDelegate,chooseLocationDelegate,WKUIDelegate,WKNavigationDelegate,CMQuickAskLocationDeletage>
 
 {
     // 选择省份的VC

@@ -151,28 +151,32 @@ UIView *infoView;
     nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 6, 45, 15)];
     nameLabel.font = [UIFont boldSystemFontOfSize:14];
     nameLabel.textColor = [UIColor blackColor];
-    nameLabel.text = @"医院：";
+    nameLabel.text = @"机构：";
+    //隐藏机构标签
+    nameLabel.hidden = YES;
     [infoView addSubview:nameLabel];
     
-    hospitalLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 6, SCREEN_WIDTH-110, 15)];
+    hospitalLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 6, SCREEN_WIDTH-110, 15)];
     hospitalLabel.font = [UIFont systemFontOfSize:14];
     hospitalLabel.textColor = [UIColor grayColor];
-    hospitalLabel.text = @"等待医院连接中...";
+    hospitalLabel.text = @"等待连接中...";
     [infoView addSubview:hospitalLabel];
     
     infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 25, 45, 15)];
     infoLabel.font = [UIFont boldSystemFontOfSize:14];
     infoLabel.textColor = [UIColor blackColor];
     infoLabel.text = @"姓名：";
+    //隐藏姓名标签
+    infoLabel.hidden = YES;
     [infoView addSubview:infoLabel];
     
-    doctorLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 25, SCREEN_WIDTH-110, 15)];
+    doctorLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 25, SCREEN_WIDTH-110, 15)];
     doctorLabel.font = [UIFont systemFontOfSize:14];
     doctorLabel.textColor = [UIColor grayColor];
     doctorLabel.text = @"";
     [infoView addSubview:doctorLabel];
     
-    queryInputView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-64-50, SCREEN_WIDTH, 50)];
+    queryInputView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - (FitIpX(64)) - (FitIpX(50)), SCREEN_WIDTH, 50)];
     queryInputView.backgroundColor = CM_BACKGROUND_COLOR;
     queryInputView.layer.borderWidth = 0.5;
     queryInputView.layer.borderColor = UIColorFromHex(0x9b9b9b, 0.51).CGColor;
@@ -455,7 +459,7 @@ UIView *infoView;
 
 - (void)moveQueryView:(CGFloat)height
 {
-    queryInputView.frame = CGRectMake(0, SCREEN_HEIGHT-64-50-height, SCREEN_WIDTH, 50);
+    queryInputView.frame = CGRectMake(0, SCREEN_HEIGHT-(FitIpX(64))- (FitIpX(50))-height, SCREEN_WIDTH, 50);
 }
 
 -(void)tapQueryContainer{

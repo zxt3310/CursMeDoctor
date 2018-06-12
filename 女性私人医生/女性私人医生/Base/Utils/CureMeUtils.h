@@ -20,6 +20,8 @@
 #import "ImageDownloadHelper.h"
 #import <Foundation/Foundation.h>
 #import "LocateUtils.h"
+#import "WXApi.h"
+#import "WXApiObject.h"
 
 #define MAX_BACK_BUTTON_WIDTH 160.0
 #define OFFICEINFO_CELLHEIGHT 68
@@ -40,6 +42,7 @@
 #define HAS_FIRST_USED @"Stat_HasFirstUsed"
 #define OFFICE_SUBTYPE_DICT @"OfficeSubTypeDict"
 #define OFFICE_SUPERTYPE_ARRAY @"OfficeSuperTypeArray"
+#define WX_HEAD @"weixinHeadImg"
 
 #define HAS_SENT_LOCATIONINFO @"HasSentLocationInfo"
 #define LAST_SEND_LOCATION_TIME @"LastSendLocationTime"
@@ -61,6 +64,11 @@
 
 #define LOCATION_ADDRESS @"LocationAddress"
 
+//虚拟定位
+#define EMULATE_LOCATION @"emulateLocationAddress"
+#define EMULATE_LOCATION_PROVINCE @"emulateProvince"
+#define EMULATE_LOCATION_CITY @"emulateCity"
+
 #define APP_LAUNCHOPTION @"AppLaunchingOptions"
 
 #define IOS_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
@@ -71,6 +79,14 @@
 #define Hichat_App_Key @"805372035"
 #define Hichat_account @"test@126.com"
 #define Hichat_password @"123654"
+
+//微信appId
+#define WX_MAN_ID @"wx3a0c3463cb54741d"
+#define WX_WOMAN_ID @"wxfc3858980f3bd564"
+#define WX_WOMAN_SECRET @"a76b122163eb5e584ca7c015ce154bc8"
+#define WX_BOTH_ID @"wx9d1831a765a664c7"
+//第三方统计appkey
+#define MIXPANEL_TOKEN @"1b5624603568968790c834eb08ebf147"
 
 #define IS_IPHONE_5 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
 
@@ -119,6 +135,15 @@ enum
     REPLYTYPE_UNLIMIT
 };
 
+@protocol wxBackDelegate <NSObject>
+-(void)recieveAuthResponse:(BOOL)isSucced code:(NSString *)code;
+
+@end
+@interface WeixinBackTools : NSObject <WXApiDelegate>
+-(void)sendAuthRequest;
++ (WeixinBackTools *)sharedInstance;
+@property id <wxBackDelegate> wxBackDelegate;
+@end
 
 
 #pragma mark Tag definitions:
@@ -180,6 +205,8 @@ NSString *officeStringWithType(NSInteger officeType);
 @property (nonatomic, readonly, strong) JSONDecoder *jsonDecoder;
 
 @property (nonatomic, readonly, strong) UIImage *queryListSeparatorLineImage;
+
+@property (nonatomic,readonly) NSString *appVersion;
 
 
 @property bool hasLogin;

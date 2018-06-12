@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "CureMeNavigationController.h"
+#import "Mixpanel.h"
+#import "WXApi.h"
 
 NSString *getCrashFilePathName();
 

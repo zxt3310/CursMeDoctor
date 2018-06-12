@@ -63,7 +63,8 @@ static bool needStopDetectReplies;
     IBOutlet UIImageView *sendQuestionImage;
     IBOutlet UILabel *sendQuestionLabel;
     IBOutlet UIView *queryInputView;
-
+    IBOutlet UIView *startQueryView;
+    
     NSMutableArray *bubbleData;
     NSMutableDictionary *doctorImages;
     NSMutableDictionary *doctorNames;
@@ -135,6 +136,11 @@ static bool needStopDetectReplies;
 @property (strong, nonatomic) IBOutlet UIView *startQueryView;
 - (IBAction)startQueryBtnClicked:(id)sender;
 - (IBAction)startBookBtnClicked:(id)sender;
+
+// 输入框View
+@property (strong, nonatomic) IBOutlet UIView *queryInputView;
+@property (strong, nonatomic) IBOutlet UITextField *queryInputField;
+
 
 // 发送咨询输入View
 - (IBAction)sendQueryBtnClicked:(id)sender;

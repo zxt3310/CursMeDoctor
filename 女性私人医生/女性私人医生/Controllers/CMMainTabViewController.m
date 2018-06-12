@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "CMMainTabViewController.h"
+#import "CMQAProtocolView.h"
 
 @interface CMMainTabViewController (privateMethod)
 
@@ -55,7 +56,8 @@
         customTabBarView.delegate = self;
         CGRect viewFrame = customTabBarView.frame;
         viewFrame.size.width = SCREEN_WIDTH;
-        viewFrame.origin.y = [self view].frame.size.height - 49;
+        viewFrame.origin.y = [self view].frame.size.height - (FitIpX(49));
+        viewFrame.size.height = FitIpX(49);
         customTabBarView.frame = viewFrame;
         for (UIButton *button in customTabBarView.subviews) {
             if ([button isKindOfClass:[UIButton class]] && button.tag == 0) {

@@ -57,6 +57,7 @@
 @property (strong, nonatomic) IBOutlet CMQATableView *qaTable;
 // “立即咨询”按钮View
 @property (strong, nonatomic) IBOutlet UIView *startQueryView;
+@property (weak, nonatomic) IBOutlet UIButton *startQueryBtn;
 
 
 @property (nonatomic, strong) LeveyPopListView *leveyPopListView;

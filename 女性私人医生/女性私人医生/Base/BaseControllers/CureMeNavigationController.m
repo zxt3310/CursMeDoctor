@@ -101,13 +101,13 @@
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    CATransition *transition = [CATransition animation];
-    transition.duration = 0.7;
-    transition.timingFunction = UIViewAnimationCurveEaseInOut;
-    transition.type = @"rippleEffect";
-    transition.subtype = kCATransitionFromRight;
-    transition.delegate = self;
-    [self.view.layer addAnimation:transition forKey:nil];
+//    CATransition *transition = [CATransition animation];
+//    transition.duration = 0.7;
+//    transition.timingFunction = UIViewAnimationCurveEaseInOut;
+//    transition.type = @"rippleEffect";
+//    transition.subtype = kCATransitionFromRight;
+//    transition.delegate = self;
+//    [self.view.layer addAnimation:transition forKey:nil];
 
     [super pushViewController:viewController animated:animated];
 }

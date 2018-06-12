@@ -30,7 +30,7 @@
 #import "personalDetailTableViewController.h"
 #import "CMPersonSetingViewController.h"
 #import "RegisteOfficeMemberViewController.h"
-
+#import "WebViewController.h"
 
 @interface PerCenterViewController ()
 {
@@ -55,6 +55,14 @@
     [super viewDidLoad];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
 
+    if (@available(iOS 11.0,*)) {
+        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        self.tableView.estimatedSectionFooterHeight = self.tableView.estimatedSectionHeaderHeight = self.tableView.estimatedRowHeight = 0;
+    }
+    else{
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -83,6 +91,8 @@
     registVipBtn.hidden = YES;
     [registVipBtn addTarget:self action:@selector(registOfficeMember) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:registVipBtn];
+    
+    
 }
 
 - (void)viewDidUnload
@@ -123,13 +133,7 @@
 {
     [super viewDidAppear:animated];
     
-    if (![CureMeUtils defaultCureMeUtil].hasLogin && !hasShownLoginViewController) {
-        LoginViewController *loginVC = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
-        [self.navigationController pushViewController:loginVC animated:YES];
-        hasShownLoginViewController = true;
-        return;
-    }
-    else if ([CureMeUtils defaultCureMeUtil].hasLogin & [CureMeUtils defaultCureMeUtil].isUnRegLoginUser){
+    if ([CureMeUtils defaultCureMeUtil].hasLogin && [CureMeUtils defaultCureMeUtil].isUnRegLoginUser){
         registVipBtn.hidden = NO;
     }
     else{
@@ -158,6 +162,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+    if (section != 2) {
+        return 0.1;
+    }
     return 10.0;
 }
 
@@ -193,15 +200,15 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    if (section == 0) { // 顶部三个按钮Cell
+    if (section == 0) {
         return 1;
     }
 
     else if (section == 1) {
-        return 2;       // 个人信息Cell（姓名、年龄、手机、地区）
+        return 3;
     }
     else if (section == 2) {
-        return 1;       // 修改密码Cell
+        return 1;
     }
     
     return 0;
@@ -219,8 +226,8 @@
         CMPerCenterHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:HeaderCell];
         cell = nil;
         cell = [[CMPerCenterHeaderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:HeaderCell];
-        
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.personalDelegate = self;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [cell setPerCenterViewController:self];
         
         return cell;
@@ -244,6 +251,10 @@
             else if (indexPath.row == 1){
                 leftView.image = [UIImage imageNamed:@"ico_msg_wdzx.png"];
                 titleLb.text = @"我的咨询";
+            }
+            else{
+                leftView.image = [UIImage imageNamed:@"serviceorder.png"];
+                titleLb.text = @"服务订单";
             }
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
@@ -283,7 +294,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        return 80;
+        return 171*SCREEN_HEIGHT/667;
     }
     return 50;
 }
@@ -293,43 +304,62 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        
-        if (![CureMeUtils defaultCureMeUtil].hasLogin) {
-            LoginViewController *loginVC = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
-            [self.navigationController pushViewController:loginVC animated:YES];
-            hasShownLoginViewController = true;
-            return;
-        }
-        else{
-            if ([CureMeUtils defaultCureMeUtil].isUnRegLoginUser) {
-                
-                [self registOfficeMember];
-                return;
-            }
-        }
-        
-        personalDetailTableViewController *personDetialVc = [[personalDetailTableViewController alloc] init];
-        [self.navigationController pushViewController:personDetialVc animated:YES];
-    }
-    else if (indexPath.section == 1){
+//    if (indexPath.section == 0) {
+//        
+//        if (![CureMeUtils defaultCureMeUtil].hasLogin) {
+//            CMLoginViewController *loginVC = [[CMLoginViewController alloc] init];
+//            [self.navigationController pushViewController:loginVC animated:YES];
+//            hasShownLoginViewController = true;
+//            return;
+//        }
+//        else{
+//            if ([CureMeUtils defaultCureMeUtil].isUnRegLoginUser) {
+//                
+//                [self registOfficeMember];
+//                return;
+//            }
+//        }
+//        
+//        personalDetailTableViewController *personDetialVc = [[personalDetailTableViewController alloc] init];
+//        [self.navigationController pushViewController:personDetialVc animated:YES];
+//    }
+//    else
+    if (indexPath.section == 1){
         if (indexPath.row == 0) {
             MyBookListViewController *myBookListVC = [[MyBookListViewController alloc] initWithNibName:@"MyBookListViewController" bundle:nil];
             myBookListVC.isMainTabPage = false;
             myBookListVC.title = @"我的预约";
             [self.navigationController pushViewController:myBookListVC animated:YES];
         }
-        else{
+        else if (indexPath.row == 1){
             
             CMMainTabViewController *mainTabVC = (CMMainTabViewController *)[[self.navigationController viewControllers] objectAtIndex:0];
             
             [mainTabVC tabWasSelected:1];
+        }
+        else{
+            if ([CureMeUtils defaultCureMeUtil].hasLogin) {
+                WebViewController *webVc = [WebViewController new];
+                webVc.strURL = [NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/famous_doctors/service_order_list.php?userid=%ld",[CureMeUtils defaultCureMeUtil].userID];
+                [self.navigationController pushViewController:webVc animated:YES];
+            }
+            else{
+                CMLoginViewController *loginView = [[CMLoginViewController alloc] init];
+                loginView.cmDelegate = self;
+                [self.navigationController pushViewController:loginView animated:YES];
+            }
         }
     }
     else if (indexPath.section == 2){
         CMPersonSetingViewController *setingVc = [[CMPersonSetingViewController alloc] init];
         [self.navigationController pushViewController:setingVc animated:YES];
     }
+}
+
+- (void)moreActionAfterLogin{
+    WebViewController *webVc = [WebViewController new];
+    webVc.strURL = [NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/famous_doctors/service_order_list.php?userid=%ld",[CureMeUtils defaultCureMeUtil].userID];
+    [self.navigationController pushViewController:webVc animated:YES];
 }
 
 - (bool)logOff
@@ -386,7 +416,25 @@
     return true;
 }
 
+- (void)loginBtnClick{
+    if ([CureMeUtils defaultCureMeUtil].hasLogin) {
+        return;
+    }
+    
+    CMLoginViewController *loginVc = [[CMLoginViewController alloc] init];
+    [self.navigationController pushViewController:loginVc animated:YES];
+}
 
+- (void)editPersonalBtnClick{
+    
+    if ([CureMeUtils defaultCureMeUtil].isUnRegLoginUser) {
+        
+        [self registOfficeMember];
+        return;
+    }
+    personalDetailTableViewController *personVc = [[personalDetailTableViewController alloc] init];
+    [self.navigationController pushViewController:personVc animated:YES];
+}
 
 - (void)login
 {

@@ -20,5 +20,6 @@
 @property id <CMQuickAskLocationDeletage> CmLocationDelegate;
 @property NSInteger office1;
 @property NSInteger office2;
+@property (nonatomic) CGRect protcolViewFrame;
 
 @end

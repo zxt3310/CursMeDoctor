@@ -111,6 +111,15 @@
     _streetName = result.addressDetail.streetName;
     _streetNumber = result.addressDetail.streetNumber;
     
+    //新增虚拟定位
+    NSString *addressStr = [[NSUserDefaults standardUserDefaults] objectForKey:@"emulateLocationAddress"];
+    if (addressStr || addressStr.length > 0) {
+        _province = [[NSUserDefaults standardUserDefaults] objectForKey:EMULATE_LOCATION_PROVINCE];
+        _city = [[NSUserDefaults standardUserDefaults] objectForKey:EMULATE_LOCATION_CITY];
+        _district = [[NSUserDefaults standardUserDefaults] objectForKey:EMULATE_LOCATION_CITY];
+    }
+
+    
     NSLog( @"address: %@, %@, %@, %@, %@", _province, _city, _district, _streetName, _streetNumber );
     
     if ( [_delegate respondsToSelector:@selector(localInfoLocationUpdateSuccess:)] )

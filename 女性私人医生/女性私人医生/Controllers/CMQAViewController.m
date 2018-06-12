@@ -359,111 +359,6 @@ UIView *protocolView1;
     [self.view becomeFirstResponder];
 }
 
-//- (void)keyboardWillShow:(NSNotification *)notification {
-//    
-//    /*
-//     Reduce the size of the text view so that it's not obscured by the keyboard.
-//     Animate the resize so that it's in sync with the appearance of the keyboard.
-//     */
-//    
-//    NSDictionary *userInfo = [notification userInfo];
-//    
-//    // Get the origin of the keyboard when it's displayed.
-//    NSValue* aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-//    
-//    // Get the top of the keyboard as the y coordinate of its origin in self's view's coordinate system. The bottom of the text view's frame should align with the top of the keyboard's final position.
-//    CGRect keyboardRect = [aValue CGRectValue];
-//    
-//    // Get the duration of the animation.
-//    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-//    NSTimeInterval animationDuration;
-//    [animationDurationValue getValue:&animationDuration];
-//    
-//    // Animate the resize of the text view's frame in sync with the keyboard's appearance.
-//    [self moveInputBarWithKeyboardHeight:keyboardRect.size.height withDuration:animationDuration];
-//}
-//
-//
-//- (void)keyboardWillHide:(NSNotification *)notification {
-//    
-//    NSDictionary* userInfo = [notification userInfo];
-//    
-//    /*
-//     Restore the size of the text view (fill self's view).
-//     Animate the resize so that it's in sync with the disappearance of the keyboard.
-//     */
-//    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-//    NSTimeInterval animationDuration;
-//    [animationDurationValue getValue:&animationDuration];
-//    
-//    [self moveInputBarWithKeyboardHeight:0.0 withDuration:animationDuration];
-//}
-//
-//- (void)moveInputBarWithKeyboardHeight:(float)height withDuration:(NSTimeInterval)duration
-//{
-//    // 如果是键盘还原
-//    if (height < 0.0001 && height > -0.0001) {
-//        // 1. 还原键盘
-////        float originY = [[UIScreen mainScreen] applicationFrame].size.height;
-////        _sendAreaView.frame = CGRectMake(0, originY - 44 - 44, 320, 44);
-////        [_sendAreaView setHidden:YES];
-//
-//        // 2. 隐藏咨询子分类View
-//        [querySubTypeView setHidden:YES];
-//        
-//        // 3.
-//        [_startQueryView setHidden:NO];
-//        
-//        // 4. 调整Nav元素显示
-//        self.navigationItem.title = nil;
-//        self.navigationItem.titleView = titleView;
-//        self.navigationItem.rightBarButtonItem = rightBarItem;
-//    }
-//    // 如果是键盘出现
-//    else if (height > 0.0001) {
-//        CGRect frame;
-//        
-//        // 1. 显示子分类View，保证从0高度开始覆盖
-//        if (!querySubTypeView || querySubTypeView.officeType != _officeType) {
-//            [querySubTypeView removeFromSuperview];
-//
-//            querySubTypeView = [[CMQAOfficeSubTypeView alloc] initWithFrame:CGRectZero];
-//            [querySubTypeView setOfficeType:_officeType];
-//            [querySubTypeView clearAllSubTypeBtns];
-//            [querySubTypeView initSubTypeButtons];
-//            querySubTypeView.delegate = self;
-////            [querySubTypeView setQaViewController:self];
-//            // 设置科室的子分类
-//            [querySubTypeView switchViewTypeToQuery];
-//            [querySubTypeView updateBackgroundImage:[UIImage imageNamed:@"layout_bg.png"]];
-//            [querySubTypeView setHidden:NO];
-//            frame = querySubTypeView.frame;
-//            frame.origin.y = 0;
-//            querySubTypeView.frame = frame;
-//            [self.view addSubview:querySubTypeView];
-//        }
-//        
-//        // 调整Nav元素显示
-//        [self initQueryRightBarItem];
-//        self.navigationItem.rightBarButtonItem = confirmRightBarItem;
-//        self.navigationItem.titleView = nil;
-//        self.navigationItem.title = @"咨询";
-//        
-//        _queryOfficeSubType = _officeSubType;
-//        [querySubTypeView setOfficeSubType:_queryOfficeSubType];
-//        NSLog(@"querySubTypeView: %@", querySubTypeView);
-//
-////        // 1. 显示键盘
-////        float screenHeight = [[UIScreen mainScreen] applicationFrame].size.height;
-////        float sendAreaHeight = screenHeight - height - 44 - querySubTypeView.frame.size.height;
-////        _sendAreaView.hidden = NO;
-////        _sendAreaView.frame = CGRectMake(0, querySubTypeView.frame.size.height, 320, sendAreaHeight);
-////        frame = _sendAreaView.frame;
-////        _sendAreaSendBtn.frame = CGRectMake(255, frame.size.height - 38, 60, 36);
-////        _sendAreaInputField.frame = CGRectMake(5, 5, 310, frame.size.height - 44);
-////        NSLog(@"sendAreaView: %@ querySubTypeView: %@", _sendAreaView, querySubTypeView);
-//    }
-//}
 
 #pragma mark CMQOfficeSubTypeViewDelegate
 - (void)officeSubTypeSelected:(NSInteger)officeSubType
@@ -531,7 +426,7 @@ UIView *protocolView1;
         NSLog(@"action=questionlist param \"msg\" invalid");
         [self performSelectorOnMainThread:@selector(mainThreadRefreshTableView) withObject:nil waitUntilDone:NO];
         return;
-    }
+    } 
 
     _curPageQueryCount = msgArray.count;
     for (int i = 0; i < MIN(20, [msgArray count]); i++) {
@@ -880,22 +775,12 @@ UIView *protocolView1;
 - (IBAction)startQueryBtnClicked:(id)sender {
     // 准备提交咨询的时候，发起一次定位
     [[CureMeUtils defaultCureMeUtil] startLocationing];
-//    NSNumber *regionNum = [[NSUserDefaults standardUserDefaults] objectForKey:USER_REGION];
-//    if (!regionNum) {
-//        [self popPickerView];
-//        return;
-//    }
     
     NSNumber *hasMarkApp = [[NSUserDefaults standardUserDefaults] objectForKey:HAS_AGREEPROTOCOL];
     if (!hasMarkApp || hasMarkApp.integerValue == 0) {
         [self.view addSubview:protcolView];
         return;
     }
-
-    /*CMQueryViewController *queryVC = [[CMQueryViewController alloc] initWithNibName:@"CMQueryViewController" bundle:nil];
-    [queryVC setOfficeType:_officeType];
-    [queryVC setSubOfficeType:_officeSubType];
-    [self.navigationController pushViewController:queryVC animated:YES];*/
     
     CMNewQueryViewController *queryVC = [CMNewQueryViewController new];
     queryVC.officeType = _officeType;

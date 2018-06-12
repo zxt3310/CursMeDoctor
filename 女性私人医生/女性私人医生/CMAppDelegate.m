@@ -25,6 +25,7 @@
 #import <sys/utsname.h>
 #import "GuideView.h"
 #import "HiChat.h"
+#import "CMH5NewsWebViewController.h"
 
 /**
  * 实现NSUncaughtExceptionHandler方法
@@ -72,6 +73,9 @@ void uncaughtExceptionHandler(NSException *exception)
 }*/
 
 @implementation CMAppDelegate
+{
+    CMH5NewsWebViewController *webVc;
+}
 
 @synthesize navigationController = _navigationController;
 
@@ -181,7 +185,7 @@ void uncaughtExceptionHandler(NSException *exception)
         NSLog(@"application loading loginCookie resp: %@", strResp);
         [[CureMeUtils defaultCureMeUtil] updatePollServerInfo:strResp];
     }
-
+    
     mainTabViewController = [[CMMainTabViewController alloc] init];
     
     // 1. 主界面Page
@@ -200,11 +204,13 @@ void uncaughtExceptionHandler(NSException *exception)
 //    }
     
     // 3. 我的消息Page
-    WebViewController *webVC = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
+    //WebViewController *webVC = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
+    webVc = [[CMH5NewsWebViewController alloc] init];
     //[webVC setStrURL:[[NSString alloc] initWithFormat:@"%@/html5/myxiaoxi.php?userid=%ld&deviceid=%@", MEDAPP_MAINDOMAIN, (long)[CureMeUtils defaultCureMeUtil].userID, [[NSUserDefaults standardUserDefaults] objectForKey:USER_UNIQUE_ID]]];
-    [webVC setStrURL:[[NSString alloc] initWithFormat:@"http://%@/h5_new/news.html?appid=1&addrdetail=%@&source=apple",DOMAIN_NAME,[CureMeUtils defaultCureMeUtil].encodedLocateInfo]];
-    webVC.isMainTabPage = true;
-
+    //[webVC setStrURL:[[NSString alloc] initWithFormat:@"http://%@/h5_new/news.html?appid=1&addrdetail=%@&source=apple",DOMAIN_NAME,[CureMeUtils defaultCureMeUtil].encodedLocateInfo]];
+    //webVC.isMainTabPage = true;
+    [self getAllOfficeTypeAndUrl];
+    
     // 4. 我的预约Page
     UIViewController *bookListViewController = nil;
    // if ([CureMeUtils defaultCureMeUtil].hasLogin) {
@@ -220,7 +226,7 @@ void uncaughtExceptionHandler(NSException *exception)
     // 5. 个人中心Page
     PerCenterViewController *perCenterVC = [[PerCenterViewController alloc] initWithStyle:UITableViewStyleGrouped];
     
-    mainTabViewController.viewControllers = [NSArray arrayWithObjects:mainPageVC, listViewController, webVC, /*bookListViewController,*/ perCenterVC, nil];
+    mainTabViewController.viewControllers = [NSArray arrayWithObjects:mainPageVC, listViewController, webVc, /*bookListViewController,*/ perCenterVC, nil];
     mainTabViewController.selectedIndex = 0;
     
     _navigationController = [[CureMeNavigationController alloc] initWithRootViewController:mainTabViewController];
@@ -235,19 +241,35 @@ void uncaughtExceptionHandler(NSException *exception)
     [[self window] setRootViewController:_navigationController];
     [self.window makeKeyAndVisible];
     
-    if(![self isFirstLauch])
+    if([self isFirstLauch])
     {
         GuideView *guide = [[GuideView alloc] initWithFrame:self.window.bounds];
         [self.window addSubview:guide];
     }
-
+    
+    //注册微信
+    [WXApi registerApp:WX_WOMAN_ID];
+    
     //初始化Hichat 并注册APNS
     [HiChat init:Hichat_App_Key];
     
     [HiChat apnsInitInFinishLaunch:[UIApplication sharedApplication]];
     
+    [Mixpanel sharedInstanceWithToken:MIXPANEL_TOKEN];
+    [Mixpanel sharedInstance].useIPAddressForGeoLocation = YES;
+    
     return YES;
 }
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+    if ([url.scheme isEqualToString:WX_WOMAN_ID]) {
+        WeixinBackTools *wxResp = [WeixinBackTools sharedInstance];
+        return [WXApi handleOpenURL:url delegate:wxResp];
+    }
+        return YES;
+}
+
 
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(nonnull UIUserNotificationSettings *)notificationSettings{
     
@@ -278,7 +300,7 @@ void uncaughtExceptionHandler(NSException *exception)
     // 如果获得的token与保存的不一致
     [[NSUserDefaults standardUserDefaults] setObject:newToken forKey:PUSH_TOKEN];
     [[NSUserDefaults standardUserDefaults] setObject:deviceToken forKey:PUSH_TOKEN_NSDATA];
-    [[NSUserDefaults standardUserDefaults] synchronize];   
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
     // 如果此时已经获得激活的GUID，则发送更新Token请求
     updateIOSPushInfo();
@@ -604,6 +626,33 @@ void uncaughtExceptionHandler(NSException *exception)
     }
 }
 
+#pragma mark - 获取健康咨询所有栏目
+
+- (void)getAllOfficeTypeAndUrl{
+    NSString *urlStr = [NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/api/m.php?action=getallqtypebyappidandgps&appid=1&addrdetail=%@&version=3.0",[CureMeUtils defaultCureMeUtil].encodedLocateInfo];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *response = sendGETRequest(urlStr);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!response) {
+                NSLog(@"network error!");
+                return ;
+            }
+            NSDictionary *returnDic = parseJsonResponse(response);
+            if (!returnDic) {
+                NSLog(@"Data error!");
+                return;
+            }
+            NSNumber *result = [returnDic objectForKey:@"result"];
+            if ([result integerValue] != 1) {
+                NSLog(@"%@",[returnDic objectForKey:@"errmsg"]);
+                return;
+            }
+            NSArray *msgArray = [returnDic objectForKey:@"msg"];
+            webVc.officeTypeArray = msgArray;
+        });
+    });
+}
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     NSLog(@"Regist fail%@",error);

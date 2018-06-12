@@ -64,7 +64,7 @@
 
     _dscpLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 45, 80, 20)];
     _dscpLabel.text = @"正在载入";
-    [_dscpLabel setTextAlignment:UITextAlignmentCenter];
+    [_dscpLabel setTextAlignment:NSTextAlignmentCenter];
     [_dscpLabel setFont:[UIFont systemFontOfSize:14]];
     [_dscpLabel setBackgroundColor:[UIColor clearColor]];
     [_dscpLabel setTextColor:[UIColor whiteColor]];

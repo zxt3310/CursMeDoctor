@@ -17,9 +17,14 @@
 
 @interface CMMainPageViewController ()
 {
-    UIWebView *html5WebView;
+    WKWebView *html5WebView;
     UITextField *addressTF;
     UITextField *quickAskTF;
+    UIView *coverView;
+    
+    NSInteger subId;
+    NSInteger childId;
+    NSString *key;
 }
 @end
 
@@ -47,9 +52,9 @@ BOOL isLFMShow;
     // 2. 初始化所有科室的子分类(在后台线程完成)
     [[CMDataUtils defaultDataUtil] initAllOfficeSubTypeData];
     
-    html5WebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 108, SCREEN_WIDTH, SCREEN_HEIGHT-157)];
+    html5WebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 108, SCREEN_WIDTH, SCREEN_HEIGHT - (FitIpX(157)))];
     [self.view addSubview:html5WebView];
-    html5WebView.delegate = self;
+    html5WebView.navigationDelegate = self;
     NSURLRequest *url = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/h5_new/index.html?appid=1&addrdetail=%@&source=apple",DOMAIN_NAME,[CureMeUtils defaultCureMeUtil].encodedLocateInfo]]];
     [html5WebView loadRequest:url];
     
@@ -57,24 +62,24 @@ BOOL isLFMShow;
 }
 
 - (void)setTopView{
-    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, 88)];
+    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, (SCREEN_HEIGHT == 812)? 0:20, SCREEN_WIDTH, FitIpX(88))];
     topView.backgroundColor = UIColorFromHex(0xF65378, 0.8);
     topView.layer.shadowColor = [UIColor blackColor].CGColor;
     topView.layer.shadowOffset = CGSizeMake(0, 2);
     topView.layer.shadowOpacity = 0.5;
     [topView setClipsToBounds:NO];
     
-    UIImageView *logoView = [[UIImageView alloc] initWithFrame:CGRectMake(19, 17, 20, 20)];
+    UIImageView *logoView = [[UIImageView alloc] initWithFrame:CGRectMake(19, FitIpX(17), 20, 20)];
     logoView.image = [CMImageUtils defaultImageUtil].logoImage;
     [topView addSubview:logoView];
     
-    UILabel *logoLb = [[UILabel alloc] initWithFrame:CGRectMake(41, 17, 150, 18)];
+    UILabel *logoLb = [[UILabel alloc] initWithFrame:CGRectMake(41, FitIpX(17), 150, 18)];
     logoLb.font = [UIFont systemFontOfSize:17];
     logoLb.textColor = [UIColor whiteColor];
     logoLb.text = @"女性私人医生";
     [topView addSubview:logoLb];
     
-    quickAskTF = [[UITextField alloc] initWithFrame:CGRectMake(14 *SCREEN_WIDTH/375, 49, 354 * SCREEN_WIDTH/375, 30)];
+    quickAskTF = [[UITextField alloc] initWithFrame:CGRectMake(14 *SCREEN_WIDTH/375, FitIpX(49), 354 * SCREEN_WIDTH/375, 30)];
     quickAskTF.layer.cornerRadius = 5;
     quickAskTF.backgroundColor = [UIColor whiteColor];
     quickAskTF.font = [UIFont systemFontOfSize:14];
@@ -89,7 +94,7 @@ BOOL isLFMShow;
     quickAskTF.tag = 1;
     [topView addSubview:quickAskTF];
     
-    addressTF = [[UITextField alloc] initWithFrame:CGRectMake(280 *SCREEN_WIDTH/375, 20, 80 *SCREEN_WIDTH/375, 18)];
+    addressTF = [[UITextField alloc] initWithFrame:CGRectMake(280 *SCREEN_WIDTH/375, FitIpX(20), 80 *SCREEN_WIDTH/375, 18)];
     addressTF.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 11, 18)];
     UIImageView *adLeftImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 2, 11, 14)];
     adLeftImgView.image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ico_dizhi_and_pink" ofType:@"png" inDirectory:@"images"]];
@@ -110,59 +115,203 @@ BOOL isLFMShow;
     [self.view addSubview:topView];
 }
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
-    NSString *schemeStr = request.URL.scheme;
-    if ([request.URL.absoluteString containsString:@"index.html"]) {
-        return YES;
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler{
+    NSString *schemeStr = navigationAction.request.URL.scheme;
+    if ([navigationAction.request.URL.absoluteString containsString:@"index.html"]) {
+        decisionHandler(WKNavigationActionPolicyAllow);
+        return;
     }
     
     if ([schemeStr isEqualToString:@"medapp"]) {
-        if ([request.URL.absoluteString containsString:@"depart"]) {
-            NSInteger officeId = [request.URL.lastPathComponent integerValue];
-            CMQAViewController *qaViewController = [[CMQAViewController alloc] initWithNibName:@"CMQAViewController" bundle:nil];
-            qaViewController.officeType = officeId;
-            [[CMAppDelegate Delegate].navigationController pushViewController:qaViewController animated:YES];
-            return YES;
+        if ([navigationAction.request.URL.absoluteString containsString:@"depart"]) {
+            if ([navigationAction.request.URL.absoluteString containsString:@"depart_2"]) {
+                NSArray *idAry = navigationAction.request.URL.pathComponents;
+                if (idAry.count == 5 && ![(NSString*)idAry[4] isEqualToString:@"null"]) {
+                    subId = [idAry[idAry.count - 3] integerValue];
+                    childId = [idAry[idAry.count - 2] integerValue];
+                    key = idAry[idAry.count - 1];
+                    //新增广告图片
+                    coverView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+                    UIImageView *backImage = [[UIImageView alloc] initWithFrame:coverView.frame];
+                    backImage.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://pic.medapp.ranknowcn.com/client/image.php?key=%@&type=L&version=3.0",key]]]];
+                    [coverView addSubview:backImage];
+                    
+                    UIButton *connectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+                    connectBtn.frame = CGRectMake(0, SCREEN_HEIGHT - 50, SCREEN_WIDTH, 50);
+                    [connectBtn setBackgroundColor:UIColorFromHex(0x0168b7,1)];
+                    [connectBtn addTarget:self action:@selector(connectBtnClick) forControlEvents:UIControlEventTouchUpInside];
+                    [connectBtn setTitle:@"立即咨询" forState:UIControlStateNormal];
+                    [coverView addSubview:connectBtn];
+                    
+                    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(coverViewTapAction)];
+                    backImage.userInteractionEnabled = YES;
+                    [backImage addGestureRecognizer:gesture];
+                    
+                    [[UIApplication sharedApplication].keyWindow addSubview:coverView];
+                }
+                else{
+                    if (idAry.count == 4) {
+                        subId = [idAry[idAry.count - 2] integerValue];
+                        childId = [idAry[idAry.count - 1] integerValue];
+                    }
+                    else{
+                        subId = [idAry[idAry.count - 3] integerValue];
+                        childId = [idAry[idAry.count - 2] integerValue];
+                    }
+                    [self connectBtnClick];
+                }
+            }
+            else{
+                NSInteger officeId = [navigationAction.request.URL.lastPathComponent integerValue];
+                CMQAViewController *qaViewController = [[CMQAViewController alloc] initWithNibName:@"CMQAViewController" bundle:nil];
+                qaViewController.officeType = officeId;
+                [[CMAppDelegate Delegate].navigationController pushViewController:qaViewController animated:YES];
+            }            
+            decisionHandler(WKNavigationActionPolicyAllow);
+            return;
         }
-        else if ([request.URL.absoluteString containsString:@"ads"]){
-            NSInteger officeId = [request.URL.lastPathComponent integerValue];
+        else if ([navigationAction.request.URL.absoluteString containsString:@"ads"]){
+            NSInteger officeId = [navigationAction.request.URL.lastPathComponent integerValue];
             CMNewQueryViewController *queryVC = [CMNewQueryViewController new];
             queryVC.officeType = officeId;
             queryVC.subOfficeType = 0;
             queryVC.chatUserID = [CureMeUtils defaultCureMeUtil].userID;
             [self.navigationController pushViewController:queryVC animated:YES];
+            decisionHandler(WKNavigationActionPolicyCancel);
+            return;
         }
-        else if ([request.URL.absoluteString containsString:@"news"]){
-            WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
-            webViewController.strURL = [NSString stringWithFormat:@"http://%@/h5_new/news.html?appid=1&addrdetail=%@&source=apple",DOMAIN_NAME,[CureMeUtils defaultCureMeUtil].encodedLocateInfo];
-            [self.navigationController pushViewController:webViewController animated:YES];
-            return NO;
+        else if ([navigationAction.request.URL.absoluteString containsString:@"news"]){
+            CMMainTabViewController *mainTabVC = (CMMainTabViewController *)[[self.navigationController viewControllers] objectAtIndex:0];
+            [mainTabVC tabWasSelected:2];
+            decisionHandler(WKNavigationActionPolicyCancel);
+            return;
         }
-        else if ([request.URL.absoluteString containsString:@"quickask"]){
+        else if ([navigationAction.request.URL.absoluteString containsString:@"quickask"]){
             CMQuickAskChoosenAndLocationViewController *quickAskView = [[CMQuickAskChoosenAndLocationViewController alloc] init];
             
             quickAskView.isQuickAskView = YES;
             
             [[CMAppDelegate Delegate].navigationController pushViewController:quickAskView animated:YES];
+            decisionHandler(WKNavigationActionPolicyCancel);
+            return;
         }
     }
     else{
+        NSString *strURL = navigationAction.request.URL.absoluteString;
+        if ([[strURL lowercaseString] containsString:@"http://new.medapp.ranknowcn.com/famous_doctors/doctor_info.php?did="] && ![[strURL lowercaseString] containsString:@"&"]){
+            
+            WebViewController *newWeb = [[WebViewController alloc] init];
+            newWeb.strURL = strURL;
+            newWeb.isPaymentPage = YES;
+            [self.navigationController pushViewController:newWeb animated:YES];
+            decisionHandler(WKNavigationActionPolicyCancel);
+            return;
+        }
+
         WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
-        webViewController.strURL = request.URL.absoluteString;
+        webViewController.strURL = navigationAction.request.URL.absoluteString;
         [self.navigationController pushViewController:webViewController animated:YES];
-     return NO;
+        decisionHandler(WKNavigationActionPolicyCancel);
+        return;
     }
-    return NO;
+    decisionHandler(WKNavigationActionPolicyCancel);
+    return;
 }
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        [webView reload];
-//    });
-    
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html" inDirectory:@"local_h5"];
-    NSURL *url = [NSURL fileURLWithPath:path];
-    [webView loadRequest:[NSURLRequest requestWithURL:url]];
+
+//protoclView
+- (void)pushNewQuary:(NSInteger)office1 and:(NSInteger)office2{
+    [coverView removeFromSuperview];
+    CMNewQueryViewController *qureVc = [CMNewQueryViewController new];
+    qureVc.officeType = office1;
+    qureVc.subOfficeType = office2;
+    [self.navigationController pushViewController:qureVc animated:YES];
 }
+
+- (void)coverViewTapAction{
+    [coverView removeFromSuperview];
+}
+- (void)connectBtnClick{
+    NSNumber *hasMarkApp = [[NSUserDefaults standardUserDefaults] objectForKey:HAS_AGREEPROTOCOL];
+    if (!hasMarkApp || hasMarkApp.integerValue == 0) {
+        CMQAProtocolView *protocl = [[CMQAProtocolView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        protocl.CmLocationDelegate = self;
+        protocl.office1 = subId;
+        protocl.office2 = childId;
+        CGRect temp = protocl.protcolViewFrame;
+        temp.origin.y += 50*SCREEN_HEIGHT/667;
+        protocl.protcolViewFrame = temp;
+
+        [[UIApplication sharedApplication].keyWindow addSubview:protocl];
+    }
+    else{
+        [coverView removeFromSuperview];
+        CMNewQueryViewController *queryVC = [CMNewQueryViewController new];
+        queryVC.officeType = subId;
+        queryVC.subOfficeType = childId;
+        queryVC.chatUserID = [CureMeUtils defaultCureMeUtil].userID;
+        [self.navigationController pushViewController:queryVC animated:YES];
+    }
+}
+//- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+//    NSString *schemeStr = request.URL.scheme;
+//    if ([request.URL.absoluteString containsString:@"index.html"]) {
+//        return YES;
+//    }
+//    
+//    if ([schemeStr isEqualToString:@"medapp"]) {
+//        if ([request.URL.absoluteString containsString:@"depart"]) {
+//            NSInteger officeId = [request.URL.lastPathComponent integerValue];
+//            CMQAViewController *qaViewController = [[CMQAViewController alloc] initWithNibName:@"CMQAViewController" bundle:nil];
+//            qaViewController.officeType = officeId;
+//            [[CMAppDelegate Delegate].navigationController pushViewController:qaViewController animated:YES];
+//            return YES;
+//        }
+//        else if ([request.URL.absoluteString containsString:@"ads"]){
+//            NSInteger officeId = [request.URL.lastPathComponent integerValue];
+//            CMNewQueryViewController *queryVC = [CMNewQueryViewController new];
+//            queryVC.officeType = officeId;
+//            queryVC.subOfficeType = 0;
+//            queryVC.chatUserID = [CureMeUtils defaultCureMeUtil].userID;
+//            [self.navigationController pushViewController:queryVC animated:YES];
+//        }
+//        else if ([request.URL.absoluteString containsString:@"news"]){
+//            WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
+//            webViewController.strURL = [NSString stringWithFormat:@"http://%@/h5_new/news.html?appid=1&addrdetail=%@&source=apple",DOMAIN_NAME,[CureMeUtils defaultCureMeUtil].encodedLocateInfo];
+//            [self.navigationController pushViewController:webViewController animated:YES];
+//            return NO;
+//        }
+//        else if ([request.URL.absoluteString containsString:@"quickask"]){
+//            CMQuickAskChoosenAndLocationViewController *quickAskView = [[CMQuickAskChoosenAndLocationViewController alloc] init];
+//            
+//            quickAskView.isQuickAskView = YES;
+//            
+//            [[CMAppDelegate Delegate].navigationController pushViewController:quickAskView animated:YES];
+//        }
+//    }
+//    else{
+//        WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
+//        webViewController.strURL = request.URL.absoluteString;
+//        [self.navigationController pushViewController:webViewController animated:YES];
+//     return NO;
+//    }
+//    return NO;
+//}
+
+- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error{
+//    NSString *path = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html" inDirectory:@"local_h5"];
+//    NSURL *url = [NSURL fileURLWithPath:path];
+//    [webView loadRequest:[NSURLRequest requestWithURL:url]];
+}
+
+//- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
+////    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+////        [webView reload];
+////    });
+//    
+//    NSString *path = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html" inDirectory:@"local_h5"];
+//    NSURL *url = [NSURL fileURLWithPath:path];
+//    [webView loadRequest:[NSURLRequest requestWithURL:url]];
+//}
 
 - (void)dealloc
 {
@@ -356,7 +505,7 @@ BOOL isLFMShow;
     addressTF.frame = temp;
     
     //reload 主页
-    NSURLRequest *url = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/h5_new/index.html?appid=1&addrdetail=%@&source=apple",DOMAIN_NAME,[CureMeUtils defaultCureMeUtil].encodedLocateInfo]]];
+    NSURLRequest *url = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/h5_new/index.html?appid=1&addrdetail=%@&source=apple&vname=%@",DOMAIN_NAME,[CureMeUtils defaultCureMeUtil].encodedLocateInfo,[CureMeUtils defaultCureMeUtil].appVersion]]];
     [html5WebView loadRequest:url];
 
 }

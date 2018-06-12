@@ -6,8 +6,6 @@
 //  Copyright (c) 2012年 Tim. All rights reserved.
 //
 
-
-
 #import "CustomBaseViewController.h"
 #import "LoginViewController.h"
 #import "CMMyChatListViewController.h"
@@ -105,6 +103,11 @@
         [activityIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
         [self.view addSubview:activityIndicator];
     }
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
     
 }
 
