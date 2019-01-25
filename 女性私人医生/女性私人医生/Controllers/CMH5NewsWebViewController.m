@@ -259,7 +259,7 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[NSString stringWithFormat:@"cell%ld",indexPath.row]];
         
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(286*SCREEN_WIDTH/375, 12, 69*SCREEN_WIDTH/375, 69*SCREEN_HEIGHT/667)];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(286*SCREEN_WIDTH/375, 12, 69*SCREEN_WIDTH/375, 69*SCREEN_WIDTH/375)];
         imageView.tag = 1;
         imageView.layer.cornerRadius = 10;
         imageView.layer.masksToBounds = YES;

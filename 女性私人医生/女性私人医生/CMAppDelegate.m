@@ -19,7 +19,7 @@
 #import "BubbleViewController.h"
 #import "BookDetailInfoViewController.h"
 #import "CMChooseQueryOfficeTableViewController.h"
-
+#import "CMShopViewController.h"
 #import "CMMainPageViewController.h"
 
 #import <sys/utsname.h>
@@ -225,8 +225,10 @@ void uncaughtExceptionHandler(NSException *exception)
     
     // 5. 个人中心Page
     PerCenterViewController *perCenterVC = [[PerCenterViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    // 6. 优品商城
+    CMShopViewController *shopVc = [[CMShopViewController alloc] init];
     
-    mainTabViewController.viewControllers = [NSArray arrayWithObjects:mainPageVC, listViewController, webVc, /*bookListViewController,*/ perCenterVC, nil];
+    mainTabViewController.viewControllers = [NSArray arrayWithObjects:mainPageVC, listViewController, webVc, perCenterVC, shopVc,nil];
     mainTabViewController.selectedIndex = 0;
     
     _navigationController = [[CureMeNavigationController alloc] initWithRootViewController:mainTabViewController];

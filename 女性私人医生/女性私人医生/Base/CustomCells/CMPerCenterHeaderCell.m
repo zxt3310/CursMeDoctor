@@ -49,7 +49,7 @@
         headImgVew.image = [UIImage imageWithData:imageData];
     }
     else{
-        headImgVew.image = [UIImage imageNamed:@"personalHeaderimage"];
+        headImgVew.image = [UIImage imageNamed:@"ico_head_me"];
     }
     [self.contentView addSubview:headImgVew];
     

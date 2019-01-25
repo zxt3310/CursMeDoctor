@@ -53,21 +53,28 @@
     }
     
     UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(0, 0, 9, 18);
+    button.frame = CGRectMake(0, 5, 9, 18);
     [button setImage:[CMImageUtils defaultImageUtil].navBackBtnNormal forState:UIControlStateNormal];
     [button setImage:[CMImageUtils defaultImageUtil].navBackBtnSelected forState:UIControlStateHighlighted];
     [button setImage:[CMImageUtils defaultImageUtil].navBackBtnSelected forState:UIControlStateSelected];
 
     [button addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
+    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 20, 36)];
     
-    UIBarButtonItem *barBtnItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    if ([[[[UIDevice currentDevice] systemVersion] substringToIndex:1] intValue]>=7) {
-        UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-        negativeSpacer.width = -10;
-        self.navigationItem.leftBarButtonItems = @[negativeSpacer, barBtnItem];
-    }else{
-        self.navigationItem.leftBarButtonItem = barBtnItem;
-    }
+    [contentView addSubview:button];
+    
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:contentView];
+    
+    self.navigationItem.leftBarButtonItem = barButtonItem;
+    
+//    UIBarButtonItem *barBtnItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+//    if ([[[[UIDevice currentDevice] systemVersion] substringToIndex:1] intValue]>=7) {
+//        UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+//        negativeSpacer.width = -10;
+//        self.navigationItem.leftBarButtonItems = @[negativeSpacer, barBtnItem];
+//    }else{
+//        self.navigationItem.leftBarButtonItem = barBtnItem;
+//    }
     //self.navigationItem.leftBarButtonItem = barBtnItem;
 
     UIView *newMsgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 41, 41)];

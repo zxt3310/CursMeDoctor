@@ -33,8 +33,8 @@
             if ([UIScreen mainScreen].bounds.size.height == 480) {
                 [imageView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"引导页%d-960.png",i]]];
             }
-            if ([UIScreen mainScreen].bounds.size.height == 812){
-                [imageView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"引导页%d-2436.png",i]]];
+            if (SCREEN_HEIGHT/SCREEN_WIDTH >= 2) {
+                [imageView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"引导页%d-1125.png",i]]];
             }
             [self addSubview:imageView];
             if (i == DEF_GUIDE_COUNT - 1) {

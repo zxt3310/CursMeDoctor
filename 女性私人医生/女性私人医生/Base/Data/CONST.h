@@ -26,7 +26,7 @@
 #define SCREEN_HEIGHT [[UIScreen mainScreen] bounds].size.height
 #define SCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
 #define NAVIGATIONBAR_HEIGHT (IOS_VERSION >= 7.0 ? 44 : 0)
-#define FitIpX(a) (SCREEN_HEIGHT == 812)? a+20 : a
+#define FitIpX(a) ((SCREEN_HEIGHT/SCREEN_WIDTH >= 2)? a+20 : a)
 
 // 颜色
 #define CM_BACKGROUND_COLOR [UIColor colorWithRed:247.0/255 green:247.0/255 blue:247.0/255 alpha:1.0]

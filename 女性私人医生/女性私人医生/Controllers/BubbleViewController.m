@@ -236,14 +236,6 @@ NSString *saveTitle;
     temp = _startQueryView.frame;
     temp.origin.y = temp.origin.y - (FitIpX(0));
     _startQueryView.frame = temp;
-    
-//    temp = _queryInputView.frame;
-//    temp.origin.y = temp.origin.y - (FitIpX(0));
-//    _queryInputView.frame = temp;
-    
-//    temp = _queryInputField.frame;
-//    temp.origin.y = temp.origin.y - (FitIpX(0));
-//    _queryInputField.frame = temp;
 }
 
 -(void)yesBtnClicked:(UIButton *)sender{

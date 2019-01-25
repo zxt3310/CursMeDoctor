@@ -62,7 +62,7 @@ BOOL isLFMShow;
 }
 
 - (void)setTopView{
-    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, (SCREEN_HEIGHT == 812)? 0:20, SCREEN_WIDTH, FitIpX(88))];
+    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, (SCREEN_HEIGHT/SCREEN_WIDTH >= 2)? 0:20, SCREEN_WIDTH, FitIpX(88))];
     topView.backgroundColor = UIColorFromHex(0xF65378, 0.8);
     topView.layer.shadowColor = [UIColor blackColor].CGColor;
     topView.layer.shadowOffset = CGSizeMake(0, 2);

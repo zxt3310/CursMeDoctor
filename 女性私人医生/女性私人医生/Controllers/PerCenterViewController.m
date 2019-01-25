@@ -63,12 +63,6 @@
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
     self.tableView.backgroundView = nil;
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]]];
     
@@ -205,7 +199,7 @@
     }
 
     else if (section == 1) {
-        return 3;
+        return 1;
     }
     else if (section == 2) {
         return 1;
@@ -244,18 +238,19 @@
             UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(50, 17, 100, 16)];
             [cell.contentView addSubview:titleLb];
             
-            if (indexPath.row == 0) {
-                leftView.image = [UIImage imageNamed:@"ico_wdyy.png"];
-                titleLb.text = @"我的预约";
-            }
-            else if (indexPath.row == 1){
-                leftView.image = [UIImage imageNamed:@"ico_msg_wdzx.png"];
+//            if (indexPath.row == 0) {
+//                leftView.image = [UIImage imageNamed:@"ico_wdyy.png"];
+//                titleLb.text = @"我的预约";
+//            }
+//            else
+            if (indexPath.row == 0){
+                leftView.image = [UIImage imageNamed:@"ico_msg_wdzx"];
                 titleLb.text = @"我的咨询";
             }
-            else{
-                leftView.image = [UIImage imageNamed:@"serviceorder.png"];
-                titleLb.text = @"服务订单";
-            }
+//            else{
+//                leftView.image = [UIImage imageNamed:@"serviceorder.png"];
+//                titleLb.text = @"服务订单";
+//            }
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         return cell;
@@ -325,30 +320,31 @@
 //    }
 //    else
     if (indexPath.section == 1){
-        if (indexPath.row == 0) {
-            MyBookListViewController *myBookListVC = [[MyBookListViewController alloc] initWithNibName:@"MyBookListViewController" bundle:nil];
-            myBookListVC.isMainTabPage = false;
-            myBookListVC.title = @"我的预约";
-            [self.navigationController pushViewController:myBookListVC animated:YES];
-        }
-        else if (indexPath.row == 1){
-            
+//        if (indexPath.row == 0) {
+//            MyBookListViewController *myBookListVC = [[MyBookListViewController alloc] initWithNibName:@"MyBookListViewController" bundle:nil];
+//            myBookListVC.isMainTabPage = false;
+//            myBookListVC.title = @"我的预约";
+//            [self.navigationController pushViewController:myBookListVC animated:YES];
+//        }
+//        else
+        if (indexPath.row == 0){
+        
             CMMainTabViewController *mainTabVC = (CMMainTabViewController *)[[self.navigationController viewControllers] objectAtIndex:0];
             
             [mainTabVC tabWasSelected:1];
         }
-        else{
-            if ([CureMeUtils defaultCureMeUtil].hasLogin) {
-                WebViewController *webVc = [WebViewController new];
-                webVc.strURL = [NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/famous_doctors/service_order_list.php?userid=%ld",[CureMeUtils defaultCureMeUtil].userID];
-                [self.navigationController pushViewController:webVc animated:YES];
-            }
-            else{
-                CMLoginViewController *loginView = [[CMLoginViewController alloc] init];
-                loginView.cmDelegate = self;
-                [self.navigationController pushViewController:loginView animated:YES];
-            }
-        }
+//        else{
+//            if ([CureMeUtils defaultCureMeUtil].hasLogin) {
+//                WebViewController *webVc = [WebViewController new];
+//                webVc.strURL = [NSString stringWithFormat:@"http://new.medapp.ranknowcn.com/famous_doctors/service_order_list.php?userid=%ld",[CureMeUtils defaultCureMeUtil].userID];
+//                [self.navigationController pushViewController:webVc animated:YES];
+//            }
+//            else{
+//                CMLoginViewController *loginView = [[CMLoginViewController alloc] init];
+//                loginView.cmDelegate = self;
+//                [self.navigationController pushViewController:loginView animated:YES];
+//            }
+//        }
     }
     else if (indexPath.section == 2){
         CMPersonSetingViewController *setingVc = [[CMPersonSetingViewController alloc] init];
