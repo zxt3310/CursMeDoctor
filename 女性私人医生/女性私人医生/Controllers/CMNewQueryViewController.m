@@ -51,6 +51,7 @@ NSInteger hospitalID;
 NSString *doctorTag;
 NSString *welcomeStr;
 NSString *dpicKey;
+NSString *SWT_url;
 UILabel *infoLabel;
 
 UIView *queryInputView;
@@ -265,6 +266,10 @@ UIView *infoView;
     if (_chatSWTID>0) {
         [self initSWTChat];
     }
+    
+    //测试crash
+//    NSArray *testAry = @[@"a",@"b",@"c"];
+//    NSLog(@"%@",testAry[9]);
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -1857,6 +1862,7 @@ UIView *infoView;
             hospitalIntro = jsonData[@"data"][@"hintro"];
             hospitalCookie = jsonData[@"data"][@"cookie"];
             hospitalUrl = jsonData[@"data"][@"url"];
+            SWT_url = jsonData[@"data"][@"swturl"];
             _chatSWTID = [jsonData[@"data"][@"chatid"] integerValue];
             [self getUrlBody];
         });
@@ -1970,15 +1976,15 @@ UIView *infoView;
         NSString *urlStr = [NSString stringWithFormat:@"http://%@/LR/CdCheck.aspx", hospitalParams[@"swtdomain"]];
         NSString *post;
         if (msg.length ==0) {
-            post = [NSString stringWithFormat:@"pp=%@&maxid=%ld&lng=cn&id=%@&_text=&sid=%@", hospitalParams[@"pp"], (long)swtMaxID, hospitalParams[@"id"], hospitalParams[@"sid"]];
+            post = [NSString stringWithFormat:@"pp=%@&maxid=%ld&lng=cn&id=%@&_text=&sid1=%@&sid=%@", hospitalParams[@"pp"], (long)swtMaxID, hospitalParams[@"id"], hospitalParams[@"sid"],hospitalParams[@"sid"]];
         }else{
             NSString *txt = [NSString stringWithFormat:@",ACT_TEMP|1|,%@", msg];
             NSString *encodedTXT = urlEncode(txt);
-            post = [NSString stringWithFormat:@"pp=%@&maxid=%ld&lng=cn&id=%@&_text=%@&sid=%@", hospitalParams[@"pp"], (long)swtMaxID, hospitalParams[@"id"], encodedTXT, hospitalParams[@"sid"]];
+            post = [NSString stringWithFormat:@"pp=%@&maxid=%ld&lng=cn&id=%@&_text=%@&sid=%@&sid1=%@", hospitalParams[@"pp"], (long)swtMaxID, hospitalParams[@"id"], encodedTXT, hospitalParams[@"sid"],hospitalParams[@"sid"]];
         }
         urlStr = [NSString stringWithFormat:@"%@?%@", urlStr, post];
         NSDictionary *additionalHeader = nil;
-        additionalHeader = [NSDictionary dictionaryWithObjectsAndKeys:@"1", @"appid", hospitalCookie, @"Cookie", nil];
+        additionalHeader = [NSDictionary dictionaryWithObjectsAndKeys:@"1", @"appid", hospitalCookie, @"Cookie",SWT_url,@"Referer", nil];
         NSMutableDictionary *respDict = [[NSMutableDictionary alloc] init];
         NSData *response = sendGetReqWithHeaderAndRespDict(urlStr, additionalHeader, respDict, false);
         
@@ -1996,7 +2002,7 @@ UIView *infoView;
                 [self sendMsgOK:msg maxid:swtMaxID userid:_swtUserID];
             }
             
-            NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
+            NSString *strResp = [[NSString alloc] initWithData:response encoding:NSASCIIStringEncoding];
             strResp = [strResp stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             NSString *tmp = [strResp stringByReplacingOccurrencesOfString:@"%u" withString:@"\\u"];
             tmp = [tmp stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -2018,8 +2024,8 @@ UIView *infoView;
             }
             for(NSString *line in firstSplit) {
                 if ([line rangeOfString:@"|direct|"].location != NSNotFound || [line rangeOfString:@"|close|"].location != NSNotFound || [line rangeOfString:@"|end|"].location != NSNotFound) {
-                    [self closeSWT];
-                    return;
+                        [self closeSWT];
+                        return;
                 }
                 NSArray *secondSplit = [line componentsSeparatedByString:@"||"];
                 if (secondSplit.count==1)

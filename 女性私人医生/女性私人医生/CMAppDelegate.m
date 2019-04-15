@@ -30,7 +30,7 @@
 /**
  * 实现NSUncaughtExceptionHandler方法
  */
-/*
+
 NSString *getCrashFilePathName()
 {
     NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -70,7 +70,7 @@ void uncaughtExceptionHandler(NSException *exception)
     [fileHandler writeData:[[NSString stringWithFormat:@"\r\n%@", name] dataUsingEncoding:NSUTF8StringEncoding]];
     [fileHandler writeData:[[NSString stringWithFormat:@"\r\n%@", stackRetAddr] dataUsingEncoding:NSUTF8StringEncoding]];
     [fileHandler closeFile];
-}*/
+}
 
 @implementation CMAppDelegate
 {
@@ -84,7 +84,7 @@ void uncaughtExceptionHandler(NSException *exception)
     return (CMAppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
-/*
+
 //http://www.ranknowcn.com/webservices/android/report_crash.php?ios
 //POST:
 //appname
@@ -109,7 +109,7 @@ void uncaughtExceptionHandler(NSException *exception)
         uname(&systemInfo);
         NSString *deviceString = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
         
-        NSString *post = [NSString stringWithFormat:@"appname=CureMe&appversion=%@&device=%@&imei=%@&osversion=%.f&exception=%@", APP_VERSION, deviceString, getUDID(), IOS_VERSION, [strContent stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        NSString *post = [NSString stringWithFormat:@"appname=CureMe&appversion=%@&device=%@&imei=%@&osversion=%.f&exception=%@", APP_VERSION, deviceString, [CureMeUtils defaultCureMeUtil].UDID, IOS_VERSION, [strContent stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         
         //        [[BaseUtils defaultBaseUtil] writeDataToExceptionFile:@"threadUploadCrashDataWithFileHandle begin" withType:LOGTYPE_CRASH];
         
@@ -123,20 +123,20 @@ void uncaughtExceptionHandler(NSException *exception)
         NSError *err = nil;
         [[NSFileManager defaultManager] removeItemAtPath:filePathName error:&err];
     }
-}*/
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {    
-    //sleep(2);
+    sleep(2);
     // ======== 1. 注册异常处理
     // Catch C Exception
-   // InstallUncaughtExceptionHandler();
+    InstallUncaughtExceptionHandler();
     
     // Catch NSException
-    //NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+    NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     
     // 如果上次打开有crash，在此处或者rootviewcontroller处，开始一次Crash文件上传
-    //[self performSelectorInBackground:@selector(threadUploadCrashDataWithFileHandle) withObject:nil];
+    [self performSelectorInBackground:@selector(threadUploadCrashDataWithFileHandle) withObject:nil];
     
     // Icon未读消息数清0
     application.applicationIconBadgeNumber = 1;
