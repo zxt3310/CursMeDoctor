@@ -114,11 +114,13 @@
     NSString *addStr = [gpsArray[gpsSelectCombox.selectId] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     //由于主页城市名称只取省市的名字（不带省市单位）而接口数据不带省市单位，故增加单位方便取值。
     NSString *province = [NSString stringWithFormat:@"%@市",city1NameAry[gpsSelectCombox.selectId]];
+    NSString *region = city1NameAry[gpsSelectCombox.selectId];
     NSString *city = city2NameAry[gpsSelectCombox.selectId];
     if (addStr) {
         [[NSUserDefaults standardUserDefaults] setObject:addStr forKey:EMULATE_LOCATION];
         [[NSUserDefaults standardUserDefaults] setObject:province forKey:EMULATE_LOCATION_PROVINCE];
         [[NSUserDefaults standardUserDefaults] setObject:city forKey:EMULATE_LOCATION_CITY];
+        [[NSUserDefaults standardUserDefaults] setObject:region forKey:EMULATE_LOCATION_REGION];
         [[NSUserDefaults standardUserDefaults] synchronize];
         [self alert:@"已开启虚拟定位"];
     }

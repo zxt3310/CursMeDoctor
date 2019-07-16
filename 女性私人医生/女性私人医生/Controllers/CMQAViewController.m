@@ -31,7 +31,9 @@
     UIView *qa_selectNavView;
     CGPoint qa_navViewStartPosPoint;
     CMQAProtocolView *protcolView;
-
+    
+    NSString *adsPicDes; //广告大图
+    NSString *adsLink;    //广告链接
 }
 @end
 
@@ -161,6 +163,68 @@ UIView *protocolView1;
     navView.contentSize = contentSize;
     
     [self.view addSubview:navView];
+    
+    [self prepareAds];
+
+}
+//2019-07-16 新增子科室广告
+- (void)prepareAds{
+    NSInteger departId = self.officeType;
+    NSInteger city1 = [CureMeUtils defaultCureMeUtil].userRegion;
+    NSInteger city2 = [CureMeUtils defaultCureMeUtil].userCity;
+    
+    NSString *urlStr = [NSString stringWithFormat:@"http://lx-medapp.ranknowcn.com/api/data?type=getDepart"];
+    NSString *post = [NSString stringWithFormat:@"depart_id=%ld&city1=%ld&city2=%ld",(long)departId,(long)city1,(long)city2];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *response = sendRequestWithFullURL(urlStr, post);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSDictionary *resDic = parseJsonResponse(response);
+            NSNumber *ret = [resDic objectForKey:@"res"];
+            if (!response || !resDic || ret.integerValue !=0) {
+                NSLog(@"科室广告获取出错");
+                return ;
+            }
+            
+            NSDictionary *adsDic = [resDic objectForKey:@"data"];
+            if (!adsDic || adsDic.count == 0) {
+                NSLog(@"此地区无广告");
+                return;
+            }
+            
+            NSString *pic = [adsDic objectForKey:@"pic"];
+            adsPicDes = [adsDic objectForKey:@"pic_detail"];
+            adsLink = [adsDic objectForKey:@"jump_link_url"];
+            
+            UIImage *adsImg = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:pic]]];
+            CGFloat width = adsImg.size.width;
+            CGFloat height = adsImg.size.height;
+            CGFloat per = width/height;
+            CGFloat imgHeight = SCREEN_WIDTH/per;
+            
+            UIImageView *adsView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH, imgHeight)];
+            adsView.image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:pic]]];
+            adsView.userInteractionEnabled = YES;
+            [self.view addSubview:adsView];
+            
+            UITapGestureRecognizer *adsTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(adsTap)];
+            [adsView addGestureRecognizer:adsTap];
+            
+            CGRect temp = self.qaTable.frame;
+            temp.origin.y += imgHeight;
+            temp.size.height -= imgHeight;
+            self.qaTable.frame = temp;
+        });
+    });
+}
+
+- (void)adsTap{
+    if (adsPicDes.length>0 && 0) {
+        
+    }else{
+        WebViewController  *webVC = [[WebViewController alloc] init];
+        webVC.strURL = adsLink;
+        [self.navigationController pushViewController:webVC animated:YES];
+    }
 }
 
 -(void)navBtnClicked:(UIButton *)sender{

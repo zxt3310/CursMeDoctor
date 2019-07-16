@@ -68,6 +68,7 @@
 #define EMULATE_LOCATION @"emulateLocationAddress"
 #define EMULATE_LOCATION_PROVINCE @"emulateProvince"
 #define EMULATE_LOCATION_CITY @"emulateCity"
+#define EMULATE_LOCATION_REGION @"region"
 
 #define APP_LAUNCHOPTION @"AppLaunchingOptions"
 

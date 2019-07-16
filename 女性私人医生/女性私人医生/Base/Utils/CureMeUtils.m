@@ -1346,6 +1346,24 @@ NSString *officeStringWithType(NSInteger officeType)
     }
     else{
         _encodedLocateInfo = addressStr;
+        
+        NSString *region = [[NSUserDefaults standardUserDefaults] objectForKey:EMULATE_LOCATION_REGION];
+        NSString *city = [[NSUserDefaults standardUserDefaults] objectForKey:EMULATE_LOCATION_CITY];
+        
+        NSNumber *rID = [self regionIDWithRegionName:region];
+        if (rID) {
+            // 本地保存省、直辖市
+            [self updateUserRegion:rID];
+            
+            // 本地保存市区
+            NSArray *cityArray = [[CureMeUtils defaultCureMeUtil] cityArrayWithRegionID:rID.integerValue];
+            for (NSDictionary *data in cityArray) {
+                if ([city isEqualToString:[data objectForKey:@"name"]]) {
+                    [self updateUserCity:[data objectForKey:@"id"] andCityName:city];
+                    break;
+                }
+            }
+        }
     }
 
     // 保存地址
