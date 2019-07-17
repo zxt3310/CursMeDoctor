@@ -2000,6 +2000,7 @@ UIView *infoView;
                 [questionInput resignFirstResponder];
                 [self addUserClientMessage:msg msgDate:[NSDate date]];
                 [self sendMsgOK:msg maxid:swtMaxID userid:_swtUserID];
+                 [self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
             }
             
             NSString *strResp = [[NSString alloc] initWithData:response encoding:NSASCIIStringEncoding];
@@ -2022,9 +2023,6 @@ UIView *infoView;
                         NSDictionary *dataList = [listAry firstObject];
                         NSString *message = [dataList objectForKey:@"message"];
                         if (message.length == 0) {
-                            if (msg.length>0) {
-                                [self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
-                            }
                             return;
                         }
                         swtMaxID = [[[receiveDic objectForKey:@"data"] objectForKey:@"maxid"] integerValue];;
