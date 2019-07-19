@@ -328,7 +328,12 @@
     if ([_html5View canGoBack])
         [_html5View goBack];
     else
-        [super back:sender];
+        if (self.iskst) {
+            NSArray *ary = self.navigationController.viewControllers;
+            [self.navigationController popToViewController:ary[ary.count - 3] animated:YES];
+        }else{
+            [super back:sender];
+        }
 }
 
 - (void)processJSEvent:(NSData *)data

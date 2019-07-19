@@ -30,6 +30,9 @@
 //#warning will be back
 //@property (nonatomic, retain) NSArray *photos;
 
+//19-07-19新增快商通处理 标识符 如果判断是快商通 pop的时候要跳过两页
+@property BOOL iskst;
+
 @property bool isMainTabPage;
 @property (nonatomic, strong) NSString *strURL;
 @property (strong, nonatomic) IBOutlet UIWebView *html5View;

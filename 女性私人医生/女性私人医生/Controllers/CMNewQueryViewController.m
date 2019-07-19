@@ -16,6 +16,7 @@
 #import "BookDetailInfoViewController.h"
 #import <CommonCrypto/CommonDigest.h>
 
+#import "WebViewController.h"
 #import "MapViewController.h"
 
 #define iatao_server_url @"http://yiaitao.lifehealthcare.com/api/"
@@ -1864,6 +1865,14 @@ UIView *infoView;
             hospitalUrl = jsonData[@"data"][@"url"];
             SWT_url = jsonData[@"data"][@"swturl"];
             _chatSWTID = [jsonData[@"data"][@"chatid"] integerValue];
+            //19-07-19新增快商通处理
+            if ([jsonData[@"data"][@"chattype"] isEqualToString:@"kst"]) {
+                WebViewController *webVC = [[WebViewController alloc] init];
+                webVC.strURL = hospitalUrl;
+                webVC.iskst = YES;
+                [self.navigationController pushViewController:webVC animated:YES];
+                return;
+            }
             [self getUrlBody];
         });
     });
