@@ -34,6 +34,9 @@
 // 通知对聊天消息进行Pull
 #define NTF_PullNewChatMsgs @"N_pullNewChatMsgs"
 
+//通知支付成功 开始对话
+#define NTF_PAYBACK_CHAT @"pay_back_chat"
+
 // 通知缩略图已经点击
 #define NTF_ChatMsgThumbnailClick @"N_chatMsgThumbnailClick"
 

@@ -18,6 +18,7 @@
 
 #import "WebViewController.h"
 #import "MapViewController.h"
+#import "chooseDoctorViewController.h"
 
 #define iatao_server_url @"http://yiaitao.lifehealthcare.com/api/"
 
@@ -236,6 +237,9 @@ UIView *infoView;
     
     // 0. 注册Notification
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ntfPullNewMsgs:) name:NTF_PullNewChatMsgs object:nil];
+    
+    // 2019-08-13新增 注册通知 选择医生付费后 开始对话
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(payBackToChat:) name:NTF_PAYBACK_CHAT object:nil];
     
     // 载入中的View
     float topY = 140;
@@ -1383,14 +1387,8 @@ UIView *infoView;
     // http://n2.medapp.ranknowcn.com:3810/message/post?from=0002&to=0001&data=123123
     
     // 发送消息新请求 action=sendmessage&fromid=xxx&chatid=xxx&msg=xxxxx&img=xxx&hospitalid=xxx
-    //        NSString *post = [[NSString alloc] initWithFormat:@"action=sendmessage&fromid=%d&chatid=%d&msg=%@&img=", [CureMeUtils defaultCureMeUtil].userID, _chatID, encodeMessage];
     NSString *post = [[NSString alloc] initWithFormat:@"action=chat_post2&hospitalid=%ld&fromid=%ld&toid=%ld&chatid=%ld&msg=%@&img=&type=text", (long)hospitalID, (long)[CureMeUtils defaultCureMeUtil].userID, (long)_doctorID, (long)_chatID, encodeMessage];
     NSData *response = sendRequest(@"msg.php", post);
-    
-//    NSString *urlStr = @"http://bd.yiaitao.net/api/msg.php?action=chat_post2&version=3.0";
-//    NSString *post = [[NSString alloc] initWithFormat:@"hospitalid=%ld&fromid=%ld&toid=%ld&chatid=%ld&msg=%@&img=&type=text", (long)hospitalID, (long)[CureMeUtils defaultCureMeUtil].userID, (long)_doctorID, (long)_chatID, encodeMessage];
-//    
-//    NSData *response = sendFullRequest(urlStr, post, nil, NO, NO);
     
     NSString *strResp = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
     NSLog(@"chat_post2: %@ resp: %@", post, strResp);
@@ -1427,26 +1425,22 @@ UIView *infoView;
     NSString *sendQuestion = urlEncode(question);
     NSLog(@"sendQuestion: before encoding: %@ after encoding: %@", question, sendQuestion);
     
-    //NSString *encodeAddr = [CureMeUtils defaultCureMeUtil].encodedLocateInfo;
-    //    NSString *post = [NSString stringWithFormat:@"action=postquestion&userid=%d&type=%d&typechild=%d&question=%@&img=&addrdetail=%@&MCC=%@&MNC=%@&LAC=%d&CID=%d", [CureMeUtils defaultCureMeUtil].userID, _officeType, _subOfficeType, sendQuestion, encodeAddr ? encodeAddr : @"",
-    //                      [CureMeUtils defaultCureMeUtil].gsmData.mcc,
-    //                      [CureMeUtils defaultCureMeUtil].gsmData.mnc,
-    //                      [CureMeUtils defaultCureMeUtil].gsmData.lac,
-    //                      [CureMeUtils defaultCureMeUtil].gsmData.cellID];
     NSString *post;
     if (_officeType == 98) {
-        post = [NSString stringWithFormat:@"action=postquestion&userid=%ld&type=%d&typechild=%d&question=%@&img=&addrdetail=%@",
+        post = [NSString stringWithFormat:@"action=postquestion&userid=%ld&type=%d&typechild=%d&question=%@&img=&addrdetail=%@&med_hid=%ld",
                 (long)[CureMeUtils defaultCureMeUtil].userID,
                 10, 98,
                 sendQuestion,
-                @""];
+                @"",
+                (long)hospitalID];
     }
     else {
-        post = [NSString stringWithFormat:@"action=postquestion&userid=%ld&type=%ld&typechild=%ld&question=%@&img=&addrdetail=%@",
+        post = [NSString stringWithFormat:@"action=postquestion&userid=%ld&type=%ld&typechild=%ld&question=%@&img=&addrdetail=%@&med_hid=%ld",
                 (long)[CureMeUtils defaultCureMeUtil].userID,
                 (long)_officeType, (long)_subOfficeType,
                 sendQuestion,
-                @""];
+                @"",
+                (long)hospitalID];
     }
     NSLog(@"zixun: %@", post);
     NSData *response = sendRequest(@"m.php", post);
@@ -1826,6 +1820,7 @@ UIView *infoView;
 - (void)connectSWT {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSString *urlStr = [NSString stringWithFormat:@"api2/connectswt/%ld/%ld/%ld/%ld/%ld?imei=%@", (long)[CureMeUtils defaultCureMeUtil].userSWTID, (long)cityid, (long)_officeType, (long)city2id,(long)_subOfficeType,[CureMeUtils defaultCureMeUtil].UDID];
+//        NSString *urlStr = [NSString stringWithFormat:@"api2/connectswt/%ld/12000/%ld/450500/%ld?imei=%@", (long)[CureMeUtils defaultCureMeUtil].userSWTID, (long)_officeType,(long)_subOfficeType,[CureMeUtils defaultCureMeUtil].UDID];
         NSMutableDictionary *respDict = [[NSMutableDictionary alloc] init];
         NSData *response = sendRequestWithFullURLNAP([@"http://exswt.ranknowcn.com/" stringByAppendingString:urlStr], respDict);
         
@@ -2413,21 +2408,12 @@ UIView *infoView;
                 }
                 return;
             }else{
-                _doctorID = [jsonData[@"data"][0][@"did"] integerValue];
-                doctorName = jsonData[@"data"][0][@"dname"];
-                doctorTag = jsonData[@"data"][0][@"dtitle"];
-                hospitalID = [jsonData[@"data"][0][@"hid"] integerValue];
-                hospitalName = jsonData[@"data"][0][@"hname"];
-                welcomeStr = jsonData[@"data"][0][@"welcome"];
-                dpicKey = jsonData[@"data"][0][@"dpic"];
-                [[self imageDownloader] addImageKey:dpicKey andSizeType:@"150"];
-                // 开启图片下载器
-                [[self imageDownloader] startDownload];
-                [self reloadInfoView];
-                [self addDoctorClientMessage:welcomeStr msgDate:[NSDate date]];
-                [self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
-                isSWT = NO;
-                isReady = YES;
+                //  3 为内部医院需要付费才能咨询的状态码
+                if ([jsonData[@"data"][0][@"status"] integerValue] == 3) {
+                    [self goToPayForQuest];
+                }else{
+                    [self readyToConnectHospital:jsonData];
+                }
             }
         });
     });
@@ -2803,5 +2789,53 @@ UIView *infoView;
     
     return [outPutStr uppercaseString];
     
+}
+
+//2019-08-09 新增付费分配逻辑 （原私人医生内部对话）
+
+//内部对话开始代码转移到这里
+- (void)readyToConnectHospital:(NSDictionary *)jsonData{
+    _doctorID = [jsonData[@"data"][0][@"did"] integerValue];
+    doctorName = jsonData[@"data"][0][@"dname"];
+    doctorTag = jsonData[@"data"][0][@"dtitle"];
+    hospitalID = [jsonData[@"data"][0][@"hid"] integerValue];
+    hospitalName = jsonData[@"data"][0][@"hname"];
+    welcomeStr = jsonData[@"data"][0][@"welcome"];
+    dpicKey = jsonData[@"data"][0][@"dpic"];
+    [[self imageDownloader] addImageKey:dpicKey andSizeType:@"150"];
+    // 开启图片下载器
+    [[self imageDownloader] startDownload];
+    [self reloadInfoView];
+    [self addDoctorClientMessage:welcomeStr msgDate:[NSDate date]];
+    [self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
+    isSWT = NO;
+    isReady = YES;
+}
+
+- (void)goToPayForQuest{
+    chooseDoctorViewController *chooseVC = [[chooseDoctorViewController alloc] init];
+    chooseVC.officeId = self.officeType;
+    chooseVC.subOfficeId = self.subOfficeType;
+    [self.navigationController pushViewController:chooseVC animated:YES];
+    
+}
+
+- (void)payBackToChat:(NSNotification *)notify{
+    doctorModel *doctor = (doctorModel *)notify.object;
+    _doctorID = doctor.did;
+    doctorName = doctor.name;
+    doctorTag = doctor.intro;
+    hospitalID = doctor.hospital_id;
+    hospitalName = doctor.hosp_name;
+    dpicKey = doctor.pic;
+    
+    [[self imageDownloader] addImageKey:dpicKey andSizeType:@"150"];
+    // 开启图片下载器
+    [[self imageDownloader] startDownload];
+    [self reloadInfoView];
+    //    [self addDoctorClientMessage:welcomeStr msgDate:[NSDate date]];
+    [self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
+    isSWT = NO;
+    isReady = YES;
 }
 @end

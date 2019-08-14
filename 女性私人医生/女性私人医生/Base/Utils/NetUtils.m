@@ -143,7 +143,7 @@ NSData *sendRequestWithData(NSString *url, NSData *data)
         return nil;
     }
     
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
     NSString *postLength = nil;
     NSURLResponse *response = nil;
@@ -172,7 +172,7 @@ NSData *sendRequestWithData(NSString *url, NSData *data)
     }
     
     // show in the status bar that network activity is starting
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
     return returnData;
 }
@@ -180,7 +180,7 @@ NSData *sendRequestWithData(NSString *url, NSData *data)
 NSData *sendFullRequest(NSString *fullURL, NSString *post, NSDictionary *additionalHeaders, bool needDispNetState, bool saveSetCookie/*, bool sendGZipContent*/)
 {
     if (needDispNetState) {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+        //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     }
     
     NSData *data = nil;
@@ -242,7 +242,7 @@ NSData *sendFullRequest(NSString *fullURL, NSString *post, NSDictionary *additio
         
         // show in the status bar that network activity is starting
         if (needDispNetState) {
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         }
     }
     
@@ -266,7 +266,7 @@ NSData * sendRequestWithHeaderAndResponse(NSString *phpFile, NSString *post, NSD
     
     // show in the status bar that network activity is starting
     if (needDispNetState) {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+        //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     }
     
     NSData *postData = nil;
@@ -331,7 +331,7 @@ NSData * sendRequestWithHeaderAndResponse(NSString *phpFile, NSString *post, NSD
         
         // show in the status bar that network activity is starting
         if (needDispNetState) {
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         }
     }
     
@@ -528,7 +528,7 @@ NSData* sendRequestAndNeedCookie(NSString *phpFile, NSString *post, NSDictionary
     
     // show in the status bar that network activity is starting
     if (needDispNetState) {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+        //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     }
     
     NSData *postData = nil;
@@ -576,7 +576,7 @@ NSData* sendRequestAndNeedCookie(NSString *phpFile, NSString *post, NSDictionary
         
         // show in the status bar that network activity is starting
         if (needDispNetState) {
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            //[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         }
     }
     

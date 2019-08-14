@@ -137,13 +137,14 @@ enum
 };
 
 @protocol wxBackDelegate <NSObject>
+@optional
 -(void)recieveAuthResponse:(BOOL)isSucced code:(NSString *)code;
-
+- (void)receivePayResp:(PayResp *)resp;
 @end
 @interface WeixinBackTools : NSObject <WXApiDelegate>
 -(void)sendAuthRequest;
 + (WeixinBackTools *)sharedInstance;
-@property id <wxBackDelegate> wxBackDelegate;
+@property (weak) id <wxBackDelegate> wxBackDelegate;
 @end
 
 
