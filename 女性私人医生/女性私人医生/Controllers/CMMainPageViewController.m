@@ -13,9 +13,9 @@
 #import "WebViewController.h"
 #import "CMPickerViewController.h"
 #import "KGModal.h"
+#import "CMMainPageCoverView.h"
 
-
-@interface CMMainPageViewController ()
+@interface CMMainPageViewController ()<PageADCoverDelegate>
 {
     WKWebView *html5WebView;
     UITextField *addressTF;
@@ -55,7 +55,7 @@ BOOL isLFMShow;
     html5WebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 108, SCREEN_WIDTH, SCREEN_HEIGHT - (FitIpX(157)))];
     [self.view addSubview:html5WebView];
     html5WebView.navigationDelegate = self;
-    NSURLRequest *url = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/h5_new/index.html?appid=1&addrdetail=%@&source=apple",DOMAIN_NAME,[CureMeUtils defaultCureMeUtil].encodedLocateInfo]]];
+    NSURLRequest *url = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/h5_new/index.html?appid=1&addrdetail=%@&source=apple&version=105&vname=3.20.0330.1",DOMAIN_NAME,[CureMeUtils defaultCureMeUtil].encodedLocateInfo]]];
     [html5WebView loadRequest:url];
     
     [self setTopView];
@@ -131,23 +131,9 @@ BOOL isLFMShow;
                     childId = [idAry[idAry.count - 2] integerValue];
                     key = idAry[idAry.count - 1];
                     //新增广告图片
-                    coverView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-                    UIImageView *backImage = [[UIImageView alloc] initWithFrame:coverView.frame];
-                    backImage.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://pic.medapp.ranknowcn.com/client/image.php?key=%@&type=L&version=3.0",key]]]];
-                    [coverView addSubview:backImage];
-                    
-                    UIButton *connectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-                    connectBtn.frame = CGRectMake(0, SCREEN_HEIGHT - 50, SCREEN_WIDTH, 50);
-                    [connectBtn setBackgroundColor:UIColorFromHex(0x0168b7,1)];
-                    [connectBtn addTarget:self action:@selector(connectBtnClick) forControlEvents:UIControlEventTouchUpInside];
-                    [connectBtn setTitle:@"立即咨询" forState:UIControlStateNormal];
-                    [coverView addSubview:connectBtn];
-                    
-                    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(coverViewTapAction)];
-                    backImage.userInteractionEnabled = YES;
-                    [backImage addGestureRecognizer:gesture];
-                    
-                    [[UIApplication sharedApplication].keyWindow addSubview:coverView];
+                    CMMainPageCoverView *cover = [[CMMainPageCoverView alloc] initWithImgUrl:[NSString stringWithFormat:@"http://pic.medapp.ranknowcn.com/client/image.php?key=%@&type=L&version=3.0",key]];
+                    cover.adDelegate = self;
+                    [[UIApplication sharedApplication].keyWindow addSubview:cover];
                 }
                 else{
                     if (idAry.count == 4) {
@@ -217,6 +203,11 @@ BOOL isLFMShow;
     decisionHandler(WKNavigationActionPolicyCancel);
     return;
 }
+//图片广告页
+- (void)adCoverView:(UIView *)view didTapDepartStart:(NSInteger)departId{
+    [view removeFromSuperview];
+    [self connectBtnClick];
+}
 
 //protoclView
 - (void)pushNewQuary:(NSInteger)office1 and:(NSInteger)office2{
@@ -252,72 +243,16 @@ BOOL isLFMShow;
         [self.navigationController pushViewController:queryVC animated:YES];
     }
 }
-//- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
-//    NSString *schemeStr = request.URL.scheme;
-//    if ([request.URL.absoluteString containsString:@"index.html"]) {
-//        return YES;
-//    }
-//    
-//    if ([schemeStr isEqualToString:@"medapp"]) {
-//        if ([request.URL.absoluteString containsString:@"depart"]) {
-//            NSInteger officeId = [request.URL.lastPathComponent integerValue];
-//            CMQAViewController *qaViewController = [[CMQAViewController alloc] initWithNibName:@"CMQAViewController" bundle:nil];
-//            qaViewController.officeType = officeId;
-//            [[CMAppDelegate Delegate].navigationController pushViewController:qaViewController animated:YES];
-//            return YES;
-//        }
-//        else if ([request.URL.absoluteString containsString:@"ads"]){
-//            NSInteger officeId = [request.URL.lastPathComponent integerValue];
-//            CMNewQueryViewController *queryVC = [CMNewQueryViewController new];
-//            queryVC.officeType = officeId;
-//            queryVC.subOfficeType = 0;
-//            queryVC.chatUserID = [CureMeUtils defaultCureMeUtil].userID;
-//            [self.navigationController pushViewController:queryVC animated:YES];
-//        }
-//        else if ([request.URL.absoluteString containsString:@"news"]){
-//            WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
-//            webViewController.strURL = [NSString stringWithFormat:@"http://%@/h5_new/news.html?appid=1&addrdetail=%@&source=apple",DOMAIN_NAME,[CureMeUtils defaultCureMeUtil].encodedLocateInfo];
-//            [self.navigationController pushViewController:webViewController animated:YES];
-//            return NO;
-//        }
-//        else if ([request.URL.absoluteString containsString:@"quickask"]){
-//            CMQuickAskChoosenAndLocationViewController *quickAskView = [[CMQuickAskChoosenAndLocationViewController alloc] init];
-//            
-//            quickAskView.isQuickAskView = YES;
-//            
-//            [[CMAppDelegate Delegate].navigationController pushViewController:quickAskView animated:YES];
-//        }
-//    }
-//    else{
-//        WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
-//        webViewController.strURL = request.URL.absoluteString;
-//        [self.navigationController pushViewController:webViewController animated:YES];
-//     return NO;
-//    }
-//    return NO;
-//}
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error{
-//    NSString *path = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html" inDirectory:@"local_h5"];
-//    NSURL *url = [NSURL fileURLWithPath:path];
-//    [webView loadRequest:[NSURLRequest requestWithURL:url]];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [webView reload];
+    });
 }
-
-//- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
-////    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-////        [webView reload];
-////    });
-//    
-//    NSString *path = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html" inDirectory:@"local_h5"];
-//    NSURL *url = [NSURL fileURLWithPath:path];
-//    [webView loadRequest:[NSURLRequest requestWithURL:url]];
-//}
 
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:NTF_LocationComfirmed object:nil];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:NTF_LocateServiceNotAvailable object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -505,7 +440,7 @@ BOOL isLFMShow;
     addressTF.frame = temp;
     
     //reload 主页
-    NSURLRequest *url = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/h5_new/index.html?appid=1&addrdetail=%@&source=apple&vname=%@",DOMAIN_NAME,[CureMeUtils defaultCureMeUtil].encodedLocateInfo,[CureMeUtils defaultCureMeUtil].appVersion]]];
+    NSURLRequest *url = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/h5_new/index.html?appid=1&addrdetail=%@&source=apple&version=105&vname=3.20.0330.1",DOMAIN_NAME,[CureMeUtils defaultCureMeUtil].encodedLocateInfo]]];
     [html5WebView loadRequest:url];
 
 }

@@ -22,7 +22,7 @@
 
 #define iatao_server_url @"http://yiaitao.lifehealthcare.com/api/"
 
-@interface CMNewQueryViewController ()
+@interface CMNewQueryViewController ()<docPaymentDelegate>
 {
     NSInteger *msgMaxId;
     BOOL talking;
@@ -1848,6 +1848,16 @@ UIView *infoView;
                 [self cancelSWTForError];
                 return;
             }
+            NSString *chatPageStr = jsonData[@"data"][@"hintro"];
+            if([chatPageStr isEqualToString:@"web view mode"]){
+               SWT_url = jsonData[@"data"][@"swturl"];
+               WebViewController *webVC = [[WebViewController alloc] init];
+               webVC.strURL = SWT_url;
+               webVC.iskst = YES;
+               [self.navigationController pushViewController:webVC animated:YES];
+               return;
+            }
+            
             NSInteger acceptFlag = [jsonData[@"data"][@"accept"] integerValue];
             if (acceptFlag==0)
             {
@@ -2410,7 +2420,7 @@ UIView *infoView;
             }else{
                 //  3 为内部医院需要付费才能咨询的状态码
                 if ([jsonData[@"data"][0][@"status"] integerValue] == 3) {
-                    [self goToPayForQuest];
+                    [self goToPayForQuestWithJson:jsonData];
                 }else{
                     [self readyToConnectHospital:jsonData];
                 }
@@ -2812,12 +2822,17 @@ UIView *infoView;
     isReady = YES;
 }
 
-- (void)goToPayForQuest{
+- (void)goToPayForQuestWithJson:(NSDictionary*) jsonData{
     chooseDoctorViewController *chooseVC = [[chooseDoctorViewController alloc] init];
     chooseVC.officeId = self.officeType;
     chooseVC.subOfficeId = self.subOfficeType;
+    chooseVC.backDelegate = self;
+    chooseVC.jsonData  = jsonData;
     [self.navigationController pushViewController:chooseVC animated:YES];
-    
+}
+
+- (void)noDoctorBackToChat:(NSDictionary *)json{
+    [self readyToConnectHospital:json];
 }
 
 - (void)payBackToChat:(NSNotification *)notify{

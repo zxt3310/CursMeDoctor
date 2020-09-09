@@ -284,13 +284,12 @@
 		22FD131716A5BD3A00B1F69C /* CMChatHeaderBtnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22FD131616A5BD3A00B1F69C /* CMChatHeaderBtnView.m */; };
 		22FFA85716A678F400E0978C /* chat_bg_right_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22FFA85516A678F400E0978C /* chat_bg_right_normal@2x.png */; };
 		22FFA85816A678F400E0978C /* chat_bg_left_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22FFA85616A678F400E0978C /* chat_bg_left_normal@2x.png */; };
+		5808205B24B30271007AA2C7 /* CMMainPageCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5808205924B30271007AA2C7 /* CMMainPageCoverView.m */; };
 		580D2E4F1F16176D001CD65F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580D2E4E1F16176C001CD65F /* WebKit.framework */; };
 		581A4BFD1EC04CF700706F97 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 581A4BFC1EC04CF700706F97 /* libsqlite3.0.tbd */; };
 		581A4BFF1EC04E0100706F97 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 581A4BFE1EC04E0100706F97 /* CoreImage.framework */; };
 		581A4C011EC04E0900706F97 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 581A4C001EC04E0900706F97 /* ImageIO.framework */; };
 		581A4C031EC04E2400706F97 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 581A4C021EC04E2400706F97 /* libsqlite3.tbd */; };
-		581A4CB51EC0542D00706F97 /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 581A4CB01EC0542D00706F97 /* libbaidumapapi.a */; };
-		581A4CB61EC0542D00706F97 /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 581A4CB21EC0542D00706F97 /* libbaidumapapi.a */; };
 		581A4CB71EC0542D00706F97 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 581A4CB31EC0542D00706F97 /* mapapi.bundle */; };
 		581A4CB81EC0542D00706F97 /* mapapi_old.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 581A4CB41EC0542D00706F97 /* mapapi_old.bundle */; };
 		582044FC1F01FC8C00D77626 /* _MPTweakBindObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 582044581F01FC8C00D77626 /* _MPTweakBindObserver.m */; };
@@ -386,7 +385,6 @@
 		582045561F01FC8C00D77626 /* UIView+MPHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 582044F81F01FC8C00D77626 /* UIView+MPHelpers.m */; };
 		582045571F01FC8C00D77626 /* UIViewController+AutomaticEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 582044FA1F01FC8C00D77626 /* UIViewController+AutomaticEvents.m */; };
 		582045591F01FCA800D77626 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 582045581F01FCA800D77626 /* Accelerate.framework */; };
-		5820455B1F01FCEE00D77626 /* WatchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5820455A1F01FCEE00D77626 /* WatchKit.framework */; };
 		5820455D1F01FD5500D77626 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5820455C1F01FD5500D77626 /* CFNetwork.framework */; };
 		582792E01FA05F6C00CA17B3 /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = 582792DF1FA05F6C00CA17B3 /* share.png */; };
 		5828718B1F8DFF1200263287 /* listBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 5828718A1F8DFF1200263287 /* listBtn.png */; };
@@ -397,6 +395,8 @@
 		586F7EFC1F94B1D400DB6070 /* cancleList_woman.png in Resources */ = {isa = PBXBuildFile; fileRef = 586F7EFB1F94B1D400DB6070 /* cancleList_woman.png */; };
 		5879000A1EFA415700633DF9 /* Mixpanel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 587900091EFA415700633DF9 /* Mixpanel.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		5879000C1EFA417500633DF9 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5879000B1EFA417500633DF9 /* libicucore.tbd */; };
+		587E47D724BC19C300596425 /* CMNewH5ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 587E47D624BC19C300596425 /* CMNewH5ViewController.m */; };
+		587E47D924BC1A7000596425 /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 587E47D824BC1A7000596425 /* libbaidumapapi.a */; };
 		588221481FA9C3EA00FE902F /* hideAndDisplay.png in Resources */ = {isa = PBXBuildFile; fileRef = 588221471FA9C3EA00FE902F /* hideAndDisplay.png */; };
 		5882214A1FA9C3F600FE902F /* clear.png in Resources */ = {isa = PBXBuildFile; fileRef = 588221491FA9C3F600FE902F /* clear.png */; };
 		58D40B761F95D3FA00CD04C3 /* CMH5NewsWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58D40B751F95D3FA00CD04C3 /* CMH5NewsWebViewController.m */; };
@@ -1025,6 +1025,8 @@
 		22FD131616A5BD3A00B1F69C /* CMChatHeaderBtnView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CMChatHeaderBtnView.m; path = "女性私人医生/Base/CustomViews/ChatViews/CMChatHeaderBtnView.m"; sourceTree = "<group>"; };
 		22FFA85516A678F400E0978C /* chat_bg_right_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat_bg_right_normal@2x.png"; path = "女性私人医生/Resources/images/chat_bg_right_normal@2x.png"; sourceTree = "<group>"; };
 		22FFA85616A678F400E0978C /* chat_bg_left_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chat_bg_left_normal@2x.png"; path = "女性私人医生/Resources/images/chat_bg_left_normal@2x.png"; sourceTree = "<group>"; };
+		5808205924B30271007AA2C7 /* CMMainPageCoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMMainPageCoverView.m; sourceTree = "<group>"; };
+		5808205A24B30271007AA2C7 /* CMMainPageCoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMMainPageCoverView.h; sourceTree = "<group>"; };
 		580D2E4E1F16176C001CD65F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		581A4BFC1EC04CF700706F97 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		581A4BFE1EC04E0100706F97 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
@@ -1330,6 +1332,9 @@
 		586F7EFB1F94B1D400DB6070 /* cancleList_woman.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancleList_woman.png; sourceTree = "<group>"; };
 		587900091EFA415700633DF9 /* Mixpanel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mixpanel.framework; sourceTree = "<group>"; };
 		5879000B1EFA417500633DF9 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		587E47D524BC19C300596425 /* CMNewH5ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMNewH5ViewController.h; sourceTree = "<group>"; };
+		587E47D624BC19C300596425 /* CMNewH5ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMNewH5ViewController.m; sourceTree = "<group>"; };
+		587E47D824BC1A7000596425 /* libbaidumapapi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbaidumapapi.a; sourceTree = "<group>"; };
 		588221471FA9C3EA00FE902F /* hideAndDisplay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hideAndDisplay.png; sourceTree = "<group>"; };
 		588221491FA9C3F600FE902F /* clear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clear.png; sourceTree = "<group>"; };
 		58D40B741F95D3FA00CD04C3 /* CMH5NewsWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CMH5NewsWebViewController.h; path = "女性私人医生/Controllers/CMH5NewsWebViewController.h"; sourceTree = "<group>"; };
@@ -1718,13 +1723,10 @@
 			files = (
 				580D2E4F1F16176D001CD65F /* WebKit.framework in Frameworks */,
 				5820455D1F01FD5500D77626 /* CFNetwork.framework in Frameworks */,
-				5820455B1F01FCEE00D77626 /* WatchKit.framework in Frameworks */,
 				582045591F01FCA800D77626 /* Accelerate.framework in Frameworks */,
 				58EDD2681F99C8C9003A999F /* libWeChatSDK.a in Frameworks */,
 				5879000C1EFA417500633DF9 /* libicucore.tbd in Frameworks */,
-				581A4CB61EC0542D00706F97 /* libbaidumapapi.a in Frameworks */,
 				581A4C031EC04E2400706F97 /* libsqlite3.tbd in Frameworks */,
-				581A4CB51EC0542D00706F97 /* libbaidumapapi.a in Frameworks */,
 				581A4C011EC04E0900706F97 /* ImageIO.framework in Frameworks */,
 				5879000A1EFA415700633DF9 /* Mixpanel.framework in Frameworks */,
 				581A4BFF1EC04E0100706F97 /* CoreImage.framework in Frameworks */,
@@ -1738,6 +1740,7 @@
 				22F88F3516BBB52800D1192D /* MapKit.framework in Frameworks */,
 				22FA9751169D0BE80058E8D4 /* SystemConfiguration.framework in Frameworks */,
 				22FA974F169D0BDC0058E8D4 /* QuartzCore.framework in Frameworks */,
+				587E47D924BC1A7000596425 /* libbaidumapapi.a in Frameworks */,
 				22FA974C169D0AE20058E8D4 /* CoreLocation.framework in Frameworks */,
 				22FA9697169D06870058E8D4 /* UIKit.framework in Frameworks */,
 				22FA9699169D06870058E8D4 /* Foundation.framework in Frameworks */,
@@ -2161,6 +2164,7 @@
 		22FA96CF169D09740058E8D4 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				587E47D424BC19B100596425 /* CMNewH5ViewController */,
 				B7F6FFDB2303CC8E00FAC683 /* DoctorPaymentQ */,
 				2204660217F6733100DDC7D0 /* CMQueryViewController.xib */,
 				2204660317F6733100DDC7D0 /* CMQueryViewController.m */,
@@ -2570,6 +2574,8 @@
 		22FA982A169D42600058E8D4 /* MainTabPages */ = {
 			isa = PBXGroup;
 			children = (
+				5808205A24B30271007AA2C7 /* CMMainPageCoverView.h */,
+				5808205924B30271007AA2C7 /* CMMainPageCoverView.m */,
 				22FA982C169D429F0058E8D4 /* CMMainPageViewController.h */,
 				22FA982D169D429F0058E8D4 /* CMMainPageViewController.m */,
 				22FA9759169D107D0058E8D4 /* CMMainTabViewController.h */,
@@ -2698,6 +2704,7 @@
 		581A4C341EC0542D00706F97 /* BaiduMapApi_Lib_iOS_1.2.1 */ = {
 			isa = PBXGroup;
 			children = (
+				587E47D824BC1A7000596425 /* libbaidumapapi.a */,
 				581A4C351EC0542D00706F97 /* inc */,
 				581A4C731EC0542D00706F97 /* inc_bak */,
 				581A4C911EC0542D00706F97 /* inc_old */,
@@ -3052,6 +3059,15 @@
 				5828718D1F8E153900263287 /* WebViewCoverView.m */,
 			);
 			name = WebViewCoverView;
+			sourceTree = "<group>";
+		};
+		587E47D424BC19B100596425 /* CMNewH5ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				587E47D524BC19C300596425 /* CMNewH5ViewController.h */,
+				587E47D624BC19C300596425 /* CMNewH5ViewController.m */,
+			);
+			name = CMNewH5ViewController;
 			sourceTree = "<group>";
 		};
 		58DDF76F1FBBD0B600DD2145 /* old */ = {
@@ -4331,6 +4347,7 @@
 				70F5AE921EBC4E4E00733E56 /* tlib.c in Sources */,
 				DE5AF5E01CABB029001BD6E8 /* UINewBubbleTableViewCell.m in Sources */,
 				222CAD6F16AD378E004C533C /* KGModal.m in Sources */,
+				587E47D724BC19C300596425 /* CMNewH5ViewController.m in Sources */,
 				222CAD7A16AD8787004C533C /* CMMarkDoctorViewController.m in Sources */,
 				DE5AF5F61CABB198001BD6E8 /* CMNewQueryViewController.m in Sources */,
 				70F5AEA61EBC4E4F00733E56 /* ImageInfo.m in Sources */,
@@ -4350,6 +4367,7 @@
 				70F5AE8B1EBC4E4E00733E56 /* hpnsNetwork.c in Sources */,
 				582045101F01FC8C00D77626 /* MPABTestDesignerChangeRequestMessage.m in Sources */,
 				2273AADF17D82F61006E4A5C /* CMPerCenterHeaderCell.m in Sources */,
+				5808205B24B30271007AA2C7 /* CMMainPageCoverView.m in Sources */,
 				58F78E3D1FE37A2600C4C208 /* CMemulateLocationPageController.m in Sources */,
 				582044FC1F01FC8C00D77626 /* _MPTweakBindObserver.m in Sources */,
 				70F5AE981EBC4E4E00733E56 /* FMDatabase.m in Sources */,
@@ -4529,13 +4547,16 @@
 				HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2/**";
 				INFOPLIST_FILE = "女性私人医生/女性私人医生-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/女性私人医生/Dependencies/BaiduMapApi_Lib_iOS_1.2.1/libs",
 					"$(PROJECT_DIR)/女性私人医生/Dependencies/BaiduMap_iOSSDK_v2.1.1_Lib",
 					"$(PROJECT_DIR)/女性私人医生/Dependencies/BaiduMapApi_Lib_iOS_1.2.1/libs_old",
 					"$(PROJECT_DIR)/OpenSDK1.8.0",
+					"$(PROJECT_DIR)/女性私人医生/Dependencies/BaiduMapApi_Lib_iOS_1.2.1",
 				);
+				MARKETING_VERSION = 3.20.0720;
 				PRODUCT_NAME = CureMe;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -4574,13 +4595,16 @@
 				HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2/**";
 				INFOPLIST_FILE = "女性私人医生/女性私人医生-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/女性私人医生/Dependencies/BaiduMapApi_Lib_iOS_1.2.1/libs",
 					"$(PROJECT_DIR)/女性私人医生/Dependencies/BaiduMap_iOSSDK_v2.1.1_Lib",
 					"$(PROJECT_DIR)/女性私人医生/Dependencies/BaiduMapApi_Lib_iOS_1.2.1/libs_old",
 					"$(PROJECT_DIR)/OpenSDK1.8.0",
+					"$(PROJECT_DIR)/女性私人医生/Dependencies/BaiduMapApi_Lib_iOS_1.2.1",
 				);
+				MARKETING_VERSION = 3.20.0720;
 				PRODUCT_NAME = CureMe;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";

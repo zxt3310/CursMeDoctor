@@ -26,6 +26,7 @@
 #import "GuideView.h"
 #import "HiChat.h"
 #import "CMH5NewsWebViewController.h"
+#import "CMNewH5ViewController.h"
 
 /**
  * 实现NSUncaughtExceptionHandler方法
@@ -74,7 +75,7 @@ void uncaughtExceptionHandler(NSException *exception)
 
 @implementation CMAppDelegate
 {
-    CMH5NewsWebViewController *webVc;
+//    CMH5NewsWebViewController *webVc;
 }
 
 @synthesize navigationController = _navigationController;
@@ -204,12 +205,17 @@ void uncaughtExceptionHandler(NSException *exception)
 //    }
     
     // 3. 我的消息Page
-    //WebViewController *webVC = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
-    webVc = [[CMH5NewsWebViewController alloc] init];
-    //[webVC setStrURL:[[NSString alloc] initWithFormat:@"%@/html5/myxiaoxi.php?userid=%ld&deviceid=%@", MEDAPP_MAINDOMAIN, (long)[CureMeUtils defaultCureMeUtil].userID, [[NSUserDefaults standardUserDefaults] objectForKey:USER_UNIQUE_ID]]];
-    //[webVC setStrURL:[[NSString alloc] initWithFormat:@"http://%@/h5_new/news.html?appid=1&addrdetail=%@&source=apple",DOMAIN_NAME,[CureMeUtils defaultCureMeUtil].encodedLocateInfo]];
-    //webVC.isMainTabPage = true;
-    [self getAllOfficeTypeAndUrl];
+
+//    WebViewController *webVC = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
+//
+//    [webVC setStrURL:[[NSString alloc] initWithFormat:@"%@/html5/myxiaoxi.php?userid=%ld&deviceid=%@", MEDAPP_MAINDOMAIN, (long)[CureMeUtils defaultCureMeUtil].userID, [[NSUserDefaults standardUserDefaults] objectForKey:USER_UNIQUE_ID]]];
+//    [webVC setStrURL:[[NSString alloc] initWithFormat:@"http://lx-medapp.ranknowcn.com/h5/news?appid=1&addrdetail=%@&source=apple",[CureMeUtils defaultCureMeUtil].encodedLocateInfo]];
+//    webVC.isMainTabPage = true;
+//    webVc = [[CMH5NewsWebViewController alloc] init];
+//    [self getAllOfficeTypeAndUrl];
+    CMNewH5ViewController *webVC = [[CMNewH5ViewController alloc] init];
+    webVC.urlStr = [[NSString alloc] initWithFormat:@"http://lx-medapp.ranknowcn.com/h5/news?appid=1&addrdetail=%@&source=apple",[CureMeUtils defaultCureMeUtil].encodedLocateInfo];
+    webVC.isMainPage = YES;
     
     // 4. 我的预约Page
     UIViewController *bookListViewController = nil;
@@ -218,17 +224,13 @@ void uncaughtExceptionHandler(NSException *exception)
         myBookListVC.isMainTabPage = true;
         bookListViewController = myBookListVC;
     //}
-//    else {
-//        CMChooseQueryOfficeTableViewController *chooseVC = [[CMChooseQueryOfficeTableViewController alloc] initWithNibName:@"CMChooseQueryOfficeTableViewController" bundle:nil]; //[[CMChooseQueryOfficeTableViewController alloc] initWithStyle:UITableViewStylePlain];
-//        bookListViewController = chooseVC;
-//    }
     
     // 5. 个人中心Page
     PerCenterViewController *perCenterVC = [[PerCenterViewController alloc] initWithStyle:UITableViewStyleGrouped];
     // 6. 优品商城
     CMShopViewController *shopVc = [[CMShopViewController alloc] init];
     
-    mainTabViewController.viewControllers = [NSArray arrayWithObjects:mainPageVC, listViewController, webVc, perCenterVC, shopVc,nil];
+    mainTabViewController.viewControllers = [NSArray arrayWithObjects:mainPageVC, listViewController, webVC, perCenterVC, shopVc,nil];
     mainTabViewController.selectedIndex = 0;
     
     _navigationController = [[CureMeNavigationController alloc] initWithRootViewController:mainTabViewController];
@@ -651,7 +653,7 @@ void uncaughtExceptionHandler(NSException *exception)
                 return;
             }
             NSArray *msgArray = [returnDic objectForKey:@"msg"];
-            webVc.officeTypeArray = msgArray;
+//            webVc.officeTypeArray = msgArray;
         });
     });
 }

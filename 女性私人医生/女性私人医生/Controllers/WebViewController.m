@@ -256,6 +256,14 @@
         tableFrame.size.height = SCREEN_HEIGHT -  49 - 64;
         self.view.frame = tableFrame;
     }
+    
+    if([self.strURL containsString:@"#fullscreen"]){
+       self.navigationController.navigationBar.hidden = YES;
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    self.navigationController.navigationBar.hidden = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -368,6 +376,7 @@
 {
     // app://huodong/chat/14
     NSString *strURL = request.URL.absoluteString;
+    
     NSLog(@"shouldStartLoadWithRequest url: %@", strURL);
     if ([[strURL lowercaseString] hasPrefix:@"app://"]) {
         NSString *subURl = [strURL substringFromIndex:[[NSString stringWithFormat:@"app://"] length]];
@@ -418,7 +427,24 @@
     NSLog(@"webView processURL: %@", fullURL);
     
     NSString *firstParam = [paramArray objectAtIndex:1];
-
+    
+      if([[firstParam lowercaseString] isEqualToString:@"depart_2"]){
+          NSInteger subId,childId;
+          if (paramArray.count == 4) {
+              subId = [paramArray[paramArray.count - 2] integerValue];
+              childId = [paramArray[paramArray.count - 1] integerValue];
+          }
+          else{
+              subId = [paramArray[paramArray.count - 3] integerValue];
+              childId = [paramArray[paramArray.count - 2] integerValue];
+          }
+          [self connectBtnClick:subId :childId];
+      }
+      
+      if([[firstParam lowercaseString] isEqualToString:@"navi_back"]){
+          [self.navigationController popViewControllerAnimated:YES];
+      }
+    
     if ([[firstParam lowercaseString] isEqualToString:@"chat"]) {
         NSString *fromType = [paramArray objectAtIndex:0];
         // 通过活动ID打开的聊天窗口
@@ -483,6 +509,36 @@
         paymentIdStr = paramArray[4];
         [self getPrePayId:[payNameStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] totalFee:paramArray[3] paymentId:paramArray[4] param1:paramArray[5]];
     }
+}
+
+- (void)connectBtnClick:(NSInteger) subId :(NSInteger) childId{
+    NSNumber *hasMarkApp = [[NSUserDefaults standardUserDefaults] objectForKey:HAS_AGREEPROTOCOL];
+    if (!hasMarkApp || hasMarkApp.integerValue == 0) {
+        CMQAProtocolView *protocl = [[CMQAProtocolView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        protocl.CmLocationDelegate = self;
+        protocl.office1 = subId;
+        protocl.office2 = childId;
+        CGRect temp = protocl.protcolViewFrame;
+        temp.origin.y += 50*SCREEN_HEIGHT/667;
+        protocl.protcolViewFrame = temp;
+        
+        [[UIApplication sharedApplication].keyWindow addSubview:protocl];
+    }
+    else{
+        CMNewQueryViewController *queryVC = [CMNewQueryViewController new];
+        queryVC.officeType = subId;
+        queryVC.subOfficeType = childId;
+        queryVC.chatUserID = [CureMeUtils defaultCureMeUtil].userID;
+        [self.navigationController pushViewController:queryVC animated:YES];
+    }
+}
+
+//protoclView
+- (void)pushNewQuary:(NSInteger)office1 and:(NSInteger)office2{
+    CMNewQueryViewController *qureVc = [CMNewQueryViewController new];
+    qureVc.officeType = office1;
+    qureVc.subOfficeType = office2;
+    [self.navigationController pushViewController:qureVc animated:YES];
 }
 
 - (void)getPrePayId:(NSString *)payName totalFee:(NSString *)fee paymentId:(NSString *)paymentId param1:(NSString *)param1{
@@ -819,11 +875,12 @@
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    NSLog(@"webView didFailLoadWithError: %@", error.description);
-    
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"news" ofType:@"html" inDirectory:@"local_h5"];
-    NSURL *url = [NSURL fileURLWithPath:path];
-    [webView loadRequest:[NSURLRequest requestWithURL:url]];
+        loadingView.hidden = YES;
+//    NSLog(@"webView didFailLoadWithError: %@", error.description);
+//
+//    NSString *path = [[NSBundle mainBundle] pathForResource:@"news" ofType:@"html" inDirectory:@"local_h5"];
+//    NSURL *url = [NSURL fileURLWithPath:path];
+//    [webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
 @end

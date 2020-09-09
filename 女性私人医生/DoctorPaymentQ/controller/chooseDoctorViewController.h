@@ -12,8 +12,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface chooseDoctorViewController : CustomBaseViewController
+@protocol docPaymentDelegate <NSObject>
 
+@optional
+
+- (void) noDoctorBackToChat:(NSDictionary*) json;
+
+@end
+
+@interface chooseDoctorViewController : CustomBaseViewController
+@property (weak) id<docPaymentDelegate> backDelegate;
+@property NSDictionary *jsonData;
 @property NSInteger officeId;
 @property NSInteger subOfficeId;
 

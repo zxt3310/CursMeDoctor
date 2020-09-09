@@ -179,6 +179,11 @@
             if (docAry.count > 0) {
                 doctorAry = docAry;
                 [docTable reloadData];
+            }else{
+                [self.navigationController popViewControllerAnimated:NO];
+                if(self.backDelegate && self.jsonData){
+                    [self.backDelegate noDoctorBackToChat:self.jsonData];
+                }
             }
         });
     });
